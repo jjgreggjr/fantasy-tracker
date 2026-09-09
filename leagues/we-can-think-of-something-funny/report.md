@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 1
 
 dynasty · 31 roster slots  
-Generated 2026-09-09 23:22 UTC · baselines: 2025 only (no 2026 games played yet)
+Generated 2026-09-09 23:24 UTC · baselines: 2025 only (no 2026 games played yet)
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -117,21 +117,21 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
-| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
-| Jared Wiley | TE | KC | 25.9 | 2 | 3 | 16% | TE3 on depth chart; team passes #6; age 26 |
-| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 | 51% | TE2 on depth chart; team passes #12; age 26 |
-| Corey Kiner | RB | NE | 24.6 | 1 | 3 | 13% | RB3 on depth chart; age 25 |
-| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 | 43% | TE2 on depth chart; team passes #1; age 26 |
-| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 | 13% | RB3 on depth chart; age 26 |
-| Bam Knight | RB | ARI | 25.4 | 4 | 3 | 33% | RB3 on depth chart; age 25 |
-| Chris Brooks | RB | GB | 26.7 | 3 | 2 | 20% | RB2 on depth chart; age 27 |
-| Payne Durham | TE | TB | 26.2 | 3 | 2 | 28% | TE2 on depth chart; team passes #15; age 26 |
-| Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 | 25% | TE2 on depth chart; team passes #3; age 27 |
-| Will Shipley | RB | PHI | 24.0 | 2 | 3 | 13% | RB3 on depth chart; age 24 |
-| Tahj Brooks | RB | CIN | 24.3 | 1 | 3 | 6% | RB3 on depth chart; age 24 |
-| Brashard Smith | RB | KC | 23.4 | 1 | 3 | 17% | RB3 on depth chart; age 23 |
-| LeQuint Allen Jr. | RB | JAX | 22.1 | 1 | 3 | 23% | RB3 on depth chart; age 22 |
+| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
+| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
+| Jared Wiley | TE | KC | 25.9 | 2 | 3 (was 3) | 16% | TE3 on depth chart; team passes #6; age 26 |
+| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 (was 2) | 51% | TE2 on depth chart; team passes #12; age 26 |
+| Corey Kiner | RB | NE | 24.6 | 1 | 3 (was 3) | 13% | RB3 on depth chart; age 25 |
+| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 43% | TE2 on depth chart; team passes #1; age 26 |
+| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 26 |
+| Bam Knight | RB | ARI | 25.4 | 4 | 3 (was 3) | 33% | RB3 on depth chart; age 25 |
+| Chris Brooks | RB | GB | 26.7 | 3 | 2 (was 2) | 20% | RB2 on depth chart; age 27 |
+| Payne Durham | TE | TB | 26.2 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #15; age 26 |
+| Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 25% | TE2 on depth chart; team passes #3; age 27 |
+| Will Shipley | RB | PHI | 24.0 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 24 |
+| Tahj Brooks | RB | CIN | 24.3 | 1 | 3 (was 3) | 6% | RB3 on depth chart; age 24 |
+| Brashard Smith | RB | KC | 23.4 | 1 | 3 (was 3) | 17% | RB3 on depth chart; age 23 |
+| LeQuint Allen Jr. | RB | JAX | 22.1 | 1 | 3 (was 3) | 23% | RB3 on depth chart; age 22 |
 
 
 ## Ask me

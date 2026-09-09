@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 1
 
 redraft · 20 roster slots  
-Generated 2026-09-09 23:22 UTC · baselines: 2025 only (no 2026 games played yet)
+Generated 2026-09-09 23:24 UTC · baselines: 2025 only (no 2026 games played yet)
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -90,29 +90,29 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Keenan Allen | WR | IND | BAL | 8.5 | 6.2 | 15% | 3 | 4 | Med |  |
 | Isaac TeSlaa | WR | DET | NO | 8.1 | 2.3 | 9% | 3 | 21 | Low |  |
 | Malachi Fields | WR | NYG | DAL | 7.7 | 4.1 | 13% | 2 | 1 | Med | 🔥 |
-| Calvin Ridley | WR | TEN | NYJ | 7.3 | 4.7 | 12% | 3 | 17 | Med |  |
 | Pat Bryant | WR | DEN | KC | 7.3 | 4.1 | 13% | 5 | 23 | Med |  |
+| Elic Ayomanor | WR | TEN | NYJ | 7.3 | 4.1 | 6% | 5 | 17 | Low |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
-| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
-| Jared Wiley | TE | KC | 25.9 | 2 | 3 | 16% | TE3 on depth chart; team passes #6; age 26 |
-| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 | 51% | TE2 on depth chart; team passes #12; age 26 |
-| Isaac TeSlaa | WR | DET | 24.6 | 1 | 3 | 43% | WR3 on depth chart; team passes #9; age 25 |
-| Corey Kiner | RB | NE | 24.6 | 1 | 3 | 13% | RB3 on depth chart; age 25 |
-| Tre Harris | WR | LAC | 24.5 | 1 | 3 | 49% | WR3 on depth chart; team passes #13; age 24 |
-| Jaylen Wright | RB | MIA | 23.4 | 2 | 2 | 22% | RB2 on depth chart; age 23 |
-| Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 | 48% | WR3 on depth chart; team passes #3; age 27 |
-| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 | 43% | TE2 on depth chart; team passes #1; age 26 |
-| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 | 13% | RB3 on depth chart; age 26 |
-| Bam Knight | RB | ARI | 25.4 | 4 | 3 | 33% | RB3 on depth chart; age 25 |
-| DJ Giddens | RB | IND | 23.0 | 1 | 3 | 18% | RB3 on depth chart; age 23 |
-| Chris Brooks | RB | GB | 26.7 | 3 | 2 | 20% | RB2 on depth chart; age 27 |
-| Payne Durham | TE | TB | 26.2 | 3 | 2 | 28% | TE2 on depth chart; team passes #15; age 26 |
+| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
+| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
+| Jared Wiley | TE | KC | 25.9 | 2 | 3 (was 3) | 16% | TE3 on depth chart; team passes #6; age 26 |
+| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 (was 2) | 51% | TE2 on depth chart; team passes #12; age 26 |
+| Isaac TeSlaa | WR | DET | 24.6 | 1 | 3 (was 3) | 43% | WR3 on depth chart; team passes #9; age 25 |
+| Corey Kiner | RB | NE | 24.6 | 1 | 3 (was 3) | 13% | RB3 on depth chart; age 25 |
+| Tre Harris | WR | LAC | 24.5 | 1 | 3 (was 3) | 49% | WR3 on depth chart; team passes #13; age 24 |
+| Jaylen Wright | RB | MIA | 23.4 | 2 | 2 (was 2) | 22% | RB2 on depth chart; age 23 |
+| Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 (was 3) | 48% | WR3 on depth chart; team passes #3; age 27 |
+| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 43% | TE2 on depth chart; team passes #1; age 26 |
+| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 26 |
+| Bam Knight | RB | ARI | 25.4 | 4 | 3 (was 3) | 33% | RB3 on depth chart; age 25 |
+| DJ Giddens | RB | IND | 23.0 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
+| Chris Brooks | RB | GB | 26.7 | 3 | 2 (was 2) | 20% | RB2 on depth chart; age 27 |
+| Payne Durham | TE | TB | 26.2 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #15; age 26 |
 
 
 ## Ask me

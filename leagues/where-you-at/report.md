@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 1
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-09 23:22 UTC · baselines: 2025 only (no 2026 games played yet)
+Generated 2026-09-09 23:24 UTC · baselines: 2025 only (no 2026 games played yet)
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -76,8 +76,8 @@ _None. No depth-chart disagreements, no blocked players in doubt._
 | Mitchell Trubisky | QB | TEN | NYJ | 6.7 | 1.3 |  | 2 | 2 | Low |  |
 | Carson Wentz | QB | MIN | GB | 6.6 | 1.3 |  | 3 | 21 | Low |  |
 | Davis Mills | QB | HOU | BUF | 6.1 | 1.3 |  | 2 | 29 | Low |  |
-| Kirk Cousins | QB | LV | MIA | 13.4 | 1.5 |  | 1 | 10 | High | 🔥 |
 | Deshaun Watson | QB | CLE | JAX | 13.4 | 2.8 |  | 1 | 18 | Med |  |
+| Kirk Cousins | QB | LV | MIA | 13.4 | 1.5 |  | 1 | 10 | High | 🔥 |
 | Ty Johnson | RB | BUF | HOU | 7.6 | 4.5 | 8% | 3 | 22 | Low |  |
 | Samaje Perine | RB | CIN | TB | 7.2 | 6.6 | 18% | 2 | 14 | Med | 🔥 |
 | Audric Estimé | RB | NO | DET | 6.9 | 7.9 | 7% | 4 | 26 | Low |  |
@@ -88,8 +88,8 @@ _None. No depth-chart disagreements, no blocked players in doubt._
 | Tyler Higbee | TE | LA | SF | 6.1 | 2.6 | 4% | 2 | 9 | Low |  |
 | Daniel Bellinger | TE | TEN | NYJ | 5.5 | 2.2 | 8% | 2 | 8 | Med |  |
 | Dawson Knox | TE | BUF | HOU | 4.8 | 2.9 | 9% | 2 | 21 | Med |  |
-| Jake Tonges | TE | SF | LA | 4.0 | 3.2 | 4% | 2 | 17 | Low |  |
 | Elijah Higgins | TE | ARI | LAC | 4.0 | 2.0 | 5% | 2 | 28 | Med |  |
+| Jake Tonges | TE | SF | LA | 4.0 | 3.2 | 4% | 2 | 17 | Low |  |
 | Ryan Flournoy | WR | DAL | NYG | 7.7 | 4.0 | 11% | 3 | 9 | Med |  |
 | Keenan Allen | WR | IND | BAL | 6.4 | 6.2 | 15% | 3 | 4 | Med |  |
 | Calvin Ridley | WR | TEN | NYJ | 6.2 | 4.7 | 12% | 3 | 17 | Med |  |
@@ -102,21 +102,21 @@ _None. No depth-chart disagreements, no blocked players in doubt._
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
-| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
-| Jared Wiley | TE | KC | 25.9 | 2 | 3 | 16% | TE3 on depth chart; team passes #6; age 26 |
-| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 | 51% | TE2 on depth chart; team passes #12; age 26 |
-| Corey Kiner | RB | NE | 24.6 | 1 | 3 | 13% | RB3 on depth chart; age 25 |
-| Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 | 48% | WR3 on depth chart; team passes #3; age 27 |
-| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 | 43% | TE2 on depth chart; team passes #1; age 26 |
-| Jalen McMillan | WR | TB | 24.8 | 2 | 3 | 52% | WR3 on depth chart; team passes #15; age 25 |
-| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 | 13% | RB3 on depth chart; age 26 |
-| DJ Giddens | RB | IND | 23.0 | 1 | 3 | 18% | RB3 on depth chart; age 23 |
-| Chris Brooks | RB | GB | 26.7 | 3 | 2 | 20% | RB2 on depth chart; age 27 |
-| Payne Durham | TE | TB | 26.2 | 3 | 2 | 28% | TE2 on depth chart; team passes #15; age 26 |
-| Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 | 25% | TE2 on depth chart; team passes #3; age 27 |
-| Kendre Miller | RB | NO | 24.2 | 3 | 3 | 24% | RB3 on depth chart; age 24 |
-| Will Shipley | RB | PHI | 24.0 | 2 | 3 | 13% | RB3 on depth chart; age 24 |
+| Raheim Sanders | RB | CLE | 24.3 | 1 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
+| Blake Whiteheart | TE | CLE | 26.5 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 26 |
+| Jared Wiley | TE | KC | 25.9 | 2 | 3 (was 3) | 16% | TE3 on depth chart; team passes #6; age 26 |
+| Daniel Bellinger | TE | TEN | 26.0 | 4 | 2 (was 2) | 51% | TE2 on depth chart; team passes #12; age 26 |
+| Corey Kiner | RB | NE | 24.6 | 1 | 3 (was 3) | 13% | RB3 on depth chart; age 25 |
+| Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 (was 3) | 48% | WR3 on depth chart; team passes #3; age 27 |
+| Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 43% | TE2 on depth chart; team passes #1; age 26 |
+| Jalen McMillan | WR | TB | 24.8 | 2 | 3 (was 3) | 52% | WR3 on depth chart; team passes #15; age 25 |
+| Rasheen Ali | RB | BAL | 25.6 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 26 |
+| DJ Giddens | RB | IND | 23.0 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
+| Chris Brooks | RB | GB | 26.7 | 3 | 2 (was 2) | 20% | RB2 on depth chart; age 27 |
+| Payne Durham | TE | TB | 26.2 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #15; age 26 |
+| Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 25% | TE2 on depth chart; team passes #3; age 27 |
+| Kendre Miller | RB | NO | 24.2 | 3 | 3 (was 3) | 24% | RB3 on depth chart; age 24 |
+| Will Shipley | RB | PHI | 24.0 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 24 |
 
 
 ## Ask me

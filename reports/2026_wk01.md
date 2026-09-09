@@ -1,6 +1,6 @@
 # Week 1 digest — 2026
 
-Generated 2026-09-09 23:22 UTC  
+Generated 2026-09-09 23:24 UTC  
 Stats through: **no games yet** · Baselines: **2025 only (no 2026 games played yet)**
 
 
@@ -11,7 +11,7 @@ Stats through: **no games yet** · Baselines: **2025 only (no 2026 games played 
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 920
 - Sleeper players cache: 2026-09-09
-- projections: 833 players (Sleeper, 2026-09-09T23:22:58Z)
+- projections: 833 players (Sleeper, 2026-09-09T23:24:28Z)
 - status rows: 562 players; 0 with practice reports
 
 ### Warnings
