@@ -38,14 +38,21 @@ jobs:
           key: raw-${{ github.run_id }}
           restore-keys: raw-
 
+      # The `secrets` context is not available in a step-level `if:`, so the
+      # "only when both are set" gate lives in the shell instead. Secrets stay
+      # scoped to this one step.
       - name: ESPN cookies (only when both secrets are set)
-        if: ${{ secrets.ESPN_S2 != '' && secrets.ESPN_SWID != '' }}
         env:
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           ESPN_SWID: ${{ secrets.ESPN_SWID }}
         run: |
-          mkdir -p secrets
-          printf '{"espn_s2": "%s", "SWID": "%s"}\n' "$ESPN_S2" "$ESPN_SWID" > secrets/espn_cookies.json
+          if [ -n "$ESPN_S2" ] && [ -n "$ESPN_SWID" ]; then
+            mkdir -p secrets
+            printf '{"espn_s2": "%s", "SWID": "%s"}\n' "$ESPN_S2" "$ESPN_SWID" > secrets/espn_cookies.json
+            echo "wrote secrets/espn_cookies.json"
+          else
+            echo "ESPN secrets not set - skipping (ESPN leagues will be skipped)"
+          fi
 
       - name: Run pipeline
         id: pipeline
@@ -56,7 +63,10 @@ jobs:
         run: |
           git config user.name  "fantasy-bot"
           git config user.email "fantasy-bot@users.noreply.github.com"
-          git add data leagues reports logs/runs.csv config.json
+          # runs.csv only exists once the pipeline reaches log_run(); an early
+          # crash must still commit whatever did get written.
+          git add data leagues reports config.json
+          if [ -f logs/runs.csv ]; then git add logs/runs.csv; fi
           if git diff --cached --quiet; then
             echo "no changes to commit"
             exit 0
