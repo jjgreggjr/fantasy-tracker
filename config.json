@@ -1,0 +1,52 @@
+{
+  "sleeper_username": "mrmasculinity",
+  "sleeper_display_name": "mrmasculinity",
+  "season": 2026,
+  "leagues": [
+    {
+      "league_id": "1384263065352015872",
+      "name": "Gooma's Family League",
+      "type": 0
+    },
+    {
+      "league_id": "1328128689807818752",
+      "name": "We can think of something funny",
+      "type": 2
+    },
+    {
+      "league_id": "1312585008447262720",
+      "name": "Where You At?",
+      "type": 2
+    }
+  ],
+  "watchlist": {
+    "max_age": 26,
+    "max_years_exp": 3,
+    "depth_ranks": [
+      2,
+      3
+    ],
+    "min_snap_pct_trend": 0.05,
+    "min_team_pass_att_rank": 16,
+    "hard_max_age": 27
+  },
+  "startsit": {
+    "trailing_weeks": 3,
+    "weights": {
+      "opps": 0.5,
+      "snap_pct": 0.2,
+      "dvp_rank": 0.3
+    }
+  },
+  "handcuff_rank": 2,
+  "sleeper_user_id": "473346537234100224",
+  "score": {
+    "trail_cap": 0.6,
+    "trail_games": 4,
+    "matchup_swing": 0.24
+  },
+  "espn_leagues": [],
+  "sources": {
+    "espn_projections": false
+  }
+}

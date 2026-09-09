@@ -1,0 +1,6 @@
+raw/
+secrets/*.json
+!secrets/*.example.json
+logs/run_*.log
+__pycache__/
+*.pyc
