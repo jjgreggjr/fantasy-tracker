@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 1
 
 redraft · 20 roster slots  
-Generated 2026-09-09 23:24 UTC · baselines: 2025 only (no 2026 games played yet)
+Generated 2026-09-09 23:25 UTC · baselines: 2025 only (no 2026 games played yet)
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -90,8 +90,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Keenan Allen | WR | IND | BAL | 8.5 | 6.2 | 15% | 3 | 4 | Med |  |
 | Isaac TeSlaa | WR | DET | NO | 8.1 | 2.3 | 9% | 3 | 21 | Low |  |
 | Malachi Fields | WR | NYG | DAL | 7.7 | 4.1 | 13% | 2 | 1 | Med | 🔥 |
+| Calvin Ridley | WR | TEN | NYJ | 7.3 | 4.7 | 12% | 3 | 17 | Med |  |
 | Pat Bryant | WR | DEN | KC | 7.3 | 4.1 | 13% | 5 | 23 | Med |  |
-| Elic Ayomanor | WR | TEN | NYJ | 7.3 | 4.1 | 6% | 5 | 17 | Low |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
