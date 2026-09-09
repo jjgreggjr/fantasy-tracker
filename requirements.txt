@@ -1,2 +1,8 @@
-pandas>=2.0
+# pandas is pinned below 3.0 deliberately. pandas 3 stopped silently upcasting
+# when a list containing pd.NA is assigned into a float64 column, which breaks
+# build.build_players()'s name+team fallback (ff/build.py:147) with
+# "TypeError: Invalid value ... for dtype 'float64'". The PC ran pandas 2.x, so
+# this keeps CI on the semantics every result so far was produced under.
+# Making the code pandas-3 clean is a separate, testable change.
+pandas>=2.0,<3
 requests>=2.28
