@@ -1,0 +1,82 @@
+season,week,type,action,sleeper_id,name,rosters
+2026,1,free_agent,drop,8323,,2
+2026,1,free_agent,drop,6900,,2
+2026,1,free_agent,drop,4988,,2
+2026,1,free_agent,drop,4018,,2
+2026,1,free_agent,drop,9999,Will Levis,2
+2026,1,free_agent,drop,5987,,2
+2026,1,free_agent,drop,10921,,5
+2026,1,free_agent,drop,10916,,5
+2026,1,free_agent,drop,11571,Isaiah Davis,5
+2026,1,free_agent,drop,6333,,5
+2026,1,waiver,add,8267,,6
+2026,1,waiver,add,8800,Malik Davis,8
+2026,1,waiver,add,12713,,10
+2026,1,waiver,drop,2747,,10
+2026,1,waiver,add,11834,Devaughn Vele,10
+2026,1,waiver,add,12048,George Holani,10
+2026,1,waiver,add,2227,,8
+2026,1,waiver,add,12487,Terrance Ferguson,4
+2026,1,free_agent,drop,9502,Tank Dell,4
+2026,1,waiver,add,7528,Najee Harris,9
+2026,1,free_agent,drop,6826,Cole Kmet,9
+2026,1,free_agent,drop,4999,,9
+2026,1,free_agent,drop,4147,Samaje Perine,7
+2026,1,free_agent,drop,1339,,7
+2026,1,free_agent,drop,4381,,7
+2026,1,waiver,add,2505,Darren Waller,10
+2026,1,waiver,drop,12455,Brashard Smith,10
+2026,1,free_agent,drop,12457,Jaydon Blue,10
+2026,1,free_agent,drop,9486,Dontayvion Wicks,10
+2026,1,free_agent,drop,11597,Theo Johnson,10
+2026,1,free_agent,drop,6888,,10
+2026,1,waiver,add,8161,Malik Willis,4
+2026,1,free_agent,drop,12495,Ollie Gordon II,4
+2026,1,free_agent,drop,4981,Calvin Ridley,4
+2026,1,free_agent,drop,11647,Kimani Vidal,4
+2026,1,free_agent,drop,12503,Isaiah Bond,8
+2026,1,free_agent,drop,11626,Xavier Legette,8
+2026,1,free_agent,drop,12510,Jalen Milroe,8
+2026,1,free_agent,drop,11435,Emanuel Wilson,6
+2026,1,free_agent,drop,8125,Calvin Austin III,6
+2026,1,free_agent,drop,8314,,6
+2026,1,free_agent,drop,5848,Marquise Brown,6
+2026,1,waiver,add,13275,Ty Simpson,9
+2026,1,waiver,add,6125,,9
+2026,1,free_agent,drop,1234,,9
+2026,1,free_agent,drop,4098,,9
+2026,1,free_agent,drop,4177,Mack Hollins,9
+2026,1,free_agent,drop,11650,Luke McCaffrey,9
+2026,1,free_agent,drop,4082,,9
+2026,1,free_agent,drop,5189,,9
+2026,1,free_agent,drop,7601,,9
+2026,1,trade,add,6801,Tee Higgins,"5, 8"
+2026,1,trade,add,8155,Breece Hall,"5, 8"
+2026,1,trade,drop,6801,Tee Higgins,"5, 8"
+2026,1,trade,drop,8155,Breece Hall,"5, 8"
+2026,1,free_agent,drop,6818,,5
+2026,1,free_agent,drop,10444,Cedric Tillman,5
+2026,1,free_agent,drop,10980,,5
+2026,1,free_agent,drop,11701,,5
+2026,1,waiver,add,12482,Savion Williams,8
+2026,1,free_agent,drop,5839,,8
+2026,1,free_agent,drop,11577,Will Shipley,8
+2026,1,free_agent,drop,9757,Kendre Miller,8
+2026,1,free_agent,drop,4081,,8
+2026,1,free_agent,drop,1479,Keenan Allen,8
+2026,1,free_agent,drop,9227,Israel Abanikanda,7
+2026,1,free_agent,drop,10225,Jonathan Mingo,7
+2026,1,free_agent,drop,4080,,7
+2026,1,free_agent,drop,8143,,7
+2026,1,free_agent,drop,331,,4
+2026,1,free_agent,drop,1264,,6
+2026,1,free_agent,drop,4144,Jonnu Smith,6
+2026,1,free_agent,drop,1689,Adam Thielen,6
+2026,1,free_agent,drop,4219,Jeremy McNichols,10
+2026,1,free_agent,drop,12547,Kyle Williams,10
+2026,1,free_agent,drop,7528,Najee Harris,10
+2026,1,free_agent,drop,4993,Mike Gesicki,4
+2026,1,free_agent,drop,5030,,4
+2026,1,free_agent,drop,5871,,4
+2026,1,free_agent,drop,8752,,4
+2026,1,free_agent,drop,2505,Darren Waller,4

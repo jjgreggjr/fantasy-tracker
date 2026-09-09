@@ -6,17 +6,20 @@
     {
       "league_id": "1384263065352015872",
       "name": "Gooma's Family League",
-      "type": 0
+      "type": 0,
+      "slug": "gooma-s-family-league"
     },
     {
       "league_id": "1328128689807818752",
       "name": "We can think of something funny",
-      "type": 2
+      "type": 2,
+      "slug": "we-can-think-of-something-funny"
     },
     {
       "league_id": "1312585008447262720",
       "name": "Where You At?",
-      "type": 2
+      "type": 2,
+      "slug": "where-you-at"
     }
   ],
   "watchlist": {

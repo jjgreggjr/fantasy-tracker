@@ -1,0 +1,60 @@
+season,week,type,action,sleeper_id,name,rosters
+2026,1,free_agent,drop,12543,Tahj Brooks,5
+2026,1,free_agent,drop,13400,Justin Joly,5
+2026,1,free_agent,drop,11199,Emari Demercado,5
+2026,1,free_agent,drop,6083,,5
+2026,1,free_agent,drop,13545,,5
+2026,1,free_agent,drop,8143,,5
+2026,1,free_agent,add,11610,Malik Washington,2
+2026,1,free_agent,drop,11569,Jarquez Hunter,2
+2026,1,waiver,add,LAC,,6
+2026,1,waiver,add,12048,George Holani,6
+2026,1,waiver,drop,8111,Cade Otton,6
+2026,1,waiver,add,8800,Malik Davis,6
+2026,1,waiver,drop,10226,Andrei Iosivas,6
+2026,1,waiver,add,11643,Jaylen Wright,8
+2026,1,waiver,drop,11577,Will Shipley,8
+2026,1,waiver,add,13424,Seth McGowan,8
+2026,1,waiver,drop,11435,Emanuel Wilson,8
+2026,1,waiver,add,10235,Roschon Johnson,6
+2026,1,waiver,drop,4066,Evan Engram,6
+2026,1,waiver,add,11575,Ray Davis,4
+2026,1,waiver,drop,13405,Kaytron Allen,4
+2026,1,waiver,add,3257,Jacoby Brissett,4
+2026,1,waiver,drop,1166,Kirk Cousins,4
+2026,1,waiver,add,13353,Chris Brazzell II,3
+2026,1,waiver,drop,12457,Jaydon Blue,3
+2026,1,waiver,add,13411,Zavion Thomas,3
+2026,1,free_agent,drop,8147,John Metchie III,4
+2026,1,free_agent,drop,6039,Ty Johnson,4
+2026,1,free_agent,drop,11627,Troy Franklin,4
+2026,1,free_agent,drop,11651,Isaac Guerendo,8
+2026,1,free_agent,drop,11596,Ben Sinnott,8
+2026,1,free_agent,drop,12476,Devin Neal,8
+2026,1,free_agent,drop,12641,Jaylin Lane,8
+2026,1,free_agent,drop,6865,Colby Parkinson,2
+2026,1,free_agent,drop,12540,Chimere Dike,3
+2026,1,free_agent,drop,12495,Ollie Gordon II,2
+2026,1,free_agent,drop,12499,Elic Ayomanor,2
+2026,1,free_agent,drop,4137,James Conner,2
+2026,1,free_agent,drop,11571,Isaiah Davis,2
+2026,1,free_agent,drop,12531,Trevor Etienne,4
+2026,1,free_agent,drop,4381,,4
+2026,1,free_agent,drop,1426,,7
+2026,1,free_agent,drop,4144,Jonnu Smith,7
+2026,1,free_agent,drop,8122,Bam Knight,7
+2026,1,free_agent,drop,4950,Christian Kirk,1
+2026,1,free_agent,drop,5848,Marquise Brown,1
+2026,1,free_agent,drop,12510,Jalen Milroe,1
+2026,1,free_agent,drop,11600,Ja'Tavion Sanders,1
+2026,1,free_agent,drop,CLE,,1
+2026,1,free_agent,drop,4098,,1
+2026,1,free_agent,drop,11597,Theo Johnson,3
+2026,1,free_agent,drop,9494,Marvin Mims Jr.,3
+2026,1,free_agent,drop,10444,Cedric Tillman,3
+2026,1,free_agent,drop,6803,,3
+2026,1,free_agent,drop,12485,Tez Johnson,6
+2026,1,free_agent,drop,12455,Brashard Smith,6
+2026,1,free_agent,drop,3257,Jacoby Brissett,6
+2026,1,free_agent,drop,1339,,6
+2026,1,free_agent,drop,7607,Michael Carter,2
