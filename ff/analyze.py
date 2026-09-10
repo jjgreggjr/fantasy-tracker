@@ -72,7 +72,13 @@ def player_baselines(pw: pd.DataFrame, preview_week: int, trailing: int,
         pcol = f"{col}_prior"
         if pcol in base.columns:
             base[col] = base[col].fillna(base[pcol])
-        base[col] = base[col].fillna(0.0)
+        # Rounded because these are serialised straight into the committed
+        # CSVs. polyfit's summation order varies between runs, so identical
+        # inputs produced values differing in the last bit (~1e-16) and every
+        # run rewrote ~800 rows of pure noise, burying the real changes in the
+        # weekly diff. Six decimals is far more precision than a slope of
+        # opportunities-per-week carries.
+        base[col] = base[col].fillna(0.0).round(6)
     base["trend_season"] = np.where(base.get("games", 0) > 0, "current", "prior")
     base["games"] = base["games"].fillna(0)
     mix = (f"{int((1-w)*100)}% current / {int(w*100)}% prior" if w

@@ -348,6 +348,13 @@ def main(argv=None) -> int:
            "freshness": freshness, "warnings": warnings,
            "leagues": league_ctx, "dvp": ranks, "trending": trending}
 
+    checks = verify_mod.verify(DATA, season, preview_week)
+    verify_mod.log_run(LOGS, season, preview_week, checks)
+    bad = [c for c in checks if c["severity"] != "OK"]
+    for c in bad:
+        log.warning("verify %s: %s — %s", c["severity"], c["check"], c["detail"])
+    ctx["checks"] = checks
+
     REPORTS.mkdir(parents=True, exist_ok=True)
     for lg in league_ctx:                      # one report per league
         if lg.get("dir") and lg["dir"] != REPORTS:
@@ -357,13 +364,6 @@ def main(argv=None) -> int:
     path = REPORTS / f"{season}_wk{preview_week:02d}.md"
     path.write_text(md, encoding="utf-8")
     (REPORTS / "latest.md").write_text(md, encoding="utf-8")
-
-    checks = verify_mod.verify(DATA, season, preview_week)
-    verify_mod.log_run(LOGS, season, preview_week, checks)
-    bad = [c for c in checks if c["severity"] != "OK"]
-    for c in bad:
-        log.warning("verify %s: %s — %s", c["severity"], c["check"], c["detail"])
-    ctx["checks"] = checks
 
     print("\n" + "=" * 60)
     print(f"season {season}  preview week {preview_week}  stats through "

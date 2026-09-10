@@ -44,6 +44,20 @@ def verify(data_dir: Path, season: int, week: int) -> list[dict]:
         teams = cur.team.nunique()
         out.append(_r(OK if teams == 32 else FAIL, "depth_charts.teams",
                       f"{teams}/32 teams for week {week}"))
+        # depth_charts.csv is upserted by key, so rows for a team that stopped
+        # appearing in the source are not removed — they survive from the
+        # previous run and keep the 32-team count above satisfied. Compare each
+        # team's snapshot against the newest one to surface that.
+        if "snapshot_dt" in cur.columns and not cur.empty:
+            newest = cur.snapshot_dt.max()
+            stale = sorted(cur.groupby("team").snapshot_dt.max()
+                           .loc[lambda x: x < newest].index)
+            out.append(_r(OK if not stale else WARN, "depth_charts.snapshot",
+                          "all teams from the current snapshot" if not stale
+                          else (f"{len(stale)} team(s) carried over from an "
+                                f"older snapshot, so the team count above is "
+                                f"not evidence they were published this run: "
+                                f"{', '.join(stale)}")))
         missing = []
         for pos in ("QB", "RB", "WR", "TE"):
             have = cur[(cur.position == pos) & (cur["rank"] == 1)].team.nunique()

@@ -40,6 +40,14 @@ only finds the `ff` package from there.
 
 Requires Python 3.9+. Check with `python --version`.
 
+**Python 3.12 is canonical.** That is what the GitHub Actions workflow
+pins and what every committed result is produced on. A local copy may run
+a different version — anything 3.9+ works for reading and for `ff.ask` —
+but if a local run and a committed run ever disagree, the workflow's
+result is the one that counts. `requirements.txt` also pins `pandas<3`:
+pandas 3 stopped upcasting `pd.NA` into float columns and breaks
+`build_players()`.
+
 `config.json` is already filled in with your Sleeper username. The first run
 discovers every league you're in for the season and writes them into
 `config.json` under `leagues`. Delete any you don't want tracked and re-run.
