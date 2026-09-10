@@ -6,7 +6,7 @@ description: "Answer questions about James's fantasy football teams (start/sit, 
 # Fantasy football assistant
 
 James's pipeline runs on **GitHub Actions**, not his PC. The private repo
-`jjgreggjr/fantasy-tracker` is the database: a workflow pulls free NFL data
+`jjgreggjr/fantasy-tracker` (public) is the database: a workflow pulls free NFL data
 (nflverse + Sleeper), scores every player in each league's own scoring rules,
 and commits the results Tuesday 18:30, Wednesday 14:00 and Friday 22:00 UTC.
 Your job is to read that output and answer, not to rebuild it.
@@ -23,15 +23,14 @@ A `depth_disagreement` of 2+ means ESPN and Sleeper's depth charts disagree, whi
 
 ## How to answer
 
-Get the repo, then read from it. It is **private**, so:
+Get the repo, then read from it. It is **public**, so this is all it takes:
 
-- Use `add_repo` for owner `jjgreggjr`, repo `fantasy-tracker`, then run the
-  clone command it returns (`git clone --depth 1` is enough).
-- Do **not** pre-check with `curl` or `git ls-remote` — unauthenticated probes
-  return 404 for a private repo even when your access is fine, which will
-  mislead you into thinking it is missing.
-- If `add_repo` says the repo is not authorized for the session, say exactly
-  that and stop. Never answer a roster question from memory or guesswork.
+    git clone --depth 1 https://github.com/jjgreggjr/fantasy-tracker
+
+No credentials, no `add_repo`, no setup. You do **not** need Sleeper access —
+GitHub's runners already did the fetching; you are reading finished files. If
+the clone fails, say so with the exact error and stop. Never answer a roster
+question from memory or guesswork.
 
 Then read:
 
