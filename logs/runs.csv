@@ -2,3 +2,4 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-09-09T23:23:00Z,2026,1,WARN,0,2,player_weeks: no rows yet; status.practice: 0% have practice reports (normal before Wednesday),
 2026-09-09T23:24:31Z,2026,1,WARN,0,2,player_weeks: no rows yet; status.practice: 0% have practice reports (normal before Wednesday),
 2026-09-09T23:25:41Z,2026,1,WARN,0,2,player_weeks: no rows yet; status.practice: 0% have practice reports (normal before Wednesday),
+2026-09-11T23:35:09Z,2026,1,WARN,0,2,player_weeks.volume: suspiciously few rows in week(s) [1]; status.practice: 0% have practice reports (normal before Wednesday),

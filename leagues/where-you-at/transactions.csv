@@ -1,10 +1,27 @@
 season,week,type,action,sleeper_id,name,rosters
+2026,1,free_agent,drop,5857,Noah Fant,3
+2026,1,free_agent,drop,5119,,3
+2026,1,free_agent,drop,6130,Devin Singletary,3
+2026,1,free_agent,drop,7117,,3
+2026,1,free_agent,drop,1192,,3
+2026,1,free_agent,drop,8122,Bam Knight,3
+2026,1,free_agent,drop,9506,Sean Tucker,1
+2026,1,free_agent,drop,12530,Travis Hunter,1
+2026,1,free_agent,drop,5944,,1
+2026,1,free_agent,drop,7042,,1
+2026,1,free_agent,drop,6803,,1
+2026,1,free_agent,drop,3156,,1
+2026,1,free_agent,drop,1433,,1
+2026,1,free_agent,drop,2374,,1
+2026,1,free_agent,drop,4663,,1
 2026,1,free_agent,drop,8323,,2
 2026,1,free_agent,drop,6900,,2
 2026,1,free_agent,drop,4988,,2
 2026,1,free_agent,drop,4018,,2
 2026,1,free_agent,drop,9999,Will Levis,2
 2026,1,free_agent,drop,5987,,2
+2026,1,waiver,add,7659,,5
+2026,1,waiver,drop,9494,Marvin Mims Jr.,5
 2026,1,free_agent,drop,10921,,5
 2026,1,free_agent,drop,10916,,5
 2026,1,free_agent,drop,11571,Isaiah Davis,5

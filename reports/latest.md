@@ -1,27 +1,23 @@
 # Week 1 digest — 2026
 
-Generated 2026-09-09 23:25 UTC  
-Stats through: **no games yet** · Baselines: **2025 only (no 2026 games played yet)**
+Generated 2026-09-11 23:34 UTC  
+Stats through: **no games yet** · Baselines: **25% 2026 / 75% 2025**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-09-09T12:06:21Z
-- 2026 player weeks: none yet
+- depth chart snapshot: 2026-09-11T12:21:50Z
+- 2026 player weeks: weeks [np.int64(1)]
 - 2025 baseline weeks: 18 weeks
-- players in dimension: 920
-- Sleeper players cache: 2026-09-09
-- projections: 833 players (Sleeper, 2026-09-09T23:25:38Z)
-- status rows: 562 players; 0 with practice reports
-
-### Warnings
-
-- stats_player_week_2026.csv not published yet — using prior season only.
-- snap_counts_2026.csv not published yet — using prior season only.
+- players in dimension: 921
+- Sleeper players cache: 2026-09-11
+- projections: 837 players (Sleeper, 2026-09-11T23:35:06Z)
+- status rows: 558 players; 0 with practice reports
 
 ### Data integrity
 
-_not run_
+- **WARN** player_weeks.volume — suspiciously few rows in week(s) [1]
+- **WARN** status.practice — 0% have practice reports (normal before Wednesday)
 
 
 ## Gooma's Family League
@@ -30,16 +26,16 @@ _not run_
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | TB | 24.1 | 2.0 |  | 1 | 4 | High |  |
-| Drake Maye | QB | NE | SEA | 20.5 | 5.8 |  | 1 | 26 | High |  |
-| Geno Smith | QB | NYJ | TEN | 12.6 | 2.8 |  | 1 | 5 | High |  |
+| Joe Burrow | QB | CIN | TB | 22.8 | 2.5 |  | 1 | 4 | High |  |
+| Drake Maye | QB | NE | SEA | 18.4 | 5.6 |  | 1 | 29 | High |  |
+| Geno Smith | QB | NYJ | TEN | 17.7 | 3.0 |  | 1 | 5 | High |  |
 | Carson Beck | QB | ARI | LAC | 0.0 | 0.0 |  | 3 | 31 | Low |  |
-| Kenny Gainwell | RB | TB | CIN | 15.9 | 10.9 | 24% | 2 | 1 | Med |  |
+| Breece Hall | RB | NYJ | TEN | 15.6 | 18.3 | 57% | 1 | 18 | High |  |
 
 
-**Needs a decision:** Brock Bowers (DOUBTFUL), Jakobi Meyers (QUESTIONABLE), Jordyn Tyson (IR)
+**Needs a decision:** Brock Bowers (OUT), Jordyn Tyson (IR)
 
-**Trending and still free here:** Samaje Perine (RB, 8.1), Justice Hill (RB, 4.3), Corey Kiner (RB, 2.4)
+**Trending and still free here:** Cooper Rush (QB, 10.8), Drew Lock (QB, 0.0), Jack Strand (QB, 0.0)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -51,16 +47,16 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Matthew Stafford | QB | LA | SF | 23.4 | 1.5 |  | 1 | 13 | High |  |
-| Bo Nix | QB | DEN | KC | 16.7 | 4.7 |  | 1 | 20 | High |  |
-| J.J. McCarthy | QB | MIN | GB | 8.1 | 2.2 |  | 2 | 21 | Low |  |
+| Matthew Stafford | QB | LA | SF | 19.5 | 1.4 |  | 1 | 23 | High |  |
+| Bo Nix | QB | DEN | KC | 16.6 | 4.3 |  | 1 | 19 | High |  |
 | Carson Beck | QB | ARI | LAC | 0.0 | 0.0 |  | 3 | 31 | Low |  |
-| D'Andre Swift | RB | CHI | CAR | 13.7 | 16.8 | 52% | 1 | 8 | High |  |
+| Breece Hall | RB | NYJ | TEN | 15.6 | 18.3 | 57% | 1 | 18 | High |  |
+| D'Andre Swift | RB | CHI | CAR | 14.4 | 16.4 | 52% | 1 | 8 | High |  |
 
 
 **Needs a decision:** Alvin Kamara (QUESTIONABLE), Zach Charbonnet (PUP), TreVeyon Henderson (OUT), Rome Odunze (QUESTIONABLE), Tory Horton (OUT), Ricky Pearsall (IR)
 
-**Trending and still free here:** Kirk Cousins (QB, 14.0), Samaje Perine (RB, 8.1), Justice Hill (RB, 4.3)
+**Trending and still free here:** Kirk Cousins (QB, 17.1), Cooper Rush (QB, 11.9), Drew Lock (QB, 0.0)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -72,16 +68,13 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Brock Purdy | QB | SF | LA | 21.5 | 3.8 |  | 1 | 19 | High |  |
-| Trevor Lawrence | QB | JAX | CLE | 20.6 | 4.6 |  | 1 | 28 | High |  |
-| Jaxson Dart | QB | NYG | DAL | 18.6 | 6.0 |  | 1 | 1 | High |  |
-| Dak Prescott | QB | DAL | NYG | 16.9 | 2.8 |  | 1 | 8 | High |  |
-| Bo Nix | QB | DEN | KC | 15.6 | 4.7 |  | 1 | 20 | High |  |
+| Jaxson Dart | QB | NYG | DAL | 23.9 | 5.6 |  | 1 | 1 | High |  |
+| Brock Purdy | QB | SF | LA | 19.6 | 4.0 |  | 1 | 15 | High |  |
+| Dak Prescott | QB | DAL | NYG | 18.0 | 2.4 |  | 1 | 8 | High |  |
+| Trevor Lawrence | QB | JAX | CLE | 16.2 | 4.4 |  | 1 | 27 | High |  |
+| Bo Nix | QB | DEN | KC | 16.1 | 4.3 |  | 1 | 19 | High |  |
 
-
-**Needs a decision:** Sean Tucker (QUESTIONABLE)
-
-**Trending and still free here:** Kirk Cousins (QB, 13.4), Samaje Perine (RB, 7.2), Corey Kiner (RB, 2.1)
+**Trending and still free here:** Kirk Cousins (QB, 16.5), Cooper Rush (QB, 10.8), Drew Lock (QB, 0.0)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -116,10 +109,10 @@ Per-game production **allowed**. Rank 1 = softest.
 | 2 | CHI | 36.2 | 17.2 | 160.1 | 1.24 | 1.2 | 6.7 | 0.06 |
 | 3 | IND | 36.1 | 21.2 | 168.3 | 0.88 | 0.7 | 2.4 | 0.06 |
 | 4 | BAL | 36.0 | 21.4 | 169.6 | 0.94 | 0.8 | 5.9 | 0.00 |
-| 5 | DET | 35.7 | 19.1 | 155.5 | 1.24 | 0.8 | 8.4 | 0.06 |
-| 6 | TEN | 35.6 | 17.4 | 165.5 | 1.06 | 0.5 | 3.8 | 0.06 |
-| 7 | PIT | 35.2 | 20.1 | 163.6 | 1.00 | 0.2 | 1.1 | 0.00 |
-| 8 | WAS | 34.9 | 18.6 | 162.7 | 1.00 | 0.8 | 6.4 | 0.00 |
+| 5 | LA | 35.8 | 18.0 | 145.4 | 1.41 | 0.8 | 6.9 | 0.00 |
+| 6 | DET | 35.7 | 19.1 | 155.5 | 1.24 | 0.8 | 8.4 | 0.06 |
+| 7 | TEN | 35.6 | 17.4 | 165.5 | 1.06 | 0.5 | 3.8 | 0.06 |
+| 8 | PIT | 35.2 | 20.1 | 163.6 | 1.00 | 0.2 | 1.1 | 0.00 |
 
 
 ### vs TE — 8 softest
