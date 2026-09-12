@@ -4,6 +4,7 @@ These are what a Cowork session runs to answer James's standard questions.
 Each takes a league slug, reads only that league's files plus shared data,
 and returns a small frame plus a sentence. Read-only by design.
 
+    python -m ff.ask live where-you-at      # current Sleeper lineup, live
     python -m ff.ask lineup where-you-at
     python -m ff.ask cut where-you-at 3
     python -m ff.ask options where-you-at "Kyle Pitts"
@@ -19,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import policy, scoring, status as status_mod, trade as trade_mod
+from . import live as live_mod, policy, scoring, status as status_mod, trade as trade_mod
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -289,13 +290,35 @@ def explain(slug: str, player: str) -> tuple[pd.DataFrame, str]:
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Ask the tracker a question.")
     ap.add_argument("recipe",
-                    choices=["lineup", "cut", "options", "explain", "trade"])
+                    choices=["live", "lineup", "cut", "options", "explain", "trade"])
     ap.add_argument("slug")
     ap.add_argument("arg", nargs="?", default=None)
     a = ap.parse_args(argv)
     pd.set_option("display.width", 200, "display.max_columns", 40)
 
+    if a.recipe == "live":
+        try:
+            res = live_mod.live_league(a.slug, ROOT)
+        except live_mod.LiveUnavailable as e:
+            meta, *_ = _load(a.slug)
+            print(f"LIVE READ FAILED: {e}")
+            print(f"Falling back to the committed snapshot, lineup as of "
+                  f"{meta.get('roster_fetched_at') or 'unknown'} — treat "
+                  f"is_starter as possibly stale.")
+            return
+        print(live_mod.render(res))
+        st = res["mine"][res["mine"].is_starter == 1]
+        if not st.empty:
+            print("\nStatus of every current starter (and who is ahead of him):")
+            for line in _status_block(_status(), st["name"].tolist()):
+                print(line)
+        return
+
     if a.recipe == "lineup":
+        meta, *_ = _load(a.slug)
+        print(f"Optimal lineup from committed scores; lineup snapshot as of "
+              f"{meta.get('roster_fetched_at') or 'unknown'} "
+              f"(run `ff.ask live {a.slug}` for what Sleeper shows right now)\n")
         start, note, bench = lineup(a.slug)
         print(start.to_string(index=False) if not start.empty else "(no lineup)")
         print("\n" + note)

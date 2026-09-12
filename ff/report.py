@@ -47,7 +47,8 @@ def render_league(lg: dict, ctx: dict) -> str:
     a(f"# {meta.get('name')} — {ctx['season']} Week {ctx['preview_week']}\n")
     a(f"{meta.get('type','?')} · {meta.get('total_slots','?')} roster slots"
       + (f" · IDP" if meta.get("idp") else "") + "  ")
-    a(f"Generated {ctx['now']} · baselines: {ctx['baseline_note']}\n")
+    a(f"Generated {ctx['now']} · baselines: {ctx['baseline_note']}"
+      f" · lineup as of {meta.get('roster_fetched_at') or '?'}\n")
     a("`E_pts` is expected points **in this league's scoring**: projected stat "
       "line blended with recent production, then adjusted ±12% for the matchup. "
       "**DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a "

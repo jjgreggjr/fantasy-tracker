@@ -34,7 +34,8 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
 
     df = roster.copy()
     keep = [x for x in ["gsis_id", "name", "position", "team", "owner_name",
-                        "is_starter", "is_taxi", "is_ir", "sleeper_id"]
+                        "is_starter", "is_taxi", "is_ir", "sleeper_id",
+                        "roster_fetched_at"]
             if x in df.columns]
     df = df[keep]
     df = df[df.position.isin(["QB", "RB", "WR", "TE"])]

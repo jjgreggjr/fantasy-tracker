@@ -276,6 +276,7 @@ def main(argv=None) -> int:
                                            cfg.get("sleeper_user_id"))
         meta["slug"] = (slugs_cfg.get(str(meta["league_id"]), {}).get("slug")
                         or leagues.slugify(meta["name"]))
+        meta["roster_fetched_at"] = lg.get("fetched_at")
         slugs_cfg.setdefault(str(meta["league_id"]), {})["slug"] = meta["slug"]
         sub = lr[lr.league_id == meta["league_id"]] if not lr.empty else pd.DataFrame()
         mine = _my_rows(sub, cfg)
@@ -338,6 +339,9 @@ def main(argv=None) -> int:
         "Sleeper players cache": today if sleeper_players else "unavailable",
         "projections": (f"{len(proj)} players (Sleeper, {proj.pulled_at.iloc[0]})"
                         if not proj.empty else "none"),
+        "league rosters": (f"{len(leagues_raw)} leagues, lineups read "
+                           f"{leagues_raw[0].get('fetched_at', '?')}"
+                           if leagues_raw else "not fetched"),
         "status rows": (f"{len(st)} players; "
                         f"{int((st.practice.notna()).sum())} with practice reports"
                         if not st.empty else "none"),

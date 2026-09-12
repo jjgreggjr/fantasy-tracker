@@ -349,5 +349,6 @@ def build_league_rosters(leagues: list[dict], players: pd.DataFrame,
                     "is_starter": int(pid in starters),
                     "is_taxi": int(pid in taxi),
                     "is_ir": int(pid in ir),
+                    "roster_fetched_at": lg.get("fetched_at"),
                 })
     return pd.DataFrame(rows)

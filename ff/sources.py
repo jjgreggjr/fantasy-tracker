@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 import logging
 from pathlib import Path
 
@@ -156,8 +157,12 @@ def sleeper_trending(kind: str = "add", hours: int = 24, limit: int = 50) -> lis
 
 
 def sleeper_league_detail(league_id: str) -> dict:
-    return {
+    out = {
         "league": _get(f"league/{league_id}"),
         "rosters": _get(f"league/{league_id}/rosters"),
         "users": _get(f"league/{league_id}/users"),
     }
+    # When the lineup was actually read. Nothing else records this; the
+    # `pulled_at` that reaches roster.csv is the projections fetch time.
+    out["fetched_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return out
