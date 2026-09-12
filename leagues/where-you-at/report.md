@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 1
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-11 23:34 UTC · baselines: 25% 2026 / 75% 2025
+Generated 2026-09-12 17:31 UTC · baselines: 25% 2026 / 75% 2025 · lineup as of 2026-09-12T17:31:47Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -74,7 +74,7 @@ _None. No depth-chart disagreements, no blocked players in doubt._
 | Josh Johnson | QB | CIN | TB | 0.0 | 0.0 |  |  | 4 | Low |  |
 | Andy Dalton | QB | PHI | WAS | 0.0 | 0.0 |  | 2 | 3 | Low |  |
 | Samaje Perine | RB | CIN | TB | 4.9 | 5.9 | 18% | 2 | 14 | Med | 🔥 |
-| Isaiah Davis | RB | NYJ | TEN | 4.7 | 4.9 | 12% | 3 | 18 | Med |  |
+| Isaiah Davis | RB | NYJ | TEN | 4.7 | 4.9 | 12% | 3 | 18 | Med | 🔥 |
 | Braelon Allen | RB | NYJ | TEN | 4.2 | 5.4 | 18% | 2 | 18 | High |  |
 | Chris Brooks | RB | GB | MIN | 3.6 | 5.2 | 14% | 2 | 24 | Med |  |
 | Jacob Saylors | RB | DET | NO | 2.9 | 4.8 | 17% | 3 | 20 | Low |  |

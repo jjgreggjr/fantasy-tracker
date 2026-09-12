@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 1
 
 redraft · 20 roster slots  
-Generated 2026-09-11 23:34 UTC · baselines: 25% 2026 / 75% 2025
+Generated 2026-09-12 17:31 UTC · baselines: 25% 2026 / 75% 2025 · lineup as of 2026-09-12T17:31:46Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -68,14 +68,14 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Cooper Rush | QB | ATL | PIT | 10.8 | 1.9 |  | 3 | 6 | Low | 🔥 |
-| Mark Gronowski | QB | HOU | BUF | 0.0 | 0.0 |  |  | 28 | Low |  |
-| Athan Kaliakmanis | QB | WAS | PHI | 0.0 | 0.0 |  | 3 | 21 | Low |  |
-| Will Howard | QB | PIT | ATL | 0.0 | 0.0 |  | 3 | 16 | Low |  |
-| Kyle McCord | QB | MIA | LV | 0.0 | 0.0 |  | 2 | 17 | Med |  |
-| Tyson Bagent | QB | CHI | CAR | 0.0 | 0.0 |  | 2 | 26 | Low |  |
+| Mac Jones | QB | SF | LA | 0.0 | 0.0 |  | 2 | 15 | Low |  |
+| Trey Lance | QB | LAC | ARI | 0.0 | 0.0 |  | 2 | 13 | Low |  |
+| Zach Wilson | QB | NO | DET | 0.0 | 0.0 |  | 3 | 9 | Low |  |
+| Sam Howell | QB | DAL | NYG | 0.0 | 0.0 |  | 2 | 8 | Med |  |
+| Kenny Pickett | QB | CAR | CHI | 0.0 | 0.0 |  | 2 | 11 | Low |  |
 | Emari Demercado | RB | DAL | NYG | 6.3 | 5.1 | 14% | 3 | 4 | Med |  |
 | Samaje Perine | RB | CIN | TB | 5.7 | 5.9 | 18% | 2 | 14 | Med | 🔥 |
-| Isaiah Davis | RB | NYJ | TEN | 5.3 | 4.9 | 12% | 3 | 18 | Med |  |
+| Isaiah Davis | RB | NYJ | TEN | 5.3 | 4.9 | 12% | 3 | 18 | Med | 🔥 |
 | Justice Hill | RB | BAL | IND | 4.9 | 4.9 | 10% | 2 | 23 | High | 🔥 |
 | George Holani | RB | SEA | NE | 4.6 | 5.9 | 20% | 2 | 31 | Med |  |
 | Najee Harris | RB | NYG | DAL | 4.5 | 5.5 | 18% | 2 | 6 | High |  |
@@ -88,8 +88,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Malachi Fields | WR | NYG | DAL | 9.5 | 4.6 | 14% | 2 | 1 | Med | 🔥 |
 | Dontayvion Wicks | WR | PHI | WAS | 9.4 | 4.6 | 16% | 2 | 9 | Med | 🔥 |
 | Keenan Allen | WR | IND | BAL | 8.9 | 4.9 | 15% | 3 | 4 | Med |  |
-| Kayshon Boutte | WR | HOU | BUF | 8.3 | 4.9 | 16% | 2 | 28 | Med |  |
 | Calvin Ridley | WR | TEN | NYJ | 8.3 | 4.7 | 14% | 3 | 16 | Med |  |
+| Kayshon Boutte | WR | HOU | BUF | 8.3 | 4.9 | 16% | 2 | 28 | Med |  |
 | Rashod Bateman | WR | BAL | IND | 8.3 | 4.4 | 17% | 2 | 3 | Med |  |
 
 
@@ -106,12 +106,12 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jaylen Wright | RB | MIA | 23.4 | 2 | 2 (was 2) | 22% | RB2 on depth chart; age 23 |
 | Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 (was 3) | 48% | WR3 on depth chart; team passes #3; age 27 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 43% | TE2 on depth chart; team passes #1; age 26 |
-| Pat Bryant | WR | DEN | 23.8 | 1 | 4 (was 5) | 53% | WR4 on depth chart; up from 5; team passes #4; age 24 |
 | Rasheen Ali | RB | BAL | 25.6 | 2 | 3 (was 3) | 13% | RB3 on depth chart; age 26 |
 | Bam Knight | RB | ARI | 25.4 | 4 | 3 (was 3) | 33% | RB3 on depth chart; age 25 |
 | DJ Giddens | RB | IND | 23.0 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
 | Chris Brooks | RB | GB | 26.7 | 3 | 2 (was 2) | 20% | RB2 on depth chart; age 27 |
 | Payne Durham | TE | TB | 26.2 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #15; age 26 |
+| Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 25% | TE2 on depth chart; team passes #3; age 27 |
 
 
 ## Ask me

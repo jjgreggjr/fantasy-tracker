@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 1
 
 dynasty · 31 roster slots  
-Generated 2026-09-11 23:34 UTC · baselines: 25% 2026 / 75% 2025
+Generated 2026-09-12 17:31 UTC · baselines: 25% 2026 / 75% 2025 · lineup as of 2026-09-12T17:31:46Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -14,7 +14,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - TreVeyon Henderson: OUT (Ankle) — his depth rank of 2 reflects that, not his role
 - Zach Charbonnet: PUP (Knee - ACL) — his depth rank of 4 reflects that, not his role
 - Tory Horton: OUT (Hamstring) — his depth rank of 4 reflects that, not his role
-- Ricky Pearsall: IR (Knee - PCL) — his depth rank of 10 reflects that, not his role
+- Ricky Pearsall: IR (Knee - PCL) — his depth rank of 9 reflects that, not his role
 
 
 ## Your roster
@@ -51,7 +51,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Keon Coleman | WR | BUF | HOU | 4.0 | 2.7 | 9% | 3 | 29 | Low |  |
 | Skyler Bell | WR | BUF | HOU | 0.9 | 0.7 | 2% | 5 | 29 | Low |  |
 | Tory Horton | WR | SEA | NE |  | 0.0 |  | 4 | 17 | Low | OUT |
-| Ricky Pearsall | WR | SF | LA |  | 0.0 |  | 10 | 5 | Low | IR |
+| Ricky Pearsall | WR | SF | LA |  | 0.0 |  | 9 | 5 | Low | IR |
 
 
 ### Why each call
@@ -90,7 +90,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Josh Johnson | QB | CIN | TB | 0.0 | 0.0 |  |  | 4 | Low |  |
 | Emari Demercado | RB | DAL | NYG | 6.3 | 5.1 | 14% | 3 | 4 | Med |  |
 | Samaje Perine | RB | CIN | TB | 5.7 | 5.9 | 18% | 2 | 14 | Med | 🔥 |
-| Isaiah Davis | RB | NYJ | TEN | 5.3 | 4.9 | 12% | 3 | 18 | Med |  |
+| Isaiah Davis | RB | NYJ | TEN | 5.3 | 4.9 | 12% | 3 | 18 | Med | 🔥 |
 | Justice Hill | RB | BAL | IND | 4.9 | 4.9 | 10% | 2 | 23 | High | 🔥 |
 | Chris Brooks | RB | GB | MIN | 4.3 | 5.2 | 14% | 2 | 24 | Med |  |
 | Jacob Saylors | RB | DET | NO | 3.1 | 4.8 | 17% | 3 | 20 | Low |  |

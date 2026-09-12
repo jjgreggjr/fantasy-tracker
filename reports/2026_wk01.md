@@ -1,18 +1,19 @@
 # Week 1 digest — 2026
 
-Generated 2026-09-11 23:34 UTC  
+Generated 2026-09-12 17:31 UTC  
 Stats through: **no games yet** · Baselines: **25% 2026 / 75% 2025**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-09-11T12:21:50Z
+- depth chart snapshot: 2026-09-12T11:36:06Z
 - 2026 player weeks: weeks [np.int64(1)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 921
-- Sleeper players cache: 2026-09-11
-- projections: 837 players (Sleeper, 2026-09-11T23:35:06Z)
-- status rows: 558 players; 0 with practice reports
+- Sleeper players cache: 2026-09-12
+- projections: 837 players (Sleeper, 2026-09-12T17:31:48Z)
+- league rosters: 3 leagues, lineups read 2026-09-12T17:31:46Z
+- status rows: 554 players; 0 with practice reports
 
 ### Data integrity
 
