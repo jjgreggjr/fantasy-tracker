@@ -49,7 +49,25 @@ Ground rules that still apply (from the migration):
 - `config.json` → `sources.espn_projections` is referenced nowhere in `ff/`.
   Dead key; see A6.
 
-### A1. What only James can supply (ask for these in chat, first message)
+### A1. What James supplied, and the one thing still on him
+
+Provided (2026-09-15):
+
+| Item | Value |
+|---|---|
+| League ID | `704757` |
+| League name | James Gregg |
+| Team ID | `14` (stable; use this to identify his team) |
+| Team name | Peter's Perfect Team (he may rename it; never rely on it) |
+| Season | 2026 |
+| Privacy | private, so both secrets are required |
+| Format | not stated; take `isKeeperLeague` from the settings payload and confirm with him |
+
+Still on him: the two GitHub secrets (item 4 below). Until they exist the
+pipeline logs a warning for this league and skips it. `espn_s2` expires, so
+the same warning returning months from now means "refresh the secret".
+
+The items as originally requested, kept for reference:
 
 1. **League ID.** The number after `leagueId=` in any fantasy.espn.com URL
    for that league. Safe to say in chat; it is not a credential.
@@ -72,19 +90,18 @@ against the documented response shape and validated by the first run.
 
 ### A2. Code: `ff/espn.py`
 
-1. **Identify his team without relying on a display name.** ESPN's `members[].id`
-   is the SWID (with braces), and `teams[].owners` lists member ids. When
-   cookies are loaded, `my_roster_id` = the team whose `owners` contains the
-   SWID from `secrets/espn_cookies.json`, and `my_user_id` = that SWID.
-   Fallbacks, in order: `my_team_name` matched case-insensitively against
-   `teams[].name` (and `location + " " + nickname` for older payloads), then
-   against the owner display name. Today `run_weekly` matches
-   `my_team_name` against `owner_name` only, which is the member display
-   name, not the team; that is a naming trap. Move the matching into
-   `espn.py` (`find_my_team(data, meta, cookies, my_team_name) -> team id`)
+1. **Identify his team by team id.** The config entry carries
+   `my_team_id: 14`; `my_roster_id` = that team's `id` in `teams[]`. Fallbacks,
+   in order: the team whose `owners` contains the SWID loaded from
+   `secrets/espn_cookies.json` (ESPN's `members[].id` is the SWID, with
+   braces); then `my_team_name` matched case-insensitively against
+   `teams[].name` (and `location + " " + nickname` for older payloads).
+   Today `run_weekly` matches `my_team_name` against `owner_name`, which is
+   the member display name, not the team; that is a naming trap. Move the
+   matching into `espn.py` (`find_my_team(data, cfg_entry, cookies) -> team id`)
    and have `run_weekly` select `mine` by `roster_id`.
 2. **`parse_meta` additions:** `fetched_at` (UTC ISO, same format as
-   `sources.sleeper_league_detail`), `my_roster_id`, `my_user_id`, `season`,
+   `sources.sleeper_league_detail`), `my_roster_id`, `season`,
    and a `type` override from the config entry when present. Remove the dead
    `keeper = ... and False` line.
 3. **Slot names must match `scoring.SLOT_ELIGIBILITY`.** Extend `SLOT_ID`:
@@ -113,15 +130,23 @@ against the documented response shape and validated by the first run.
    first run's log (the code logs unmapped ids at INFO). 41 is mapped to
    `rec_tgt`; if this league scores 41 and 53 both, one of them is receptions
    and PPR would double count. Fix the map from the evidence, not from memory.
+8. **Never commit ESPN member ids.** The repo is public. `parse_meta` keys
+   `owners` by `members[].id` and `parse_rosters` writes `owner_id` from
+   `teams[].owners`; both are SWIDs, which are half of the ESPN credential
+   pair and identify real people. Key `owners` by team id, set `owner_id`
+   to the team id, and leave `my_user_id` out of the ESPN meta entirely.
+   Grep the league folder for `{` GUIDs after the first run (A5.3) to
+   prove none leaked; if one did, purge it from history before continuing.
 
 ### A3. Config: `config.json`
 
-Add one entry (values from A1; slug is your choice, kebab-case):
+Add one entry. No `type` key: let `parse_meta` derive keeper/redraft from
+the settings, and add `"type": "dynasty"` only if James says it is one.
 
 ```json
 "espn_leagues": [
-  {"league_id": "<id>", "slug": "<slug>", "my_team_name": "<team name>",
-   "type": "redraft"}
+  {"league_id": "704757", "slug": "james-gregg-espn", "my_team_id": 14,
+   "my_team_name": "Peter's Perfect Team"}
 ]
 ```
 
@@ -163,7 +188,8 @@ Update `config.example.json` to show the same shape. Delete the unused
    `platform: espn`, `my_roster_id` set, `roster_fetched_at` set, the slot
    list matching what ESPN shows, and `scoring` with the right PPR value;
    `roster.csv` has his players with `E_pts`; `available.csv` exists;
-   `reports/latest.md` has a fourth league section.
+   `reports/latest.md` has a fourth league section; and no file in the
+   folder contains a `{GUID}` (A2.8).
 4. Locally: `python -m ff.ask live <espn-slug>`, `lineup`, `cut`, `options`,
    `explain`, `trade` all run without error and the first line of `live`
    names the snapshot time.
@@ -309,8 +335,8 @@ A and B have run for a week.
 
 ## Order of work and definition of done
 
-1. Ask James for A1 items 1 to 3 (and remind him of item 4, secrets only in
-   GitHub). Start A2 while waiting.
+1. Confirm with James that the two secrets exist in GitHub (A1). Start A2
+   regardless.
 2. A2, A3, A4 → commit → dispatch → A5. Fix and re-run until step 3 of A5
    passes. If secrets are still missing, the league folder will not exist;
    everything else must still be green, and say exactly that.
