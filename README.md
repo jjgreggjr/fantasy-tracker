@@ -17,9 +17,13 @@ repo *is* the database and every week is a diffable commit. The job is marked
 failed — and GitHub emails you — if an integrity check fails. Your PC is not
 involved. To refresh mid-week, press the button.
 
-ESPN cookies, if you track that league, go in repo Settings → Secrets as
-`ESPN_S2` and `ESPN_SWID`; the workflow writes them to `secrets/` at run time
-and they are never committed.
+ESPN cookies, if you track that league, go in repo Settings → Secrets and
+variables → Actions as `ESPN_S2` and `ESPN_SWID` (SWID with its braces); the
+workflow writes them to `secrets/` at run time and they are never committed.
+`espn_s2` expires after roughly a year — when the run starts warning that the
+ESPN league could not be loaded, refresh that one secret. The league itself is
+configured in `config.json` → `espn_leagues` by league id and **team id**, so
+renaming the team changes nothing.
 
 **On your PC (retired).** `setup_schedule.ps1` registered Windows tasks that did
 the same thing locally. Once the workflow is live, remove them so there is only
@@ -207,7 +211,12 @@ against zero.
   run logs this as a warning so it stays visible.
 - Kickers, team defenses and IDP players are never scored. In an IDP league
   they still count toward the roster limit, so `cut` accounts for them.
-- ESPN leagues need `secrets/espn_cookies.json` if the league is private. See
-  `config.example.json` for the shape; those values never leave your machine.
+- ESPN is fetched only by the workflow. Claude's question sandbox cannot reach
+  ESPN's API (the egress policy refuses the host), so `ff.ask live` for an ESPN
+  league returns the committed lineup labelled with its time rather than a
+  live read; the Sleeper leagues do get a live read. A private ESPN league
+  needs the two secrets above or it is skipped with a warning.
+- ESPN member ids are never written to league files: owners are keyed by team
+  id and labelled by display name, because the repo is public.
 - Practice-squad players sometimes lack a Sleeper or PFR id; they're logged in
   `logs/` and simply carry blank snap data.

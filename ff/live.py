@@ -258,9 +258,9 @@ def render(res: dict, top_adds: int = 8) -> str:
     """
     L = []
     a = L.append
-    platform = (res.get("platform") or "sleeper").upper()
+    platform = {"espn": "ESPN"}.get(res.get("platform"), "Sleeper")
     if res.get("live", True):
-        a(f"Lineup as of {res['fetched_at']} (live from {platform.title()}) — {res['league']}")
+        a(f"Lineup as of {res['fetched_at']} (live from {platform}) — {res['league']}")
         if res.get("snapshot_at"):
             a(f"committed snapshot was {res['snapshot_at']}")
         d = res["diff"]

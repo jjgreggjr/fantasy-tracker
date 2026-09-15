@@ -7,14 +7,17 @@ description: "Answer questions about James's fantasy football teams (start/sit, 
 
 James's pipeline runs on **GitHub Actions**, not his PC. The public repo
 `jjgreggjr/fantasy-tracker` is the database: a workflow pulls free NFL data
-(nflverse + Sleeper), scores every player in each league's own scoring rules,
+(nflverse, Sleeper and, for one league, ESPN), scores every player in each
+league's own scoring rules,
 and commits the results Tuesday 18:37 (backstop 19:41), Wednesday 14:07 and
 Friday 22:11 UTC.
 Your job is to read that output and answer, not to rebuild it.
 
 Sleeper's read-only API **is reachable** from question sessions (verified),
 so you can see his lineup as it is *right now*, not as it was at the last
-run. Use that — see "Lineup freshness" below.
+run. Use that — see "Lineup freshness" below. ESPN's API is **not** reachable
+from here (the sandbox's egress policy refuses the host), so his ESPN league
+is snapshot-only: the last run's lineup, with its time.
 
 ## The rule that exists because we got it wrong
 
@@ -56,7 +59,12 @@ snapshot as "your lineup" — do this instead, in order:
    timestamp and say the lineup may be stale. Do not cite `pulled_at` from
    `roster.csv` as the roster age — that column is the *projections* fetch
    time.
-3. **What `live` does not refresh:** projections, injury designations, depth
+3. **The ESPN league has no live read.** For `james-gregg-espn`,
+   `ff.ask live` returns the committed lineup and says so in its first line
+   ("COMMITTED SNAPSHOT"). Say "your ESPN lineup as of <that time>", never
+   "your current lineup", and lead with that time. A Tuesday or Wednesday
+   question is usually answering from a lineup he set before Sunday's games.
+4. **What `live` does not refresh:** projections, injury designations, depth
    charts. Those only change on a full run. If the snapshot is more than a
    day old and a GitHub Actions dispatch tool is available, trigger
    `pipeline.yml` on `main` — but answer the lineup question now from the
@@ -75,8 +83,9 @@ Get the repo, then read from it. It is **public**, so this is all it takes:
 
     git clone --depth 1 https://github.com/jjgreggjr/fantasy-tracker
 
-No credentials, no `add_repo`, no setup. You do **not** need Sleeper access —
-GitHub's runners already did the fetching; you are reading finished files. If
+No credentials, no `add_repo`, no setup. The Sleeper live read is
+unauthenticated, and ESPN is only ever fetched by the workflow, so nothing
+here needs a login; you are reading finished files plus one public GET. If
 the clone fails, say so with the exact error and stop. Never answer a roster
 question from memory or guesswork.
 
@@ -92,7 +101,11 @@ Then read:
   committed lineup was read from Sleeper
 - `POLICY.md` — the reasoning behind keep-value, age curves, and trades
 
-His leagues: `gooma-s-family-league` (redraft), `we-can-think-of-something-funny` (dynasty, superflex), `where-you-at` (dynasty). If a question doesn't name a league and the answer would differ, ask which.
+His leagues: `gooma-s-family-league` (Sleeper, redraft),
+`we-can-think-of-something-funny` (Sleeper, dynasty, superflex),
+`where-you-at` (Sleeper, dynasty, IDP), `james-gregg-espn` (ESPN, league
+named "James Gregg"; format per its `league.json`; snapshot-only, see above).
+If a question doesn't name a league and the answer would differ, ask which.
 
 ## Definitions to use correctly
 

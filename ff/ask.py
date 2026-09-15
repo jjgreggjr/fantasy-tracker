@@ -316,9 +316,12 @@ def main(argv=None):
 
     if a.recipe == "lineup":
         meta, *_ = _load(a.slug)
+        plat = {"espn": "ESPN"}.get(meta.get("platform"), "Sleeper")
+        hint = (f"run `ff.ask live {a.slug}` for what {plat} shows right now"
+                if plat == "Sleeper" else
+                f"{plat} has no live read from here; this snapshot IS the lineup")
         print(f"Optimal lineup from committed scores; lineup snapshot as of "
-              f"{meta.get('roster_fetched_at') or 'unknown'} "
-              f"(run `ff.ask live {a.slug}` for what Sleeper shows right now)\n")
+              f"{meta.get('roster_fetched_at') or 'unknown'} ({hint})\n")
         start, note, bench = lineup(a.slug)
         print(start.to_string(index=False) if not start.empty else "(no lineup)")
         print("\n" + note)

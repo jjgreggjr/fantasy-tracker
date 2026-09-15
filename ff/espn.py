@@ -179,11 +179,12 @@ def parse_meta(data: dict, league_id: str, season: int, entry: dict | None = Non
     # owners keyed by TEAM id, labelled by display name — never by member id
     members = {str(m.get("id")): (m.get("displayName") or "").strip()
                for m in (data.get("members") or [])}
-    owners = {}
+    owners, team_names = {}, {}
     for t in (data.get("teams") or []):
         tid = str(t.get("id"))
         first = (t.get("owners") or [None])[0]
         owners[tid] = members.get(str(first)) or team_name(t) or f"team {tid}"
+        team_names[tid] = team_name(t) or f"team {tid}"
 
     return {
         "league_id": str(league_id), "platform": "espn",
@@ -197,6 +198,7 @@ def parse_meta(data: dict, league_id: str, season: int, entry: dict | None = Non
         "taxi_slots": 0,
         "reserve_slots": int(lineup_counts.get("21", 0)),
         "owners": owners,
+        "team_names": team_names,
         "my_roster_id": find_my_team(data, entry, cookies),
         "my_team_name": entry.get("my_team_name"),
         "season": season,
