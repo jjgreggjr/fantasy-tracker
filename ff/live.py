@@ -133,8 +133,42 @@ def live_league(slug: str, root: Path) -> dict:
     }
 
 
+def _with_volume(df: pd.DataFrame) -> pd.DataFrame:
+    """Add the volume behind E_pts, so points are never shown alone.
+
+    E_pts is derived from opportunity; POLICY.md's whole premise is that the
+    opportunity predicts the points. So every table carries both: E_opps
+    (expected touches/targets, blended projection + recent), snap share, and
+    the position-appropriate share of team volume — targets for WR/TE,
+    carries for RB. QBs get pass attempts in the share column.
+    """
+    out = df.copy()
+    if "avg_snap_pct" in out.columns:
+        out["snap%"] = (pd.to_numeric(out.avg_snap_pct, errors="coerce") * 100).round(0)
+    share = pd.Series(float("nan"), index=out.index)
+    pos = out.get("position", pd.Series("", index=out.index))
+    if "proj_target_share" in out.columns:
+        share = share.mask(pos.isin(["WR", "TE"]),
+                           pd.to_numeric(out.proj_target_share, errors="coerce") * 100)
+    if "proj_carry_share" in out.columns:
+        share = share.mask(pos == "RB",
+                           pd.to_numeric(out.proj_carry_share, errors="coerce") * 100)
+    if "proj_pass_att" in out.columns:
+        share = share.mask(pos == "QB", pd.to_numeric(out.proj_pass_att, errors="coerce"))
+    out["share"] = share.round(0)
+    return out
+
+
+VOL_COLS = ("name", "position", "team", "injury_status", "E_pts", "E_opps",
+            "snap%", "share", "conf", "opponent")
+
+
 def render(res: dict, top_adds: int = 8) -> str:
-    """Plain-text summary a question session can print verbatim."""
+    """Plain-text summary a question session can print verbatim.
+
+    Columns: E_pts and E_opps side by side; snap% = recent snap share;
+    share = % of team targets (WR/TE) or carries (RB), pass attempts for QB.
+    """
     L = []
     a = L.append
     a(f"Lineup as of {res['fetched_at']} (live from Sleeper) — {res['league']}")
@@ -153,9 +187,11 @@ def render(res: dict, top_adds: int = 8) -> str:
         a(f"on your roster but not scored — expected for K, DEF and, in IDP "
           f"leagues, defensive players: {', '.join(res['unscored'])}")
 
-    m = res["mine"]
-    cols = [c for c in ("name", "position", "team", "injury_status", "E_pts",
-                        "conf", "opponent") if c in m.columns]
+    m = _with_volume(res["mine"])
+    cols = [c for c in VOL_COLS if c in m.columns]
+    a("columns: E_pts = expected points · E_opps = expected touches/targets · "
+      "snap% = recent snap share · share = % of team targets (WR/TE) or "
+      "carries (RB), pass att (QB)")
     st = m[m.is_starter == 1].sort_values("E_pts", ascending=False)
     bn = m[(m.is_starter == 0) & (m.is_ir == 0) & (m.is_taxi == 0)] \
         .sort_values("E_pts", ascending=False)
@@ -164,9 +200,9 @@ def render(res: dict, top_adds: int = 8) -> str:
     a(f"\nBENCH ({len(bn)}), best first:")
     a(bn[cols].head(10).to_string(index=False) if not bn.empty else "  (none)")
 
-    av = res["available"]
+    av = _with_volume(res["available"])
     if not av.empty and "E_pts" in av.columns:
-        acols = [c for c in cols + ["vor"] if c in av.columns]
+        acols = [c for c in list(VOL_COLS) + ["vor"] if c in av.columns]
         a(f"\nTOP FREE AGENTS right now ({len(av)} available):")
         a(av.nlargest(top_adds, "E_pts")[acols].to_string(index=False))
     return "\n".join(L)

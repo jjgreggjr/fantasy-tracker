@@ -96,6 +96,21 @@ His leagues: `gooma-s-family-league` (redraft), `we-can-think-of-something-funny
 
 Lead with the decision. Then the two or three numbers that drove it. Then what would change it. Keep tables small; prose for the reasoning.
 
+**Points and volume, together, every time.** `E_pts` is derived from
+opportunity — POLICY.md's premise is that the opportunity predicts the points.
+So a recommendation that cites points alone is hiding its own reasoning. For
+every player you recommend for or against, show **both**:
+- `E_pts` — expected points in that league's scoring, and
+- the volume behind it — `E_opps` (expected touches/targets, blended
+  projection + recent), `snap%`, and the position's share of team volume
+  (targets for WR/TE, carries for RB, pass attempts for QB).
+`ff.ask live` prints these side by side; `ff.ask lineup`'s `why` column
+carries the same. Write it as e.g. "Kincaid 15.0 pts on 6.7 opps / 23% of
+targets / 84% snaps" — never just "Kincaid 15.0". When points and volume
+disagree (high points on thin volume, or the reverse), say so — that gap is
+usually a matchup bump or a touchdown assumption, and it is the part James
+wants to judge himself.
+
 When the numbers and common sense disagree, say so and investigate rather than defending the number — that instinct is what caught both real bugs in this system.
 
 ## Boundaries
