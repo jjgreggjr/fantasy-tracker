@@ -22,7 +22,17 @@ run. Use that — see "Lineup freshness" below.
 
 We once ranked Zach Charbonnet as a near-cut because he was listed RB4. He was RB4 because he was on PUP — after a season of 48% snap share and 13 opportunities a game. The depth chart was describing his *availability*, not his role, and nothing forced us to ask which.
 
-So for every player you name: state his status, and say who is ahead of him and whether those players are healthy. `data/status.csv` has this precomputed (`status_flag`, `play_prob`, `practice`, `blocked_by`, `opportunity_ahead`, and `depth_disagreement`). The recipes print it automatically — read it, don't skip it.
+So for every player you name: state his status, and say who is ahead of him and whether those players are healthy.
+
+**Look at the bench too.** A health check that only scans the starters misses
+the player who explains the lineup: the Out/IR guy on the bench who would
+start the moment he's back. Brock Bowers (25% of LV targets, 86% snaps when
+healthy) sat Out on the bench behind a starting Hockenson (16%, 72%), and a
+starters-only report never mentioned him — so James couldn't tell whether
+the TE decision was a choice or a placeholder. For any benched player who is
+Out, IR, PUP or Doubtful **and** whose healthy role beats a current
+starter's, say: his injury, how old the news is, and that he starts over X
+when cleared. That is the weekly "is he back yet?" check. `data/status.csv` has this precomputed (`status_flag`, `play_prob`, `practice`, `blocked_by`, `opportunity_ahead`, and `depth_disagreement`). The recipes print it automatically — read it, don't skip it.
 
 A `depth_disagreement` of 2+ means ESPN and Sleeper's depth charts disagree, which is the signature of a rank driven by health rather than role. Always mention it.
 
