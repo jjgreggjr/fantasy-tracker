@@ -4,9 +4,16 @@ on:
   schedule:
     # GitHub cron is UTC and ignores DST. Mountain time is UTC-6 until Nov 1,
     # then UTC-7, so these land one hour earlier in November. Harmless.
-    - cron: "30 18 * * 2"   # Tue 12:30 MDT — main pull (Monday night stats are in)
-    - cron: "0 14 * * 3"    # Wed 08:00 MDT — snap-count backfill
-    - cron: "0 22 * * 5"    # Fri 16:00 MDT — final injury designations
+    #
+    # Minutes are deliberately off :00/:30. GitHub queues every cron in the
+    # world at those marks and delays or drops the excess: the first Friday
+    # run went 94 min late and the first Tuesday run never fired at all.
+    # Tuesday also gets a backstop slot — the run is idempotent, so a double
+    # run costs ~35s and changes nothing.
+    - cron: "37 18 * * 2"   # Tue 12:37 MDT — main pull (Monday night stats are in)
+    - cron: "41 19 * * 2"   # Tue 13:41 MDT — backstop in case the 18:37 slot was dropped
+    - cron: "7 14 * * 3"    # Wed 08:07 MDT — snap-count backfill
+    - cron: "11 22 * * 5"   # Fri 16:11 MDT — final injury designations
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:

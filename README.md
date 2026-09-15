@@ -9,7 +9,8 @@ All data is free and public. No API keys, no logins, no scraping.
 ## Where it runs
 
 **GitHub Actions (current).** `.github/workflows/pipeline.yml` runs the pipeline
-on GitHub's machines Tuesday 12:30, Wednesday 08:00 and Friday 16:00 Mountain,
+on GitHub's machines Tuesday 12:37 (with a 13:41 backstop), Wednesday 08:07
+and Friday 16:11 Mountain,
 plus a manual "Run workflow" button on the Actions tab. Every run commits
 `data/`, `leagues/`, `reports/` and `logs/runs.csv` back to the repo, so the
 repo *is* the database and every week is a diffable commit. The job is marked

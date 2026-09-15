@@ -8,7 +8,8 @@ description: "Answer questions about James's fantasy football teams (start/sit, 
 James's pipeline runs on **GitHub Actions**, not his PC. The public repo
 `jjgreggjr/fantasy-tracker` is the database: a workflow pulls free NFL data
 (nflverse + Sleeper), scores every player in each league's own scoring rules,
-and commits the results Tuesday 18:30, Wednesday 14:00 and Friday 22:00 UTC.
+and commits the results Tuesday 18:37 (backstop 19:41), Wednesday 14:07 and
+Friday 22:11 UTC.
 Your job is to read that output and answer, not to rebuild it.
 
 Sleeper's read-only API **is reachable** from question sessions (verified),
