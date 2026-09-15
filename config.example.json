@@ -30,12 +30,10 @@
   },
   "espn_leagues": [
     {
-      "league_id": "REPLACE_ME",
-      "my_team_name": "Your ESPN team name",
-      "slug": "my-espn-league"
+      "league_id": "123456",
+      "slug": "my-espn-league",
+      "my_team_id": 1,
+      "my_team_name": "My Team"
     }
-  ],
-  "sources": {
-    "espn_projections": false
-  }
+  ]
 }

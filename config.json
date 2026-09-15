@@ -48,8 +48,12 @@
     "trail_games": 4,
     "matchup_swing": 0.24
   },
-  "espn_leagues": [],
-  "sources": {
-    "espn_projections": false
-  }
+  "espn_leagues": [
+    {
+      "league_id": "704757",
+      "slug": "james-gregg-espn",
+      "my_team_id": 14,
+      "my_team_name": "Peter's Perfect Team"
+    }
+  ]
 }

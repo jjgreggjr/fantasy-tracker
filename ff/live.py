@@ -1,9 +1,9 @@
-"""Live view of a league: Sleeper's current rosters on top of committed scores.
+"""Live view of a league: the platform's current rosters on top of committed scores.
 
 The pipeline scores every relevant player and commits the result, but it runs
 on a schedule. Between runs James moves players, so the committed `is_starter`
-drifts from what Sleeper actually shows — and lineup edits cluster right
-before games, in the gaps. One unauthenticated GET closes that gap:
+drifts from what the platform actually shows — and lineup edits cluster right
+before games, in the gaps. For Sleeper one unauthenticated GET closes that gap:
 
     GET https://api.sleeper.app/v1/league/{id}/rosters
 
@@ -11,6 +11,12 @@ gives every roster's `players`, `starters`, `reserve` and `taxi`. Join that
 onto the committed scored pool (all_rosters.csv ∪ available.csv, which
 carries E_pts / vor / conf / injury for everyone in the league) and you have
 the current lineup and the current waiver wire with the last run's numbers.
+
+ESPN is different: its API is not reachable from the question sandbox (the
+egress policy refuses the host) and a private league needs cookies that only
+the pipeline holds. So for an ESPN league this module tries one live read,
+and when that fails it returns the committed snapshot with its timestamp and
+`live: False`, so the caller can say plainly that the lineup may be stale.
 
 What this does NOT refresh: projections, injury designations, depth charts.
 Those come from the full pipeline. This answers "what is he starting right
@@ -31,7 +37,7 @@ from .build import norm_id
 
 
 class LiveUnavailable(RuntimeError):
-    """Sleeper could not be reached or answered with something unusable."""
+    """The platform could not be reached or answered with something unusable."""
 
 
 def _pool(d: Path) -> pd.DataFrame:
@@ -52,6 +58,82 @@ def _ids(xs) -> set:
     return {norm_id(x) for x in (xs or []) if x not in (None, "0", 0)}
 
 
+def _sleeper_rosters(league_id: str) -> list[dict]:
+    try:
+        rosters = sources._get(f"league/{league_id}/rosters")
+    except Exception as e:  # network, 4xx/5xx, bad JSON — all the same to a reader
+        raise LiveUnavailable(f"could not read live rosters: {e}") from e
+    if not isinstance(rosters, list) or not rosters:
+        raise LiveUnavailable("Sleeper returned no rosters")
+    return rosters
+
+
+def _espn_rosters(meta: dict, root: Path) -> list[dict]:
+    """ESPN's current rosters reshaped into Sleeper's roster dicts, keyed by
+    Sleeper id through the player crosswalk, so the rest of the module is
+    platform-blind. Raises LiveUnavailable on any failure, including the
+    expected one: the sandbox cannot reach ESPN at all."""
+    from . import espn
+    pf = root / "data" / "players.csv"
+    if not pf.exists():
+        raise LiveUnavailable("no data/players.csv for the ESPN id crosswalk")
+    try:
+        data = espn._get(int(meta.get("season") or datetime.now().year),
+                         str(meta["league_id"]), ["mRoster"], espn.load_cookies(root))
+    except Exception as e:
+        raise LiveUnavailable(f"could not read ESPN live: {e}") from e
+    px = pd.read_csv(pf, low_memory=False, usecols=["espn_id", "sleeper_id"])
+    px["espn_id"] = px.espn_id.map(norm_id)
+    px["sleeper_id"] = px.sleeper_id.map(norm_id)
+    xw = (px.dropna(subset=["espn_id", "sleeper_id"])
+            .drop_duplicates("espn_id").set_index("espn_id").sleeper_id.to_dict())
+    out = []
+    for t in (data.get("teams") or []):
+        players, starters, reserve = [], [], []
+        for e in ((t.get("roster") or {}).get("entries") or []):
+            pid = norm_id(((e.get("playerPoolEntry") or {}).get("player") or {}).get("id"))
+            sid = xw.get(pid)
+            if sid is None:
+                continue
+            slot = espn.SLOT_ID.get(e.get("lineupSlotId"), "")
+            players.append(sid)
+            if slot == "IR":
+                reserve.append(sid)
+            elif slot not in espn.NON_STARTING:
+                starters.append(sid)
+        out.append({"owner_id": str(t.get("id")), "roster_id": t.get("id"),
+                    "players": players, "starters": starters,
+                    "reserve": reserve, "taxi": []})
+    if not out:
+        raise LiveUnavailable("ESPN returned no teams")
+    return out
+
+
+def _snapshot_view(slug: str, meta: dict, d: Path) -> dict:
+    """The committed lineup, presented as what it is: a snapshot with a time."""
+    snap = (pd.read_csv(d / "roster.csv", low_memory=False)
+            if (d / "roster.csv").exists() else pd.DataFrame())
+    avail = (pd.read_csv(d / "available.csv", low_memory=False)
+             if (d / "available.csv").exists() else pd.DataFrame())
+    for col in ("is_starter", "is_ir", "is_taxi"):
+        if not snap.empty and col not in snap.columns:
+            snap[col] = 0
+    if not avail.empty:
+        avail = avail.assign(is_starter=0, is_ir=0, is_taxi=0)
+    st = set()
+    if not snap.empty and "sleeper_id" in snap.columns:
+        st = set(snap[snap.is_starter == 1].sleeper_id.map(norm_id).dropna())
+    return {
+        "slug": slug, "league": meta.get("name"),
+        "platform": meta.get("platform", "sleeper"), "live": False,
+        "fetched_at": meta.get("roster_fetched_at"),
+        "snapshot_at": meta.get("roster_fetched_at"),
+        "mine": snap, "available": avail, "unscored": [],
+        "diff": {"started_since_snapshot": [], "benched_since_snapshot": []},
+        "live_starter_ids": st,
+    }
+
+
 def live_league(slug: str, root: Path) -> dict:
     d = root / "leagues" / slug
     if not d.exists():
@@ -60,13 +142,17 @@ def live_league(slug: str, root: Path) -> dict:
     league_id = str(meta["league_id"])
     my_uid = str(meta.get("my_user_id") or "")
     my_rid = meta.get("my_roster_id")
+    platform = meta.get("platform") or "sleeper"
 
-    try:
-        rosters = sources._get(f"league/{league_id}/rosters")
-    except Exception as e:  # network, 4xx/5xx, bad JSON — all the same to a reader
-        raise LiveUnavailable(f"could not read live rosters for {slug}: {e}") from e
-    if not isinstance(rosters, list) or not rosters:
-        raise LiveUnavailable(f"Sleeper returned no rosters for {slug}")
+    if platform == "espn":
+        try:
+            rosters = _espn_rosters(meta, root)
+        except LiveUnavailable:
+            # Expected from the sandbox. Not an error: the snapshot IS the answer,
+            # as long as it is labelled with its time.
+            return _snapshot_view(slug, meta, d)
+    else:
+        rosters = _sleeper_rosters(league_id)
     fetched_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     pool = _pool(d)
@@ -125,7 +211,8 @@ def live_league(slug: str, root: Path) -> dict:
         "benched_since_snapshot": sorted(name.get(i, i) for i in snap_st - live_st),
     }
     return {
-        "slug": slug, "league": meta.get("name"), "fetched_at": fetched_at,
+        "slug": slug, "league": meta.get("name"), "platform": platform,
+        "live": True, "fetched_at": fetched_at,
         "snapshot_at": meta.get("roster_fetched_at"),
         "mine": mine_live, "available": avail_live,
         "unscored": unscored, "diff": diff,
@@ -171,18 +258,25 @@ def render(res: dict, top_adds: int = 8) -> str:
     """
     L = []
     a = L.append
-    a(f"Lineup as of {res['fetched_at']} (live from Sleeper) — {res['league']}")
-    if res.get("snapshot_at"):
-        a(f"committed snapshot was {res['snapshot_at']}")
-    d = res["diff"]
-    if d["started_since_snapshot"] or d["benched_since_snapshot"]:
-        a("changes since the snapshot:")
-        if d["started_since_snapshot"]:
-            a("  started: " + ", ".join(d["started_since_snapshot"]))
-        if d["benched_since_snapshot"]:
-            a("  benched: " + ", ".join(d["benched_since_snapshot"]))
+    platform = (res.get("platform") or "sleeper").upper()
+    if res.get("live", True):
+        a(f"Lineup as of {res['fetched_at']} (live from {platform.title()}) — {res['league']}")
+        if res.get("snapshot_at"):
+            a(f"committed snapshot was {res['snapshot_at']}")
+        d = res["diff"]
+        if d["started_since_snapshot"] or d["benched_since_snapshot"]:
+            a("changes since the snapshot:")
+            if d["started_since_snapshot"]:
+                a("  started: " + ", ".join(d["started_since_snapshot"]))
+            if d["benched_since_snapshot"]:
+                a("  benched: " + ", ".join(d["benched_since_snapshot"]))
+        else:
+            a("no lineup changes since the snapshot")
     else:
-        a("no lineup changes since the snapshot")
+        a(f"Lineup as of {res.get('fetched_at') or 'unknown'} (COMMITTED SNAPSHOT — "
+          f"{platform} cannot be read live from here; the lineup may have changed "
+          f"since) — {res['league']}")
+        a("no live diff available: say 'your lineup as of <that time>', never 'your current lineup'")
     if res["unscored"]:
         a(f"on your roster but not scored — expected for K, DEF and, in IDP "
           f"leagues, defensive players: {', '.join(res['unscored'])}")
@@ -192,6 +286,9 @@ def render(res: dict, top_adds: int = 8) -> str:
     a("columns: E_pts = expected points · E_opps = expected touches/targets · "
       "snap% = recent snap share · share = % of team targets (WR/TE) or "
       "carries (RB), pass att (QB)")
+    if m.empty:
+        a("\n(no scored players on this roster)")
+        return "\n".join(L)
     st = m[m.is_starter == 1].sort_values("E_pts", ascending=False)
     bn = m[(m.is_starter == 0) & (m.is_ir == 0) & (m.is_taxi == 0)] \
         .sort_values("E_pts", ascending=False)

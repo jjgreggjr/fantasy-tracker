@@ -291,22 +291,48 @@ def main(argv=None) -> int:
             st, set(mine.gsis_id.dropna()) if not mine.empty else set())
         league_ctx.append(ctx)
 
-    # ---- optional ESPN league -------------------------------------------
+    # ---- optional ESPN leagues ------------------------------------------
+    # ESPN is fetched here, on the runner, because the question sandbox cannot
+    # reach it. A league that fails to load is a WARN, never a FAIL: the
+    # Sleeper leagues must still publish.
+    espn_loaded, espn_missing = [], []
+    espn_cookies = espn.load_cookies(ROOT)
     for e in (cfg.get("espn_leagues") or []):
-        data = espn.fetch(season, e["league_id"], ROOT)
+        lid = str(e["league_id"])
+        data = espn.fetch(season, lid, ROOT)
         if not data:
-            warnings.append(f"ESPN league {e['league_id']} could not be loaded "
-                            "(private leagues need secrets/espn_cookies.json).")
+            warnings.append(f"ESPN league {lid} could not be loaded (a private "
+                            "league needs the ESPN_S2 / ESPN_SWID secrets; "
+                            "espn_s2 expires and must be refreshed).")
+            espn_missing.append(lid)
             continue
-        meta = espn.parse_meta(data, e["league_id"], season)
+        meta = espn.parse_meta(data, lid, season, e, espn_cookies)
         meta["slug"] = e.get("slug") or leagues.slugify(meta["name"])
+        meta["roster_fetched_at"] = meta["fetched_at"]
         rosters = espn.parse_rosters(data, players, season, preview_week, meta)
-        my_name = e.get("my_team_name")
-        mine = (rosters[rosters.owner_name.str.contains(my_name, case=False, na=False)]
-                if my_name else pd.DataFrame())
-        if mine.empty and my_name:
-            warnings.append(f"ESPN: no team matching '{my_name}'. Owners seen: "
-                            + ", ".join(sorted(rosters.owner_name.unique())[:8]))
+        my_tid = meta.get("my_roster_id")
+        mine = (rosters[rosters.roster_id.astype(str) == str(my_tid)]
+                if my_tid is not None and not rosters.empty else pd.DataFrame())
+        if mine.empty:
+            seen = sorted(f"{t.get('id')}: {espn.team_name(t)}"
+                          for t in (data.get("teams") or []))
+            warnings.append(f"ESPN league {meta['name']}: could not identify your "
+                            f"team (my_team_id={e.get('my_team_id')}, "
+                            f"my_team_name={e.get('my_team_name')}). Teams seen: "
+                            + "; ".join(seen))
+        else:
+            keyed = rosters.dropna(subset=["sleeper_id"])
+            if len(keyed) < len(rosters):
+                log.info("ESPN %s: %d rostered players have no Sleeper id and "
+                         "stay out of data/league_rosters.csv",
+                         meta["name"], len(rosters) - len(keyed))
+            build.upsert(DATA / "league_rosters.csv", keyed,
+                         ["season", "week", "league_id", "sleeper_id"])
+            build.upsert(DATA / "my_roster.csv", mine.dropna(subset=["sleeper_id"]),
+                         ["season", "week", "league_id", "sleeper_id"])
+        log.info("ESPN %s: %d teams, %d rostered, my team %s, slots %s",
+                 meta["name"], len(meta.get("owners", {})), len(rosters), my_tid,
+                 meta.get("roster_positions"))
         ctx = leagues.write_league(ROOT, meta, mine, rosters, players, pw_hist,
                                    base, proj, ranks, sched, depth,
                                    preview_week, season, trending, cfg)
@@ -316,6 +342,7 @@ def main(argv=None) -> int:
         ctx["status_warnings"] = status_mod.warnings(
             st, set(mine.gsis_id.dropna()) if not mine.empty else set())
         league_ctx.append(ctx)
+        espn_loaded.append(f"{meta['name']} ({meta['fetched_at']})")
 
     cfg["leagues"] = [{"league_id": k, **v} for k, v in slugs_cfg.items()]
     save_config(cfg)
@@ -342,6 +369,9 @@ def main(argv=None) -> int:
         "league rosters": (f"{len(leagues_raw)} leagues, lineups read "
                            f"{leagues_raw[0].get('fetched_at', '?')}"
                            if leagues_raw else "not fetched"),
+        "ESPN rosters": (", ".join(espn_loaded) if espn_loaded
+                         else ("not configured" if not cfg.get("espn_leagues")
+                               else "not loaded — see warnings")),
         "status rows": (f"{len(st)} players; "
                         f"{int((st.practice.notna()).sum())} with practice reports"
                         if not st.empty else "none"),
@@ -353,6 +383,10 @@ def main(argv=None) -> int:
            "leagues": league_ctx, "dvp": ranks, "trending": trending}
 
     checks = verify_mod.verify(DATA, season, preview_week)
+    for lid in espn_missing:
+        checks.append(verify_mod._r(verify_mod.WARN, "espn.league",
+                                    f"league {lid} not loaded this run — secrets "
+                                    "missing or expired, or ESPN unreachable"))
     verify_mod.log_run(LOGS, season, preview_week, checks)
     bad = [c for c in checks if c["severity"] != "OK"]
     for c in bad:
