@@ -1,6 +1,6 @@
 # Week 2 digest — 2026
 
-Generated 2026-09-15 21:33 UTC  
+Generated 2026-09-15 23:21 UTC  
 Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 
 
@@ -11,8 +11,9 @@ Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 921
 - Sleeper players cache: 2026-09-15
-- projections: 838 players (Sleeper, 2026-09-15T21:34:04Z)
-- league rosters: 3 leagues, lineups read 2026-09-15T21:34:02Z
+- projections: 838 players (Sleeper, 2026-09-15T23:21:23Z)
+- league rosters: 3 leagues, lineups read 2026-09-15T23:21:22Z
+- ESPN rosters: Average Joes (2026-09-15T23:21:27Z)
 - status rows: 557 players; 0 with practice reports
 
 ### Data integrity
@@ -78,6 +79,27 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 
 Full report: `leagues/where-you-at/report.md`
+
+
+## Average Joes
+
+**Top of your roster this week**
+
+| Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Drake Maye | QB | NE | PIT | 16.7 | 5.8 |  | 1 | 29 | High |  |
+| Rhamondre Stevenson | RB | NE | PIT | 16.7 | 15.7 | 44% | 1 | 8 | High |  |
+| Breece Hall | RB | NYJ | GB | 14.6 | 18.9 | 56% | 1 | 16 | High |  |
+| Aaron Jones | RB | MIN | CHI | 12.5 | 13.2 | 41% | 1 | 7 | High |  |
+| Rico Dowdle | RB | PIT | NE | 9.1 | 15.2 | 47% | 2 | 27 | High |  |
+
+
+**Needs a decision:** Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE), Alec Pierce (QUESTIONABLE)
+
+**Trending and still free here:** Malik Willis (QB, 16.5), C.J. Stroud (QB, 16.5), Bryce Young (QB, 15.1)
+
+
+Full report: `leagues/james-gregg-espn/report.md`
 
 
 ---
