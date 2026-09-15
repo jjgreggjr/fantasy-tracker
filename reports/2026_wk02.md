@@ -1,6 +1,6 @@
 # Week 2 digest — 2026
 
-Generated 2026-09-15 21:13 UTC  
+Generated 2026-09-15 21:33 UTC  
 Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 
 
@@ -11,8 +11,8 @@ Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 921
 - Sleeper players cache: 2026-09-15
-- projections: 838 players (Sleeper, 2026-09-15T21:13:44Z)
-- league rosters: 3 leagues, lineups read 2026-09-15T21:13:42Z
+- projections: 838 players (Sleeper, 2026-09-15T21:34:04Z)
+- league rosters: 3 leagues, lineups read 2026-09-15T21:34:02Z
 - status rows: 557 players; 0 with practice reports
 
 ### Data integrity

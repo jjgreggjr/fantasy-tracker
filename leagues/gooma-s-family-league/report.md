@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 2
 
 redraft · 20 roster slots  
-Generated 2026-09-15 21:13 UTC · baselines: 50% 2026 / 50% 2025 · lineup as of 2026-09-15T21:13:42Z
+Generated 2026-09-15 21:33 UTC · baselines: 50% 2026 / 50% 2025 · lineup as of 2026-09-15T21:34:02Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -98,7 +98,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
 | Josh Whyle | TE | GB | 27.0 | 3 | 3 (was 3) | 51% | TE3 on depth chart; snap share trending +7%/wk; team passes #7; age 27 |
-| Efton Chism III | WR | NE | 24.9 | 1 | 5 (was 6) | 18% | WR5 on depth chart; up from 6; snap share trending +6%/wk; team passes #16; age 25 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 43% | TE2 on depth chart; team passes #2; age 26 |
 | Bam Knight | RB | ARI | 25.4 | 4 | 3 (was 3) | 33% | RB3 on depth chart; age 25 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
@@ -109,9 +108,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Raheim Sanders | RB | CLE | 24.3 | 1 | 3 (was 3) | 30% | RB3 on depth chart; age 24 |
 | George Holani | RB | SEA | 26.7 | 2 | 2 (was 2) | 26% | RB2 on depth chart; age 27 |
 | Chris Brooks | RB | GB | 26.7 | 3 | 2 (was 2) | 38% | RB2 on depth chart; age 27 |
-| DeMario Douglas | WR | NE | 25.8 | 3 | 2 (was 3) | 44% | WR2 on depth chart; up from 3; team passes #16; age 26 |
+| DeMario Douglas | WR | NE | 25.8 | 3 | 2 (was 2) | 44% | WR2 on depth chart; team passes #16; age 26 |
 | Jaylen Wright | RB | MIA | 23.5 | 2 | 2 (was 2) | 15% | RB2 on depth chart; age 24 |
-| Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 3) | 57% | WR2 on depth chart; up from 3; team passes #6; age 26 |
+| Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 2) | 57% | WR2 on depth chart; team passes #6; age 26 |
+| Corey Kiner | RB | NE | 24.6 | 1 | 3 (was 3) | 12% | RB3 on depth chart; age 25 |
 
 
 ## Ask me
