@@ -1,4 +1,6 @@
 season,week,type,action,sleeper_id,name,rosters
+2026,1,waiver,add,13424,Seth McGowan,8
+2026,1,free_agent,drop,8800,Malik Davis,8
 2026,1,free_agent,drop,5857,Noah Fant,3
 2026,1,free_agent,drop,5119,,3
 2026,1,free_agent,drop,6130,Devin Singletary,3
