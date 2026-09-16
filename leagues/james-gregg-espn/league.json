@@ -53,10 +53,22 @@
     "16": "espn90036700",
     "17": "kmccloskey"
   },
+  "team_names": {
+    "1": "Sive Drafely",
+    "4": "King Autodraft Strikes Again",
+    "5": "Threatened with a good time",
+    "8": "Six Disney Tats, So Cool",
+    "10": "JJ's LB",
+    "13": "Mariska Hargitay",
+    "14": "Peter's Perfect Team",
+    "15": "Mr. Clean",
+    "16": "My Ninja Star Collection",
+    "17": "Mevis and Mutthead"
+  },
   "my_roster_id": 14,
   "my_team_name": "Peter's Perfect Team",
   "season": 2026,
-  "fetched_at": "2026-09-15T23:21:27Z",
+  "fetched_at": "2026-09-16T18:08:15Z",
   "slug": "james-gregg-espn",
-  "roster_fetched_at": "2026-09-15T23:21:27Z"
+  "roster_fetched_at": "2026-09-16T18:08:15Z"
 }

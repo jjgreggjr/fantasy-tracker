@@ -1,4 +1,8 @@
 season,week,type,action,sleeper_id,name,rosters
+2026,1,waiver,add,4993,Mike Gesicki,9
+2026,1,waiver,drop,8147,John Metchie III,9
+2026,1,waiver,add,12530,Travis Hunter,10
+2026,1,waiver,drop,4039,Cooper Kupp,10
 2026,1,waiver,add,13424,Seth McGowan,8
 2026,1,free_agent,drop,8800,Malik Davis,8
 2026,1,free_agent,drop,5857,Noah Fant,3

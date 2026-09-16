@@ -1,4 +1,12 @@
 season,week,type,action,sleeper_id,name,rosters
+2026,1,waiver,add,12711,,6
+2026,1,waiver,drop,11539,,6
+2026,1,waiver,add,4177,Mack Hollins,6
+2026,1,waiver,drop,10235,Roschon Johnson,6
+2026,1,waiver,add,TB,,6
+2026,1,waiver,drop,LAC,,6
+2026,1,waiver,add,3634,Kalif Raymond,1
+2026,1,waiver,drop,4981,Calvin Ridley,1
 2026,1,free_agent,add,9486,Dontayvion Wicks,2
 2026,1,free_agent,drop,11565,J.J. McCarthy,5
 2026,1,free_agent,drop,12543,Tahj Brooks,5
