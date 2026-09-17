@@ -14,7 +14,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,11199,Emari Demercado,5
 2026,1,free_agent,drop,6083,,5
 2026,1,free_agent,drop,13545,,5
-2026,1,free_agent,drop,8143,,5
+2026,1,free_agent,drop,8143,Jerome Ford,5
 2026,1,free_agent,add,11610,Malik Washington,2
 2026,1,free_agent,drop,11569,Jarquez Hunter,2
 2026,1,waiver,add,LAC,,6
@@ -68,3 +68,5 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,3257,Jacoby Brissett,6
 2026,1,free_agent,drop,1339,,6
 2026,1,free_agent,drop,7607,Michael Carter,2
+2026,2,free_agent,add,13405,Kaytron Allen,3
+2026,2,free_agent,drop,12471,DJ Giddens,3

@@ -1,20 +1,20 @@
 # Week 2 digest — 2026
 
-Generated 2026-09-16 18:08 UTC  
+Generated 2026-09-17 23:58 UTC  
 Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-09-16T12:34:22Z
+- depth chart snapshot: 2026-09-17T12:34:29Z
 - 2026 player weeks: weeks [np.int64(1)]
 - 2025 baseline weeks: 18 weeks
-- players in dimension: 924
-- Sleeper players cache: 2026-09-16
-- projections: 842 players (Sleeper, 2026-09-16T18:08:10Z)
-- league rosters: 3 leagues, lineups read 2026-09-16T18:08:08Z
-- ESPN rosters: Average Joes (2026-09-16T18:08:15Z)
-- status rows: 560 players; 0 with practice reports
+- players in dimension: 928
+- Sleeper players cache: 2026-09-17
+- projections: 847 players (Sleeper, 2026-09-17T23:58:56Z)
+- league rosters: 3 leagues, lineups read 2026-09-17T23:58:54Z
+- ESPN rosters: Average Joes (2026-09-17T23:59:00Z)
+- status rows: 563 players; 0 with practice reports
 
 ### Data integrity
 
@@ -27,16 +27,16 @@ Stats through: **Week 1** · Baselines: **50% 2026 / 50% 2025**
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | HOU | 19.1 | 2.8 |  | 1 | 4 | High |  |
+| Joe Burrow | QB | CIN | HOU | 19.1 | 2.8 |  | 1 | 4 | Med | QUESTIONABLE |
 | Drake Maye | QB | NE | PIT | 16.7 | 5.8 |  | 1 | 29 | High |  |
 | Geno Smith | QB | NYJ | GB | 14.1 | 3.3 |  | 1 | 11 | Med |  |
 | Carson Beck | QB | ARI | SEA | 0.0 | 0.0 |  | 3 | 30 | Low |  |
 | Breece Hall | RB | NYJ | GB | 14.7 | 19.0 | 56% | 1 | 16 | High |  |
 
 
-**Needs a decision:** Brock Bowers (QUESTIONABLE), Omar Cooper Jr. (QUESTIONABLE), Jordyn Tyson (IR)
+**Needs a decision:** Joe Burrow (QUESTIONABLE), Brock Bowers (QUESTIONABLE), Jakobi Meyers (QUESTIONABLE), Omar Cooper Jr. (QUESTIONABLE), Jordyn Tyson (IR)
 
-**Trending and still free here:** Carson Wentz (QB, 16.6), Drew Lock (QB, 10.4), Devin Singletary (RB, 5.9)
+**Trending and still free here:** Carson Wentz (QB, 16.6), DeeJay Dallas (RB, 4.7), Demond Claiborne (RB, 4.0)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -52,12 +52,12 @@ Full report: `leagues/gooma-s-family-league/report.md`
 | Bo Nix | QB | DEN | JAX | 14.5 | 4.3 |  | 1 | 22 | High |  |
 | Carson Beck | QB | ARI | SEA | 0.0 | 0.0 |  | 3 | 30 | Low |  |
 | Breece Hall | RB | NYJ | GB | 15.0 | 19.0 | 56% | 1 | 16 | High |  |
-| D'Andre Swift | RB | CHI | MIN | 12.0 | 16.2 | 47% | 1 | 32 | High |  |
+| D'Andre Swift | RB | CHI | MIN | 12.4 | 16.7 | 47% | 1 | 32 | Med | QUESTIONABLE |
 
 
-**Needs a decision:** TreVeyon Henderson (QUESTIONABLE), Alvin Kamara (QUESTIONABLE), Zach Charbonnet (PUP), Tory Horton (QUESTIONABLE), Ricky Pearsall (IR)
+**Needs a decision:** D'Andre Swift (QUESTIONABLE), Zach Charbonnet (PUP), Chris Olave (QUESTIONABLE), Skyler Bell (OUT), Ricky Pearsall (IR)
 
-**Trending and still free here:** Carson Wentz (QB, 17.8), Drew Lock (QB, 10.9), Devin Singletary (RB, 5.9)
+**Trending and still free here:** Carson Wentz (QB, 17.8), Devin Singletary (RB, 6.3), Raheim Sanders (RB, 5.3)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -69,13 +69,16 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Brock Purdy | QB | SF | MIA | 20.6 | 4.1 |  | 1 | 16 | High |  |
 | Jaxson Dart | QB | NYG | LA | 20.2 | 7.1 |  | 1 | 9 | High |  |
+| Brock Purdy | QB | SF | MIA | 20.0 | 4.3 |  | 1 | 16 | High |  |
 | Dak Prescott | QB | DAL | WAS | 19.7 | 2.5 |  | 1 | 5 | High |  |
 | Trevor Lawrence | QB | JAX | DEN | 19.6 | 4.3 |  | 1 | 10 | High |  |
 | Bo Nix | QB | DEN | JAX | 13.7 | 4.3 |  | 1 | 22 | High |  |
 
-**Trending and still free here:** Carson Wentz (QB, 16.6), Drew Lock (QB, 10.4), Devin Singletary (RB, 5.5)
+
+**Needs a decision:** D'Andre Swift (QUESTIONABLE)
+
+**Trending and still free here:** Carson Wentz (QB, 16.6), Devin Singletary (RB, 5.6), Raheim Sanders (RB, 4.5)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -90,13 +93,13 @@ Full report: `leagues/where-you-at/report.md`
 | Drake Maye | QB | NE | PIT | 16.7 | 5.8 |  | 1 | 29 | High |  |
 | Rhamondre Stevenson | RB | NE | PIT | 16.7 | 15.7 | 44% | 1 | 8 | High |  |
 | Breece Hall | RB | NYJ | GB | 14.7 | 19.0 | 56% | 1 | 16 | High |  |
-| Aaron Jones | RB | MIN | CHI | 12.8 | 13.6 | 42% | 1 | 7 | High |  |
-| Rico Dowdle | RB | PIT | NE | 9.0 | 15.1 | 47% | 2 | 27 | High |  |
+| Aaron Jones | RB | MIN | CHI | 14.6 | 16.2 | 56% | 1 | 7 | High |  |
+| Rico Dowdle | RB | PIT | NE | 9.0 | 15.2 | 48% | 2 | 27 | High |  |
 
 
-**Needs a decision:** Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE), Alec Pierce (QUESTIONABLE)
+**Needs a decision:** Kaelon Black (QUESTIONABLE), Kyle Monangai (QUESTIONABLE), Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE), Nico Collins (QUESTIONABLE), Alec Pierce (QUESTIONABLE)
 
-**Trending and still free here:** Carson Wentz (QB, 16.6), Malik Willis (QB, 16.5), C.J. Stroud (QB, 16.5)
+**Trending and still free here:** Malik Willis (QB, 16.6), Carson Wentz (QB, 16.6), C.J. Stroud (QB, 16.3)
 
 
 Full report: `leagues/james-gregg-espn/report.md`

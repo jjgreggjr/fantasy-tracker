@@ -1,4 +1,8 @@
 season,week,type,action,sleeper_id,name,rosters
+2026,1,waiver,add,SF,,1
+2026,1,waiver,add,12048,George Holani,8
+2026,1,waiver,drop,12529,TreVeyon Henderson,8
+2026,1,waiver,add,4993,Mike Gesicki,4
 2026,1,free_agent,add,11834,Devaughn Vele,3
 2026,1,free_agent,drop,13347,Demond Claiborne,3
 2026,1,free_agent,add,4017,Deshaun Watson,2
@@ -7,3 +11,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,IND,,2
 2026,1,free_agent,add,8800,Malik Davis,1
 2026,1,free_agent,drop,11589,Trey Benson,1
+2026,2,free_agent,add,GB,,2
+2026,2,free_agent,drop,LV,,2
+2026,2,free_agent,add,11370,Chris Brooks,2
+2026,2,free_agent,drop,13345,Jonah Coleman,2
+2026,2,free_agent,add,12472,Raheim Sanders,1
+2026,2,free_agent,add,6130,Devin Singletary,1
+2026,2,free_agent,drop,8800,Malik Davis,1
+2026,2,free_agent,drop,8408,Jordan Mason,1
