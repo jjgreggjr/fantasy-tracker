@@ -103,6 +103,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,5871,,4
 2026,1,free_agent,drop,8752,,4
 2026,1,free_agent,drop,2505,Darren Waller,4
+2026,2,waiver,add,7635,,10
+2026,2,waiver,drop,12467,Jordan James,10
+2026,2,waiver,add,8275,,8
+2026,2,waiver,drop,7136,,8
 2026,2,waiver,add,4177,Mack Hollins,10
 2026,2,waiver,drop,11655,Tyrone Tracy Jr.,10
 2026,2,waiver,add,9486,Dontayvion Wicks,10

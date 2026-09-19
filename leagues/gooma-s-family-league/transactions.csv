@@ -11,6 +11,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,IND,,2
 2026,1,free_agent,add,8800,Malik Davis,1
 2026,1,free_agent,drop,11589,Trey Benson,1
+2026,2,free_agent,add,9501,DeMario Douglas,11
+2026,2,free_agent,add,CAR,,6
+2026,2,waiver,add,12529,TreVeyon Henderson,6
+2026,2,free_agent,drop,13272,Carson Beck,6
 2026,2,free_agent,add,GB,,2
 2026,2,free_agent,drop,LV,,2
 2026,2,free_agent,add,11370,Chris Brooks,2
