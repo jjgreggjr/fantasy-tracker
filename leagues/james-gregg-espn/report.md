@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 3
 
 redraft · 17 roster slots  
-Generated 2026-09-22 21:37 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T21:37:57Z
+Generated 2026-09-22 22:24 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T22:24:27Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -66,13 +66,13 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | C.J. Stroud | QB | HOU | IND | 17.6 | 2.8 |  | 1 | 4 | High | 🔥 |
 | Malik Willis | QB | MIA | KC | 15.8 | 4.9 |  | 1 | 30 | High |  |
 | Drew Lock | QB | SEA | WAS | 14.9 | 2.2 |  | 2 | 2 | Low | 🔥 |
-| Jordan Love | QB | GB | ATL | 14.4 | 2.2 |  | 1 | 11 | Low |  |
 | Deshaun Watson | QB | CLE | CAR | 14.4 | 4.8 |  | 1 | 15 | Med | 🔥 |
+| Jordan Love | QB | GB | ATL | 14.4 | 2.2 |  | 1 | 11 | Low |  |
 | Tyjae Spears | RB | TEN | NYG | 8.6 | 8.5 | 26% | 2 | 7 | High |  |
 | Alvin Kamara | RB | NO | LV | 7.7 | 11.3 | 29% | 2 | 21 | Med | 🔥 |
 | Tank Bigsby | RB | PHI | CHI | 7.2 | 5.7 | 12% | 2 | 10 | Med | 🔥 |
-| Jonah Coleman | RB | DEN | LA | 6.9 | 7.7 | 28% | 3 | 23 | Med | 🔥 |
 | Devin Singletary | RB | NYG | TEN | 6.9 | 7.1 | 20% | 3 | 13 | Med | 🔥 |
+| Jonah Coleman | RB | DEN | LA | 6.9 | 7.7 | 28% | 3 | 23 | Med | 🔥 |
 | Emmett Johnson | RB | KC | MIA | 6.6 | 5.7 | 11% | 2 | 3 | Med | 🔥 |
 | Cade Otton | TE | TB | MIN | 9.2 | 5.1 | 15% | 1 | 26 | High |  |
 | Hunter Henry | TE | NE | JAX | 9.0 | 4.9 | 18% | 1 | 16 | High |  |
@@ -99,7 +99,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 2) | 66% | WR2 on depth chart; snap share trending +25%/wk; team passes #1; age 26 |
 | Roman Wilson | WR | PIT | 25.3 | 2 | 3 (was 3) | 61% | WR3 on depth chart; snap share trending +24%/wk; team passes #3; age 25 |
 | Tank Bigsby | RB | PHI | 24.1 | 3 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +23%/wk; age 24 |
-| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 4) | 62% | WR3 on depth chart; up from 4; snap share trending +22%/wk; team passes #13; age 26 |
+| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 3) | 62% | WR3 on depth chart; snap share trending +22%/wk; team passes #13; age 26 |
 | Mitchell Evans | TE | CAR | 23.3 | 1 | 2 (was 2) | 47% | TE2 on depth chart; snap share trending +18%/wk; team passes #6; age 23 |
 | Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 29% | TE2 on depth chart; snap share trending +16%/wk; team passes #10; age 27 |
 | Adonai Mitchell | WR | NYJ | 24.0 | 2 | 2 (was 2) | 69% | WR2 on depth chart; snap share trending +13%/wk; team passes #13; age 24 |

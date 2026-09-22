@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 3
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-22 21:37 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T21:37:52Z
+Generated 2026-09-22 22:24 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T22:24:22Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -88,13 +88,13 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Cole Kmet | TE | CHI | PHI | 3.4 | 2.2 | 7% | 2 | 32 | High |  |
 | Eli Raridon | TE | NE | JAX | 3.3 | 1.0 | 3% | 2 | 16 | Med |  |
 | Jonnu Smith | TE | GB | ATL | 3.2 | 2.2 | 6% | 2 | 5 | Med |  |
-| Josh Oliver | TE | MIN | TB | 2.9 | 1.8 | 4% | 2 | 2 | Med |  |
+| Daniel Bellinger | TE | TEN | NYG | 2.9 | 1.2 | 4% | 2 | 11 | High |  |
 | Kalif Raymond | WR | CHI | PHI | 6.7 | 4.9 | 13% | 3 | 20 | Med |  |
 | Xavier Hutchinson | WR | HOU | IND | 6.3 | 5.1 | 11% | 2 | 2 | Med |  |
 | Ryan Flournoy | WR | DAL | BAL | 6.1 | 4.6 | 12% | 3 | 15 | Med |  |
 | Keenan Allen | WR | IND | HOU | 5.7 | 5.5 | 19% | 3 | 4 | Med |  |
-| Cooper Kupp | WR | SEA | WAS | 5.3 | 3.4 | 13% | 3 | 6 | Med |  |
 | Tyquan Thornton | WR | KC | MIA | 5.3 | 3.1 | 12% | 3 | 27 | Med | 🔥 |
+| Cooper Kupp | WR | SEA | WAS | 5.3 | 3.4 | 13% | 3 | 6 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
@@ -104,7 +104,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Will Shipley | RB | PHI | 24.1 | 2 | 3 (was 3) | 29% | RB3 on depth chart; snap share trending +33%/wk; age 24 |
 | Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 2) | 66% | WR2 on depth chart; snap share trending +25%/wk; team passes #1; age 26 |
 | Roman Wilson | WR | PIT | 25.3 | 2 | 3 (was 3) | 61% | WR3 on depth chart; snap share trending +24%/wk; team passes #3; age 25 |
-| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 4) | 62% | WR3 on depth chart; up from 4; snap share trending +22%/wk; team passes #13; age 26 |
+| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 3) | 62% | WR3 on depth chart; snap share trending +22%/wk; team passes #13; age 26 |
 | Mitchell Evans | TE | CAR | 23.3 | 1 | 2 (was 2) | 47% | TE2 on depth chart; snap share trending +18%/wk; team passes #6; age 23 |
 | Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 29% | TE2 on depth chart; snap share trending +16%/wk; team passes #10; age 27 |
 | Josh Whyle | TE | GB | 27.0 | 3 | 3 (was 3) | 51% | TE3 on depth chart; snap share trending +7%/wk; team passes #9; age 27 |

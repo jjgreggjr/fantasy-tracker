@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 3
 
 dynasty · 31 roster slots  
-Generated 2026-09-22 21:37 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T21:37:52Z
+Generated 2026-09-22 22:24 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-22T22:24:22Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -85,8 +85,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Drew Lock | QB | SEA | WAS | 15.3 | 2.2 |  | 2 | 2 | Low | 🔥 |
 | Deshaun Watson | QB | CLE | CAR | 15.3 | 4.8 |  | 1 | 15 | Med | 🔥 |
+| Drew Lock | QB | SEA | WAS | 15.3 | 2.2 |  | 2 | 2 | Low | 🔥 |
 | Kirk Cousins | QB | LV | NO | 14.8 | 2.7 |  | 1 | 20 | Med | 🔥 |
 | Jameis Winston | QB | NYG | TEN | 12.9 | 3.2 |  | 2 | 23 | Med | 🔥 |
 | Aaron Rodgers | QB | PIT | CIN | 12.3 | 1.5 |  | 1 | 19 | Med |  |
@@ -118,7 +118,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Will Shipley | RB | PHI | 24.1 | 2 | 3 (was 3) | 29% | RB3 on depth chart; snap share trending +33%/wk; age 24 |
 | Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 2) | 66% | WR2 on depth chart; snap share trending +25%/wk; team passes #1; age 26 |
 | Roman Wilson | WR | PIT | 25.3 | 2 | 3 (was 3) | 61% | WR3 on depth chart; snap share trending +24%/wk; team passes #3; age 25 |
-| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 4) | 62% | WR3 on depth chart; up from 4; snap share trending +22%/wk; team passes #13; age 26 |
+| Isaiah Williams | WR | NYJ | 25.6 | 2 | 3 (was 3) | 62% | WR3 on depth chart; snap share trending +22%/wk; team passes #13; age 26 |
 | Mitchell Evans | TE | CAR | 23.3 | 1 | 2 (was 2) | 47% | TE2 on depth chart; snap share trending +18%/wk; team passes #6; age 23 |
 | Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 29% | TE2 on depth chart; snap share trending +16%/wk; team passes #10; age 27 |
 | Josh Whyle | TE | GB | 27.0 | 3 | 3 (was 3) | 51% | TE3 on depth chart; snap share trending +7%/wk; team passes #9; age 27 |
@@ -126,8 +126,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Payne Durham | TE | TB | 26.3 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #14; age 26 |
 | Bam Knight | RB | ARI | 25.4 | 4 | 3 (was 3) | 13% | RB3 on depth chart; age 25 |
 | Ollie Gordon II | RB | MIA | 22.7 | 1 | 3 (was 3) | 20% | RB3 on depth chart; age 23 |
-| Erick All | TE | CIN | 26.0 | 2 | 3 (was 3) | 42% | TE3 on depth chart; team passes #7; age 26 |
 | Sam Roush | TE | CHI | 23.0 | 0 | 3 (was 3) | 27% | TE3 on depth chart; team passes #11; age 23 |
+| Erick All | TE | CIN | 26.0 | 2 | 3 (was 3) | 42% | TE3 on depth chart; team passes #7; age 26 |
 | Jaleel McLaughlin | RB | CLE | 26.0 | 3 | 3 (was 3) | 15% | RB3 on depth chart; age 26 |
 | LeQuint Allen Jr. | RB | JAX | 22.1 | 1 | 3 (was 3) | 17% | RB3 on depth chart; age 22 |
 
