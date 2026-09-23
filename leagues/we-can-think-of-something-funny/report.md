@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 3
 
 dynasty · 31 roster slots  
-Generated 2026-09-23 18:21 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-23T18:21:59Z
+Generated 2026-09-23 23:56 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-23T23:56:48Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 

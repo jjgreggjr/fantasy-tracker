@@ -64,7 +64,7 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,2,TEN,PHI,1,2026-09-20,7.0,39.5,outdoors
 2026,2,WAS,DAL,0,2026-09-20,3.5,51.5,closed
 2026,3,ARI,SF,0,2026-09-27,8.5,47.5,outdoors
-2026,3,ATL,GB,0,2026-09-24,4.5,42.5,outdoors
+2026,3,ATL,GB,0,2026-09-24,5.5,42.5,outdoors
 2026,3,BAL,DAL,0,2026-09-27,-3.5,52.5,
 2026,3,BUF,LAC,1,2026-09-27,-7.0,50.5,outdoors
 2026,3,CAR,CLE,0,2026-09-27,-2.5,42.5,outdoors
@@ -72,14 +72,14 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,3,CIN,PIT,0,2026-09-27,-3.5,42.5,outdoors
 2026,3,CLE,CAR,1,2026-09-27,2.5,42.5,outdoors
 2026,3,DAL,BAL,1,2026-09-27,3.5,52.5,
-2026,3,DEN,LA,1,2026-09-27,2.5,45.5,outdoors
+2026,3,DEN,LA,1,2026-09-27,2.5,44.5,outdoors
 2026,3,DET,NYJ,1,2026-09-27,-6.5,47.5,dome
-2026,3,GB,ATL,1,2026-09-24,-4.5,42.5,outdoors
-2026,3,HOU,IND,0,2026-09-27,-3.0,42.5,
-2026,3,IND,HOU,1,2026-09-27,3.0,42.5,
+2026,3,GB,ATL,1,2026-09-24,-5.5,42.5,outdoors
+2026,3,HOU,IND,0,2026-09-27,-2.5,42.5,
+2026,3,IND,HOU,1,2026-09-27,2.5,42.5,
 2026,3,JAX,NE,1,2026-09-27,-3.0,45.5,outdoors
 2026,3,KC,MIA,0,2026-09-27,-11.5,46.5,outdoors
-2026,3,LA,DEN,0,2026-09-27,-2.5,45.5,outdoors
+2026,3,LA,DEN,0,2026-09-27,-2.5,44.5,outdoors
 2026,3,LAC,BUF,0,2026-09-27,7.0,50.5,outdoors
 2026,3,LV,NO,0,2026-09-27,3.0,43.5,dome
 2026,3,MIA,KC,1,2026-09-27,11.5,46.5,outdoors
@@ -100,7 +100,7 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,4,BAL,TEN,1,2026-10-04,-10.5,44.5,outdoors
 2026,4,BUF,NE,1,2026-10-04,-5.5,49.5,outdoors
 2026,4,CAR,DET,1,2026-10-04,3.0,49.5,outdoors
-2026,4,CHI,NYJ,1,2026-10-04,-3.0,43.5,outdoors
+2026,4,CHI,NYJ,1,2026-10-04,-3.5,43.5,outdoors
 2026,4,CIN,JAX,1,2026-10-04,-3.0,49.5,outdoors
 2026,4,CLE,PIT,1,2026-10-01,3.0,38.5,outdoors
 2026,4,DAL,HOU,0,2026-10-04,3.0,47.5,
@@ -119,7 +119,7 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,4,NE,BUF,0,2026-10-04,5.5,49.5,outdoors
 2026,4,NO,ATL,1,2026-10-05,-3.5,45.5,dome
 2026,4,NYG,ARI,1,2026-10-04,-2.5,43.5,outdoors
-2026,4,NYJ,CHI,0,2026-10-04,3.0,43.5,outdoors
+2026,4,NYJ,CHI,0,2026-10-04,3.5,43.5,outdoors
 2026,4,PHI,LA,1,2026-10-04,2.5,45.5,outdoors
 2026,4,PIT,CLE,0,2026-10-01,-3.0,38.5,outdoors
 2026,4,SEA,LAC,1,2026-10-04,-6.5,42.5,outdoors

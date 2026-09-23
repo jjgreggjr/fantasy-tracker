@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 3
 
 redraft · 17 roster slots  
-Generated 2026-09-23 18:21 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-23T18:22:05Z
+Generated 2026-09-23 23:56 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-23T23:56:52Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -101,7 +101,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 29% | TE2 on depth chart; snap share trending +16%/wk; team passes #10; age 27 |
 | Adonai Mitchell | WR | NYJ | 24.0 | 2 | 2 (was 2) | 69% | WR2 on depth chart; snap share trending +13%/wk; team passes #13; age 24 |
 | Antonio Williams | WR | WAS | 22.2 | 0 | 3 (was 3) | 43% | WR3 on depth chart; snap share trending +12%/wk; team passes #12; age 22 |
-| Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 4) | 74% | WR3 on depth chart; up from 4; snap share trending +10%/wk; team passes #2; age 24 |
+| Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 74% | WR3 on depth chart; snap share trending +10%/wk; team passes #2; age 24 |
 | Isaac TeSlaa | WR | DET | 24.6 | 1 | 3 (was 3) | 64% | WR3 on depth chart; snap share trending +7%/wk; team passes #4; age 25 |
 | Josh Whyle | TE | GB | 27.0 | 3 | 3 (was 3) | 51% | TE3 on depth chart; snap share trending +7%/wk; team passes #9; age 27 |
 
