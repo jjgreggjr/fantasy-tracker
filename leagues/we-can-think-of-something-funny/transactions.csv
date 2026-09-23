@@ -66,9 +66,18 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,12485,Tez Johnson,6
 2026,1,free_agent,drop,12455,Brashard Smith,6
 2026,1,free_agent,drop,3257,Jacoby Brissett,6
-2026,1,free_agent,drop,1339,,6
+2026,1,free_agent,drop,1339,Zach Ertz,6
 2026,1,free_agent,drop,7607,Michael Carter,2
+2026,2,waiver,add,5854,Drew Lock,4
+2026,2,waiver,drop,11626,Xavier Legette,4
+2026,2,waiver,add,1166,Kirk Cousins,7
+2026,2,waiver,add,KC,,6
+2026,2,waiver,drop,TB,,6
+2026,2,waiver,add,11435,Emanuel Wilson,2
+2026,2,waiver,drop,12502,Gunnar Helm,2
 2026,2,free_agent,add,7571,Rashod Bateman,6
 2026,2,free_agent,drop,4177,Mack Hollins,6
 2026,2,free_agent,add,13405,Kaytron Allen,3
 2026,2,free_agent,drop,12471,DJ Giddens,3
+2026,3,free_agent,add,2306,Jameis Winston,6
+2026,3,free_agent,drop,8800,Malik Davis,6

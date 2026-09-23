@@ -45,7 +45,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,6826,Cole Kmet,9
 2026,1,free_agent,drop,4999,,9
 2026,1,free_agent,drop,4147,Samaje Perine,7
-2026,1,free_agent,drop,1339,,7
+2026,1,free_agent,drop,1339,Zach Ertz,7
 2026,1,free_agent,drop,4381,,7
 2026,1,waiver,add,2505,Darren Waller,10
 2026,1,waiver,drop,12455,Brashard Smith,10
@@ -103,6 +103,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,5871,,4
 2026,1,free_agent,drop,8752,,4
 2026,1,free_agent,drop,2505,Darren Waller,4
+2026,2,waiver,add,8330,,8
+2026,2,waiver,drop,8275,,8
+2026,2,waiver,add,8188,Tyquan Thornton,2
+2026,2,waiver,add,13379,,10
 2026,2,free_agent,drop,12568,,10
 2026,2,waiver,add,7136,,4
 2026,2,waiver,add,7635,,10

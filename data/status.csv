@@ -1,569 +1,569 @@
 gsis_id,name,team,position,espn_rank,sleeper_rank,depth_disagreement,status_flag,play_prob,injury_body_part,practice,news_age_hours,n_blockers,blockers_out,opportunity_ahead,blocked_by
-00-0033119,Jacoby Brissett,ARI,QB,1,1.0,0.0,healthy,0.97,,,1.6,0,0,0.0,nobody
-00-0035289,Gardner Minshew II,ARI,QB,2,2.0,0.0,healthy,0.97,,,594.4,1,0,0.0,Jacoby Brissett (healthy)
-00-0041561,Carson Beck,ARI,QB,3,3.0,0.0,out,0.02,Coach's Decision,,51.1,2,0,0.0,Jacoby Brissett (healthy); Gardner Minshew II (healthy)
-00-0041027,Jeremiyah Love,ARI,RB,1,1.0,0.0,healthy,0.97,,,41.5,0,0,0.0,nobody
-00-0037263,Tyler Allgeier,ARI,RB,2,2.0,0.0,healthy,0.97,,,28.5,1,0,0.015,Jeremiyah Love (healthy)
-00-0037157,Bam Knight,ARI,RB,3,3.0,0.0,healthy,0.97,,,188.7,2,0,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy)
-00-0033553,James Conner,ARI,RB,4,4.0,0.0,ir,0.02,Foot,,289.8,3,0,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy); Bam Knight (healthy)
-00-0039921,Trey Benson,ARI,RB,5,6.0,1.0,ir,0.02,Knee,,669.1,4,1,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy); Bam Knight (healthy); James Conner (ir)
-00-0037744,Trey McBride,ARI,TE,1,1.0,0.0,healthy,0.97,,,42.2,0,0,0.0,nobody
-00-0039041,Elijah Higgins,ARI,TE,2,2.0,0.0,healthy,0.97,,,594.1,1,0,0.009,Trey McBride (healthy)
-00-0037004,Hunter Long,ARI,TE,3,3.0,0.0,healthy,0.97,,,556.6,2,0,0.01,Trey McBride (healthy); Elijah Higgins (healthy)
-00-0039737,Tip Reiman,ARI,TE,4,5.0,1.0,pup,0.02,Ankle,,503.9,3,0,0.01,Trey McBride (healthy); Elijah Higgins (healthy); Hunter Long (healthy)
-00-0041366,Jameson Geers,ARI,TE,5,7.0,2.0,ir,0.02,Undisclosed,,914.3,4,1,0.01,Trey McBride (healthy); Elijah Higgins (healthy); Hunter Long (healthy); Tip Reiman (pup)
-00-0038559,Michael Wilson,ARI,WR,1,1.0,0.0,healthy,0.97,,,42.2,0,0,0.0,nobody
-00-0039849,Marvin Harrison Jr.,ARI,WR,2,2.0,0.0,healthy,0.97,,,1.8,1,0,0.006,Michael Wilson (healthy)
-00-0033307,Kendrick Bourne,ARI,WR,3,3.0,0.0,healthy,0.97,,,2.0,2,0,0.011,Michael Wilson (healthy); Marvin Harrison Jr. (healthy)
-00-0038640,Jalen Brooks,ARI,WR,4,4.0,0.0,healthy,0.97,,,570.8,3,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy)
-00-0036646,Simi Fehoko,ARI,WR,5,7.0,2.0,healthy,0.97,,,591.1,4,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy)
-00-0036331,Devin Duvernay,ARI,WR,6,6.0,0.0,healthy,0.97,,,2182.1,5,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy); Simi Fehoko (healthy)
-00-0041070,Reggie Virgil,ARI,WR,7,5.0,2.0,out,0.02,Coach's Decision,,51.1,6,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy); Simi Fehoko (healthy); Devin Duvernay (healthy)
-00-0039917,Michael Penix Jr.,ATL,QB,1,1.0,0.0,out,0.02,Knee - ACL,,25.5,0,0,0.0,nobody
-00-0036212,Tua Tagovailoa,ATL,QB,2,3.0,1.0,out,0.02,Oblique,,1.5,1,1,0.0,Michael Penix Jr. (out)
-00-0033662,Cooper Rush,ATL,QB,3,2.0,1.0,healthy,0.97,,,43.1,2,2,0.0,Michael Penix Jr. (out); Tua Tagovailoa (out)
-00-0041194,Jack Strand,ATL,QB,4,4.0,0.0,healthy,0.97,,,42.6,3,2,0.0,Michael Penix Jr. (out); Tua Tagovailoa (out); Cooper Rush (healthy)
-00-0038542,Bijan Robinson,ATL,RB,1,1.0,0.0,healthy,0.97,,,43.1,0,0,0.0,nobody
-00-0037746,Brian Robinson Jr.,ATL,RB,2,2.0,0.0,questionable,0.72,Ankle,,1.5,1,0,0.02,Bijan Robinson (healthy)
-00-0036984,Trey Sermon,ATL,RB,3,3.0,0.0,ir,0.02,Undisclosed,,814.8,2,0,0.078,Bijan Robinson (healthy); Brian Robinson Jr. (questionable)
-00-0036970,Kyle Pitts Sr.,ATL,TE,1,1.0,0.0,healthy,0.97,,,5.1,0,0,0.0,nobody
-00-0036429,Charlie Woerner,ATL,TE,2,3.0,1.0,healthy,0.97,,,2687.1,1,0,0.005,Kyle Pitts Sr. (healthy)
-00-0032392,Austin Hooper,ATL,TE,3,2.0,1.0,healthy,0.97,,,19.6,2,0,0.006,Kyle Pitts Sr. (healthy); Charlie Woerner (healthy)
-00-0037317,Nick Muse,ATL,TE,4,4.0,0.0,questionable,0.72,Shoulder,,23.0,3,0,0.007,Kyle Pitts Sr. (healthy); Charlie Woerner (healthy); Austin Hooper (healthy)
-00-0037238,Drake London,ATL,WR,1,1.0,0.0,healthy,0.97,,,42.9,0,0,0.0,nobody
-00-0037741,Jahan Dotson,ATL,WR,2,2.0,0.0,healthy,0.97,,,19.8,1,0,0.009,Drake London (healthy)
-00-0035208,Olamide Zaccheaus,ATL,WR,3,3.0,0.0,healthy,0.97,,,19.7,2,0,0.012,Drake London (healthy); Jahan Dotson (healthy)
-00-0041044,Zachariah Branch,ATL,WR,4,4.0,0.0,healthy,0.97,,,19.4,3,0,0.014,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy)
-00-0036463,Chris Blair,ATL,WR,5,5.0,0.0,healthy,0.97,,,6230.7,4,0,0.016,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy); Zachariah Branch (healthy)
-00-0040432,Beaux Collins,ATL,WR,6,6.0,0.0,ir,0.02,Undisclosed,,546.3,5,0,0.016,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy); Zachariah Branch (healthy); Chris Blair (healthy)
-00-0034796,Lamar Jackson,BAL,QB,1,1.0,0.0,healthy,0.97,,,45.3,0,0,0.0,nobody
-00-0035993,Tyler Huntley,BAL,QB,2,2.0,0.0,healthy,0.97,,,591.9,1,0,0.0,Lamar Jackson (healthy)
-00-0040981,Joe Fagnano,BAL,QB,3,4.0,1.0,out,0.02,Coach's Decision,,54.1,2,0,0.0,Lamar Jackson (healthy); Tyler Huntley (healthy)
-00-0037327,Skylar Thompson,BAL,QB,4,3.0,1.0,ir,0.02,Undisclosed,,987.0,3,1,0.0,Lamar Jackson (healthy); Tyler Huntley (healthy); Joe Fagnano (out)
-00-0032764,Derrick Henry,BAL,RB,1,1.0,0.0,healthy,0.97,,,45.3,0,0,0.0,nobody
-00-0034975,Justice Hill,BAL,RB,2,2.0,0.0,healthy,0.97,,,19.8,1,0,0.017,Derrick Henry (healthy)
-00-0039796,Rasheen Ali,BAL,RB,3,3.0,0.0,healthy,0.97,,,74.6,2,0,0.02,Derrick Henry (healthy); Justice Hill (healthy)
-00-0040888,Adam Randall,BAL,RB,4,5.0,1.0,ir,0.02,Undisclosed,,530.2,3,0,0.02,Derrick Henry (healthy); Justice Hill (healthy); Rasheen Ali (healthy)
-00-0034753,Mark Andrews,BAL,TE,1,1.0,0.0,healthy,0.97,,,26.3,0,0,0.0,nobody
-00-0034798,Durham Smythe,BAL,TE,2,2.0,0.0,healthy,0.97,,,216.9,1,0,0.006,Mark Andrews (healthy)
-00-0040879,Matthew Hibner,BAL,TE,3,,,healthy,0.97,,,,2,0,0.008,Mark Andrews (healthy); Durham Smythe (healthy)
-00-0040887,Josh Cuevas,BAL,TE,4,4.0,0.0,healthy,0.97,,,592.0,3,0,0.008,Mark Andrews (healthy); Durham Smythe (healthy); Matthew Hibner (healthy)
-00-0039064,Zay Flowers,BAL,WR,1,1.0,0.0,out,0.02,Hamstring,,26.3,0,0,0.0,nobody
-00-0036550,Rashod Bateman,BAL,WR,2,2.0,0.0,healthy,0.97,,,26.9,1,1,0.241,Zay Flowers (out)
-00-0039792,Devontez Walker,BAL,WR,3,4.0,1.0,healthy,0.97,,,19.2,2,1,0.247,Zay Flowers (out); Rashod Bateman (healthy)
-00-0032398,Chris Moore,BAL,WR,4,3.0,1.0,healthy,0.97,,,53.6,3,1,0.248,Zay Flowers (out); Rashod Bateman (healthy); Devontez Walker (healthy)
-00-0040876,Elijah Sarratt,BAL,WR,5,6.0,1.0,healthy,0.97,,,19.0,4,1,0.25,Zay Flowers (out); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy)
-00-0040075,LaJohntay Wester,BAL,WR,6,5.0,1.0,healthy,0.97,,,19.4,5,1,0.25,Zay Flowers (out); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy); Elijah Sarratt (healthy)
-00-0040870,Ja'Kobi Lane,BAL,WR,7,9.0,2.0,ir,0.02,Wrist,,146.7,6,1,0.251,Zay Flowers (out); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy); Elijah Sarratt (healthy); LaJohntay Wester (healthy)
-00-0034857,Josh Allen,BUF,QB,1,1.0,0.0,healthy,0.97,,,104.4,0,0,0.0,nobody
-00-0034577,Kyle Allen,BUF,QB,2,2.0,0.0,healthy,0.97,,,2832.1,1,0,0.0,Josh Allen (healthy)
-00-0037248,James Cook III,BUF,RB,1,1.0,0.0,healthy,0.97,,,104.2,0,0,0.0,nobody
-00-0039875,Ray Davis,BUF,RB,2,3.0,1.0,healthy,0.97,,,93.5,1,0,0.016,James Cook III (healthy)
-00-0035537,Ty Johnson,BUF,RB,3,2.0,1.0,out,0.02,Hamstring,,119.1,2,0,0.019,James Cook III (healthy); Ray Davis (healthy)
-00-0038933,Dalton Kincaid,BUF,TE,1,1.0,0.0,healthy,0.97,,,104.2,0,0,0.0,nobody
-00-0035689,Dawson Knox,BUF,TE,2,2.0,0.0,healthy,0.97,,,95.1,1,0,0.006,Dalton Kincaid (healthy)
-00-0040194,Jackson Hawes,BUF,TE,3,3.0,0.0,healthy,0.97,,,93.2,2,0,0.008,Dalton Kincaid (healthy); Dawson Knox (healthy)
-00-0040363,Keleki Latu,BUF,TE,4,4.0,0.0,healthy,0.97,,,6456.8,3,0,0.009,Dalton Kincaid (healthy); Dawson Knox (healthy); Jackson Hawes (healthy)
-00-0034827,DJ Moore,BUF,WR,1,1.0,0.0,out,0.02,Shoulder,,56.1,0,0,0.0,nobody
-00-0037261,Khalil Shakir,BUF,WR,2,2.0,0.0,healthy,0.97,,,19.7,1,1,0.194,DJ Moore (out)
-00-0039901,Keon Coleman,BUF,WR,3,3.0,0.0,healthy,0.97,,,7.9,2,1,0.2,DJ Moore (out); Khalil Shakir (healthy)
-00-0036988,Joshua Palmer,BUF,WR,4,4.0,0.0,healthy,0.97,,,1.8,3,1,0.204,DJ Moore (out); Khalil Shakir (healthy); Keon Coleman (healthy)
-00-0041443,Skyler Bell,BUF,WR,5,5.0,0.0,out,0.02,Coach's Decision,,119.1,4,1,0.205,DJ Moore (out); Khalil Shakir (healthy); Keon Coleman (healthy); Joshua Palmer (healthy)
-00-0038679,Tyrell Shavers,BUF,WR,6,8.0,2.0,pup,0.02,Knee - ACL,,506.4,5,2,0.21,DJ Moore (out); Khalil Shakir (healthy); Keon Coleman (healthy); Joshua Palmer (healthy); Skyler Bell (out)
-00-0039150,Bryce Young,CAR,QB,1,1.0,0.0,healthy,0.97,,,26.0,0,0,0.0,nobody
-00-0038102,Kenny Pickett,CAR,QB,2,2.0,0.0,healthy,0.97,,,53.9,1,0,0.0,Bryce Young (healthy)
-00-0041149,Haynes King,CAR,QB,3,3.0,0.0,out,0.02,Coach's Decision,,54.4,2,0,0.0,Bryce Young (healthy); Kenny Pickett (healthy)
-00-0036555,Chuba Hubbard,CAR,RB,1,1.0,0.0,healthy,0.97,,,43.7,0,0,0.0,nobody
-00-0039344,Jonathon Brooks,CAR,RB,2,2.0,0.0,questionable,0.72,Groin,,24.7,1,0,0.018,Chuba Hubbard (healthy)
-00-0036265,AJ Dillon,CAR,RB,3,3.0,0.0,healthy,0.97,,,190.2,2,0,0.018,Chuba Hubbard (healthy); Jonathon Brooks (questionable)
-00-0040644,Trevor Etienne,CAR,RB,4,4.0,0.0,ir,0.02,Ankle,,529.9,3,0,0.024,Chuba Hubbard (healthy); Jonathon Brooks (questionable); AJ Dillon (healthy)
-00-0037005,Tommy Tremble,CAR,TE,1,2.0,1.0,healthy,0.97,,,190.2,0,0,0.0,nobody
-00-0040187,Mitchell Evans,CAR,TE,2,3.0,1.0,healthy,0.97,,,190.2,1,0,0.002,Tommy Tremble (healthy)
-00-0031610,Darren Waller,CAR,TE,3,1.0,2.0,healthy,0.97,,,7.1,2,0,0.003,Tommy Tremble (healthy); Mitchell Evans (healthy)
-00-0036825,Feleipe Franks,CAR,TE,4,5.0,1.0,healthy,0.97,,,4419.5,3,0,0.007,Tommy Tremble (healthy); Mitchell Evans (healthy); Darren Waller (healthy)
-00-0039356,Ja'Tavion Sanders,CAR,TE,5,4.0,1.0,out,0.02,Coach's Decision,,54.3,4,0,0.007,Tommy Tremble (healthy); Mitchell Evans (healthy); Darren Waller (healthy); Feleipe Franks (healthy)
-00-0040124,Tetairoa McMillan,CAR,WR,1,1.0,0.0,healthy,0.97,,,43.6,0,0,0.0,nobody
-00-0039491,Jalen Coker,CAR,WR,2,2.0,0.0,healthy,0.97,,,28.4,1,0,0.009,Tetairoa McMillan (healthy)
-00-0039342,Xavier Legette,CAR,WR,3,3.0,0.0,healthy,0.97,,,43.2,2,0,0.016,Tetairoa McMillan (healthy); Jalen Coker (healthy)
-00-0038840,Brycen Tremayne,CAR,WR,4,4.0,0.0,healthy,0.97,,,3718.8,3,0,0.019,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy)
-00-0037614,John Metchie III,CAR,WR,5,5.0,0.0,healthy,0.97,,,165.9,4,0,0.019,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy); Brycen Tremayne (healthy)
-00-0041047,Chris Brazzell II,CAR,WR,6,9.0,3.0,ir,0.02,Knee,,1266.7,5,0,0.02,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy); Brycen Tremayne (healthy); John Metchie III (healthy)
-00-0039918,Caleb Williams,CHI,QB,1,1.0,0.0,out,0.02,Hamstring,,4.2,0,0,0.0,nobody
-00-0038416,Tyson Bagent,CHI,QB,2,2.0,0.0,questionable,0.72,Concussion,,3.8,1,1,0.0,Caleb Williams (out)
-00-0028986,Case Keenum,CHI,QB,3,3.0,0.0,out,0.02,Coach's Decision,,3.0,2,1,0.0,Caleb Williams (out); Tyson Bagent (questionable)
-00-0036275,D'Andre Swift,CHI,RB,1,1.0,0.0,healthy,0.97,,,43.9,0,0,0.0,nobody
-00-0040236,Kyle Monangai,CHI,RB,2,2.0,0.0,healthy,0.97,,,44.1,1,0,0.014,D'Andre Swift (healthy)
-00-0039021,Roschon Johnson,CHI,RB,3,3.0,0.0,healthy,0.97,,,162.6,2,0,0.023,D'Andre Swift (healthy); Kyle Monangai (healthy)
-00-0037329,Brittain Brown,CHI,RB,4,5.0,1.0,ir,0.02,Undisclosed,,534.0,3,0,0.024,D'Andre Swift (healthy); Kyle Monangai (healthy); Roschon Johnson (healthy)
-00-0040126,Colston Loveland,CHI,TE,1,1.0,0.0,healthy,0.97,,,44.4,0,0,0.0,nobody
-00-0036290,Cole Kmet,CHI,TE,2,2.0,0.0,healthy,0.97,,,25.6,1,0,0.005,Colston Loveland (healthy)
-00-0041558,Sam Roush,CHI,TE,3,3.0,0.0,healthy,0.97,,,44.6,2,0,0.008,Colston Loveland (healthy); Cole Kmet (healthy)
-00-0037031,Nikola Kalinic,CHI,TE,4,5.0,1.0,ir,0.02,Knee,,838.7,3,0,0.009,Colston Loveland (healthy); Cole Kmet (healthy); Sam Roush (healthy)
-00-0041170,Hayden Large,CHI,TE,5,7.0,2.0,ir,0.02,Undisclosed,,502.6,4,1,0.009,Colston Loveland (healthy); Cole Kmet (healthy); Sam Roush (healthy); Nikola Kalinic (ir)
-00-0039919,Rome Odunze,CHI,WR,1,1.0,0.0,healthy,0.97,,,44.2,0,0,0.0,nobody
-00-0040735,Luther Burden III,CHI,WR,2,2.0,0.0,healthy,0.97,,,43.4,1,0,0.006,Rome Odunze (healthy)
-00-0032464,Kalif Raymond,CHI,WR,3,3.0,0.0,healthy,0.97,,,6.7,2,0,0.012,Rome Odunze (healthy); Luther Burden III (healthy)
-00-0041051,Zavion Thomas,CHI,WR,4,5.0,1.0,healthy,0.97,,,89.7,3,0,0.016,Rome Odunze (healthy); Luther Burden III (healthy); Kalif Raymond (healthy)
-00-0040277,Jahdae Walker,CHI,WR,5,4.0,1.0,healthy,0.97,,,175.1,4,0,0.016,Rome Odunze (healthy); Luther Burden III (healthy); Kalif Raymond (healthy); Zavion Thomas (healthy)
-00-0036442,Joe Burrow,CIN,QB,1,1.0,0.0,healthy,0.97,,,41.5,0,0,0.0,nobody
-00-0026158,Joe Flacco,CIN,QB,2,2.0,0.0,healthy,0.97,,,2265.1,1,0,0.0,Joe Burrow (healthy)
-00-0038597,Chase Brown,CIN,RB,1,1.0,0.0,healthy,0.97,,,41.5,0,0,0.0,nobody
-00-0033526,Samaje Perine,CIN,RB,2,2.0,0.0,healthy,0.97,,,2.9,1,0,0.019,Chase Brown (healthy)
-00-0040208,Tahj Brooks,CIN,RB,3,3.0,0.0,healthy,0.97,,,104.4,2,0,0.024,Chase Brown (healthy); Samaje Perine (healthy)
-00-0034829,Mike Gesicki,CIN,TE,1,1.0,0.0,healthy,0.97,,,25.4,0,0,0.0,nobody
-00-0035631,Drew Sample,CIN,TE,2,2.0,0.0,healthy,0.97,,,190.0,1,0,0.003,Mike Gesicki (healthy)
-00-0039814,Erick All Jr.,CIN,TE,3,3.0,0.0,healthy,0.97,,,80.9,2,0,0.005,Mike Gesicki (healthy); Drew Sample (healthy)
-00-0041116,Jack Endries,CIN,TE,4,4.0,0.0,healthy,0.97,,,222.1,3,0,0.006,Mike Gesicki (healthy); Drew Sample (healthy); Erick All Jr. (healthy)
-00-0036900,Ja'Marr Chase,CIN,WR,1,1.0,0.0,healthy,0.97,,,41.5,0,0,0.0,nobody
-00-0036410,Tee Higgins,CIN,WR,2,2.0,0.0,healthy,0.97,,,41.3,1,0,0.008,Ja'Marr Chase (healthy)
-00-0038619,Andrei Iosivas,CIN,WR,3,3.0,0.0,healthy,0.97,,,24.3,2,0,0.015,Ja'Marr Chase (healthy); Tee Higgins (healthy)
-00-0041069,Colbie Young,CIN,WR,4,5.0,1.0,healthy,0.97,,,594.6,3,0,0.017,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (healthy)
-00-0040785,Dohnte Meyers,CIN,WR,5,4.0,1.0,healthy,0.97,,,557.0,4,0,0.018,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (healthy); Colbie Young (healthy)
-00-0040534,Ke'Shawn Williams,CIN,WR,6,7.0,1.0,healthy,0.97,,,6720.2,5,0,0.018,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (healthy); Colbie Young (healthy); Dohnte Meyers (healthy)
-00-0033537,Deshaun Watson,CLE,QB,1,1.0,0.0,healthy,0.97,,,40.7,0,0,0.0,nobody
-00-0040668,Shedeur Sanders,CLE,QB,2,3.0,1.0,healthy,0.97,,,57.8,1,0,0.0,Deshaun Watson (healthy)
-00-0041092,Taylen Green,CLE,QB,3,4.0,1.0,out,0.02,Coach's Decision,,54.4,2,0,0.0,Deshaun Watson (healthy); Shedeur Sanders (healthy)
-00-0040704,Dillon Gabriel,CLE,QB,4,2.0,2.0,ir,0.02,Back,,531.5,3,1,0.0,Deshaun Watson (healthy); Shedeur Sanders (healthy); Taylen Green (out)
-00-0040784,Quinshon Judkins,CLE,RB,1,1.0,0.0,healthy,0.97,,,40.6,0,0,0.0,nobody
-00-0040466,Raheim Sanders,CLE,RB,2,2.0,0.0,healthy,0.97,,,40.6,1,0,0.018,Quinshon Judkins (healthy)
-00-0038794,Jaleel McLaughlin,CLE,RB,3,3.0,0.0,healthy,0.97,,,169.7,2,0,0.023,Quinshon Judkins (healthy); Raheim Sanders (healthy)
-00-0040162,Dylan Sampson,CLE,RB,4,6.0,2.0,ir,0.02,Knee,,170.5,3,0,0.025,Quinshon Judkins (healthy); Raheim Sanders (healthy); Jaleel McLaughlin (healthy)
-00-0040663,Harold Fannin Jr.,CLE,TE,1,1.0,0.0,healthy,0.97,,,40.5,0,0,0.0,nobody
-00-0038710,Blake Whiteheart,CLE,TE,2,2.0,0.0,healthy,0.97,,,2687.1,1,0,0.006,Harold Fannin Jr. (healthy)
-00-0041131,Carsen Ryan,CLE,TE,3,3.0,0.0,healthy,0.97,,,618.2,2,0,0.007,Harold Fannin Jr. (healthy); Blake Whiteheart (healthy)
-00-0041087,Joe Royer,CLE,TE,4,5.0,1.0,pup,0.02,Personal,,552.8,3,0,0.007,Harold Fannin Jr. (healthy); Blake Whiteheart (healthy); Carsen Ryan (healthy)
-00-0041037,Denzel Boston,CLE,WR,1,1.0,0.0,healthy,0.97,,,31.1,0,0,0.0,nobody
-00-0041547,KC Concepcion,CLE,WR,2,2.0,0.0,healthy,0.97,,,40.5,1,0,0.006,Denzel Boston (healthy)
-00-0036407,Jerry Jeudy,CLE,WR,3,3.0,0.0,healthy,0.97,,,22.8,2,0,0.011,Denzel Boston (healthy); KC Concepcion (healthy)
-00-0040782,Isaiah Bond,CLE,WR,4,4.0,0.0,healthy,0.97,,,363.5,3,0,0.016,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy)
-00-0036630,Tylan Wallace,CLE,WR,5,6.0,1.0,healthy,0.97,,,2185.1,4,0,0.017,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy); Isaiah Bond (healthy)
-00-0039920,Malachi Corley,CLE,WR,6,5.0,1.0,healthy,0.97,,,2446.1,5,0,0.017,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy); Isaiah Bond (healthy); Tylan Wallace (healthy)
-00-0033077,Dak Prescott,DAL,QB,1,1.0,0.0,healthy,0.97,,,42.7,0,0,0.0,nobody
-00-0037077,Sam Howell,DAL,QB,2,2.0,0.0,healthy,0.97,,,503.2,1,0,0.0,Dak Prescott (healthy)
-00-0036997,Javonte Williams,DAL,RB,1,1.0,0.0,healthy,0.97,,,39.2,0,0,0.0,nobody
-00-0038705,Emari Demercado,DAL,RB,2,2.0,0.0,healthy,0.97,,,18.3,1,0,0.02,Javonte Williams (healthy)
-00-0037120,Tyler Goodson,DAL,RB,3,4.0,1.0,out,0.02,Coach's Decision,,51.0,2,0,0.024,Javonte Williams (healthy); Emari Demercado (healthy)
-00-0037563,Malik Davis,DAL,RB,4,5.0,1.0,ir,0.02,Hip,,241.8,3,1,0.039,Javonte Williams (healthy); Emari Demercado (healthy); Tyler Goodson (out)
-00-0038041,Jake Ferguson,DAL,TE,1,1.0,0.0,healthy,0.97,,,40.1,0,0,0.0,nobody
-00-0039530,Brevyn Spann-Ford,DAL,TE,2,2.0,0.0,healthy,0.97,,,187.8,1,0,0.004,Jake Ferguson (healthy)
-00-0038547,Luke Schoonmaker,DAL,TE,3,3.0,0.0,healthy,0.97,,,187.7,2,0,0.005,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy)
-00-0038735,Princeton Fant,DAL,TE,4,5.0,1.0,ir,0.02,Knee - ACL + MCL,,1121.5,3,0,0.006,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy); Luke Schoonmaker (healthy)
-00-0040938,DJ Rogers,DAL,TE,5,6.0,1.0,ir,0.02,Knee,,527.3,4,1,0.006,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy); Luke Schoonmaker (healthy); Princeton Fant (ir)
-00-0036358,CeeDee Lamb,DAL,WR,1,1.0,0.0,healthy,0.97,,,42.6,0,0,0.0,nobody
-00-0037247,George Pickens,DAL,WR,2,2.0,0.0,healthy,0.97,,,40.2,1,0,0.008,CeeDee Lamb (healthy)
-00-0039410,Ryan Flournoy,DAL,WR,3,3.0,0.0,healthy,0.97,,,4.7,2,0,0.014,CeeDee Lamb (healthy); George Pickens (healthy)
-00-0037801,KaVontae Turpin,DAL,WR,4,4.0,0.0,healthy,0.97,,,80.8,3,0,0.018,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy)
-00-0039062,Jonathan Mingo,DAL,WR,5,5.0,0.0,healthy,0.97,,,187.7,4,0,0.019,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy); KaVontae Turpin (healthy)
-00-0040930,Camden Brown,DAL,WR,6,6.0,0.0,out,0.02,Coach's Decision,,459.1,5,0,0.02,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy); KaVontae Turpin (healthy); Jonathan Mingo (healthy)
-00-0039732,Bo Nix,DEN,QB,1,1.0,0.0,healthy,0.97,,,36.3,0,0,0.0,nobody
-00-0035264,Jarrett Stidham,DEN,QB,2,2.0,0.0,healthy,0.97,,,476.1,1,0,0.0,Bo Nix (healthy)
-00-0036879,Sam Ehlinger,DEN,QB,3,3.0,0.0,out,0.02,Coach's Decision,,51.6,2,0,0.0,Bo Nix (healthy); Jarrett Stidham (healthy)
-00-0036158,J.K. Dobbins,DEN,RB,1,1.0,0.0,questionable,0.72,Hamstring,,2.1,0,0,0.0,nobody
-00-0040730,RJ Harvey,DEN,RB,2,2.0,0.0,out,0.02,Hamstring,,51.4,1,0,0.073,J.K. Dobbins (questionable)
-00-0041496,Jonah Coleman,DEN,RB,3,3.0,0.0,healthy,0.97,,,3.3,2,1,0.299,J.K. Dobbins (questionable); RJ Harvey (out)
-00-0037085,Tyler Badie,DEN,RB,4,4.0,0.0,healthy,0.97,,,27.1,3,1,0.307,J.K. Dobbins (questionable); RJ Harvey (out); Jonah Coleman (healthy)
-00-0033881,Evan Engram,DEN,TE,1,1.0,0.0,healthy,0.97,,,21.5,0,0,0.0,nobody
-00-0036422,Adam Trautman,DEN,TE,2,2.0,0.0,healthy,0.97,,,166.1,1,0,0.003,Evan Engram (healthy)
-00-0038783,Nate Adkins,DEN,TE,3,3.0,0.0,healthy,0.97,,,1031.0,2,0,0.004,Evan Engram (healthy); Adam Trautman (healthy)
-00-0041133,Dallen Bentley,DEN,TE,4,4.0,0.0,out,0.02,Coach's Decision,,3483.1,3,0,0.005,Evan Engram (healthy); Adam Trautman (healthy); Nate Adkins (healthy)
-00-0040240,Caleb Lohner,DEN,TE,5,6.0,1.0,ir,0.02,Lower Body,,533.5,4,1,0.009,Evan Engram (healthy); Adam Trautman (healthy); Nate Adkins (healthy); Dallen Bentley (out)
-00-0036613,Jaylen Waddle,DEN,WR,1,1.0,0.0,healthy,0.97,,,32.9,0,0,0.0,nobody
-00-0034348,Courtland Sutton,DEN,WR,2,2.0,0.0,healthy,0.97,,,36.2,1,0,0.007,Jaylen Waddle (healthy)
-00-0038976,Marvin Mims Jr.,DEN,WR,3,5.0,2.0,out,0.02,Foot,,78.1,2,0,0.012,Jaylen Waddle (healthy); Courtland Sutton (healthy)
-00-0040134,Pat Bryant,DEN,WR,4,3.0,1.0,healthy,0.97,,,5.1,3,1,0.044,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (out)
-00-0039868,Troy Franklin,DEN,WR,5,4.0,1.0,healthy,0.97,,,78.1,4,1,0.048,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (out); Pat Bryant (healthy)
-00-0035406,Lil'Jordan Humphrey,DEN,WR,6,6.0,0.0,healthy,0.97,,,167.1,5,1,0.049,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (out); Pat Bryant (healthy); Troy Franklin (healthy)
-00-0033106,Jared Goff,DET,QB,1,1.0,0.0,healthy,0.97,,,103.7,0,0,0.0,nobody
-00-0033949,Joshua Dobbs,DET,QB,2,2.0,0.0,healthy,0.97,,,573.2,1,0,0.0,Jared Goff (healthy)
-00-0039139,Jahmyr Gibbs,DET,RB,1,1.0,0.0,healthy,0.97,,,103.7,0,0,0.0,nobody
-00-0039364,Sione Vaki,DET,RB,2,2.0,0.0,healthy,0.97,,,2.7,1,0,0.022,Jahmyr Gibbs (healthy)
-00-0038896,Jacob Saylors,DET,RB,3,3.0,0.0,healthy,0.97,,,93.6,2,0,0.026,Jahmyr Gibbs (healthy); Sione Vaki (healthy)
-00-0037197,Isiah Pacheco,DET,RB,4,4.0,0.0,ir,0.02,Back,,192.0,3,0,0.027,Jahmyr Gibbs (healthy); Sione Vaki (healthy); Jacob Saylors (healthy)
-00-0039065,Sam LaPorta,DET,TE,1,1.0,0.0,healthy,0.97,,,103.5,0,0,0.0,nobody
-00-0036754,Brock Wright,DET,TE,2,2.0,0.0,healthy,0.97,,,201.5,1,0,0.006,Sam LaPorta (healthy)
-00-0034270,Tyler Conklin,DET,TE,3,3.0,0.0,healthy,0.97,,,505.9,2,0,0.006,Sam LaPorta (healthy); Brock Wright (healthy)
-00-0040390,Jackson Meeks,DET,TE,4,4.0,0.0,healthy,0.97,,,725.1,3,0,0.007,Sam LaPorta (healthy); Brock Wright (healthy); Tyler Conklin (healthy)
-00-0036963,Amon-Ra St. Brown,DET,WR,1,1.0,0.0,healthy,0.97,,,103.6,0,0,0.0,nobody
-00-0037240,Jameson Williams,DET,WR,2,2.0,0.0,healthy,0.97,,,103.6,1,0,0.009,Amon-Ra St. Brown (healthy)
-00-0040669,Isaac TeSlaa,DET,WR,3,3.0,0.0,healthy,0.97,,,95.2,2,0,0.015,Amon-Ra St. Brown (healthy); Jameson Williams (healthy)
-00-0035544,Tom Kennedy,DET,WR,4,4.0,0.0,healthy,0.97,,,280.0,3,0,0.017,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy)
-00-0037524,Tay Martin,DET,WR,5,5.0,0.0,healthy,0.97,,,415.8,4,0,0.018,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy); Tom Kennedy (healthy)
-00-0041446,Kendrick Law,DET,WR,6,8.0,2.0,ir,0.02,Knee - ACL,,2318.5,5,0,0.018,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy); Tom Kennedy (healthy); Tay Martin (healthy)
-00-0036264,Jordan Love,GB,QB,1,1.0,0.0,healthy,0.97,,,1.7,0,0,0.0,nobody
-00-0028118,Tyrod Taylor,GB,QB,2,2.0,0.0,healthy,0.97,,,2833.1,1,0,0.0,Jordan Love (healthy)
-00-0039811,MarShawn Lloyd,GB,RB,1,1.0,0.0,healthy,0.97,,,43.8,0,0,0.0,nobody
-00-0038685,Chris Brooks,GB,RB,2,2.0,0.0,healthy,0.97,,,1.7,1,0,0.012,MarShawn Lloyd (healthy)
-00-0040142,Kaleb Johnson,GB,RB,3,3.0,0.0,healthy,0.97,,,2.9,2,0,0.019,MarShawn Lloyd (healthy); Chris Brooks (healthy)
-00-0035700,Josh Jacobs,GB,RB,4,4.0,0.0,na,0.02,Personal,,124.5,3,0,0.025,MarShawn Lloyd (healthy); Chris Brooks (healthy); Kaleb Johnson (healthy)
-00-0038996,Tucker Kraft,GB,TE,1,1.0,0.0,healthy,0.97,,,46.6,0,0,0.0,nobody
-00-0033858,Jonnu Smith,GB,TE,2,2.0,0.0,healthy,0.97,,,76.4,1,0,0.005,Tucker Kraft (healthy)
-00-0038589,Josh Whyle,GB,TE,3,3.0,0.0,healthy,0.97,,,142.7,2,0,0.007,Tucker Kraft (healthy); Jonnu Smith (healthy)
-00-0040598,Mark Redman,GB,TE,4,4.0,0.0,healthy,0.97,,,553.6,3,0,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy)
-00-0039144,Luke Musgrave,GB,TE,5,5.0,0.0,pup,0.02,Undisclosed,,505.2,4,0,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy); Mark Redman (healthy)
-00-0039936,Thomas Yassmin,GB,TE,6,7.0,1.0,ir,0.02,Undisclosed,,527.2,5,1,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy); Mark Redman (healthy); Luke Musgrave (pup)
-00-0038124,Christian Watson,GB,WR,1,1.0,0.0,healthy,0.97,,,46.5,0,0,0.0,nobody
-00-0039146,Jayden Reed,GB,WR,2,3.0,1.0,out,0.02,Neck,,1.1,1,0,0.007,Christian Watson (healthy)
-00-0040667,Matthew Golden,GB,WR,3,2.0,1.0,healthy,0.97,,,46.6,2,1,0.007,Christian Watson (healthy); Jayden Reed (out)
-00-0038090,Skyy Moore,GB,WR,4,4.0,0.0,healthy,0.97,,,46.7,3,1,0.014,Christian Watson (healthy); Jayden Reed (out); Matthew Golden (healthy)
-00-0037091,Bo Melton,GB,WR,5,5.0,0.0,questionable,0.72,Neck,,23.1,4,1,0.017,Christian Watson (healthy); Jayden Reed (out); Matthew Golden (healthy); Skyy Moore (healthy)
-00-0040948,J. Michael Sturdivant,GB,WR,6,6.0,0.0,healthy,0.97,,,218.8,5,1,0.019,Christian Watson (healthy); Jayden Reed (out); Matthew Golden (healthy); Skyy Moore (healthy); Bo Melton (questionable)
-00-0040009,Savion Williams,GB,WR,7,8.0,1.0,ir,0.02,Undisclosed,,506.7,6,1,0.019,Christian Watson (healthy); Jayden Reed (out); Matthew Golden (healthy); Skyy Moore (healthy); Bo Melton (questionable); J. Michael Sturdivant (healthy)
-00-0039163,C.J. Stroud,HOU,QB,1,1.0,0.0,healthy,0.97,,,18.1,0,0,0.0,nobody
-00-0036898,Davis Mills,HOU,QB,2,2.0,0.0,healthy,0.97,,,1605.0,1,0,0.0,C.J. Stroud (healthy)
-00-0040211,Graham Mertz,HOU,QB,3,3.0,0.0,ir,0.02,Knee - ACL,,904.2,2,0,0.0,C.J. Stroud (healthy); Davis Mills (healthy)
-00-0035685,David Montgomery,HOU,RB,1,1.0,0.0,healthy,0.97,,,41.1,0,0,0.0,nobody
-00-0040583,Woody Marks,HOU,RB,2,2.0,0.0,healthy,0.97,,,41.1,1,0,0.017,David Montgomery (healthy)
-00-0039603,British Brooks,HOU,RB,3,3.0,0.0,healthy,0.97,,,310.1,2,0,0.026,David Montgomery (healthy); Woody Marks (healthy)
-00-0034383,Dalton Schultz,HOU,TE,1,1.0,0.0,healthy,0.97,,,9.0,0,0,0.0,nobody
-00-0034981,Foster Moreau,HOU,TE,2,2.0,0.0,healthy,0.97,,,73.5,1,0,0.006,Dalton Schultz (healthy)
-00-0041472,Marlin Klein,HOU,TE,3,3.0,0.0,healthy,0.97,,,768.1,2,0,0.007,Dalton Schultz (healthy); Foster Moreau (healthy)
-00-0039359,Cade Stover,HOU,TE,4,4.0,0.0,healthy,0.97,,,2688.1,3,0,0.008,Dalton Schultz (healthy); Foster Moreau (healthy); Marlin Klein (healthy)
-00-0036556,Brevin Jordan,HOU,TE,5,5.0,0.0,out,0.02,Coach's Decision,,310.2,4,0,0.009,Dalton Schultz (healthy); Foster Moreau (healthy); Marlin Klein (healthy); Cade Stover (healthy)
-00-0036554,Nico Collins,HOU,WR,1,1.0,0.0,out,0.02,Hamstring,,29.2,0,0,0.0,nobody
-00-0038618,Xavier Hutchinson,HOU,WR,2,3.0,1.0,healthy,0.97,,,5.8,1,1,0.232,Nico Collins (out)
-00-0038608,Kayshon Boutte,HOU,WR,3,2.0,1.0,healthy,0.97,,,7.3,2,1,0.236,Nico Collins (out); Xavier Hutchinson (healthy)
-00-0040138,Jaylin Noel,HOU,WR,4,4.0,0.0,healthy,0.97,,,41.0,3,1,0.24,Nico Collins (out); Xavier Hutchinson (healthy); Kayshon Boutte (healthy)
-00-0038728,Jared Wayne,HOU,WR,5,,,healthy,0.97,,,5877.1,4,1,0.242,Nico Collins (out); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy)
-00-0038977,Tank Dell,HOU,WR,6,6.0,0.0,ir,0.02,Knee - ACL + MCL,,329.7,5,1,0.242,Nico Collins (out); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy); Jared Wayne (healthy)
-00-0040130,Jayden Higgins,HOU,WR,7,10.0,3.0,ir,0.02,Knee - ACL,,771.2,6,2,0.242,Nico Collins (out); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy); Jared Wayne (healthy); Tank Dell (ir)
-00-0035710,Daniel Jones,IND,QB,1,1.0,0.0,healthy,0.97,,,8.8,0,0,0.0,nobody
-00-0039164,Anthony Richardson Sr.,IND,QB,2,2.0,0.0,healthy,0.97,,,97.6,1,0,0.0,Daniel Jones (healthy)
-00-0040206,Riley Leonard,IND,QB,3,3.0,0.0,out,0.02,Coach's Decision,,47.3,2,0,0.0,Daniel Jones (healthy); Anthony Richardson Sr. (healthy)
-00-0036223,Jonathan Taylor,IND,RB,1,1.0,0.0,healthy,0.97,,,30.0,0,0,0.0,nobody
-00-0041125,Seth McGowan,IND,RB,2,2.0,0.0,healthy,0.97,,,1.9,1,0,0.023,Jonathan Taylor (healthy)
-00-0040179,DJ Giddens,IND,RB,3,3.0,0.0,out,0.02,Knee,,47.3,2,0,0.025,Jonathan Taylor (healthy); Seth McGowan (healthy)
-00-0040128,Tyler Warren,IND,TE,1,1.0,0.0,healthy,0.97,,,30.0,0,0,0.0,nobody
-00-0033217,Mo Alie-Cox,IND,TE,2,2.0,0.0,healthy,0.97,,,2688.1,1,0,0.007,Tyler Warren (healthy)
-00-0037292,Drew Ogletree,IND,TE,3,3.0,0.0,healthy,0.97,,,215.8,2,0,0.008,Tyler Warren (healthy); Mo Alie-Cox (healthy)
-00-0038394,Will Mallory,IND,TE,4,5.0,1.0,ir,0.02,Thumb,,533.2,3,0,0.008,Tyler Warren (healthy); Mo Alie-Cox (healthy); Drew Ogletree (healthy)
-00-0040853,Carson Towt,IND,TE,5,6.0,1.0,ir,0.02,Undisclosed,,831.1,4,1,0.008,Tyler Warren (healthy); Mo Alie-Cox (healthy); Drew Ogletree (healthy); Will Mallory (ir)
-00-0037664,Alec Pierce,IND,WR,1,1.0,0.0,out,0.02,Heel,,4.4,0,0,0.0,nobody
-00-0038997,Josh Downs,IND,WR,2,2.0,0.0,healthy,0.97,,,30.0,1,1,0.0,Alec Pierce (out)
-00-0030279,Keenan Allen,IND,WR,3,3.0,0.0,healthy,0.97,,,25.9,2,1,0.008,Alec Pierce (out); Josh Downs (healthy)
-00-0035535,Darius Slayton,IND,WR,4,7.0,3.0,healthy,0.97,,,20.8,3,1,0.013,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy)
-00-0035021,Ashton Dulin,IND,WR,5,5.0,0.0,out,0.02,Ankle,,89.7,4,1,0.016,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy)
-00-0032951,Laquon Treadwell,IND,WR,6,4.0,2.0,healthy,0.97,,,30.0,5,2,0.05,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Ashton Dulin (out)
-00-0041132,Deion Burks,IND,WR,7,6.0,1.0,healthy,0.97,,,3481.1,6,2,0.053,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Ashton Dulin (out); Laquon Treadwell (healthy)
-00-0035045,D.J. Montgomery,IND,WR,8,8.0,0.0,ir,0.02,Abdomen,,533.1,7,2,0.053,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Ashton Dulin (out); Laquon Treadwell (healthy); Deion Burks (healthy)
-00-0036971,Trevor Lawrence,JAX,QB,1,1.0,0.0,healthy,0.97,,,36.7,0,0,0.0,nobody
-00-0040234,Quinn Ewers,JAX,QB,2,3.0,1.0,out,0.02,Coach's Decision,,51.4,1,0,0.0,Trevor Lawrence (healthy)
-00-0040719,Bhayshul Tuten,JAX,RB,1,1.0,0.0,healthy,0.97,,,32.7,0,0,0.0,nobody
-00-0038611,Chris Rodriguez Jr.,JAX,RB,2,2.0,0.0,healthy,0.97,,,36.5,1,0,0.014,Bhayshul Tuten (healthy)
-00-0040238,LeQuint Allen Jr.,JAX,RB,3,4.0,1.0,healthy,0.97,,,78.3,2,0,0.021,Bhayshul Tuten (healthy); Chris Rodriguez Jr. (healthy)
-00-0032104,Ameer Abdullah,JAX,RB,4,3.0,1.0,healthy,0.97,,,73.3,3,0,0.022,Bhayshul Tuten (healthy); Chris Rodriguez Jr. (healthy); LeQuint Allen Jr. (healthy)
-00-0038935,Brenton Strange,JAX,TE,1,1.0,0.0,healthy,0.97,,,36.3,0,0,0.0,nobody
-00-0041503,Nate Boerkircher,JAX,TE,2,2.0,0.0,healthy,0.97,,,189.6,1,0,0.005,Brenton Strange (healthy)
-00-0036590,Quintin Morris,JAX,TE,3,3.0,0.0,healthy,0.97,,,2687.1,2,0,0.005,Brenton Strange (healthy); Nate Boerkircher (healthy)
-00-0041084,Tanner Koziol,JAX,TE,4,4.0,0.0,out,0.02,Coach's Decision,,51.4,3,0,0.006,Brenton Strange (healthy); Nate Boerkircher (healthy); Quintin Morris (healthy)
-00-0038606,Parker Washington,JAX,WR,1,1.0,0.0,healthy,0.97,,,36.5,0,0,0.0,nobody
-00-0039893,Brian Thomas Jr.,JAX,WR,2,2.0,0.0,healthy,0.97,,,32.2,1,0,0.007,Parker Washington (healthy)
-00-0034960,Jakobi Meyers,JAX,WR,3,3.0,0.0,healthy,0.97,,,36.5,2,0,0.012,Parker Washington (healthy); Brian Thomas Jr. (healthy)
-00-0041100,Josh Cameron,JAX,WR,4,5.0,1.0,healthy,0.97,,,192.0,3,0,0.017,Parker Washington (healthy); Brian Thomas Jr. (healthy); Jakobi Meyers (healthy)
+00-0033119,Jacoby Brissett,ARI,QB,1,1.0,0.0,healthy,0.97,,,21.5,0,0,0.0,nobody
+00-0035289,Gardner Minshew II,ARI,QB,2,2.0,0.0,healthy,0.97,,,614.4,1,0,0.0,Jacoby Brissett (healthy)
+00-0041561,Carson Beck,ARI,QB,3,3.0,0.0,healthy,0.97,,,71.0,2,0,0.0,Jacoby Brissett (healthy); Gardner Minshew II (healthy)
+00-0041027,Jeremiyah Love,ARI,RB,1,1.0,0.0,healthy,0.97,,,61.4,0,0,0.0,nobody
+00-0037263,Tyler Allgeier,ARI,RB,2,2.0,0.0,healthy,0.97,,,48.4,1,0,0.015,Jeremiyah Love (healthy)
+00-0037157,Bam Knight,ARI,RB,3,3.0,0.0,healthy,0.97,,,208.7,2,0,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy)
+00-0033553,James Conner,ARI,RB,4,4.0,0.0,ir,0.02,Foot,,309.8,3,0,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy); Bam Knight (healthy)
+00-0039921,Trey Benson,ARI,RB,5,6.0,1.0,ir,0.02,Knee,,689.1,4,1,0.026,Jeremiyah Love (healthy); Tyler Allgeier (healthy); Bam Knight (healthy); James Conner (ir)
+00-0037744,Trey McBride,ARI,TE,1,1.0,0.0,healthy,0.97,,,62.2,0,0,0.0,nobody
+00-0039041,Elijah Higgins,ARI,TE,2,2.0,0.0,healthy,0.97,,,614.1,1,0,0.009,Trey McBride (healthy)
+00-0037004,Hunter Long,ARI,TE,3,3.0,0.0,healthy,0.97,,,576.6,2,0,0.01,Trey McBride (healthy); Elijah Higgins (healthy)
+00-0039737,Tip Reiman,ARI,TE,4,5.0,1.0,pup,0.02,Ankle,,523.9,3,0,0.01,Trey McBride (healthy); Elijah Higgins (healthy); Hunter Long (healthy)
+00-0041366,Jameson Geers,ARI,TE,5,7.0,2.0,ir,0.02,Undisclosed,,934.3,4,1,0.01,Trey McBride (healthy); Elijah Higgins (healthy); Hunter Long (healthy); Tip Reiman (pup)
+00-0038559,Michael Wilson,ARI,WR,1,1.0,0.0,healthy,0.97,,,62.2,0,0,0.0,nobody
+00-0039849,Marvin Harrison Jr.,ARI,WR,2,2.0,0.0,healthy,0.97,,,2.8,1,0,0.006,Michael Wilson (healthy)
+00-0033307,Kendrick Bourne,ARI,WR,3,3.0,0.0,healthy,0.97,,,4.4,2,0,0.011,Michael Wilson (healthy); Marvin Harrison Jr. (healthy)
+00-0038640,Jalen Brooks,ARI,WR,4,4.0,0.0,healthy,0.97,,,590.8,3,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy)
+00-0036646,Simi Fehoko,ARI,WR,5,7.0,2.0,healthy,0.97,,,611.0,4,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy)
+00-0036331,Devin Duvernay,ARI,WR,6,6.0,0.0,healthy,0.97,,,2202.0,5,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy); Simi Fehoko (healthy)
+00-0041070,Reggie Virgil,ARI,WR,7,5.0,2.0,healthy,0.97,,,71.1,6,0,0.014,Michael Wilson (healthy); Marvin Harrison Jr. (healthy); Kendrick Bourne (healthy); Jalen Brooks (healthy); Simi Fehoko (healthy); Devin Duvernay (healthy)
+00-0039917,Michael Penix Jr.,ATL,QB,1,1.0,0.0,healthy,0.97,,,45.4,0,0,0.0,nobody
+00-0036212,Tua Tagovailoa,ATL,QB,2,3.0,1.0,healthy,0.97,,,1.8,1,0,0.0,Michael Penix Jr. (healthy)
+00-0033662,Cooper Rush,ATL,QB,3,2.0,1.0,healthy,0.97,,,63.0,2,0,0.0,Michael Penix Jr. (healthy); Tua Tagovailoa (healthy)
+00-0041194,Jack Strand,ATL,QB,4,4.0,0.0,healthy,0.97,,,62.5,3,0,0.0,Michael Penix Jr. (healthy); Tua Tagovailoa (healthy); Cooper Rush (healthy)
+00-0038542,Bijan Robinson,ATL,RB,1,1.0,0.0,healthy,0.97,,,63.0,0,0,0.0,nobody
+00-0037746,Brian Robinson Jr.,ATL,RB,2,2.0,0.0,healthy,0.97,,,21.4,1,0,0.02,Bijan Robinson (healthy)
+00-0036984,Trey Sermon,ATL,RB,3,3.0,0.0,ir,0.02,Undisclosed,,834.8,2,0,0.026,Bijan Robinson (healthy); Brian Robinson Jr. (healthy)
+00-0036970,Kyle Pitts Sr.,ATL,TE,1,1.0,0.0,healthy,0.97,,,25.1,0,0,0.0,nobody
+00-0036429,Charlie Woerner,ATL,TE,2,3.0,1.0,healthy,0.97,,,2707.0,1,0,0.005,Kyle Pitts Sr. (healthy)
+00-0032392,Austin Hooper,ATL,TE,3,2.0,1.0,healthy,0.97,,,39.5,2,0,0.006,Kyle Pitts Sr. (healthy); Charlie Woerner (healthy)
+00-0037317,Nick Muse,ATL,TE,4,4.0,0.0,healthy,0.97,,,18.9,3,0,0.007,Kyle Pitts Sr. (healthy); Charlie Woerner (healthy); Austin Hooper (healthy)
+00-0037238,Drake London,ATL,WR,1,1.0,0.0,healthy,0.97,,,62.9,0,0,0.0,nobody
+00-0037741,Jahan Dotson,ATL,WR,2,2.0,0.0,healthy,0.97,,,39.8,1,0,0.009,Drake London (healthy)
+00-0035208,Olamide Zaccheaus,ATL,WR,3,3.0,0.0,healthy,0.97,,,39.7,2,0,0.012,Drake London (healthy); Jahan Dotson (healthy)
+00-0041044,Zachariah Branch,ATL,WR,4,4.0,0.0,healthy,0.97,,,39.4,3,0,0.014,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy)
+00-0036463,Chris Blair,ATL,WR,5,5.0,0.0,healthy,0.97,,,6250.6,4,0,0.016,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy); Zachariah Branch (healthy)
+00-0040432,Beaux Collins,ATL,WR,6,8.0,2.0,ir,0.02,Undisclosed,,566.3,5,0,0.016,Drake London (healthy); Jahan Dotson (healthy); Olamide Zaccheaus (healthy); Zachariah Branch (healthy); Chris Blair (healthy)
+00-0034796,Lamar Jackson,BAL,QB,1,1.0,0.0,healthy,0.97,,,65.3,0,0,0.0,nobody
+00-0035993,Tyler Huntley,BAL,QB,2,2.0,0.0,healthy,0.97,,,611.9,1,0,0.0,Lamar Jackson (healthy)
+00-0040981,Joe Fagnano,BAL,QB,3,4.0,1.0,healthy,0.97,,,74.0,2,0,0.0,Lamar Jackson (healthy); Tyler Huntley (healthy)
+00-0037327,Skylar Thompson,BAL,QB,4,3.0,1.0,ir,0.02,Undisclosed,,1006.9,3,0,0.0,Lamar Jackson (healthy); Tyler Huntley (healthy); Joe Fagnano (healthy)
+00-0032764,Derrick Henry,BAL,RB,1,1.0,0.0,healthy,0.97,,,65.3,0,0,0.0,nobody
+00-0034975,Justice Hill,BAL,RB,2,2.0,0.0,healthy,0.97,,,39.8,1,0,0.017,Derrick Henry (healthy)
+00-0039796,Rasheen Ali,BAL,RB,3,3.0,0.0,healthy,0.97,,,94.5,2,0,0.02,Derrick Henry (healthy); Justice Hill (healthy)
+00-0040888,Adam Randall,BAL,RB,4,5.0,1.0,ir,0.02,Undisclosed,,550.2,3,0,0.02,Derrick Henry (healthy); Justice Hill (healthy); Rasheen Ali (healthy)
+00-0034753,Mark Andrews,BAL,TE,1,1.0,0.0,healthy,0.97,,,46.3,0,0,0.0,nobody
+00-0034798,Durham Smythe,BAL,TE,2,2.0,0.0,healthy,0.97,,,236.9,1,0,0.006,Mark Andrews (healthy)
+00-0040879,Matthew Hibner,BAL,TE,3,,,healthy,0.97,,,,2,0,0.007,Mark Andrews (healthy); Durham Smythe (healthy)
+00-0040887,Josh Cuevas,BAL,TE,4,4.0,0.0,healthy,0.97,,,611.9,3,0,0.007,Mark Andrews (healthy); Durham Smythe (healthy); Matthew Hibner (healthy)
+00-0039064,Zay Flowers,BAL,WR,1,1.0,0.0,questionable,0.72,Hamstring,,0.9,0,0,0.0,nobody
+00-0036550,Rashod Bateman,BAL,WR,2,2.0,0.0,healthy,0.97,,,46.9,1,0,0.069,Zay Flowers (questionable)
+00-0039792,Devontez Walker,BAL,WR,3,4.0,1.0,healthy,0.97,,,39.2,2,0,0.075,Zay Flowers (questionable); Rashod Bateman (healthy)
+00-0032398,Chris Moore,BAL,WR,4,3.0,1.0,healthy,0.97,,,73.5,3,0,0.076,Zay Flowers (questionable); Rashod Bateman (healthy); Devontez Walker (healthy)
+00-0040876,Elijah Sarratt,BAL,WR,5,6.0,1.0,healthy,0.97,,,38.9,4,0,0.078,Zay Flowers (questionable); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy)
+00-0040075,LaJohntay Wester,BAL,WR,6,5.0,1.0,healthy,0.97,,,39.4,5,0,0.078,Zay Flowers (questionable); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy); Elijah Sarratt (healthy)
+00-0040870,Ja'Kobi Lane,BAL,WR,7,10.0,3.0,ir,0.02,Wrist,,166.6,6,0,0.079,Zay Flowers (questionable); Rashod Bateman (healthy); Devontez Walker (healthy); Chris Moore (healthy); Elijah Sarratt (healthy); LaJohntay Wester (healthy)
+00-0034857,Josh Allen,BUF,QB,1,1.0,0.0,healthy,0.97,,,124.4,0,0,0.0,nobody
+00-0034577,Kyle Allen,BUF,QB,2,2.0,0.0,healthy,0.97,,,2852.0,1,0,0.0,Josh Allen (healthy)
+00-0037248,James Cook III,BUF,RB,1,1.0,0.0,healthy,0.97,,,124.2,0,0,0.0,nobody
+00-0039875,Ray Davis,BUF,RB,2,3.0,1.0,healthy,0.97,,,113.4,1,0,0.016,James Cook III (healthy)
+00-0035537,Ty Johnson,BUF,RB,3,2.0,1.0,questionable,0.72,Hamstring,,139.1,2,0,0.019,James Cook III (healthy); Ray Davis (healthy)
+00-0038933,Dalton Kincaid,BUF,TE,1,1.0,0.0,healthy,0.97,,,124.2,0,0,0.0,nobody
+00-0035689,Dawson Knox,BUF,TE,2,2.0,0.0,healthy,0.97,,,16.7,1,0,0.006,Dalton Kincaid (healthy)
+00-0040194,Jackson Hawes,BUF,TE,3,3.0,0.0,healthy,0.97,,,113.2,2,0,0.008,Dalton Kincaid (healthy); Dawson Knox (healthy)
+00-0040363,Keleki Latu,BUF,TE,4,4.0,0.0,healthy,0.97,,,6476.8,3,0,0.009,Dalton Kincaid (healthy); Dawson Knox (healthy); Jackson Hawes (healthy)
+00-0034827,DJ Moore,BUF,WR,1,1.0,0.0,questionable,0.72,Shoulder - AC Joint,,76.0,0,0,0.0,nobody
+00-0037261,Khalil Shakir,BUF,WR,2,2.0,0.0,healthy,0.97,,,39.7,1,0,0.055,DJ Moore (questionable)
+00-0039901,Keon Coleman,BUF,WR,3,3.0,0.0,healthy,0.97,,,27.9,2,0,0.061,DJ Moore (questionable); Khalil Shakir (healthy)
+00-0036988,Joshua Palmer,BUF,WR,4,4.0,0.0,healthy,0.97,,,21.8,3,0,0.065,DJ Moore (questionable); Khalil Shakir (healthy); Keon Coleman (healthy)
+00-0041443,Skyler Bell,BUF,WR,5,5.0,0.0,healthy,0.97,,,139.1,4,0,0.067,DJ Moore (questionable); Khalil Shakir (healthy); Keon Coleman (healthy); Joshua Palmer (healthy)
+00-0038679,Tyrell Shavers,BUF,WR,6,8.0,2.0,pup,0.02,Knee - ACL,,526.4,5,0,0.067,DJ Moore (questionable); Khalil Shakir (healthy); Keon Coleman (healthy); Joshua Palmer (healthy); Skyler Bell (healthy)
+00-0039150,Bryce Young,CAR,QB,1,1.0,0.0,healthy,0.97,,,45.9,0,0,0.0,nobody
+00-0038102,Kenny Pickett,CAR,QB,2,2.0,0.0,healthy,0.97,,,73.9,1,0,0.0,Bryce Young (healthy)
+00-0041149,Haynes King,CAR,QB,3,3.0,0.0,healthy,0.97,,,74.4,2,0,0.0,Bryce Young (healthy); Kenny Pickett (healthy)
+00-0036555,Chuba Hubbard,CAR,RB,1,1.0,0.0,healthy,0.97,,,63.7,0,0,0.0,nobody
+00-0039344,Jonathon Brooks,CAR,RB,2,3.0,1.0,ir,0.02,Abdomen,,2.9,1,0,0.018,Chuba Hubbard (healthy)
+00-0036265,AJ Dillon,CAR,RB,3,2.0,1.0,healthy,0.97,,,0.9,2,1,0.018,Chuba Hubbard (healthy); Jonathon Brooks (ir)
+00-0040644,Trevor Etienne,CAR,RB,4,4.0,0.0,ir,0.02,Ankle,,549.9,3,1,0.025,Chuba Hubbard (healthy); Jonathon Brooks (ir); AJ Dillon (healthy)
+00-0037005,Tommy Tremble,CAR,TE,1,2.0,1.0,healthy,0.97,,,210.2,0,0,0.0,nobody
+00-0040187,Mitchell Evans,CAR,TE,2,3.0,1.0,healthy,0.97,,,210.2,1,0,0.002,Tommy Tremble (healthy)
+00-0031610,Darren Waller,CAR,TE,3,1.0,2.0,healthy,0.97,,,27.0,2,0,0.003,Tommy Tremble (healthy); Mitchell Evans (healthy)
+00-0036825,Feleipe Franks,CAR,TE,4,5.0,1.0,healthy,0.97,,,4439.4,3,0,0.007,Tommy Tremble (healthy); Mitchell Evans (healthy); Darren Waller (healthy)
+00-0039356,Ja'Tavion Sanders,CAR,TE,5,4.0,1.0,healthy,0.97,,,74.3,4,0,0.007,Tommy Tremble (healthy); Mitchell Evans (healthy); Darren Waller (healthy); Feleipe Franks (healthy)
+00-0040124,Tetairoa McMillan,CAR,WR,1,1.0,0.0,healthy,0.97,,,63.5,0,0,0.0,nobody
+00-0039491,Jalen Coker,CAR,WR,2,2.0,0.0,healthy,0.97,,,48.4,1,0,0.009,Tetairoa McMillan (healthy)
+00-0039342,Xavier Legette,CAR,WR,3,3.0,0.0,healthy,0.97,,,15.8,2,0,0.016,Tetairoa McMillan (healthy); Jalen Coker (healthy)
+00-0038840,Brycen Tremayne,CAR,WR,4,4.0,0.0,healthy,0.97,,,3738.8,3,0,0.019,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy)
+00-0037614,John Metchie III,CAR,WR,5,5.0,0.0,healthy,0.97,,,185.9,4,0,0.019,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy); Brycen Tremayne (healthy)
+00-0041047,Chris Brazzell II,CAR,WR,6,6.0,0.0,ir,0.02,Knee,,1286.7,5,0,0.019,Tetairoa McMillan (healthy); Jalen Coker (healthy); Xavier Legette (healthy); Brycen Tremayne (healthy); John Metchie III (healthy)
+00-0039918,Caleb Williams,CHI,QB,1,3.0,2.0,doubtful,0.28,Hamstring,,0.4,0,0,0.0,nobody
+00-0038416,Tyson Bagent,CHI,QB,2,1.0,1.0,questionable,0.72,Concussion,,0.5,1,1,0.0,Caleb Williams (doubtful)
+00-0028986,Case Keenum,CHI,QB,3,2.0,1.0,healthy,0.97,,,0.9,2,1,0.0,Caleb Williams (doubtful); Tyson Bagent (questionable)
+00-0036275,D'Andre Swift,CHI,RB,1,1.0,0.0,healthy,0.97,,,63.9,0,0,0.0,nobody
+00-0040236,Kyle Monangai,CHI,RB,2,2.0,0.0,healthy,0.97,,,64.0,1,0,0.014,D'Andre Swift (healthy)
+00-0039021,Roschon Johnson,CHI,RB,3,3.0,0.0,healthy,0.97,,,182.6,2,0,0.023,D'Andre Swift (healthy); Kyle Monangai (healthy)
+00-0037329,Brittain Brown,CHI,RB,4,5.0,1.0,ir,0.02,Undisclosed,,553.9,3,0,0.024,D'Andre Swift (healthy); Kyle Monangai (healthy); Roschon Johnson (healthy)
+00-0040126,Colston Loveland,CHI,TE,1,1.0,0.0,healthy,0.97,,,64.4,0,0,0.0,nobody
+00-0036290,Cole Kmet,CHI,TE,2,2.0,0.0,healthy,0.97,,,45.5,1,0,0.005,Colston Loveland (healthy)
+00-0041558,Sam Roush,CHI,TE,3,3.0,0.0,healthy,0.97,,,15.9,2,0,0.008,Colston Loveland (healthy); Cole Kmet (healthy)
+00-0037031,Nikola Kalinic,CHI,TE,4,5.0,1.0,ir,0.02,Knee,,858.7,3,0,0.009,Colston Loveland (healthy); Cole Kmet (healthy); Sam Roush (healthy)
+00-0041170,Hayden Large,CHI,TE,5,7.0,2.0,ir,0.02,Undisclosed,,522.6,4,1,0.009,Colston Loveland (healthy); Cole Kmet (healthy); Sam Roush (healthy); Nikola Kalinic (ir)
+00-0039919,Rome Odunze,CHI,WR,1,1.0,0.0,healthy,0.97,,,64.2,0,0,0.0,nobody
+00-0040735,Luther Burden III,CHI,WR,2,2.0,0.0,healthy,0.97,,,63.4,1,0,0.006,Rome Odunze (healthy)
+00-0032464,Kalif Raymond,CHI,WR,3,3.0,0.0,healthy,0.97,,,26.7,2,0,0.012,Rome Odunze (healthy); Luther Burden III (healthy)
+00-0041051,Zavion Thomas,CHI,WR,4,5.0,1.0,healthy,0.97,,,109.7,3,0,0.016,Rome Odunze (healthy); Luther Burden III (healthy); Kalif Raymond (healthy)
+00-0040277,Jahdae Walker,CHI,WR,5,4.0,1.0,healthy,0.97,,,195.0,4,0,0.016,Rome Odunze (healthy); Luther Burden III (healthy); Kalif Raymond (healthy); Zavion Thomas (healthy)
+00-0036442,Joe Burrow,CIN,QB,1,1.0,0.0,healthy,0.97,,,1.1,0,0,0.0,nobody
+00-0026158,Joe Flacco,CIN,QB,2,2.0,0.0,healthy,0.97,,,2285.0,1,0,0.0,Joe Burrow (healthy)
+00-0038597,Chase Brown,CIN,RB,1,1.0,0.0,healthy,0.97,,,61.4,0,0,0.0,nobody
+00-0033526,Samaje Perine,CIN,RB,2,2.0,0.0,healthy,0.97,,,22.9,1,0,0.019,Chase Brown (healthy)
+00-0040208,Tahj Brooks,CIN,RB,3,3.0,0.0,healthy,0.97,,,124.4,2,0,0.025,Chase Brown (healthy); Samaje Perine (healthy)
+00-0034829,Mike Gesicki,CIN,TE,1,1.0,0.0,healthy,0.97,,,45.4,0,0,0.0,nobody
+00-0035631,Drew Sample,CIN,TE,2,2.0,0.0,healthy,0.97,,,14.9,1,0,0.004,Mike Gesicki (healthy)
+00-0039814,Erick All Jr.,CIN,TE,3,3.0,0.0,healthy,0.97,,,14.7,2,0,0.005,Mike Gesicki (healthy); Drew Sample (healthy)
+00-0041116,Jack Endries,CIN,TE,4,4.0,0.0,healthy,0.97,,,242.0,3,0,0.007,Mike Gesicki (healthy); Drew Sample (healthy); Erick All Jr. (healthy)
+00-0036900,Ja'Marr Chase,CIN,WR,1,1.0,0.0,healthy,0.97,,,61.4,0,0,0.0,nobody
+00-0036410,Tee Higgins,CIN,WR,2,2.0,0.0,healthy,0.97,,,61.3,1,0,0.009,Ja'Marr Chase (healthy)
+00-0038619,Andrei Iosivas,CIN,WR,3,3.0,0.0,out,0.02,Thumb,,0.3,2,0,0.016,Ja'Marr Chase (healthy); Tee Higgins (healthy)
+00-0041069,Colbie Young,CIN,WR,4,5.0,1.0,healthy,0.97,,,614.5,3,1,0.016,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (out)
+00-0040785,Dohnte Meyers,CIN,WR,5,4.0,1.0,healthy,0.97,,,576.9,4,1,0.017,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (out); Colbie Young (healthy)
+00-0040534,Ke'Shawn Williams,CIN,WR,6,7.0,1.0,healthy,0.97,,,6740.2,5,1,0.017,Ja'Marr Chase (healthy); Tee Higgins (healthy); Andrei Iosivas (out); Colbie Young (healthy); Dohnte Meyers (healthy)
+00-0033537,Deshaun Watson,CLE,QB,1,1.0,0.0,healthy,0.97,,,2.3,0,0,0.0,nobody
+00-0040668,Shedeur Sanders,CLE,QB,2,3.0,1.0,healthy,0.97,,,77.8,1,0,0.0,Deshaun Watson (healthy)
+00-0041092,Taylen Green,CLE,QB,3,4.0,1.0,healthy,0.97,,,74.4,2,0,0.0,Deshaun Watson (healthy); Shedeur Sanders (healthy)
+00-0040704,Dillon Gabriel,CLE,QB,4,2.0,2.0,ir,0.02,Back,,551.4,3,0,0.0,Deshaun Watson (healthy); Shedeur Sanders (healthy); Taylen Green (healthy)
+00-0040784,Quinshon Judkins,CLE,RB,1,1.0,0.0,healthy,0.97,,,60.5,0,0,0.0,nobody
+00-0040466,Raheim Sanders,CLE,RB,2,2.0,0.0,healthy,0.97,,,15.3,1,0,0.018,Quinshon Judkins (healthy)
+00-0038794,Jaleel McLaughlin,CLE,RB,3,3.0,0.0,healthy,0.97,,,15.2,2,0,0.023,Quinshon Judkins (healthy); Raheim Sanders (healthy)
+00-0040162,Dylan Sampson,CLE,RB,4,6.0,2.0,ir,0.02,Knee,,190.4,3,0,0.025,Quinshon Judkins (healthy); Raheim Sanders (healthy); Jaleel McLaughlin (healthy)
+00-0040663,Harold Fannin Jr.,CLE,TE,1,1.0,0.0,healthy,0.97,,,60.4,0,0,0.0,nobody
+00-0038710,Blake Whiteheart,CLE,TE,2,2.0,0.0,healthy,0.97,,,15.1,1,0,0.006,Harold Fannin Jr. (healthy)
+00-0041131,Carsen Ryan,CLE,TE,3,3.0,0.0,healthy,0.97,,,638.2,2,0,0.007,Harold Fannin Jr. (healthy); Blake Whiteheart (healthy)
+00-0041087,Joe Royer,CLE,TE,4,5.0,1.0,pup,0.02,Personal,,572.8,3,0,0.007,Harold Fannin Jr. (healthy); Blake Whiteheart (healthy); Carsen Ryan (healthy)
+00-0041037,Denzel Boston,CLE,WR,1,1.0,0.0,healthy,0.97,,,51.0,0,0,0.0,nobody
+00-0041547,KC Concepcion,CLE,WR,2,2.0,0.0,healthy,0.97,,,60.4,1,0,0.006,Denzel Boston (healthy)
+00-0036407,Jerry Jeudy,CLE,WR,3,3.0,0.0,healthy,0.97,,,42.8,2,0,0.011,Denzel Boston (healthy); KC Concepcion (healthy)
+00-0040782,Isaiah Bond,CLE,WR,4,4.0,0.0,healthy,0.97,,,383.4,3,0,0.016,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy)
+00-0036630,Tylan Wallace,CLE,WR,5,6.0,1.0,healthy,0.97,,,2205.0,4,0,0.017,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy); Isaiah Bond (healthy)
+00-0039920,Malachi Corley,CLE,WR,6,5.0,1.0,healthy,0.97,,,2466.0,5,0,0.017,Denzel Boston (healthy); KC Concepcion (healthy); Jerry Jeudy (healthy); Isaiah Bond (healthy); Tylan Wallace (healthy)
+00-0033077,Dak Prescott,DAL,QB,1,1.0,0.0,healthy,0.97,,,62.7,0,0,0.0,nobody
+00-0037077,Sam Howell,DAL,QB,2,2.0,0.0,healthy,0.97,,,523.1,1,0,0.0,Dak Prescott (healthy)
+00-0036997,Javonte Williams,DAL,RB,1,1.0,0.0,healthy,0.97,,,59.1,0,0,0.0,nobody
+00-0038705,Emari Demercado,DAL,RB,2,2.0,0.0,healthy,0.97,,,38.3,1,0,0.02,Javonte Williams (healthy)
+00-0037120,Tyler Goodson,DAL,RB,3,4.0,1.0,healthy,0.97,,,70.9,2,0,0.024,Javonte Williams (healthy); Emari Demercado (healthy)
+00-0037563,Malik Davis,DAL,RB,4,5.0,1.0,ir,0.02,Hip,,261.8,3,0,0.024,Javonte Williams (healthy); Emari Demercado (healthy); Tyler Goodson (healthy)
+00-0038041,Jake Ferguson,DAL,TE,1,1.0,0.0,healthy,0.97,,,60.0,0,0,0.0,nobody
+00-0039530,Brevyn Spann-Ford,DAL,TE,2,2.0,0.0,healthy,0.97,,,207.8,1,0,0.004,Jake Ferguson (healthy)
+00-0038547,Luke Schoonmaker,DAL,TE,3,3.0,0.0,healthy,0.97,,,207.7,2,0,0.005,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy)
+00-0038735,Princeton Fant,DAL,TE,4,5.0,1.0,ir,0.02,Knee - ACL + MCL,,1141.4,3,0,0.006,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy); Luke Schoonmaker (healthy)
+00-0040938,DJ Rogers,DAL,TE,5,6.0,1.0,ir,0.02,Knee,,547.3,4,1,0.006,Jake Ferguson (healthy); Brevyn Spann-Ford (healthy); Luke Schoonmaker (healthy); Princeton Fant (ir)
+00-0036358,CeeDee Lamb,DAL,WR,1,1.0,0.0,healthy,0.97,,,62.6,0,0,0.0,nobody
+00-0037247,George Pickens,DAL,WR,2,2.0,0.0,healthy,0.97,,,60.1,1,0,0.008,CeeDee Lamb (healthy)
+00-0039410,Ryan Flournoy,DAL,WR,3,3.0,0.0,healthy,0.97,,,24.7,2,0,0.014,CeeDee Lamb (healthy); George Pickens (healthy)
+00-0037801,KaVontae Turpin,DAL,WR,4,4.0,0.0,healthy,0.97,,,100.8,3,0,0.018,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy)
+00-0039062,Jonathan Mingo,DAL,WR,5,5.0,0.0,healthy,0.97,,,207.6,4,0,0.019,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy); KaVontae Turpin (healthy)
+00-0040930,Camden Brown,DAL,WR,6,6.0,0.0,healthy,0.97,,,479.0,5,0,0.02,CeeDee Lamb (healthy); George Pickens (healthy); Ryan Flournoy (healthy); KaVontae Turpin (healthy); Jonathan Mingo (healthy)
+00-0039732,Bo Nix,DEN,QB,1,1.0,0.0,healthy,0.97,,,56.3,0,0,0.0,nobody
+00-0035264,Jarrett Stidham,DEN,QB,2,2.0,0.0,healthy,0.97,,,496.1,1,0,0.0,Bo Nix (healthy)
+00-0036879,Sam Ehlinger,DEN,QB,3,3.0,0.0,healthy,0.97,,,71.5,2,0,0.0,Bo Nix (healthy); Jarrett Stidham (healthy)
+00-0036158,J.K. Dobbins,DEN,RB,1,1.0,0.0,questionable,0.72,Hamstring,,22.0,0,0,0.0,nobody
+00-0040730,RJ Harvey,DEN,RB,2,2.0,0.0,questionable,0.72,Hamstring,,71.4,1,0,0.074,J.K. Dobbins (questionable)
+00-0041496,Jonah Coleman,DEN,RB,3,3.0,0.0,healthy,0.97,,,23.3,2,0,0.138,J.K. Dobbins (questionable); RJ Harvey (questionable)
+00-0037085,Tyler Badie,DEN,RB,4,4.0,0.0,healthy,0.97,,,14.6,3,0,0.146,J.K. Dobbins (questionable); RJ Harvey (questionable); Jonah Coleman (healthy)
+00-0033881,Evan Engram,DEN,TE,1,1.0,0.0,healthy,0.97,,,41.4,0,0,0.0,nobody
+00-0036422,Adam Trautman,DEN,TE,2,2.0,0.0,healthy,0.97,,,186.1,1,0,0.003,Evan Engram (healthy)
+00-0038783,Nate Adkins,DEN,TE,3,3.0,0.0,healthy,0.97,,,14.5,2,0,0.004,Evan Engram (healthy); Adam Trautman (healthy)
+00-0041133,Dallen Bentley,DEN,TE,4,4.0,0.0,healthy,0.97,,,3503.0,3,0,0.005,Evan Engram (healthy); Adam Trautman (healthy); Nate Adkins (healthy)
+00-0040240,Caleb Lohner,DEN,TE,5,6.0,1.0,ir,0.02,Lower Body,,553.4,4,0,0.005,Evan Engram (healthy); Adam Trautman (healthy); Nate Adkins (healthy); Dallen Bentley (healthy)
+00-0036613,Jaylen Waddle,DEN,WR,1,1.0,0.0,healthy,0.97,,,52.9,0,0,0.0,nobody
+00-0034348,Courtland Sutton,DEN,WR,2,2.0,0.0,healthy,0.97,,,56.1,1,0,0.007,Jaylen Waddle (healthy)
+00-0038976,Marvin Mims Jr.,DEN,WR,3,5.0,2.0,questionable,0.72,Foot,,98.1,2,0,0.012,Jaylen Waddle (healthy); Courtland Sutton (healthy)
+00-0040134,Pat Bryant,DEN,WR,4,3.0,1.0,healthy,0.97,,,25.0,3,0,0.021,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (questionable)
+00-0039868,Troy Franklin,DEN,WR,5,4.0,1.0,healthy,0.97,,,14.3,4,0,0.026,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (questionable); Pat Bryant (healthy)
+00-0035406,Lil'Jordan Humphrey,DEN,WR,6,6.0,0.0,healthy,0.97,,,187.1,5,0,0.027,Jaylen Waddle (healthy); Courtland Sutton (healthy); Marvin Mims Jr. (questionable); Pat Bryant (healthy); Troy Franklin (healthy)
+00-0033106,Jared Goff,DET,QB,1,1.0,0.0,healthy,0.97,,,123.7,0,0,0.0,nobody
+00-0033949,Joshua Dobbs,DET,QB,2,2.0,0.0,healthy,0.97,,,593.2,1,0,0.0,Jared Goff (healthy)
+00-0039139,Jahmyr Gibbs,DET,RB,1,1.0,0.0,healthy,0.97,,,123.7,0,0,0.0,nobody
+00-0039364,Sione Vaki,DET,RB,2,2.0,0.0,healthy,0.97,,,22.7,1,0,0.022,Jahmyr Gibbs (healthy)
+00-0038896,Jacob Saylors,DET,RB,3,3.0,0.0,healthy,0.97,,,113.5,2,0,0.026,Jahmyr Gibbs (healthy); Sione Vaki (healthy)
+00-0037197,Isiah Pacheco,DET,RB,4,4.0,0.0,ir,0.02,Back,,211.9,3,0,0.027,Jahmyr Gibbs (healthy); Sione Vaki (healthy); Jacob Saylors (healthy)
+00-0039065,Sam LaPorta,DET,TE,1,1.0,0.0,healthy,0.97,,,123.4,0,0,0.0,nobody
+00-0036754,Brock Wright,DET,TE,2,2.0,0.0,healthy,0.97,,,221.4,1,0,0.006,Sam LaPorta (healthy)
+00-0034270,Tyler Conklin,DET,TE,3,3.0,0.0,healthy,0.97,,,525.9,2,0,0.006,Sam LaPorta (healthy); Brock Wright (healthy)
+00-0040390,Jackson Meeks,DET,TE,4,4.0,0.0,healthy,0.97,,,745.0,3,0,0.007,Sam LaPorta (healthy); Brock Wright (healthy); Tyler Conklin (healthy)
+00-0036963,Amon-Ra St. Brown,DET,WR,1,1.0,0.0,healthy,0.97,,,123.6,0,0,0.0,nobody
+00-0037240,Jameson Williams,DET,WR,2,2.0,0.0,healthy,0.97,,,123.6,1,0,0.009,Amon-Ra St. Brown (healthy)
+00-0040669,Isaac TeSlaa,DET,WR,3,3.0,0.0,healthy,0.97,,,115.2,2,0,0.015,Amon-Ra St. Brown (healthy); Jameson Williams (healthy)
+00-0035544,Tom Kennedy,DET,WR,4,5.0,1.0,healthy,0.97,,,299.9,3,0,0.017,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy)
+00-0037524,Tay Martin,DET,WR,5,4.0,1.0,healthy,0.97,,,435.8,4,0,0.018,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy); Tom Kennedy (healthy)
+00-0041446,Kendrick Law,DET,WR,6,8.0,2.0,ir,0.02,Knee - ACL,,2338.4,5,0,0.018,Amon-Ra St. Brown (healthy); Jameson Williams (healthy); Isaac TeSlaa (healthy); Tom Kennedy (healthy); Tay Martin (healthy)
+00-0036264,Jordan Love,GB,QB,1,1.0,0.0,healthy,0.97,,,21.6,0,0,0.0,nobody
+00-0028118,Tyrod Taylor,GB,QB,2,2.0,0.0,healthy,0.97,,,2853.0,1,0,0.0,Jordan Love (healthy)
+00-0039811,MarShawn Lloyd,GB,RB,1,1.0,0.0,healthy,0.97,,,63.8,0,0,0.0,nobody
+00-0038685,Chris Brooks,GB,RB,2,2.0,0.0,healthy,0.97,,,17.8,1,0,0.012,MarShawn Lloyd (healthy)
+00-0040142,Kaleb Johnson,GB,RB,3,3.0,0.0,healthy,0.97,,,17.5,2,0,0.019,MarShawn Lloyd (healthy); Chris Brooks (healthy)
+00-0035700,Josh Jacobs,GB,RB,4,4.0,0.0,na,0.02,Personal,,144.4,3,0,0.025,MarShawn Lloyd (healthy); Chris Brooks (healthy); Kaleb Johnson (healthy)
+00-0038996,Tucker Kraft,GB,TE,1,1.0,0.0,healthy,0.97,,,1.3,0,0,0.0,nobody
+00-0033858,Jonnu Smith,GB,TE,2,2.0,0.0,healthy,0.97,,,17.6,1,0,0.005,Tucker Kraft (healthy)
+00-0038589,Josh Whyle,GB,TE,3,3.0,0.0,healthy,0.97,,,162.6,2,0,0.007,Tucker Kraft (healthy); Jonnu Smith (healthy)
+00-0040598,Mark Redman,GB,TE,4,4.0,0.0,healthy,0.97,,,573.6,3,0,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy)
+00-0039144,Luke Musgrave,GB,TE,5,5.0,0.0,pup,0.02,Undisclosed,,525.1,4,0,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy); Mark Redman (healthy)
+00-0039936,Thomas Yassmin,GB,TE,6,7.0,1.0,ir,0.02,Undisclosed,,547.1,5,1,0.008,Tucker Kraft (healthy); Jonnu Smith (healthy); Josh Whyle (healthy); Mark Redman (healthy); Luke Musgrave (pup)
+00-0038124,Christian Watson,GB,WR,1,1.0,0.0,healthy,0.97,,,66.4,0,0,0.0,nobody
+00-0039146,Jayden Reed,GB,WR,2,3.0,1.0,doubtful,0.28,Neck,,18.1,1,0,0.007,Christian Watson (healthy)
+00-0040667,Matthew Golden,GB,WR,3,2.0,1.0,healthy,0.97,,,66.5,2,1,0.007,Christian Watson (healthy); Jayden Reed (doubtful)
+00-0038090,Skyy Moore,GB,WR,4,4.0,0.0,healthy,0.97,,,17.1,3,1,0.014,Christian Watson (healthy); Jayden Reed (doubtful); Matthew Golden (healthy)
+00-0037091,Bo Melton,GB,WR,5,5.0,0.0,healthy,0.97,,,43.1,4,1,0.017,Christian Watson (healthy); Jayden Reed (doubtful); Matthew Golden (healthy); Skyy Moore (healthy)
+00-0040948,J. Michael Sturdivant,GB,WR,6,6.0,0.0,healthy,0.97,,,238.8,5,1,0.017,Christian Watson (healthy); Jayden Reed (doubtful); Matthew Golden (healthy); Skyy Moore (healthy); Bo Melton (healthy)
+00-0040009,Savion Williams,GB,WR,7,8.0,1.0,ir,0.02,Undisclosed,,526.6,6,1,0.017,Christian Watson (healthy); Jayden Reed (doubtful); Matthew Golden (healthy); Skyy Moore (healthy); Bo Melton (healthy); J. Michael Sturdivant (healthy)
+00-0039163,C.J. Stroud,HOU,QB,1,1.0,0.0,healthy,0.97,,,38.1,0,0,0.0,nobody
+00-0036898,Davis Mills,HOU,QB,2,2.0,0.0,healthy,0.97,,,1624.9,1,0,0.0,C.J. Stroud (healthy)
+00-0040211,Graham Mertz,HOU,QB,3,3.0,0.0,ir,0.02,Knee - ACL,,924.1,2,0,0.0,C.J. Stroud (healthy); Davis Mills (healthy)
+00-0035685,David Montgomery,HOU,RB,1,1.0,0.0,healthy,0.97,,,61.1,0,0,0.0,nobody
+00-0040583,Woody Marks,HOU,RB,2,2.0,0.0,healthy,0.97,,,61.1,1,0,0.017,David Montgomery (healthy)
+00-0039603,British Brooks,HOU,RB,3,3.0,0.0,healthy,0.97,,,330.1,2,0,0.026,David Montgomery (healthy); Woody Marks (healthy)
+00-0034383,Dalton Schultz,HOU,TE,1,1.0,0.0,healthy,0.97,,,28.9,0,0,0.0,nobody
+00-0034981,Foster Moreau,HOU,TE,2,2.0,0.0,healthy,0.97,,,15.9,1,0,0.006,Dalton Schultz (healthy)
+00-0041472,Marlin Klein,HOU,TE,3,3.0,0.0,healthy,0.97,,,788.0,2,0,0.007,Dalton Schultz (healthy); Foster Moreau (healthy)
+00-0039359,Cade Stover,HOU,TE,4,4.0,0.0,healthy,0.97,,,2708.0,3,0,0.008,Dalton Schultz (healthy); Foster Moreau (healthy); Marlin Klein (healthy)
+00-0036556,Brevin Jordan,HOU,TE,5,5.0,0.0,healthy,0.97,,,330.2,4,0,0.009,Dalton Schultz (healthy); Foster Moreau (healthy); Marlin Klein (healthy); Cade Stover (healthy)
+00-0036554,Nico Collins,HOU,WR,1,1.0,0.0,questionable,0.72,Hamstring,,0.2,0,0,0.0,nobody
+00-0038618,Xavier Hutchinson,HOU,WR,2,2.0,0.0,healthy,0.97,,,25.8,1,0,0.066,Nico Collins (questionable)
+00-0038608,Kayshon Boutte,HOU,WR,3,3.0,0.0,healthy,0.97,,,27.3,2,0,0.07,Nico Collins (questionable); Xavier Hutchinson (healthy)
+00-0040138,Jaylin Noel,HOU,WR,4,4.0,0.0,healthy,0.97,,,15.6,3,0,0.074,Nico Collins (questionable); Xavier Hutchinson (healthy); Kayshon Boutte (healthy)
+00-0038728,Jared Wayne,HOU,WR,5,,,healthy,0.97,,,15.9,4,0,0.076,Nico Collins (questionable); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy)
+00-0038977,Tank Dell,HOU,WR,6,6.0,0.0,ir,0.02,Knee - ACL + MCL,,349.7,5,0,0.076,Nico Collins (questionable); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy); Jared Wayne (healthy)
+00-0040130,Jayden Higgins,HOU,WR,7,10.0,3.0,ir,0.02,Knee - ACL,,791.2,6,1,0.076,Nico Collins (questionable); Xavier Hutchinson (healthy); Kayshon Boutte (healthy); Jaylin Noel (healthy); Jared Wayne (healthy); Tank Dell (ir)
+00-0035710,Daniel Jones,IND,QB,1,1.0,0.0,healthy,0.97,,,28.8,0,0,0.0,nobody
+00-0039164,Anthony Richardson Sr.,IND,QB,2,2.0,0.0,healthy,0.97,,,117.6,1,0,0.0,Daniel Jones (healthy)
+00-0040206,Riley Leonard,IND,QB,3,3.0,0.0,healthy,0.97,,,67.3,2,0,0.0,Daniel Jones (healthy); Anthony Richardson Sr. (healthy)
+00-0036223,Jonathan Taylor,IND,RB,1,1.0,0.0,healthy,0.97,,,49.9,0,0,0.0,nobody
+00-0041125,Seth McGowan,IND,RB,2,2.0,0.0,healthy,0.97,,,21.9,1,0,0.023,Jonathan Taylor (healthy)
+00-0040179,DJ Giddens,IND,RB,3,3.0,0.0,questionable,0.72,Knee,,67.3,2,0,0.025,Jonathan Taylor (healthy); Seth McGowan (healthy)
+00-0040128,Tyler Warren,IND,TE,1,1.0,0.0,healthy,0.97,,,49.9,0,0,0.0,nobody
+00-0033217,Mo Alie-Cox,IND,TE,2,2.0,0.0,healthy,0.97,,,2708.0,1,0,0.007,Tyler Warren (healthy)
+00-0037292,Drew Ogletree,IND,TE,3,3.0,0.0,healthy,0.97,,,235.8,2,0,0.007,Tyler Warren (healthy); Mo Alie-Cox (healthy)
+00-0038394,Will Mallory,IND,TE,4,5.0,1.0,ir,0.02,Thumb,,553.1,3,0,0.008,Tyler Warren (healthy); Mo Alie-Cox (healthy); Drew Ogletree (healthy)
+00-0040853,Carson Towt,IND,TE,5,6.0,1.0,ir,0.02,Undisclosed,,851.0,4,1,0.008,Tyler Warren (healthy); Mo Alie-Cox (healthy); Drew Ogletree (healthy); Will Mallory (ir)
+00-0037664,Alec Pierce,IND,WR,1,3.0,2.0,out,0.02,Heel,,2.4,0,0,0.0,nobody
+00-0038997,Josh Downs,IND,WR,2,1.0,1.0,healthy,0.97,,,49.9,1,1,0.0,Alec Pierce (out)
+00-0030279,Keenan Allen,IND,WR,3,2.0,1.0,healthy,0.97,,,45.9,2,1,0.007,Alec Pierce (out); Josh Downs (healthy)
+00-0035535,Darius Slayton,IND,WR,4,5.0,1.0,healthy,0.97,,,40.8,3,1,0.012,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy)
+00-0032951,Laquon Treadwell,IND,WR,5,4.0,1.0,healthy,0.97,,,13.9,4,1,0.015,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy)
+00-0035021,Ashton Dulin,IND,WR,6,6.0,0.0,questionable,0.72,Ankle,,109.7,5,1,0.017,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Laquon Treadwell (healthy)
+00-0041132,Deion Burks,IND,WR,7,7.0,0.0,healthy,0.97,,,3501.0,6,1,0.026,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Laquon Treadwell (healthy); Ashton Dulin (questionable)
+00-0035045,D.J. Montgomery,IND,WR,8,8.0,0.0,ir,0.02,Abdomen,,553.0,7,1,0.026,Alec Pierce (out); Josh Downs (healthy); Keenan Allen (healthy); Darius Slayton (healthy); Laquon Treadwell (healthy); Ashton Dulin (questionable); Deion Burks (healthy)
+00-0036971,Trevor Lawrence,JAX,QB,1,1.0,0.0,healthy,0.97,,,56.6,0,0,0.0,nobody
+00-0040234,Quinn Ewers,JAX,QB,2,3.0,1.0,healthy,0.97,,,71.4,1,0,0.0,Trevor Lawrence (healthy)
+00-0040719,Bhayshul Tuten,JAX,RB,1,1.0,0.0,healthy,0.97,,,52.7,0,0,0.0,nobody
+00-0038611,Chris Rodriguez Jr.,JAX,RB,2,2.0,0.0,healthy,0.97,,,56.4,1,0,0.014,Bhayshul Tuten (healthy)
+00-0040238,LeQuint Allen Jr.,JAX,RB,3,4.0,1.0,healthy,0.97,,,14.6,2,0,0.021,Bhayshul Tuten (healthy); Chris Rodriguez Jr. (healthy)
+00-0032104,Ameer Abdullah,JAX,RB,4,3.0,1.0,healthy,0.97,,,14.5,3,0,0.022,Bhayshul Tuten (healthy); Chris Rodriguez Jr. (healthy); LeQuint Allen Jr. (healthy)
+00-0038935,Brenton Strange,JAX,TE,1,1.0,0.0,healthy,0.97,,,56.3,0,0,0.0,nobody
+00-0041503,Nate Boerkircher,JAX,TE,2,2.0,0.0,healthy,0.97,,,209.5,1,0,0.005,Brenton Strange (healthy)
+00-0036590,Quintin Morris,JAX,TE,3,3.0,0.0,healthy,0.97,,,2707.0,2,0,0.005,Brenton Strange (healthy); Nate Boerkircher (healthy)
+00-0041084,Tanner Koziol,JAX,TE,4,4.0,0.0,healthy,0.97,,,71.4,3,0,0.006,Brenton Strange (healthy); Nate Boerkircher (healthy); Quintin Morris (healthy)
+00-0038606,Parker Washington,JAX,WR,1,1.0,0.0,healthy,0.97,,,56.4,0,0,0.0,nobody
+00-0039893,Brian Thomas Jr.,JAX,WR,2,2.0,0.0,healthy,0.97,,,52.1,1,0,0.007,Parker Washington (healthy)
+00-0034960,Jakobi Meyers,JAX,WR,3,3.0,0.0,healthy,0.97,,,56.4,2,0,0.013,Parker Washington (healthy); Brian Thomas Jr. (healthy)
+00-0041100,Josh Cameron,JAX,WR,4,5.0,1.0,healthy,0.97,,,14.8,3,0,0.017,Parker Washington (healthy); Brian Thomas Jr. (healthy); Jakobi Meyers (healthy)
 00-0040718,Travis Hunter,JAX,WR,5,,,healthy,0.97,,,,4,0,0.018,Parker Washington (healthy); Brian Thomas Jr. (healthy); Jakobi Meyers (healthy); Josh Cameron (healthy)
-00-0041106,CJ Williams,JAX,WR,6,9.0,3.0,out,0.02,Coach's Decision,,51.3,5,0,0.019,Parker Washington (healthy); Brian Thomas Jr. (healthy); Jakobi Meyers (healthy); Josh Cameron (healthy); Travis Hunter (healthy)
-00-0033873,Patrick Mahomes,KC,QB,1,1.0,0.0,healthy,0.97,,,30.7,0,0,0.0,nobody
-00-0036945,Justin Fields,KC,QB,2,2.0,0.0,healthy,0.97,,,738.4,1,0,0.0,Patrick Mahomes (healthy)
-00-0040906,Garrett Nussmeier,KC,QB,3,3.0,0.0,out,0.02,Coach's Decision,,47.2,2,0,0.0,Patrick Mahomes (healthy); Justin Fields (healthy)
-00-0038134,Kenneth Walker III,KC,RB,1,1.0,0.0,healthy,0.97,,,30.7,0,0,0.0,nobody
-00-0041013,Emmett Johnson,KC,RB,2,2.0,0.0,healthy,0.97,,,25.6,1,0,0.02,Kenneth Walker III (healthy)
-00-0040078,Brashard Smith,KC,RB,3,3.0,0.0,healthy,0.97,,,92.5,2,0,0.023,Kenneth Walker III (healthy); Emmett Johnson (healthy)
-00-0030506,Travis Kelce,KC,TE,1,1.0,0.0,healthy,0.97,,,30.4,0,0,0.0,nobody
-00-0036637,Noah Gray,KC,TE,2,2.0,0.0,healthy,0.97,,,18.0,1,0,0.006,Travis Kelce (healthy)
-00-0040081,Jake Briningstool,KC,TE,3,4.0,1.0,healthy,0.97,,,165.9,2,0,0.008,Travis Kelce (healthy); Noah Gray (healthy)
-00-0039824,Jared Wiley,KC,TE,4,3.0,1.0,out,0.02,Coach's Decision,,2471.1,3,0,0.008,Travis Kelce (healthy); Noah Gray (healthy); Jake Briningstool (healthy)
-00-0040955,John Michael Gyllenborg,KC,TE,5,6.0,1.0,ir,0.02,Knee,,1344.4,4,1,0.008,Travis Kelce (healthy); Noah Gray (healthy); Jake Briningstool (healthy); Jared Wiley (out)
-00-0039067,Rashee Rice,KC,WR,1,1.0,0.0,healthy,0.97,,,30.4,0,0,0.0,nobody
-00-0039894,Xavier Worthy,KC,WR,2,2.0,0.0,healthy,0.97,,,19.2,1,0,0.006,Rashee Rice (healthy)
-00-0038104,Tyquan Thornton,KC,WR,3,3.0,0.0,healthy,0.97,,,18.0,2,0,0.011,Rashee Rice (healthy); Xavier Worthy (healthy)
-00-0040890,Cyrus Allen,KC,WR,4,5.0,1.0,healthy,0.97,,,30.2,3,0,0.015,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy)
-00-0040646,Jalen Royals,KC,WR,5,4.0,1.0,healthy,0.97,,,40.2,4,0,0.015,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy)
-00-0038519,Nikko Remigio,KC,WR,6,6.0,0.0,healthy,0.97,,,165.9,5,0,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy)
-00-0040953,Jeff Caldwell,KC,WR,7,8.0,1.0,ir,0.02,Knee,,671.1,6,0,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy); Nikko Remigio (healthy)
-00-0040120,Jimmy Holiday,KC,WR,8,,,ir,0.02,Undisclosed,,532.7,7,1,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy); Nikko Remigio (healthy); Jeff Caldwell (ir)
-00-0026498,Matthew Stafford,LA,QB,1,1.0,0.0,healthy,0.97,,,10.6,0,0,0.0,nobody
-00-0039107,Stetson Bennett IV,LA,QB,2,2.0,0.0,healthy,0.97,,,261.8,1,0,0.0,Matthew Stafford (healthy)
-00-0041568,Ty Simpson,LA,QB,3,3.0,0.0,out,0.02,Coach's Decision,,23.3,2,0,0.0,Matthew Stafford (healthy); Stetson Bennett IV (healthy)
-00-0041414,Matthew Caldwell,LA,QB,4,,,healthy,0.97,,,,3,1,0.0,Matthew Stafford (healthy); Stetson Bennett IV (healthy); Ty Simpson (out)
-00-0037840,Kyren Williams,LA,RB,1,1.0,0.0,healthy,0.97,,,10.4,0,0,0.0,nobody
-00-0039738,Blake Corum,LA,RB,2,2.0,0.0,healthy,0.97,,,10.4,1,0,0.016,Kyren Williams (healthy)
-00-0037557,Ronnie Rivers,LA,RB,3,3.0,0.0,out,0.02,Calf,,20.1,2,0,0.027,Kyren Williams (healthy); Blake Corum (healthy)
-00-0036244,Colby Parkinson,LA,TE,1,1.0,0.0,healthy,0.97,,,10.4,0,0,0.0,nobody
-00-0033110,Tyler Higbee,LA,TE,2,3.0,1.0,healthy,0.97,,,103.9,1,0,0.003,Colby Parkinson (healthy)
-00-0040737,Terrance Ferguson,LA,TE,3,2.0,1.0,healthy,0.97,,,8.1,2,0,0.004,Colby Parkinson (healthy); Tyler Higbee (healthy)
-00-0039074,Davis Allen,LA,TE,4,4.0,0.0,healthy,0.97,,,190.8,3,0,0.006,Colby Parkinson (healthy); Tyler Higbee (healthy); Terrance Ferguson (healthy)
-00-0041510,Max Klare,LA,TE,5,5.0,0.0,healthy,0.97,,,286.2,4,0,0.006,Colby Parkinson (healthy); Tyler Higbee (healthy); Terrance Ferguson (healthy); Davis Allen (healthy)
-00-0039075,Puka Nacua,LA,WR,1,6.0,5.0,out,0.02,Hip,,6.2,0,0,0.0,nobody
-00-0031381,Davante Adams,LA,WR,2,1.0,1.0,healthy,0.97,,,10.4,1,1,0.268,Puka Nacua (out)
-00-0039751,Jordan Whittington,LA,WR,3,7.0,4.0,out,0.02,Quadriceps,,22.4,2,1,0.276,Puka Nacua (out); Davante Adams (healthy)
-00-0040590,Konata Mumpfield,LA,WR,4,2.0,2.0,healthy,0.97,,,23.1,3,2,0.305,Puka Nacua (out); Davante Adams (healthy); Jordan Whittington (out)
-00-0038359,Xavier Smith,LA,WR,5,4.0,1.0,healthy,0.97,,,262.0,4,2,0.306,Puka Nacua (out); Davante Adams (healthy); Jordan Whittington (out); Konata Mumpfield (healthy)
-00-0036849,Tutu Atwell,LA,WR,6,3.0,3.0,healthy,0.97,,,10.3,5,2,0.307,Puka Nacua (out); Davante Adams (healthy); Jordan Whittington (out); Konata Mumpfield (healthy); Xavier Smith (healthy)
-00-0041399,CJ Daniels,LA,WR,7,,,healthy,0.97,,,,6,2,0.308,Puka Nacua (out); Davante Adams (healthy); Jordan Whittington (out); Konata Mumpfield (healthy); Xavier Smith (healthy); Tutu Atwell (healthy)
-00-0036355,Justin Herbert,LAC,QB,1,1.0,0.0,healthy,0.97,,,33.4,0,0,0.0,nobody
-00-0037012,Trey Lance,LAC,QB,2,2.0,0.0,healthy,0.97,,,547.2,1,0,0.0,Justin Herbert (healthy)
-00-0040666,Omarion Hampton,LAC,RB,1,1.0,0.0,healthy,0.97,,,33.4,0,0,0.0,nobody
-00-0038454,Keaton Mitchell,LAC,RB,2,2.0,0.0,healthy,0.97,,,20.4,1,0,0.016,Omarion Hampton (healthy)
-00-0039391,Kimani Vidal,LAC,RB,3,3.0,0.0,healthy,0.97,,,97.6,2,0,0.023,Omarion Hampton (healthy); Keaton Mitchell (healthy)
-00-0040189,Oronde Gadsden,LAC,TE,1,1.0,0.0,healthy,0.97,,,24.1,0,0,0.0,nobody
-00-0038046,Charlie Kolar,LAC,TE,2,3.0,1.0,out,0.02,Forearm,,24.6,1,0,0.005,Oronde Gadsden (healthy)
-00-0033885,David Njoku,LAC,TE,3,2.0,1.0,out,0.02,Knee,,24.6,2,1,0.005,Oronde Gadsden (healthy); Charlie Kolar (out)
-00-0039915,Ladd McConkey,LAC,WR,1,1.0,0.0,healthy,0.97,,,33.2,0,0,0.0,nobody
-00-0038544,Quentin Johnston,LAC,WR,2,2.0,0.0,healthy,0.97,,,33.2,1,0,0.008,Ladd McConkey (healthy)
-00-0040727,Tre' Harris,LAC,WR,3,3.0,0.0,healthy,0.97,,,20.2,2,0,0.013,Ladd McConkey (healthy); Quentin Johnston (healthy)
-00-0041550,Brenen Thompson,LAC,WR,4,4.0,0.0,healthy,0.97,,,172.9,3,0,0.018,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy)
-00-0038573,Derius Davis,LAC,WR,5,5.0,0.0,healthy,0.97,,,142.4,4,0,0.02,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy); Brenen Thompson (healthy)
-00-0035589,Gary Jennings,LAC,WR,6,7.0,1.0,healthy,0.97,,,151.4,5,0,0.021,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy); Brenen Thompson (healthy); Derius Davis (healthy)
-00-0040184,KeAndre Lambert-Smith,LAC,WR,7,9.0,2.0,ir,0.02,Hamstring,,166.7,6,0,0.021,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy); Brenen Thompson (healthy); Derius Davis (healthy); Gary Jennings (healthy)
-00-0029604,Kirk Cousins,LV,QB,1,1.0,0.0,healthy,0.97,,,33.9,0,0,0.0,nobody
-00-0041562,Fernando Mendoza,LV,QB,2,3.0,1.0,healthy,0.97,,,21.4,1,0,0.0,Kirk Cousins (healthy)
-00-0038579,Aidan O'Connell,LV,QB,3,2.0,1.0,out,0.02,Personal,,72.7,2,0,0.0,Kirk Cousins (healthy); Fernando Mendoza (healthy)
-00-0040122,Ashton Jeanty,LV,RB,1,1.0,0.0,healthy,0.97,,,33.8,0,0,0.0,nobody
-00-0040878,Mike Washington Jr.,LV,RB,2,2.0,0.0,healthy,0.97,,,27.2,1,0,0.021,Ashton Jeanty (healthy)
-00-0039407,Dylan Laube,LV,RB,3,4.0,1.0,healthy,0.97,,,188.5,2,0,0.025,Ashton Jeanty (healthy); Mike Washington Jr. (healthy)
-00-0039244,Chris Collier,LV,RB,4,7.0,3.0,ir,0.02,Undisclosed,,1222.5,3,0,0.026,Ashton Jeanty (healthy); Mike Washington Jr. (healthy); Dylan Laube (healthy)
-00-0039338,Brock Bowers,LV,TE,1,1.0,0.0,out,0.02,Knee - Meniscus,,25.7,0,0,0.0,nobody
-00-0039066,Michael Mayer,LV,TE,2,2.0,0.0,healthy,0.97,,,2.9,1,1,0.228,Brock Bowers (out)
-00-0034365,Ian Thomas,LV,TE,3,3.0,0.0,healthy,0.97,,,188.5,2,1,0.231,Brock Bowers (out); Michael Mayer (healthy)
-00-0040488,Carter Runyon,LV,TE,4,5.0,1.0,ir,0.02,Undisclosed,,532.5,3,1,0.232,Brock Bowers (out); Michael Mayer (healthy); Ian Thomas (healthy)
-00-0038563,Tre Tucker,LV,WR,1,1.0,0.0,healthy,0.97,,,28.6,0,0,0.0,nobody
-00-0037291,Jalen Nailor,LV,WR,2,2.0,0.0,healthy,0.97,,,33.7,1,0,0.005,Tre Tucker (healthy)
-00-0040729,Jack Bech,LV,WR,3,3.0,0.0,healthy,0.97,,,33.7,2,0,0.009,Tre Tucker (healthy); Jalen Nailor (healthy)
-00-0040894,Malik Benson,LV,WR,4,4.0,0.0,healthy,0.97,,,33.7,3,0,0.012,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy)
-00-0037093,Dareke Young,LV,WR,5,5.0,0.0,questionable,0.72,Hamstring,,47.4,4,0,0.013,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy)
-00-0040581,Dont'e Thornton Jr.,LV,WR,6,10.0,4.0,ir,0.02,Undisclosed,,522.8,5,0,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable)
-00-0038590,Justin Shorter,LV,WR,7,9.0,2.0,ir,0.02,Undisclosed,,3382.9,6,1,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable); Dont'e Thornton Jr. (ir)
-00-0041005,Corey Rucker,LV,WR,8,11.0,3.0,ir,0.02,Undisclosed,,2497.5,7,2,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable); Dont'e Thornton Jr. (ir); Justin Shorter (ir)
-00-0038128,Malik Willis,MIA,QB,1,1.0,0.0,healthy,0.97,,,8.1,0,0,0.0,nobody
-00-0040014,Kyle McCord,MIA,QB,2,3.0,1.0,healthy,0.97,,,505.2,1,0,0.0,Malik Willis (healthy)
-00-0040398,Brady Cook,MIA,QB,3,2.0,1.0,out,0.02,Coach's Decision,,50.7,2,0,0.0,Malik Willis (healthy); Kyle McCord (healthy)
-00-0039040,De'Von Achane,MIA,RB,1,1.0,0.0,healthy,0.97,,,33.2,0,0,0.0,nobody
-00-0039874,Jaylen Wright,MIA,RB,2,2.0,0.0,questionable,0.72,Neck,,19.8,1,0,0.017,De'Von Achane (healthy)
-00-0040198,Ollie Gordon II,MIA,RB,3,3.0,0.0,healthy,0.97,,,77.6,2,0,0.037,De'Von Achane (healthy); Jaylen Wright (questionable)
-00-0037252,Greg Dulcich,MIA,TE,1,1.0,0.0,healthy,0.97,,,18.2,0,0,0.0,nobody
-00-0041524,Will Kacmarek,MIA,TE,2,2.0,0.0,healthy,0.97,,,188.7,1,0,0.004,Greg Dulcich (healthy)
-00-0041579,Seydou Traore,MIA,TE,3,3.0,0.0,healthy,0.97,,,266.0,2,0,0.006,Greg Dulcich (healthy); Will Kacmarek (healthy)
-00-0041077,Justin Joly,MIA,TE,4,4.0,0.0,out,0.02,Coach's Decision,,219.1,3,0,0.007,Greg Dulcich (healthy); Will Kacmarek (healthy); Seydou Traore (healthy)
-00-0037078,Cole Turner,MIA,TE,5,5.0,0.0,ir,0.02,Undisclosed,,622.7,4,1,0.018,Greg Dulcich (healthy); Will Kacmarek (healthy); Seydou Traore (healthy); Justin Joly (out)
-00-0039880,Malik Washington,MIA,WR,1,1.0,0.0,healthy,0.97,,,7.0,0,0,0.0,nobody
-00-0041523,Caleb Douglas,MIA,WR,2,2.0,0.0,questionable,0.72,Ankle,,20.6,1,0,0.007,Malik Washington (healthy)
-00-0041525,Chris Bell,MIA,WR,3,3.0,0.0,healthy,0.97,,,7.8,2,0,0.035,Malik Washington (healthy); Caleb Douglas (questionable)
-00-0041529,Kevin Coleman Jr.,MIA,WR,4,4.0,0.0,healthy,0.97,,,190.6,3,0,0.037,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy)
-00-0037666,Jalen Tolbert,MIA,WR,5,5.0,0.0,out,0.02,Coach's Decision,,50.7,4,0,0.04,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy); Kevin Coleman Jr. (healthy)
-00-0038824,Ryan Miller,MIA,WR,6,6.0,0.0,healthy,0.97,,,33.2,5,1,0.076,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy); Kevin Coleman Jr. (healthy); Jalen Tolbert (out)
-00-0035228,Kyler Murray,MIN,QB,1,1.0,0.0,out,0.02,Concussion,,27.8,0,0,0.0,nobody
-00-0032950,Carson Wentz,MIN,QB,2,2.0,0.0,healthy,0.97,,,27.7,1,1,0.0,Kyler Murray (out)
-00-0039923,J.J. McCarthy,MIN,QB,3,3.0,0.0,healthy,0.97,,,99.5,2,1,0.0,Kyler Murray (out); Carson Wentz (healthy)
-00-0033293,Aaron Jones Sr.,MIN,RB,1,1.0,0.0,questionable,0.72,Knee,,25.5,0,0,0.0,nobody
-00-0041104,Demond Claiborne,MIN,RB,2,2.0,0.0,healthy,0.97,,,18.4,1,0,0.163,Aaron Jones Sr. (questionable)
-00-0036425,DeeJay Dallas,MIN,RB,3,3.0,0.0,healthy,0.97,,,20.1,2,0,0.166,Aaron Jones Sr. (questionable); Demond Claiborne (healthy)
-00-0037525,Jordan Mason,MIN,RB,4,6.0,2.0,ir,0.02,Thumb,,147.4,3,0,0.168,Aaron Jones Sr. (questionable); Demond Claiborne (healthy); DeeJay Dallas (healthy)
-00-0035229,T.J. Hockenson,MIN,TE,1,1.0,0.0,healthy,0.97,,,25.9,0,0,0.0,nobody
-00-0035249,Josh Oliver,MIN,TE,2,2.0,0.0,healthy,0.97,,,45.3,1,0,0.005,T.J. Hockenson (healthy)
-00-0040215,Gavin Bartholomew,MIN,TE,3,4.0,1.0,healthy,0.97,,,887.7,2,0,0.006,T.J. Hockenson (healthy); Josh Oliver (healthy)
-00-0040509,Ben Yurosek,MIN,TE,4,5.0,1.0,ir,0.02,Undisclosed,,334.4,3,0,0.006,T.J. Hockenson (healthy); Josh Oliver (healthy); Gavin Bartholomew (healthy)
-00-0036322,Justin Jefferson,MIN,WR,1,1.0,0.0,healthy,0.97,,,45.0,0,0,0.0,nobody
-00-0038994,Jordan Addison,MIN,WR,2,2.0,0.0,healthy,0.97,,,44.0,1,0,0.009,Justin Jefferson (healthy)
-00-0036259,Jauan Jennings,MIN,WR,3,3.0,0.0,out,0.02,Personal,,25.9,2,0,0.014,Justin Jefferson (healthy); Jordan Addison (healthy)
-00-0040154,Tai Felton,MIN,WR,4,4.0,0.0,healthy,0.97,,,738.6,3,1,0.131,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (out)
-00-0040506,Myles Price,MIN,WR,5,5.0,0.0,healthy,0.97,,,45.3,4,1,0.132,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (out); Tai Felton (healthy)
-00-0039710,Jeshaun Jones,MIN,WR,6,6.0,0.0,sus,0.02,Suspension,,605.6,5,1,0.132,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (out); Tai Felton (healthy); Myles Price (healthy)
-00-0039851,Drake Maye,NE,QB,1,1.0,0.0,healthy,0.97,,,41.0,0,0,0.0,nobody
-00-0038476,Tommy DeVito,NE,QB,2,2.0,0.0,healthy,0.97,,,2832.1,1,0,0.0,Drake Maye (healthy)
-00-0041123,Behren Morton,NE,QB,3,3.0,0.0,out,0.02,Coach's Decision,,53.8,2,0,0.0,Drake Maye (healthy); Tommy DeVito (healthy)
-00-0036875,Rhamondre Stevenson,NE,RB,1,2.0,1.0,healthy,0.97,,,42.0,0,0,0.0,nobody
-00-0040734,TreVeyon Henderson,NE,RB,2,1.0,1.0,healthy,0.97,,,47.0,1,0,0.009,Rhamondre Stevenson (healthy)
-00-0040556,Corey Kiner,NE,RB,3,3.0,0.0,healthy,0.97,,,76.1,2,0,0.022,Rhamondre Stevenson (healthy); TreVeyon Henderson (healthy)
-00-0041323,Myles Montgomery,NE,RB,4,,,ir,0.02,Undisclosed,,959.2,3,0,0.023,Rhamondre Stevenson (healthy); TreVeyon Henderson (healthy); Corey Kiner (healthy)
-00-0033090,Hunter Henry,NE,TE,1,1.0,0.0,healthy,0.97,,,44.0,0,0,0.0,nobody
-00-0041395,Eli Raridon,NE,TE,2,2.0,0.0,questionable,0.72,Thigh,,46.7,1,0,0.006,Hunter Henry (healthy)
-00-0038564,Cameron Latu,NE,TE,3,3.0,0.0,healthy,0.97,,,522.9,2,0,0.015,Hunter Henry (healthy); Eli Raridon (questionable)
-00-0041314,Tanner Arkin,NE,TE,4,5.0,1.0,out,0.02,Coach's Decision,,54.1,3,0,0.015,Hunter Henry (healthy); Eli Raridon (questionable); Cameron Latu (healthy)
-00-0038720,Julian Hill,NE,TE,5,4.0,1.0,ir,0.02,Knee,,2687.1,4,1,0.015,Hunter Henry (healthy); Eli Raridon (questionable); Cameron Latu (healthy); Tanner Arkin (out)
-00-0037816,Romeo Doubs,NE,WR,1,1.0,0.0,healthy,0.97,,,31.9,0,0,0.0,nobody
-00-0038621,DeMario Douglas,NE,WR,2,3.0,1.0,healthy,0.97,,,22.6,1,0,0.005,Romeo Doubs (healthy)
-00-0033555,Mack Hollins,NE,WR,3,2.0,1.0,healthy,0.97,,,5.4,2,0,0.01,Romeo Doubs (healthy); DeMario Douglas (healthy)
-00-0040131,Kyle Williams,NE,WR,4,4.0,0.0,healthy,0.97,,,140.1,3,0,0.015,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy)
-00-0040563,Efton Chism III,NE,WR,5,5.0,0.0,healthy,0.97,,,311.3,4,0,0.017,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy)
-00-0035676,A.J. Brown,NE,WR,6,6.0,0.0,ir,0.02,Ankle,,221.6,5,0,0.018,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy); Efton Chism III (healthy)
-00-0040570,Jeremiah Webb,NE,WR,7,7.0,0.0,ir,0.02,Arm,,1392.1,6,1,0.018,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy); Efton Chism III (healthy); A.J. Brown (ir)
-00-0040743,Tyler Shough,NO,QB,1,1.0,0.0,healthy,0.97,,,6.8,0,0,0.0,nobody
-00-0039376,Spencer Rattler,NO,QB,2,2.0,0.0,healthy,0.97,,,571.0,1,0,0.0,Tyler Shough (healthy)
-00-0037013,Zach Wilson,NO,QB,3,3.0,0.0,out,0.02,Coach's Decision,,54.2,2,0,0.0,Tyler Shough (healthy); Spencer Rattler (healthy)
-00-0036973,Travis Etienne Jr.,NO,RB,1,1.0,0.0,healthy,0.97,,,49.8,0,0,0.0,nobody
-00-0033906,Alvin Kamara,NO,RB,2,2.0,0.0,healthy,0.97,,,26.4,1,0,0.014,Travis Etienne Jr. (healthy)
-00-0038551,Kendre Miller,NO,RB,3,3.0,0.0,out,0.02,Coach's Decision,,54.4,2,0,0.023,Travis Etienne Jr. (healthy); Alvin Kamara (healthy)
-00-0041326,CJ Donaldson,NO,RB,4,4.0,0.0,healthy,0.97,,,91.3,3,1,0.023,Travis Etienne Jr. (healthy); Alvin Kamara (healthy); Kendre Miller (out)
-00-0039373,Audric Estime,NO,RB,5,7.0,2.0,ir,0.02,Thigh,,144.7,4,1,0.024,Travis Etienne Jr. (healthy); Alvin Kamara (healthy); Kendre Miller (out); CJ Donaldson (healthy)
-00-0037276,Ty Chandler,NO,RB,6,5.0,1.0,ir,0.02,Knee,,671.7,5,2,0.024,Travis Etienne Jr. (healthy); Alvin Kamara (healthy); Kendre Miller (out); CJ Donaldson (healthy); Audric Estime (ir)
-00-0036040,Juwan Johnson,NO,TE,1,1.0,0.0,healthy,0.97,,,26.5,0,0,0.0,nobody
-00-0035644,Noah Fant,NO,TE,2,2.0,0.0,healthy,0.97,,,89.2,1,0,0.005,Juwan Johnson (healthy)
-00-0041041,Oscar Delp,NO,TE,3,3.0,0.0,healthy,0.97,,,95.1,2,0,0.007,Juwan Johnson (healthy); Noah Fant (healthy)
-00-0039518,Treyton Welch,NO,TE,4,5.0,1.0,healthy,0.97,,,244.0,3,0,0.008,Juwan Johnson (healthy); Noah Fant (healthy); Oscar Delp (healthy)
-00-0040244,Moliki Matavao,NO,TE,5,6.0,1.0,ir,0.02,Knee,,671.6,4,0,0.008,Juwan Johnson (healthy); Noah Fant (healthy); Oscar Delp (healthy); Treyton Welch (healthy)
-00-0037239,Chris Olave,NO,WR,1,1.0,0.0,healthy,0.97,,,45.6,0,0,0.0,nobody
-00-0039424,Devaughn Vele,NO,WR,2,2.0,0.0,healthy,0.97,,,28.9,1,0,0.008,Chris Olave (healthy)
-00-0041099,Barion Brown,NO,WR,3,4.0,1.0,healthy,0.97,,,200.9,2,0,0.014,Chris Olave (healthy); Devaughn Vele (healthy)
-00-0041067,Bryce Lance,NO,WR,4,3.0,1.0,healthy,0.97,,,193.0,3,0,0.015,Chris Olave (healthy); Devaughn Vele (healthy); Barion Brown (healthy)
-00-0041029,Jordyn Tyson,NO,WR,5,11.0,6.0,ir,0.02,Hamstring,,335.6,4,0,0.017,Chris Olave (healthy); Devaughn Vele (healthy); Barion Brown (healthy); Bryce Lance (healthy)
-00-0039623,Mason Tipton,NO,WR,6,9.0,3.0,pup,0.02,Groin,,531.7,5,1,0.017,Chris Olave (healthy); Devaughn Vele (healthy); Barion Brown (healthy); Bryce Lance (healthy); Jordyn Tyson (ir)
-00-0040691,Jaxson Dart,NYG,QB,1,1.0,0.0,out,0.02,Knee,,3.5,0,0,0.0,nobody
-00-0031503,Jameis Winston,NYG,QB,2,2.0,0.0,healthy,0.97,,,3.2,1,1,0.0,Jaxson Dart (out)
-00-0040715,Cam Skattebo,NYG,RB,1,1.0,0.0,healthy,0.97,,,10.1,0,0,0.0,nobody
-00-0036893,Najee Harris,NYG,RB,2,3.0,1.0,healthy,0.97,,,9.9,1,0,0.015,Cam Skattebo (healthy)
-00-0035250,Devin Singletary,NYG,RB,3,2.0,1.0,healthy,0.97,,,10.1,2,0,0.02,Cam Skattebo (healthy); Najee Harris (healthy)
-00-0039384,Tyrone Tracy Jr.,NYG,RB,4,4.0,0.0,healthy,0.97,,,9.9,3,0,0.025,Cam Skattebo (healthy); Najee Harris (healthy); Devin Singletary (healthy)
-00-0037838,Isaiah Likely,NYG,TE,1,1.0,0.0,healthy,0.97,,,10.1,0,0,0.0,nobody
-00-0039847,Theo Johnson,NYG,TE,2,2.0,0.0,healthy,0.97,,,189.0,1,0,0.005,Isaiah Likely (healthy)
+00-0041106,CJ Williams,JAX,WR,6,9.0,3.0,healthy,0.97,,,71.3,5,0,0.019,Parker Washington (healthy); Brian Thomas Jr. (healthy); Jakobi Meyers (healthy); Josh Cameron (healthy); Travis Hunter (healthy)
+00-0033873,Patrick Mahomes,KC,QB,1,1.0,0.0,healthy,0.97,,,50.6,0,0,0.0,nobody
+00-0036945,Justin Fields,KC,QB,2,2.0,0.0,healthy,0.97,,,758.4,1,0,0.0,Patrick Mahomes (healthy)
+00-0040906,Garrett Nussmeier,KC,QB,3,3.0,0.0,healthy,0.97,,,67.2,2,0,0.0,Patrick Mahomes (healthy); Justin Fields (healthy)
+00-0038134,Kenneth Walker III,KC,RB,1,1.0,0.0,healthy,0.97,,,50.6,0,0,0.0,nobody
+00-0041013,Emmett Johnson,KC,RB,2,2.0,0.0,healthy,0.97,,,45.6,1,0,0.02,Kenneth Walker III (healthy)
+00-0040078,Brashard Smith,KC,RB,3,3.0,0.0,healthy,0.97,,,112.4,2,0,0.023,Kenneth Walker III (healthy); Emmett Johnson (healthy)
+00-0030506,Travis Kelce,KC,TE,1,1.0,0.0,healthy,0.97,,,50.4,0,0,0.0,nobody
+00-0036637,Noah Gray,KC,TE,2,2.0,0.0,healthy,0.97,,,37.9,1,0,0.006,Travis Kelce (healthy)
+00-0040081,Jake Briningstool,KC,TE,3,4.0,1.0,healthy,0.97,,,185.9,2,0,0.008,Travis Kelce (healthy); Noah Gray (healthy)
+00-0039824,Jared Wiley,KC,TE,4,3.0,1.0,healthy,0.97,,,2491.0,3,0,0.008,Travis Kelce (healthy); Noah Gray (healthy); Jake Briningstool (healthy)
+00-0040955,John Michael Gyllenborg,KC,TE,5,6.0,1.0,ir,0.02,Knee,,1364.4,4,0,0.008,Travis Kelce (healthy); Noah Gray (healthy); Jake Briningstool (healthy); Jared Wiley (healthy)
+00-0039067,Rashee Rice,KC,WR,1,1.0,0.0,healthy,0.97,,,50.4,0,0,0.0,nobody
+00-0039894,Xavier Worthy,KC,WR,2,2.0,0.0,healthy,0.97,,,39.2,1,0,0.006,Rashee Rice (healthy)
+00-0038104,Tyquan Thornton,KC,WR,3,3.0,0.0,healthy,0.97,,,37.9,2,0,0.011,Rashee Rice (healthy); Xavier Worthy (healthy)
+00-0040890,Cyrus Allen,KC,WR,4,5.0,1.0,healthy,0.97,,,17.9,3,0,0.015,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy)
+00-0040646,Jalen Royals,KC,WR,5,4.0,1.0,healthy,0.97,,,13.9,4,0,0.015,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy)
+00-0038519,Nikko Remigio,KC,WR,6,6.0,0.0,healthy,0.97,,,185.9,5,0,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy)
+00-0040953,Jeff Caldwell,KC,WR,7,8.0,1.0,ir,0.02,Knee,,691.1,6,0,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy); Nikko Remigio (healthy)
+00-0040120,Jimmy Holiday,KC,WR,8,,,ir,0.02,Undisclosed,,552.6,7,1,0.016,Rashee Rice (healthy); Xavier Worthy (healthy); Tyquan Thornton (healthy); Cyrus Allen (healthy); Jalen Royals (healthy); Nikko Remigio (healthy); Jeff Caldwell (ir)
+00-0026498,Matthew Stafford,LA,QB,1,1.0,0.0,healthy,0.97,,,30.5,0,0,0.0,nobody
+00-0039107,Stetson Bennett IV,LA,QB,2,2.0,0.0,healthy,0.97,,,281.8,1,0,0.0,Matthew Stafford (healthy)
+00-0041568,Ty Simpson,LA,QB,3,3.0,0.0,healthy,0.97,,,43.3,2,0,0.0,Matthew Stafford (healthy); Stetson Bennett IV (healthy)
+00-0041414,Matthew Caldwell,LA,QB,4,,,healthy,0.97,,,,3,0,0.0,Matthew Stafford (healthy); Stetson Bennett IV (healthy); Ty Simpson (healthy)
+00-0037840,Kyren Williams,LA,RB,1,1.0,0.0,healthy,0.97,,,30.4,0,0,0.0,nobody
+00-0039738,Blake Corum,LA,RB,2,2.0,0.0,healthy,0.97,,,30.4,1,0,0.016,Kyren Williams (healthy)
+00-0037557,Ronnie Rivers,LA,RB,3,3.0,0.0,questionable,0.72,Calf,,40.0,2,0,0.027,Kyren Williams (healthy); Blake Corum (healthy)
+00-0036244,Colby Parkinson,LA,TE,1,2.0,1.0,healthy,0.97,,,18.5,0,0,0.0,nobody
+00-0040737,Terrance Ferguson,LA,TE,2,1.0,1.0,healthy,0.97,,,28.1,1,0,0.003,Colby Parkinson (healthy)
+00-0039074,Davis Allen,LA,TE,3,4.0,1.0,healthy,0.97,,,18.4,2,0,0.005,Colby Parkinson (healthy); Terrance Ferguson (healthy)
+00-0033110,Tyler Higbee,LA,TE,4,3.0,1.0,healthy,0.97,,,18.0,3,0,0.005,Colby Parkinson (healthy); Terrance Ferguson (healthy); Davis Allen (healthy)
+00-0041510,Max Klare,LA,TE,5,5.0,0.0,healthy,0.97,,,306.2,4,0,0.006,Colby Parkinson (healthy); Terrance Ferguson (healthy); Davis Allen (healthy); Tyler Higbee (healthy)
+00-0039075,Puka Nacua,LA,WR,1,1.0,0.0,questionable,0.72,Groin,,26.2,0,0,0.0,nobody
+00-0031381,Davante Adams,LA,WR,2,2.0,0.0,healthy,0.97,,,30.4,1,0,0.076,Puka Nacua (questionable)
+00-0039751,Jordan Whittington,LA,WR,3,4.0,1.0,questionable,0.72,Quadriceps,,42.4,2,0,0.085,Puka Nacua (questionable); Davante Adams (healthy)
+00-0040590,Konata Mumpfield,LA,WR,4,3.0,1.0,healthy,0.97,,,18.4,3,0,0.093,Puka Nacua (questionable); Davante Adams (healthy); Jordan Whittington (questionable)
+00-0038359,Xavier Smith,LA,WR,5,6.0,1.0,healthy,0.97,,,18.0,4,0,0.094,Puka Nacua (questionable); Davante Adams (healthy); Jordan Whittington (questionable); Konata Mumpfield (healthy)
+00-0036849,Tutu Atwell,LA,WR,6,5.0,1.0,healthy,0.97,,,18.1,5,0,0.095,Puka Nacua (questionable); Davante Adams (healthy); Jordan Whittington (questionable); Konata Mumpfield (healthy); Xavier Smith (healthy)
+00-0041399,CJ Daniels,LA,WR,7,,,healthy,0.97,,,,6,0,0.095,Puka Nacua (questionable); Davante Adams (healthy); Jordan Whittington (questionable); Konata Mumpfield (healthy); Xavier Smith (healthy); Tutu Atwell (healthy)
+00-0036355,Justin Herbert,LAC,QB,1,1.0,0.0,healthy,0.97,,,53.4,0,0,0.0,nobody
+00-0037012,Trey Lance,LAC,QB,2,2.0,0.0,healthy,0.97,,,567.1,1,0,0.0,Justin Herbert (healthy)
+00-0040666,Omarion Hampton,LAC,RB,1,1.0,0.0,healthy,0.97,,,53.4,0,0,0.0,nobody
+00-0038454,Keaton Mitchell,LAC,RB,2,2.0,0.0,healthy,0.97,,,40.4,1,0,0.016,Omarion Hampton (healthy)
+00-0039391,Kimani Vidal,LAC,RB,3,3.0,0.0,healthy,0.97,,,14.0,2,0,0.023,Omarion Hampton (healthy); Keaton Mitchell (healthy)
+00-0040189,Oronde Gadsden,LAC,TE,1,1.0,0.0,healthy,0.97,,,44.1,0,0,0.0,nobody
+00-0039489,Hayden Rucci,LAC,TE,2,4.0,2.0,healthy,0.97,,,18.0,1,0,0.005,Oronde Gadsden (healthy)
+00-0038046,Charlie Kolar,LAC,TE,3,3.0,0.0,out,0.02,Forearm,,18.0,2,0,0.005,Oronde Gadsden (healthy); Hayden Rucci (healthy)
+00-0033885,David Njoku,LAC,TE,4,2.0,2.0,out,0.02,Knee,,44.5,3,1,0.005,Oronde Gadsden (healthy); Hayden Rucci (healthy); Charlie Kolar (out)
+00-0039915,Ladd McConkey,LAC,WR,1,1.0,0.0,healthy,0.97,,,53.2,0,0,0.0,nobody
+00-0038544,Quentin Johnston,LAC,WR,2,2.0,0.0,healthy,0.97,,,53.2,1,0,0.008,Ladd McConkey (healthy)
+00-0040727,Tre' Harris,LAC,WR,3,3.0,0.0,healthy,0.97,,,40.2,2,0,0.013,Ladd McConkey (healthy); Quentin Johnston (healthy)
+00-0041550,Brenen Thompson,LAC,WR,4,4.0,0.0,healthy,0.97,,,14.4,3,0,0.018,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy)
+00-0038573,Derius Davis,LAC,WR,5,5.0,0.0,healthy,0.97,,,162.4,4,0,0.02,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy); Brenen Thompson (healthy)
+00-0040184,KeAndre Lambert-Smith,LAC,WR,6,8.0,2.0,ir,0.02,Hamstring,,186.7,5,0,0.021,Ladd McConkey (healthy); Quentin Johnston (healthy); Tre' Harris (healthy); Brenen Thompson (healthy); Derius Davis (healthy)
+00-0029604,Kirk Cousins,LV,QB,1,1.0,0.0,healthy,0.97,,,16.4,0,0,0.0,nobody
+00-0041562,Fernando Mendoza,LV,QB,2,3.0,1.0,healthy,0.97,,,41.4,1,0,0.0,Kirk Cousins (healthy)
+00-0038579,Aidan O'Connell,LV,QB,3,2.0,1.0,questionable,0.72,Personal,,92.7,2,0,0.0,Kirk Cousins (healthy); Fernando Mendoza (healthy)
+00-0040122,Ashton Jeanty,LV,RB,1,1.0,0.0,healthy,0.97,,,53.8,0,0,0.0,nobody
+00-0040878,Mike Washington Jr.,LV,RB,2,2.0,0.0,healthy,0.97,,,47.2,1,0,0.021,Ashton Jeanty (healthy)
+00-0039407,Dylan Laube,LV,RB,3,4.0,1.0,healthy,0.97,,,208.4,2,0,0.025,Ashton Jeanty (healthy); Mike Washington Jr. (healthy)
+00-0039244,Chris Collier,LV,RB,4,7.0,3.0,ir,0.02,Undisclosed,,1242.4,3,0,0.026,Ashton Jeanty (healthy); Mike Washington Jr. (healthy); Dylan Laube (healthy)
+00-0039338,Brock Bowers,LV,TE,1,1.0,0.0,questionable,0.72,Knee - Meniscus,,0.3,0,0,0.0,nobody
+00-0039066,Michael Mayer,LV,TE,2,2.0,0.0,healthy,0.97,,,22.9,1,0,0.065,Brock Bowers (questionable)
+00-0034365,Ian Thomas,LV,TE,3,3.0,0.0,healthy,0.97,,,208.4,2,0,0.068,Brock Bowers (questionable); Michael Mayer (healthy)
+00-0040488,Carter Runyon,LV,TE,4,5.0,1.0,ir,0.02,Undisclosed,,552.4,3,0,0.069,Brock Bowers (questionable); Michael Mayer (healthy); Ian Thomas (healthy)
+00-0038563,Tre Tucker,LV,WR,1,1.0,0.0,healthy,0.97,,,48.6,0,0,0.0,nobody
+00-0037291,Jalen Nailor,LV,WR,2,2.0,0.0,healthy,0.97,,,53.7,1,0,0.005,Tre Tucker (healthy)
+00-0040729,Jack Bech,LV,WR,3,3.0,0.0,healthy,0.97,,,14.4,2,0,0.009,Tre Tucker (healthy); Jalen Nailor (healthy)
+00-0040894,Malik Benson,LV,WR,4,4.0,0.0,healthy,0.97,,,53.6,3,0,0.012,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy)
+00-0037093,Dareke Young,LV,WR,5,5.0,0.0,questionable,0.72,Hamstring,,67.4,4,0,0.013,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy)
+00-0040581,Dont'e Thornton Jr.,LV,WR,6,10.0,4.0,ir,0.02,Undisclosed,,542.8,5,0,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable)
+00-0038590,Justin Shorter,LV,WR,7,9.0,2.0,ir,0.02,Undisclosed,,3402.9,6,1,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable); Dont'e Thornton Jr. (ir)
+00-0041005,Corey Rucker,LV,WR,8,11.0,3.0,ir,0.02,Undisclosed,,2517.4,7,2,0.015,Tre Tucker (healthy); Jalen Nailor (healthy); Jack Bech (healthy); Malik Benson (healthy); Dareke Young (questionable); Dont'e Thornton Jr. (ir); Justin Shorter (ir)
+00-0038128,Malik Willis,MIA,QB,1,1.0,0.0,healthy,0.97,,,28.0,0,0,0.0,nobody
+00-0040014,Kyle McCord,MIA,QB,2,3.0,1.0,healthy,0.97,,,525.1,1,0,0.0,Malik Willis (healthy)
+00-0040398,Brady Cook,MIA,QB,3,2.0,1.0,healthy,0.97,,,70.7,2,0,0.0,Malik Willis (healthy); Kyle McCord (healthy)
+00-0039040,De'Von Achane,MIA,RB,1,1.0,0.0,healthy,0.97,,,53.2,0,0,0.0,nobody
+00-0039874,Jaylen Wright,MIA,RB,2,2.0,0.0,questionable,0.72,Neck,,1.4,1,0,0.017,De'Von Achane (healthy)
+00-0040198,Ollie Gordon II,MIA,RB,3,3.0,0.0,healthy,0.97,,,4.4,2,0,0.037,De'Von Achane (healthy); Jaylen Wright (questionable)
+00-0037252,Greg Dulcich,MIA,TE,1,1.0,0.0,healthy,0.97,,,38.2,0,0,0.0,nobody
+00-0041524,Will Kacmarek,MIA,TE,2,2.0,0.0,healthy,0.97,,,208.6,1,0,0.004,Greg Dulcich (healthy)
+00-0041579,Seydou Traore,MIA,TE,3,4.0,1.0,healthy,0.97,,,285.9,2,0,0.006,Greg Dulcich (healthy); Will Kacmarek (healthy)
+00-0041077,Justin Joly,MIA,TE,4,3.0,1.0,healthy,0.97,,,239.0,3,0,0.006,Greg Dulcich (healthy); Will Kacmarek (healthy); Seydou Traore (healthy)
+00-0037078,Cole Turner,MIA,TE,5,5.0,0.0,ir,0.02,Undisclosed,,642.7,4,0,0.007,Greg Dulcich (healthy); Will Kacmarek (healthy); Seydou Traore (healthy); Justin Joly (healthy)
+00-0039880,Malik Washington,MIA,WR,1,1.0,0.0,healthy,0.97,,,26.9,0,0,0.0,nobody
+00-0041523,Caleb Douglas,MIA,WR,2,2.0,0.0,questionable,0.72,Ankle,,1.2,1,0,0.007,Malik Washington (healthy)
+00-0041525,Chris Bell,MIA,WR,3,3.0,0.0,healthy,0.97,,,14.1,2,0,0.039,Malik Washington (healthy); Caleb Douglas (questionable)
+00-0041529,Kevin Coleman Jr.,MIA,WR,4,5.0,1.0,healthy,0.97,,,14.0,3,0,0.042,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy)
+00-0037666,Jalen Tolbert,MIA,WR,5,4.0,1.0,healthy,0.97,,,70.7,4,0,0.044,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy); Kevin Coleman Jr. (healthy)
+00-0038824,Ryan Miller,MIA,WR,6,6.0,0.0,healthy,0.97,,,14.0,5,0,0.046,Malik Washington (healthy); Caleb Douglas (questionable); Chris Bell (healthy); Kevin Coleman Jr. (healthy); Jalen Tolbert (healthy)
+00-0035228,Kyler Murray,MIN,QB,1,1.0,0.0,healthy,0.97,,,47.8,0,0,0.0,nobody
+00-0032950,Carson Wentz,MIN,QB,2,2.0,0.0,healthy,0.97,,,47.7,1,0,0.0,Kyler Murray (healthy)
+00-0039923,J.J. McCarthy,MIN,QB,3,3.0,0.0,healthy,0.97,,,119.4,2,0,0.0,Kyler Murray (healthy); Carson Wentz (healthy)
+00-0033293,Aaron Jones Sr.,MIN,RB,1,1.0,0.0,healthy,0.97,,,45.4,0,0,0.0,nobody
+00-0036425,DeeJay Dallas,MIN,RB,2,2.0,0.0,healthy,0.97,,,40.0,1,0,0.017,Aaron Jones Sr. (healthy)
+00-0041104,Demond Claiborne,MIN,RB,3,3.0,0.0,healthy,0.97,,,38.4,2,0,0.02,Aaron Jones Sr. (healthy); DeeJay Dallas (healthy)
+00-0037525,Jordan Mason,MIN,RB,4,7.0,3.0,ir,0.02,Thumb,,167.4,3,0,0.023,Aaron Jones Sr. (healthy); DeeJay Dallas (healthy); Demond Claiborne (healthy)
+00-0035229,T.J. Hockenson,MIN,TE,1,1.0,0.0,healthy,0.97,,,16.9,0,0,0.0,nobody
+00-0035249,Josh Oliver,MIN,TE,2,2.0,0.0,healthy,0.97,,,16.3,1,0,0.005,T.J. Hockenson (healthy)
+00-0040215,Gavin Bartholomew,MIN,TE,3,4.0,1.0,healthy,0.97,,,907.6,2,0,0.006,T.J. Hockenson (healthy); Josh Oliver (healthy)
+00-0040509,Ben Yurosek,MIN,TE,4,5.0,1.0,ir,0.02,Undisclosed,,354.4,3,0,0.006,T.J. Hockenson (healthy); Josh Oliver (healthy); Gavin Bartholomew (healthy)
+00-0036322,Justin Jefferson,MIN,WR,1,1.0,0.0,healthy,0.97,,,64.9,0,0,0.0,nobody
+00-0038994,Jordan Addison,MIN,WR,2,2.0,0.0,healthy,0.97,,,63.9,1,0,0.009,Justin Jefferson (healthy)
+00-0036259,Jauan Jennings,MIN,WR,3,3.0,0.0,questionable,0.72,Personal,,45.9,2,0,0.014,Justin Jefferson (healthy); Jordan Addison (healthy)
+00-0040154,Tai Felton,MIN,WR,4,4.0,0.0,healthy,0.97,,,758.5,3,0,0.048,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (questionable)
+00-0040506,Myles Price,MIN,WR,5,5.0,0.0,healthy,0.97,,,65.3,4,0,0.049,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (questionable); Tai Felton (healthy)
+00-0039710,Jeshaun Jones,MIN,WR,6,6.0,0.0,sus,0.02,Suspension,,625.6,5,0,0.049,Justin Jefferson (healthy); Jordan Addison (healthy); Jauan Jennings (questionable); Tai Felton (healthy); Myles Price (healthy)
+00-0039851,Drake Maye,NE,QB,1,1.0,0.0,healthy,0.97,,,60.9,0,0,0.0,nobody
+00-0038476,Tommy DeVito,NE,QB,2,2.0,0.0,healthy,0.97,,,2852.0,1,0,0.0,Drake Maye (healthy)
+00-0041123,Behren Morton,NE,QB,3,3.0,0.0,healthy,0.97,,,73.8,2,0,0.0,Drake Maye (healthy); Tommy DeVito (healthy)
+00-0036875,Rhamondre Stevenson,NE,RB,1,2.0,1.0,healthy,0.97,,,61.9,0,0,0.0,nobody
+00-0040734,TreVeyon Henderson,NE,RB,2,1.0,1.0,healthy,0.97,,,66.9,1,0,0.009,Rhamondre Stevenson (healthy)
+00-0040556,Corey Kiner,NE,RB,3,3.0,0.0,healthy,0.97,,,96.1,2,0,0.022,Rhamondre Stevenson (healthy); TreVeyon Henderson (healthy)
+00-0041323,Myles Montgomery,NE,RB,4,,,ir,0.02,Undisclosed,,979.2,3,0,0.023,Rhamondre Stevenson (healthy); TreVeyon Henderson (healthy); Corey Kiner (healthy)
+00-0033090,Hunter Henry,NE,TE,1,1.0,0.0,healthy,0.97,,,63.9,0,0,0.0,nobody
+00-0041395,Eli Raridon,NE,TE,2,2.0,0.0,questionable,0.72,Thigh,,66.7,1,0,0.006,Hunter Henry (healthy)
+00-0038564,Cameron Latu,NE,TE,3,3.0,0.0,healthy,0.97,,,542.9,2,0,0.015,Hunter Henry (healthy); Eli Raridon (questionable)
+00-0041314,Tanner Arkin,NE,TE,4,6.0,2.0,healthy,0.97,,,74.0,3,0,0.015,Hunter Henry (healthy); Eli Raridon (questionable); Cameron Latu (healthy)
+00-0038720,Julian Hill,NE,TE,5,5.0,0.0,ir,0.02,Knee,,2707.0,4,0,0.015,Hunter Henry (healthy); Eli Raridon (questionable); Cameron Latu (healthy); Tanner Arkin (healthy)
+00-0037816,Romeo Doubs,NE,WR,1,1.0,0.0,healthy,0.97,,,51.9,0,0,0.0,nobody
+00-0038621,DeMario Douglas,NE,WR,2,3.0,1.0,healthy,0.97,,,42.5,1,0,0.005,Romeo Doubs (healthy)
+00-0033555,Mack Hollins,NE,WR,3,2.0,1.0,healthy,0.97,,,25.4,2,0,0.01,Romeo Doubs (healthy); DeMario Douglas (healthy)
+00-0040131,Kyle Williams,NE,WR,4,4.0,0.0,healthy,0.97,,,15.3,3,0,0.015,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy)
+00-0040563,Efton Chism III,NE,WR,5,5.0,0.0,healthy,0.97,,,331.3,4,0,0.017,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy)
+00-0035676,A.J. Brown,NE,WR,6,6.0,0.0,ir,0.02,Ankle,,241.5,5,0,0.018,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy); Efton Chism III (healthy)
+00-0040570,Jeremiah Webb,NE,WR,7,7.0,0.0,ir,0.02,Arm,,1412.0,6,1,0.018,Romeo Doubs (healthy); DeMario Douglas (healthy); Mack Hollins (healthy); Kyle Williams (healthy); Efton Chism III (healthy); A.J. Brown (ir)
+00-0040743,Tyler Shough,NO,QB,1,1.0,0.0,healthy,0.97,,,26.8,0,0,0.0,nobody
+00-0039376,Spencer Rattler,NO,QB,2,2.0,0.0,healthy,0.97,,,590.9,1,0,0.0,Tyler Shough (healthy)
+00-0037013,Zach Wilson,NO,QB,3,3.0,0.0,healthy,0.97,,,74.2,2,0,0.0,Tyler Shough (healthy); Spencer Rattler (healthy)
+00-0036973,Travis Etienne Jr.,NO,RB,1,1.0,0.0,healthy,0.97,,,4.5,0,0,0.0,nobody
+00-0033906,Alvin Kamara,NO,RB,2,2.0,0.0,healthy,0.97,,,46.4,1,0,0.014,Travis Etienne Jr. (healthy)
+00-0038551,Kendre Miller,NO,RB,3,3.0,0.0,healthy,0.97,,,74.4,2,0,0.023,Travis Etienne Jr. (healthy); Alvin Kamara (healthy)
+00-0041326,CJ Donaldson,NO,RB,4,4.0,0.0,healthy,0.97,,,111.3,3,0,0.023,Travis Etienne Jr. (healthy); Alvin Kamara (healthy); Kendre Miller (healthy)
+00-0037276,Ty Chandler,NO,RB,5,5.0,0.0,ir,0.02,Knee,,691.7,4,0,0.024,Travis Etienne Jr. (healthy); Alvin Kamara (healthy); Kendre Miller (healthy); CJ Donaldson (healthy)
+00-0036040,Juwan Johnson,NO,TE,1,1.0,0.0,healthy,0.97,,,46.4,0,0,0.0,nobody
+00-0035644,Noah Fant,NO,TE,2,2.0,0.0,healthy,0.97,,,109.2,1,0,0.005,Juwan Johnson (healthy)
+00-0041041,Oscar Delp,NO,TE,3,3.0,0.0,healthy,0.97,,,15.1,2,0,0.007,Juwan Johnson (healthy); Noah Fant (healthy)
+00-0039518,Treyton Welch,NO,TE,4,5.0,1.0,healthy,0.97,,,263.9,3,0,0.008,Juwan Johnson (healthy); Noah Fant (healthy); Oscar Delp (healthy)
+00-0040244,Moliki Matavao,NO,TE,5,6.0,1.0,ir,0.02,Knee,,691.6,4,0,0.008,Juwan Johnson (healthy); Noah Fant (healthy); Oscar Delp (healthy); Treyton Welch (healthy)
+00-0037239,Chris Olave,NO,WR,1,1.0,0.0,healthy,0.97,,,65.6,0,0,0.0,nobody
+00-0039424,Devaughn Vele,NO,WR,2,2.0,0.0,healthy,0.97,,,48.9,1,0,0.008,Chris Olave (healthy)
+00-0041067,Bryce Lance,NO,WR,3,3.0,0.0,healthy,0.97,,,15.7,2,0,0.014,Chris Olave (healthy); Devaughn Vele (healthy)
+00-0041099,Barion Brown,NO,WR,4,4.0,0.0,healthy,0.97,,,220.9,3,0,0.016,Chris Olave (healthy); Devaughn Vele (healthy); Bryce Lance (healthy)
+00-0041029,Jordyn Tyson,NO,WR,5,11.0,6.0,ir,0.02,Hamstring,,355.5,4,0,0.017,Chris Olave (healthy); Devaughn Vele (healthy); Bryce Lance (healthy); Barion Brown (healthy)
+00-0039623,Mason Tipton,NO,WR,6,9.0,3.0,pup,0.02,Groin,,551.6,5,1,0.017,Chris Olave (healthy); Devaughn Vele (healthy); Bryce Lance (healthy); Barion Brown (healthy); Jordyn Tyson (ir)
+00-0031503,Jameis Winston,NYG,QB,1,1.0,0.0,healthy,0.97,,,23.2,0,0,0.0,nobody
+00-0040691,Jaxson Dart,NYG,QB,2,3.0,1.0,out,0.02,Knee - MCL,,2.1,1,0,0.0,Jameis Winston (healthy)
+00-0040715,Cam Skattebo,NYG,RB,1,1.0,0.0,healthy,0.97,,,30.0,0,0,0.0,nobody
+00-0035250,Devin Singletary,NYG,RB,2,2.0,0.0,healthy,0.97,,,19.0,1,0,0.015,Cam Skattebo (healthy)
+00-0036893,Najee Harris,NYG,RB,3,3.0,0.0,healthy,0.97,,,19.0,2,0,0.021,Cam Skattebo (healthy); Devin Singletary (healthy)
+00-0039384,Tyrone Tracy Jr.,NYG,RB,4,4.0,0.0,healthy,0.97,,,19.1,3,0,0.025,Cam Skattebo (healthy); Devin Singletary (healthy); Najee Harris (healthy)
+00-0037838,Isaiah Likely,NYG,TE,1,1.0,0.0,healthy,0.97,,,30.0,0,0,0.0,nobody
+00-0039847,Theo Johnson,NYG,TE,2,2.0,0.0,healthy,0.97,,,18.0,1,0,0.005,Isaiah Likely (healthy)
 ,,NYG,TE,3,,,unknown,0.85,,,,2,0,0.007,Isaiah Likely (healthy); Theo Johnson (healthy)
-00-0040225,Thomas Fidone II,NYG,TE,4,4.0,0.0,out,0.02,Coach's Decision,,1340.7,3,0,0.007,Isaiah Likely (healthy); Theo Johnson (healthy); nan (unknown)
-00-0039337,Malik Nabers,NYG,WR,1,1.0,0.0,questionable,0.72,Shoulder,,10.2,0,0,0.0,nobody
-00-0041042,Malachi Fields,NYG,WR,2,2.0,0.0,healthy,0.97,,,8.4,1,0,0.079,Malik Nabers (questionable)
-00-0036309,Darnell Mooney,NYG,WR,3,3.0,0.0,healthy,0.97,,,9.9,2,0,0.082,Malik Nabers (questionable); Malachi Fields (healthy)
-00-0031235,Odell Beckham Jr.,NYG,WR,4,4.0,0.0,healthy,0.97,,,88.9,3,0,0.085,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy)
-00-0034419,Braxton Berrios,NYG,WR,5,5.0,0.0,healthy,0.97,,,24.7,4,0,0.086,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy); Odell Beckham Jr. (healthy)
-00-0037837,Calvin Austin III,NYG,WR,6,7.0,1.0,ir,0.02,Knee,,622.8,5,0,0.086,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy); Odell Beckham Jr. (healthy); Braxton Berrios (healthy)
-00-0035645,Gunner Olszewski,NYG,WR,7,6.0,1.0,ir,0.02,Achilles,,2710.1,6,1,0.086,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy); Odell Beckham Jr. (healthy); Braxton Berrios (healthy); Calvin Austin III (ir)
-00-0030565,Geno Smith,NYJ,QB,1,1.0,0.0,healthy,0.97,,,45.5,0,0,0.0,nobody
-00-0041056,Cade Klubnik,NYJ,QB,2,3.0,1.0,healthy,0.97,,,531.3,1,0,0.0,Geno Smith (healthy)
-00-0038120,Breece Hall,NYJ,RB,1,1.0,0.0,healthy,0.97,,,45.5,0,0,0.0,nobody
-00-0039794,Braelon Allen,NYJ,RB,2,2.0,0.0,healthy,0.97,,,20.1,1,0,0.017,Breece Hall (healthy)
-00-0039798,Isaiah Davis,NYJ,RB,3,3.0,0.0,healthy,0.97,,,89.8,2,0,0.024,Breece Hall (healthy); Braelon Allen (healthy)
-00-0036842,Kene Nwangwu,NYJ,RB,4,5.0,1.0,out,0.02,Back,,78.0,3,0,0.025,Breece Hall (healthy); Braelon Allen (healthy); Isaiah Davis (healthy)
-00-0041239,Chip Trayanum,NYJ,RB,5,,,healthy,0.97,,,,4,1,0.032,Breece Hall (healthy); Braelon Allen (healthy); Isaiah Davis (healthy); Kene Nwangwu (out)
-00-0040736,Mason Taylor,NYJ,TE,1,2.0,1.0,questionable,0.72,Thumb,,49.4,0,0,0.0,nobody
-00-0041032,Kenyon Sadiq,NYJ,TE,2,1.0,1.0,healthy,0.97,,,2.8,1,0,0.021,Mason Taylor (questionable)
-00-0037805,Jeremy Ruckert,NYJ,TE,3,3.0,0.0,healthy,0.97,,,45.8,2,0,0.024,Mason Taylor (questionable); Kenyon Sadiq (healthy)
-00-0034959,Andrew Beck,NYJ,TE,4,4.0,0.0,healthy,0.97,,,2472.1,3,0,0.025,Mason Taylor (questionable); Kenyon Sadiq (healthy); Jeremy Ruckert (healthy)
-00-0037755,Jelani Woods,NYJ,TE,5,4.0,1.0,healthy,0.97,,,1127.7,4,0,0.025,Mason Taylor (questionable); Kenyon Sadiq (healthy); Jeremy Ruckert (healthy); Andrew Beck (healthy)
-00-0037740,Garrett Wilson,NYJ,WR,1,1.0,0.0,healthy,0.97,,,45.6,0,0,0.0,nobody
-00-0039890,Adonai Mitchell,NYJ,WR,2,2.0,0.0,healthy,0.97,,,8.4,1,0,0.009,Garrett Wilson (healthy)
-00-0039451,Isaiah Williams,NYJ,WR,3,3.0,0.0,healthy,0.97,,,22.9,2,0,0.015,Garrett Wilson (healthy); Adonai Mitchell (healthy)
-00-0040582,Arian Smith,NYJ,WR,4,4.0,0.0,out,0.02,Knee,,1.8,3,0,0.018,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy)
-00-0033375,Tim Patrick,NYJ,WR,5,6.0,1.0,ir,0.02,Groin,,242.8,4,1,0.018,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy); Arian Smith (out)
-00-0041511,Omar Cooper Jr.,NYJ,WR,6,9.0,3.0,ir,0.02,Ankle,,74.1,5,2,0.018,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy); Arian Smith (out); Tim Patrick (ir)
-00-0036389,Jalen Hurts,PHI,QB,1,1.0,0.0,healthy,0.97,,,47.1,0,0,0.0,nobody
-00-0027973,Andy Dalton,PHI,QB,2,2.0,0.0,healthy,0.97,,,53.5,1,0,0.0,Jalen Hurts (healthy)
-00-0038400,Tanner McKee,PHI,QB,3,3.0,0.0,out,0.02,Coach's Decision,,54.7,2,0,0.0,Jalen Hurts (healthy); Andy Dalton (healthy)
-00-0040891,Cole Payton,PHI,QB,4,4.0,0.0,out,0.02,Coach's Decision,,54.6,3,1,0.0,Jalen Hurts (healthy); Andy Dalton (healthy); Tanner McKee (out)
-00-0034844,Saquon Barkley,PHI,RB,1,1.0,0.0,questionable,0.72,Arm,,31.3,0,0,0.0,nobody
-00-0038555,Tank Bigsby,PHI,RB,2,2.0,0.0,healthy,0.97,,,30.9,1,0,0.16,Saquon Barkley (questionable)
-00-0039746,Will Shipley,PHI,RB,3,3.0,0.0,healthy,0.97,,,91.4,2,0,0.163,Saquon Barkley (questionable); Tank Bigsby (healthy)
-00-0034351,Dallas Goedert,PHI,TE,1,1.0,0.0,questionable,0.72,Knee,,24.7,0,0,0.0,nobody
-00-0033246,Johnny Mundt,PHI,TE,2,2.0,0.0,healthy,0.97,,,2687.1,1,0,0.0,Dallas Goedert (questionable)
-00-0038498,E.J. Jenkins,PHI,TE,3,3.0,0.0,healthy,0.97,,,6047.9,2,0,0.001,Dallas Goedert (questionable); Johnny Mundt (healthy)
-00-0037086,Grant Calcaterra,PHI,TE,4,5.0,1.0,ir,0.02,Back,,503.9,3,0,0.002,Dallas Goedert (questionable); Johnny Mundt (healthy); E.J. Jenkins (healthy)
-00-0041483,Eli Stowers,PHI,TE,5,6.0,1.0,ir,0.02,Hamstring,,241.8,4,1,0.002,Dallas Goedert (questionable); Johnny Mundt (healthy); E.J. Jenkins (healthy); Grant Calcaterra (ir)
-00-0036912,DeVonta Smith,PHI,WR,1,1.0,0.0,healthy,0.97,,,42.1,0,0,0.0,nobody
-00-0038393,Dontayvion Wicks,PHI,WR,2,2.0,0.0,healthy,0.97,,,8.6,1,0,0.01,DeVonta Smith (healthy)
-00-0040867,Makai Lemon,PHI,WR,3,3.0,0.0,healthy,0.97,,,22.4,2,0,0.016,DeVonta Smith (healthy); Dontayvion Wicks (healthy)
-00-0040024,Darius Cooper,PHI,WR,4,4.0,0.0,healthy,0.97,,,386.8,3,0,0.02,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy)
-00-0035662,Hollywood Brown,PHI,WR,5,5.0,0.0,healthy,0.97,,,123.1,4,0,0.022,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy)
-00-0036980,Elijah Moore,PHI,WR,6,6.0,0.0,out,0.02,Coach's Decision,,54.6,5,0,0.022,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy)
-00-0037132,Britain Covey,PHI,WR,7,7.0,0.0,healthy,0.97,,,151.6,6,1,0.028,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy); Elijah Moore (out)
-00-0039236,Johnny Wilson,PHI,WR,8,9.0,1.0,ir,0.02,Knee,,744.4,7,1,0.028,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy); Elijah Moore (out); Britain Covey (healthy)
-00-0023459,Aaron Rodgers,PIT,QB,1,1.0,0.0,healthy,0.97,,,44.5,0,0,0.0,nobody
-00-0034771,Mason Rudolph,PIT,QB,2,2.0,0.0,healthy,0.97,,,339.1,1,0,0.0,Aaron Rodgers (healthy)
-00-0040203,Will Howard,PIT,QB,3,3.0,0.0,out,0.02,Coach's Decision,,53.9,2,0,0.0,Aaron Rodgers (healthy); Mason Rudolph (healthy)
-00-0041565,Drew Allar,PIT,QB,4,4.0,0.0,out,0.02,Coach's Decision,,53.8,3,1,0.0,Aaron Rodgers (healthy); Mason Rudolph (healthy); Will Howard (out)
-00-0037228,Jaylen Warren,PIT,RB,1,1.0,0.0,healthy,0.97,,,46.5,0,0,0.0,nobody
-00-0036139,Rico Dowdle,PIT,RB,2,2.0,0.0,questionable,0.72,Toe,,46.5,1,0,0.014,Jaylen Warren (healthy)
-00-0041490,Eli Heidenreich,PIT,RB,3,4.0,1.0,healthy,0.97,,,607.9,2,0,0.146,Jaylen Warren (healthy); Rico Dowdle (questionable)
-00-0036894,Pat Freiermuth,PIT,TE,1,1.0,0.0,healthy,0.97,,,1.4,0,0,0.0,nobody
-00-0038558,Darnell Washington,PIT,TE,2,2.0,0.0,healthy,0.97,,,20.2,1,0,0.004,Pat Freiermuth (healthy)
-00-0033757,Robert Tonyan,PIT,TE,3,3.0,0.0,healthy,0.97,,,2637.1,2,0,0.006,Pat Freiermuth (healthy); Darnell Washington (healthy)
-00-0035640,DK Metcalf,PIT,WR,1,1.0,0.0,healthy,0.97,,,46.4,0,0,0.0,nobody
-00-0036252,Michael Pittman Jr.,PIT,WR,2,2.0,0.0,out,0.02,Ankle,,25.9,1,0,0.006,DK Metcalf (healthy)
-00-0039739,Roman Wilson,PIT,WR,3,3.0,0.0,healthy,0.97,,,23.6,2,1,0.174,DK Metcalf (healthy); Michael Pittman Jr. (out)
-00-0041489,Germie Bernard,PIT,WR,4,4.0,0.0,healthy,0.97,,,7.6,3,1,0.177,DK Metcalf (healthy); Michael Pittman Jr. (out); Roman Wilson (healthy)
-00-0036862,Ben Skowronek,PIT,WR,5,5.0,0.0,healthy,0.97,,,310.4,4,1,0.18,DK Metcalf (healthy); Michael Pittman Jr. (out); Roman Wilson (healthy); Germie Bernard (healthy)
-00-0041397,Kaden Wetjen,PIT,WR,6,6.0,0.0,healthy,0.97,,,615.6,5,1,0.18,DK Metcalf (healthy); Michael Pittman Jr. (out); Roman Wilson (healthy); Germie Bernard (healthy); Ben Skowronek (healthy)
-00-0039626,Cole Burgess,PIT,WR,7,9.0,2.0,ir,0.02,Undisclosed,,1149.6,6,1,0.18,DK Metcalf (healthy); Michael Pittman Jr. (out); Roman Wilson (healthy); Germie Bernard (healthy); Ben Skowronek (healthy); Kaden Wetjen (healthy)
-00-0034869,Sam Darnold,SEA,QB,1,1.0,0.0,out,0.02,Lower Body,,27.5,0,0,0.0,nobody
-00-0035704,Drew Lock,SEA,QB,2,2.0,0.0,healthy,0.97,,,4.1,1,1,0.0,Sam Darnold (out)
-00-0040673,Jalen Milroe,SEA,QB,3,3.0,0.0,healthy,0.97,,,143.2,2,1,0.0,Sam Darnold (out); Drew Lock (healthy)
-00-0041512,Jadarian Price,SEA,RB,1,1.0,0.0,questionable,0.72,Chest,,21.6,0,0,0.0,nobody
-00-0038797,Emanuel Wilson,SEA,RB,2,2.0,0.0,healthy,0.97,,,21.4,1,0,0.132,Jadarian Price (questionable)
-00-0039299,George Holani,SEA,RB,3,3.0,0.0,healthy,0.97,,,18.8,2,0,0.135,Jadarian Price (questionable); Emanuel Wilson (healthy)
-00-0039165,Zach Charbonnet,SEA,RB,4,4.0,0.0,pup,0.02,Knee - ACL,,93.8,3,0,0.143,Jadarian Price (questionable); Emanuel Wilson (healthy); George Holani (healthy)
-00-0039793,AJ Barner,SEA,TE,1,1.0,0.0,healthy,0.97,,,20.0,0,0,0.0,nobody
-00-0033576,Eric Saubert,SEA,TE,2,3.0,1.0,healthy,0.97,,,1412.4,1,0,0.004,AJ Barner (healthy)
-00-0040739,Elijah Arroyo,SEA,TE,3,2.0,1.0,healthy,0.97,,,20.1,2,0,0.004,AJ Barner (healthy); Eric Saubert (healthy)
-00-0040058,Nick Kallerup,SEA,TE,4,4.0,0.0,healthy,0.97,,,6366.2,3,0,0.006,AJ Barner (healthy); Eric Saubert (healthy); Elijah Arroyo (healthy)
-00-0038543,Jaxon Smith-Njigba,SEA,WR,1,1.0,0.0,healthy,0.97,,,29.3,0,0,0.0,nobody
-00-0037545,Rashid Shaheed,SEA,WR,2,2.0,0.0,healthy,0.97,,,6.4,1,0,0.01,Jaxon Smith-Njigba (healthy)
-00-0033908,Cooper Kupp,SEA,WR,3,3.0,0.0,healthy,0.97,,,19.4,2,0,0.014,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy)
-00-0040648,Tory Horton,SEA,WR,4,4.0,0.0,healthy,0.97,,,90.0,3,0,0.018,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy)
-00-0040621,Montorie Foster Jr.,SEA,WR,5,9.0,4.0,out,0.02,Coach's Decision,,459.2,4,0,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy)
-00-0037156,Irv Charles,SEA,WR,6,5.0,1.0,ir,0.02,Undisclosed,,528.7,5,1,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy); Montorie Foster Jr. (out)
-00-0038752,Jake Bobo,SEA,WR,7,6.0,1.0,ir,0.02,Knee,,747.9,6,2,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy); Montorie Foster Jr. (out); Irv Charles (ir)
-00-0037834,Brock Purdy,SF,QB,1,1.0,0.0,healthy,0.97,,,32.1,0,0,0.0,nobody
-00-0036972,Mac Jones,SF,QB,2,2.0,0.0,healthy,0.97,,,599.1,1,0,0.0,Brock Purdy (healthy)
-00-0040589,Kurtis Rourke,SF,QB,3,3.0,0.0,out,0.02,Coach's Decision,,50.6,2,0,0.0,Brock Purdy (healthy); Mac Jones (healthy)
-00-0033280,Christian McCaffrey,SF,RB,1,1.0,0.0,healthy,0.97,,,30.3,0,0,0.0,nobody
-00-0041052,Kaelon Black,SF,RB,2,2.0,0.0,healthy,0.97,,,32.1,1,0,0.017,Christian McCaffrey (healthy)
-00-0040177,Jordan James,SF,RB,3,4.0,1.0,healthy,0.97,,,18.1,2,0,0.023,Christian McCaffrey (healthy); Kaelon Black (healthy)
-00-0039363,Isaac Guerendo,SF,RB,4,6.0,2.0,pup,0.02,Pectoral,,550.6,3,0,0.024,Christian McCaffrey (healthy); Kaelon Black (healthy); Jordan James (healthy)
-00-0033288,George Kittle,SF,TE,1,1.0,0.0,healthy,0.97,,,31.7,0,0,0.0,nobody
-00-0036887,Luke Farrell,SF,TE,2,2.0,0.0,healthy,0.97,,,262.2,1,0,0.006,George Kittle (healthy)
-00-0038643,Brayden Willis,SF,TE,3,5.0,2.0,healthy,0.97,,,167.1,2,0,0.007,George Kittle (healthy); Luke Farrell (healthy)
-00-0037112,Jake Tonges,SF,TE,4,4.0,0.0,ir,0.02,Knee,,146.2,3,0,0.007,George Kittle (healthy); Luke Farrell (healthy); Brayden Willis (healthy)
-00-0031408,Mike Evans,SF,WR,1,1.0,0.0,questionable,0.72,Hip,,24.2,0,0,0.0,nobody
-00-0035719,Deebo Samuel,SF,WR,2,2.0,0.0,healthy,0.97,,,31.8,1,0,0.067,Mike Evans (questionable)
-00-0032775,Demarcus Robinson,SF,WR,3,6.0,3.0,out,0.02,Ankle,,25.4,2,0,0.073,Mike Evans (questionable); Deebo Samuel (healthy)
-00-0039365,Jacob Cowing,SF,WR,4,3.0,1.0,healthy,0.97,,,6.1,3,1,0.073,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out)
-00-0040172,Jordan Watkins,SF,WR,5,5.0,0.0,out,0.02,Coach's Decision,,50.6,4,1,0.075,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy)
-00-0034854,KhaDarel Hodge,SF,WR,6,4.0,2.0,healthy,0.97,,,144.6,5,2,0.117,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy); Jordan Watkins (out)
-00-0034775,Christian Kirk,SF,WR,7,7.0,0.0,ir,0.02,Calf,,529.7,6,2,0.117,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy); Jordan Watkins (out); KhaDarel Hodge (healthy)
-00-0041035,De'Zhaun Stribling,SF,WR,8,10.0,2.0,ir,0.02,Ankle,,73.1,7,3,0.117,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy); Jordan Watkins (out); KhaDarel Hodge (healthy); Christian Kirk (ir)
-00-0039916,Ricky Pearsall,SF,WR,9,9.0,0.0,ir,0.02,Knee - PCL,,965.4,8,4,0.117,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy); Jordan Watkins (out); KhaDarel Hodge (healthy); Christian Kirk (ir); De'Zhaun Stribling (ir)
-00-0036261,Brandon Aiyuk,SF,WR,10,,,unknown,0.85,,,,9,5,0.117,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (out); Jacob Cowing (healthy); Jordan Watkins (out); KhaDarel Hodge (healthy); Christian Kirk (ir); De'Zhaun Stribling (ir); Ricky Pearsall (ir)
-00-0034855,Baker Mayfield,TB,QB,1,1.0,0.0,healthy,0.97,,,40.3,0,0,0.0,nobody
-00-0041251,Jalon Daniels,TB,QB,2,3.0,1.0,healthy,0.97,,,559.9,1,0,0.0,Baker Mayfield (healthy)
-00-0039361,Bucky Irving,TB,RB,1,1.0,0.0,healthy,0.97,,,40.3,0,0,0.0,nobody
-00-0036919,Kenny Gainwell,TB,RB,2,2.0,0.0,healthy,0.97,,,40.2,1,0,0.017,Bucky Irving (healthy)
-00-0038951,Sean Tucker,TB,RB,3,3.0,0.0,healthy,0.97,,,20.4,2,0,0.025,Bucky Irving (healthy); Kenny Gainwell (healthy)
-00-0038129,Cade Otton,TB,TE,1,1.0,0.0,healthy,0.97,,,22.6,0,0,0.0,nobody
-00-0039050,Payne Durham,TB,TE,2,2.0,0.0,healthy,0.97,,,2687.1,1,0,0.005,Cade Otton (healthy)
-00-0037311,Ko Kieft,TB,TE,3,4.0,1.0,healthy,0.97,,,1296.6,2,0,0.005,Cade Otton (healthy); Payne Durham (healthy)
-00-0041094,Bauer Sharp,TB,TE,4,3.0,1.0,healthy,0.97,,,2687.1,3,0,0.005,Cade Otton (healthy); Payne Durham (healthy); Ko Kieft (healthy)
-00-0040129,Emeka Egbuka,TB,WR,1,1.0,0.0,healthy,0.97,,,40.2,0,0,0.0,nobody
-00-0033921,Chris Godwin Jr.,TB,WR,2,2.0,0.0,healthy,0.97,,,40.2,1,0,0.007,Emeka Egbuka (healthy)
-00-0039855,Jalen McMillan,TB,WR,3,3.0,0.0,healthy,0.97,,,22.4,2,0,0.012,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy)
-00-0041048,Ted Hurst III,TB,WR,4,4.0,0.0,healthy,0.97,,,22.6,3,0,0.013,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy)
-00-0040237,Tez Johnson,TB,WR,5,5.0,0.0,healthy,0.97,,,264.7,4,0,0.017,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy)
-00-0039589,Kameron Johnson,TB,WR,6,6.0,0.0,healthy,0.97,,,2185.1,5,0,0.018,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy); Tez Johnson (healthy)
-00-0035359,David Sills V,TB,WR,7,7.0,0.0,ir,0.02,Undisclosed,,528.6,6,0,0.019,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy); Tez Johnson (healthy); Kameron Johnson (healthy)
-00-0040676,Cam Ward,TEN,QB,1,1.0,0.0,healthy,0.97,,,46.6,0,0,0.0,nobody
-00-0033869,Mitchell Trubisky,TEN,QB,2,2.0,0.0,healthy,0.97,,,311.4,1,0,0.0,Cam Ward (healthy)
-00-0035261,Tony Pollard,TEN,RB,1,1.0,0.0,healthy,0.97,,,46.4,0,0,0.0,nobody
-00-0039032,Tyjae Spears,TEN,RB,2,2.0,0.0,healthy,0.97,,,22.1,1,0,0.015,Tony Pollard (healthy)
-00-0037594,Julius Chestnut,TEN,RB,3,4.0,1.0,healthy,0.97,,,2803.1,2,0,0.022,Tony Pollard (healthy); Tyjae Spears (healthy)
-00-0040886,Nicholas Singleton,TEN,RB,4,3.0,1.0,healthy,0.97,,,21.6,3,0,0.023,Tony Pollard (healthy); Tyjae Spears (healthy); Julius Chestnut (healthy)
-00-0040584,Gunnar Helm,TEN,TE,1,1.0,0.0,healthy,0.97,,,36.8,0,0,0.0,nobody
-00-0038115,Daniel Bellinger,TEN,TE,2,2.0,0.0,healthy,0.97,,,80.6,1,0,0.004,Gunnar Helm (healthy)
-00-0039648,David Martin-Robinson,TEN,TE,3,5.0,2.0,healthy,0.97,,,6136.3,2,0,0.005,Gunnar Helm (healthy); Daniel Bellinger (healthy)
-00-0036876,Kylen Granson,TEN,TE,4,3.0,1.0,out,0.02,Coach's Decision,,54.3,3,0,0.005,Gunnar Helm (healthy); Daniel Bellinger (healthy); David Martin-Robinson (healthy)
-00-0040901,Jaren Kanak,TEN,TE,5,6.0,1.0,ir,0.02,Pectoral,,880.3,4,1,0.009,Gunnar Helm (healthy); Daniel Bellinger (healthy); David Martin-Robinson (healthy); Kylen Granson (out)
-00-0041438,Carnell Tate,TEN,WR,1,1.0,0.0,healthy,0.97,,,37.0,0,0,0.0,nobody
-00-0038117,Wan'Dale Robinson,TEN,WR,2,2.0,0.0,healthy,0.97,,,36.8,1,0,0.006,Carnell Tate (healthy)
-00-0034837,Calvin Ridley,TEN,WR,3,3.0,0.0,healthy,0.97,,,22.0,2,0,0.012,Carnell Tate (healthy); Wan'Dale Robinson (healthy)
-00-0040170,Elic Ayomanor,TEN,WR,4,4.0,0.0,healthy,0.97,,,21.7,3,0,0.015,Carnell Tate (healthy); Wan'Dale Robinson (healthy); Calvin Ridley (healthy)
-00-0040705,Chimere Dike,TEN,WR,5,5.0,0.0,healthy,0.97,,,162.3,4,0,0.019,Carnell Tate (healthy); Wan'Dale Robinson (healthy); Calvin Ridley (healthy); Elic Ayomanor (healthy)
-00-0039910,Jayden Daniels,WAS,QB,1,2.0,1.0,out,0.02,Elbow,,26.2,0,0,0.0,nobody
-00-0032268,Marcus Mariota,WAS,QB,2,1.0,1.0,healthy,0.97,,,3.9,1,1,0.0,Jayden Daniels (out)
-00-0041117,Athan Kaliakmanis,WAS,QB,3,4.0,1.0,out,0.02,Coach's Decision,,51.2,2,1,0.0,Jayden Daniels (out); Marcus Mariota (healthy)
-00-0040242,Jacory Croskey-Merritt,WAS,RB,1,1.0,0.0,healthy,0.97,,,42.6,0,0,0.0,nobody
-00-0037256,Rachaad White,WAS,RB,2,2.0,0.0,healthy,0.97,,,42.6,1,0,0.014,Jacory Croskey-Merritt (healthy)
-00-0041096,Kaytron Allen,WAS,RB,3,3.0,0.0,healthy,0.97,,,18.6,2,0,0.02,Jacory Croskey-Merritt (healthy); Rachaad White (healthy)
-00-0033955,Jeremy McNichols,WAS,RB,4,4.0,0.0,ir,0.02,Quadriceps,,532.2,3,0,0.023,Jacory Croskey-Merritt (healthy); Rachaad White (healthy); Kaytron Allen (healthy)
-00-0037809,Chig Okonkwo,WAS,TE,1,1.0,0.0,out,0.02,Hamstring,,100.8,0,0,0.0,nobody
-00-0039912,Ben Sinnott,WAS,TE,2,2.0,0.0,healthy,0.97,,,18.3,1,1,0.121,Chig Okonkwo (out)
-00-0036628,John Bates,WAS,TE,3,3.0,0.0,healthy,0.97,,,93.7,2,1,0.122,Chig Okonkwo (out); Ben Sinnott (healthy)
-00-0039686,Colson Yankoff,WAS,TE,4,4.0,0.0,healthy,0.97,,,2471.1,3,1,0.123,Chig Okonkwo (out); Ben Sinnott (healthy); John Bates (healthy)
-00-0035659,Terry McLaurin,WAS,WR,1,1.0,0.0,healthy,0.97,,,44.3,0,0,0.0,nobody
-00-0031588,Stefon Diggs,WAS,WR,2,2.0,0.0,healthy,0.97,,,32.4,1,0,0.007,Terry McLaurin (healthy)
-00-0041040,Antonio Williams,WAS,WR,3,3.0,0.0,healthy,0.97,,,7.5,2,0,0.013,Terry McLaurin (healthy); Stefon Diggs (healthy)
-00-0036626,Dyami Brown,WAS,WR,4,4.0,0.0,healthy,0.97,,,18.4,3,0,0.016,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy)
-00-0040164,Jaylin Lane,WAS,WR,5,5.0,0.0,healthy,0.97,,,94.7,4,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy)
-00-0037742,Treylon Burks,WAS,WR,6,7.0,1.0,healthy,0.97,,,219.1,5,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy); Jaylin Lane (healthy)
-00-0039355,Luke McCaffrey,WAS,WR,7,6.0,1.0,out,0.02,Coach's Decision,,51.2,6,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy); Jaylin Lane (healthy); Treylon Burks (healthy)
+00-0040225,Thomas Fidone II,NYG,TE,4,4.0,0.0,healthy,0.97,,,1360.7,3,0,0.007,Isaiah Likely (healthy); Theo Johnson (healthy); nan (unknown)
+00-0039337,Malik Nabers,NYG,WR,1,1.0,0.0,questionable,0.72,Shoulder,,30.2,0,0,0.0,nobody
+00-0041042,Malachi Fields,NYG,WR,2,2.0,0.0,healthy,0.97,,,28.4,1,0,0.087,Malik Nabers (questionable)
+00-0036309,Darnell Mooney,NYG,WR,3,3.0,0.0,healthy,0.97,,,18.9,2,0,0.091,Malik Nabers (questionable); Malachi Fields (healthy)
+00-0031235,Odell Beckham Jr.,NYG,WR,4,4.0,0.0,healthy,0.97,,,18.2,3,0,0.094,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy)
+00-0037837,Calvin Austin III,NYG,WR,5,7.0,2.0,ir,0.02,Knee,,642.8,4,0,0.096,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy); Odell Beckham Jr. (healthy)
+00-0035645,Gunner Olszewski,NYG,WR,6,6.0,0.0,ir,0.02,Achilles,,2730.1,5,1,0.096,Malik Nabers (questionable); Malachi Fields (healthy); Darnell Mooney (healthy); Odell Beckham Jr. (healthy); Calvin Austin III (ir)
+00-0030565,Geno Smith,NYJ,QB,1,1.0,0.0,healthy,0.97,,,13.1,0,0,0.0,nobody
+00-0041056,Cade Klubnik,NYJ,QB,2,3.0,1.0,healthy,0.97,,,551.3,1,0,0.0,Geno Smith (healthy)
+00-0038120,Breece Hall,NYJ,RB,1,1.0,0.0,healthy,0.97,,,65.4,0,0,0.0,nobody
+00-0039794,Braelon Allen,NYJ,RB,2,2.0,0.0,healthy,0.97,,,40.1,1,0,0.017,Breece Hall (healthy)
+00-0039798,Isaiah Davis,NYJ,RB,3,3.0,0.0,healthy,0.97,,,18.0,2,0,0.024,Breece Hall (healthy); Braelon Allen (healthy)
+00-0036842,Kene Nwangwu,NYJ,RB,4,5.0,1.0,questionable,0.72,Back,,1.5,3,0,0.025,Breece Hall (healthy); Braelon Allen (healthy); Isaiah Davis (healthy)
+00-0041239,Chip Trayanum,NYJ,RB,5,,,healthy,0.97,,,,4,0,0.027,Breece Hall (healthy); Braelon Allen (healthy); Isaiah Davis (healthy); Kene Nwangwu (questionable)
+00-0041032,Kenyon Sadiq,NYJ,TE,1,1.0,0.0,healthy,0.97,,,22.8,0,0,0.0,nobody
+00-0040736,Mason Taylor,NYJ,TE,2,2.0,0.0,doubtful,0.28,Thumb,,0.6,1,0,0.004,Kenyon Sadiq (healthy)
+00-0037805,Jeremy Ruckert,NYJ,TE,3,3.0,0.0,healthy,0.97,,,65.8,2,1,0.004,Kenyon Sadiq (healthy); Mason Taylor (doubtful)
+00-0034959,Andrew Beck,NYJ,TE,4,4.0,0.0,healthy,0.97,,,2492.0,3,1,0.005,Kenyon Sadiq (healthy); Mason Taylor (doubtful); Jeremy Ruckert (healthy)
+00-0037755,Jelani Woods,NYJ,TE,5,4.0,1.0,healthy,0.97,,,1147.7,4,1,0.005,Kenyon Sadiq (healthy); Mason Taylor (doubtful); Jeremy Ruckert (healthy); Andrew Beck (healthy)
+00-0037740,Garrett Wilson,NYJ,WR,1,1.0,0.0,healthy,0.97,,,65.6,0,0,0.0,nobody
+00-0039890,Adonai Mitchell,NYJ,WR,2,2.0,0.0,healthy,0.97,,,28.4,1,0,0.009,Garrett Wilson (healthy)
+00-0039451,Isaiah Williams,NYJ,WR,3,3.0,0.0,healthy,0.97,,,42.9,2,0,0.016,Garrett Wilson (healthy); Adonai Mitchell (healthy)
+00-0041267,Malik McClain,NYJ,WR,4,10.0,6.0,healthy,0.97,,,18.4,3,0,0.019,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy)
+00-0033375,Tim Patrick,NYJ,WR,5,5.0,0.0,ir,0.02,Groin,,262.8,4,0,0.019,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy); Malik McClain (healthy)
+00-0041511,Omar Cooper Jr.,NYJ,WR,6,9.0,3.0,ir,0.02,Ankle,,94.0,5,1,0.019,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy); Malik McClain (healthy); Tim Patrick (ir)
+00-0040582,Arian Smith,NYJ,WR,7,8.0,1.0,ir,0.02,Knee,,1.5,6,2,0.019,Garrett Wilson (healthy); Adonai Mitchell (healthy); Isaiah Williams (healthy); Malik McClain (healthy); Tim Patrick (ir); Omar Cooper Jr. (ir)
+00-0036389,Jalen Hurts,PHI,QB,1,1.0,0.0,healthy,0.97,,,67.1,0,0,0.0,nobody
+00-0027973,Andy Dalton,PHI,QB,2,2.0,0.0,healthy,0.97,,,73.4,1,0,0.0,Jalen Hurts (healthy)
+00-0038400,Tanner McKee,PHI,QB,3,3.0,0.0,healthy,0.97,,,74.7,2,0,0.0,Jalen Hurts (healthy); Andy Dalton (healthy)
+00-0040891,Cole Payton,PHI,QB,4,4.0,0.0,healthy,0.97,,,74.6,3,0,0.0,Jalen Hurts (healthy); Andy Dalton (healthy); Tanner McKee (healthy)
+00-0034844,Saquon Barkley,PHI,RB,1,1.0,0.0,questionable,0.72,Arm,,51.3,0,0,0.0,nobody
+00-0038555,Tank Bigsby,PHI,RB,2,2.0,0.0,healthy,0.97,,,50.9,1,0,0.157,Saquon Barkley (questionable)
+00-0039746,Will Shipley,PHI,RB,3,3.0,0.0,healthy,0.97,,,15.4,2,0,0.16,Saquon Barkley (questionable); Tank Bigsby (healthy)
+00-0034351,Dallas Goedert,PHI,TE,1,1.0,0.0,doubtful,0.28,Knee - MCL,,44.7,0,0,0.0,nobody
+00-0030061,Zach Ertz,PHI,TE,2,2.0,0.0,healthy,0.97,,,24.9,1,1,0.0,Dallas Goedert (doubtful)
+00-0033246,Johnny Mundt,PHI,TE,3,3.0,0.0,healthy,0.97,,,15.4,2,1,0.002,Dallas Goedert (doubtful); Zach Ertz (healthy)
+00-0038498,E.J. Jenkins,PHI,TE,4,4.0,0.0,healthy,0.97,,,6067.9,3,1,0.004,Dallas Goedert (doubtful); Zach Ertz (healthy); Johnny Mundt (healthy)
+00-0037086,Grant Calcaterra,PHI,TE,5,6.0,1.0,ir,0.02,Back,,523.9,4,1,0.005,Dallas Goedert (doubtful); Zach Ertz (healthy); Johnny Mundt (healthy); E.J. Jenkins (healthy)
+00-0041483,Eli Stowers,PHI,TE,6,7.0,1.0,ir,0.02,Hamstring,,261.8,5,2,0.005,Dallas Goedert (doubtful); Zach Ertz (healthy); Johnny Mundt (healthy); E.J. Jenkins (healthy); Grant Calcaterra (ir)
+00-0036912,DeVonta Smith,PHI,WR,1,1.0,0.0,healthy,0.97,,,62.1,0,0,0.0,nobody
+00-0038393,Dontayvion Wicks,PHI,WR,2,2.0,0.0,healthy,0.97,,,28.6,1,0,0.009,DeVonta Smith (healthy)
+00-0040867,Makai Lemon,PHI,WR,3,3.0,0.0,healthy,0.97,,,42.4,2,0,0.014,DeVonta Smith (healthy); Dontayvion Wicks (healthy)
+00-0040024,Darius Cooper,PHI,WR,4,4.0,0.0,healthy,0.97,,,15.0,3,0,0.018,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy)
+00-0035662,Hollywood Brown,PHI,WR,5,5.0,0.0,healthy,0.97,,,143.0,4,0,0.019,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy)
+00-0036980,Elijah Moore,PHI,WR,6,6.0,0.0,healthy,0.97,,,74.5,5,0,0.02,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy)
+00-0037132,Britain Covey,PHI,WR,7,7.0,0.0,healthy,0.97,,,171.5,6,0,0.02,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy); Elijah Moore (healthy)
+00-0039236,Johnny Wilson,PHI,WR,8,8.0,0.0,ir,0.02,Knee,,764.4,7,0,0.02,DeVonta Smith (healthy); Dontayvion Wicks (healthy); Makai Lemon (healthy); Darius Cooper (healthy); Hollywood Brown (healthy); Elijah Moore (healthy); Britain Covey (healthy)
+00-0023459,Aaron Rodgers,PIT,QB,1,1.0,0.0,healthy,0.97,,,64.4,0,0,0.0,nobody
+00-0034771,Mason Rudolph,PIT,QB,2,2.0,0.0,healthy,0.97,,,359.1,1,0,0.0,Aaron Rodgers (healthy)
+00-0040203,Will Howard,PIT,QB,3,3.0,0.0,healthy,0.97,,,73.9,2,0,0.0,Aaron Rodgers (healthy); Mason Rudolph (healthy)
+00-0041565,Drew Allar,PIT,QB,4,4.0,0.0,healthy,0.97,,,73.8,3,0,0.0,Aaron Rodgers (healthy); Mason Rudolph (healthy); Will Howard (healthy)
+00-0037228,Jaylen Warren,PIT,RB,1,1.0,0.0,questionable,0.72,Undisclosed,,1.3,0,0,0.0,nobody
+00-0036139,Rico Dowdle,PIT,RB,2,2.0,0.0,questionable,0.72,Toe,,0.1,1,0,0.127,Jaylen Warren (questionable)
+00-0041490,Eli Heidenreich,PIT,RB,3,4.0,1.0,healthy,0.97,,,627.9,2,0,0.259,Jaylen Warren (questionable); Rico Dowdle (questionable)
+00-0036894,Pat Freiermuth,PIT,TE,1,1.0,0.0,healthy,0.97,,,21.4,0,0,0.0,nobody
+00-0038558,Darnell Washington,PIT,TE,2,2.0,0.0,healthy,0.97,,,40.2,1,0,0.004,Pat Freiermuth (healthy)
+00-0033757,Robert Tonyan,PIT,TE,3,3.0,0.0,healthy,0.97,,,2657.1,2,0,0.006,Pat Freiermuth (healthy); Darnell Washington (healthy)
+00-0035640,DK Metcalf,PIT,WR,1,1.0,0.0,healthy,0.97,,,66.4,0,0,0.0,nobody
+00-0036252,Michael Pittman Jr.,PIT,WR,2,2.0,0.0,questionable,0.72,Foot,,1.7,1,0,0.006,DK Metcalf (healthy)
+00-0039739,Roman Wilson,PIT,WR,3,3.0,0.0,healthy,0.97,,,43.5,2,0,0.054,DK Metcalf (healthy); Michael Pittman Jr. (questionable)
+00-0041489,Germie Bernard,PIT,WR,4,4.0,0.0,healthy,0.97,,,27.6,3,0,0.058,DK Metcalf (healthy); Michael Pittman Jr. (questionable); Roman Wilson (healthy)
+00-0036862,Ben Skowronek,PIT,WR,5,5.0,0.0,healthy,0.97,,,330.4,4,0,0.06,DK Metcalf (healthy); Michael Pittman Jr. (questionable); Roman Wilson (healthy); Germie Bernard (healthy)
+00-0041397,Kaden Wetjen,PIT,WR,6,6.0,0.0,healthy,0.97,,,635.5,5,0,0.06,DK Metcalf (healthy); Michael Pittman Jr. (questionable); Roman Wilson (healthy); Germie Bernard (healthy); Ben Skowronek (healthy)
+00-0039626,Cole Burgess,PIT,WR,7,10.0,3.0,ir,0.02,Undisclosed,,1169.6,6,0,0.06,DK Metcalf (healthy); Michael Pittman Jr. (questionable); Roman Wilson (healthy); Germie Bernard (healthy); Ben Skowronek (healthy); Kaden Wetjen (healthy)
+00-0034869,Sam Darnold,SEA,QB,1,1.0,0.0,questionable,0.72,Lower Body,,13.8,0,0,0.0,nobody
+00-0035704,Drew Lock,SEA,QB,2,2.0,0.0,healthy,0.97,,,24.1,1,0,0.0,Sam Darnold (questionable)
+00-0040673,Jalen Milroe,SEA,QB,3,3.0,0.0,healthy,0.97,,,163.1,2,0,0.0,Sam Darnold (questionable); Drew Lock (healthy)
+00-0041512,Jadarian Price,SEA,RB,1,1.0,0.0,questionable,0.72,Chest,,41.5,0,0,0.0,nobody
+00-0038797,Emanuel Wilson,SEA,RB,2,2.0,0.0,healthy,0.97,,,41.4,1,0,0.128,Jadarian Price (questionable)
+00-0039299,George Holani,SEA,RB,3,3.0,0.0,healthy,0.97,,,38.8,2,0,0.131,Jadarian Price (questionable); Emanuel Wilson (healthy)
+00-0039165,Zach Charbonnet,SEA,RB,4,4.0,0.0,pup,0.02,Knee - ACL,,113.8,3,0,0.139,Jadarian Price (questionable); Emanuel Wilson (healthy); George Holani (healthy)
+00-0039793,AJ Barner,SEA,TE,1,1.0,0.0,healthy,0.97,,,39.9,0,0,0.0,nobody
+00-0033576,Eric Saubert,SEA,TE,2,3.0,1.0,healthy,0.97,,,1432.4,1,0,0.004,AJ Barner (healthy)
+00-0040739,Elijah Arroyo,SEA,TE,3,2.0,1.0,healthy,0.97,,,17.9,2,0,0.004,AJ Barner (healthy); Eric Saubert (healthy)
+00-0040058,Nick Kallerup,SEA,TE,4,4.0,0.0,healthy,0.97,,,6386.2,3,0,0.006,AJ Barner (healthy); Eric Saubert (healthy); Elijah Arroyo (healthy)
+00-0038543,Jaxon Smith-Njigba,SEA,WR,1,1.0,0.0,healthy,0.97,,,49.3,0,0,0.0,nobody
+00-0037545,Rashid Shaheed,SEA,WR,2,2.0,0.0,healthy,0.97,,,26.4,1,0,0.01,Jaxon Smith-Njigba (healthy)
+00-0033908,Cooper Kupp,SEA,WR,3,3.0,0.0,healthy,0.97,,,39.4,2,0,0.014,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy)
+00-0040648,Tory Horton,SEA,WR,4,4.0,0.0,healthy,0.97,,,17.9,3,0,0.018,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy)
+00-0040621,Montorie Foster Jr.,SEA,WR,5,9.0,4.0,healthy,0.97,,,479.1,4,0,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy)
+00-0037156,Irv Charles,SEA,WR,6,5.0,1.0,ir,0.02,Undisclosed,,548.7,5,0,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy); Montorie Foster Jr. (healthy)
+00-0038752,Jake Bobo,SEA,WR,7,6.0,1.0,ir,0.02,Knee,,767.9,6,1,0.02,Jaxon Smith-Njigba (healthy); Rashid Shaheed (healthy); Cooper Kupp (healthy); Tory Horton (healthy); Montorie Foster Jr. (healthy); Irv Charles (ir)
+00-0037834,Brock Purdy,SF,QB,1,1.0,0.0,healthy,0.97,,,52.0,0,0,0.0,nobody
+00-0036972,Mac Jones,SF,QB,2,2.0,0.0,healthy,0.97,,,13.8,1,0,0.0,Brock Purdy (healthy)
+00-0040589,Kurtis Rourke,SF,QB,3,3.0,0.0,healthy,0.97,,,70.6,2,0,0.0,Brock Purdy (healthy); Mac Jones (healthy)
+00-0033280,Christian McCaffrey,SF,RB,1,1.0,0.0,healthy,0.97,,,50.3,0,0,0.0,nobody
+00-0041052,Kaelon Black,SF,RB,2,2.0,0.0,healthy,0.97,,,52.0,1,0,0.017,Christian McCaffrey (healthy)
+00-0040177,Jordan James,SF,RB,3,4.0,1.0,healthy,0.97,,,38.0,2,0,0.023,Christian McCaffrey (healthy); Kaelon Black (healthy)
+00-0039363,Isaac Guerendo,SF,RB,4,6.0,2.0,pup,0.02,Pectoral,,570.5,3,0,0.024,Christian McCaffrey (healthy); Kaelon Black (healthy); Jordan James (healthy)
+00-0033288,George Kittle,SF,TE,1,1.0,0.0,healthy,0.97,,,51.6,0,0,0.0,nobody
+00-0036887,Luke Farrell,SF,TE,2,2.0,0.0,healthy,0.97,,,282.2,1,0,0.006,George Kittle (healthy)
+00-0038643,Brayden Willis,SF,TE,3,5.0,2.0,healthy,0.97,,,187.1,2,0,0.007,George Kittle (healthy); Luke Farrell (healthy)
+00-0037112,Jake Tonges,SF,TE,4,4.0,0.0,ir,0.02,Knee,,166.1,3,0,0.007,George Kittle (healthy); Luke Farrell (healthy); Brayden Willis (healthy)
+00-0031408,Mike Evans,SF,WR,1,1.0,0.0,questionable,0.72,Hip,,44.2,0,0,0.0,nobody
+00-0035719,Deebo Samuel,SF,WR,2,2.0,0.0,healthy,0.97,,,51.8,1,0,0.068,Mike Evans (questionable)
+00-0032775,Demarcus Robinson,SF,WR,3,7.0,4.0,doubtful,0.28,Ankle,,45.4,2,0,0.074,Mike Evans (questionable); Deebo Samuel (healthy)
+00-0039365,Jacob Cowing,SF,WR,4,3.0,1.0,healthy,0.97,,,26.1,3,1,0.074,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful)
+00-0040172,Jordan Watkins,SF,WR,5,5.0,0.0,healthy,0.97,,,70.5,4,1,0.075,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy)
+00-0034854,KhaDarel Hodge,SF,WR,6,4.0,2.0,healthy,0.97,,,164.5,5,1,0.076,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy); Jordan Watkins (healthy)
+00-0034775,Christian Kirk,SF,WR,7,8.0,1.0,ir,0.02,Calf,,549.6,6,1,0.076,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy); Jordan Watkins (healthy); KhaDarel Hodge (healthy)
+00-0041035,De'Zhaun Stribling,SF,WR,8,11.0,3.0,ir,0.02,Ankle,,93.1,7,2,0.076,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy); Jordan Watkins (healthy); KhaDarel Hodge (healthy); Christian Kirk (ir)
+00-0039916,Ricky Pearsall,SF,WR,9,10.0,1.0,ir,0.02,Knee - PCL,,985.4,8,3,0.076,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy); Jordan Watkins (healthy); KhaDarel Hodge (healthy); Christian Kirk (ir); De'Zhaun Stribling (ir)
+00-0036261,Brandon Aiyuk,SF,WR,10,,,unknown,0.85,,,,9,4,0.076,Mike Evans (questionable); Deebo Samuel (healthy); Demarcus Robinson (doubtful); Jacob Cowing (healthy); Jordan Watkins (healthy); KhaDarel Hodge (healthy); Christian Kirk (ir); De'Zhaun Stribling (ir); Ricky Pearsall (ir)
+00-0034855,Baker Mayfield,TB,QB,1,1.0,0.0,healthy,0.97,,,60.3,0,0,0.0,nobody
+00-0041251,Jalon Daniels,TB,QB,2,3.0,1.0,healthy,0.97,,,579.9,1,0,0.0,Baker Mayfield (healthy)
+00-0039361,Bucky Irving,TB,RB,1,1.0,0.0,healthy,0.97,,,60.3,0,0,0.0,nobody
+00-0036919,Kenny Gainwell,TB,RB,2,2.0,0.0,healthy,0.97,,,60.2,1,0,0.017,Bucky Irving (healthy)
+00-0038951,Sean Tucker,TB,RB,3,3.0,0.0,healthy,0.97,,,40.4,2,0,0.025,Bucky Irving (healthy); Kenny Gainwell (healthy)
+00-0038129,Cade Otton,TB,TE,1,1.0,0.0,healthy,0.97,,,42.6,0,0,0.0,nobody
+00-0039050,Payne Durham,TB,TE,2,2.0,0.0,healthy,0.97,,,2707.0,1,0,0.005,Cade Otton (healthy)
+00-0037311,Ko Kieft,TB,TE,3,4.0,1.0,healthy,0.97,,,1316.6,2,0,0.005,Cade Otton (healthy); Payne Durham (healthy)
+00-0041094,Bauer Sharp,TB,TE,4,3.0,1.0,healthy,0.97,,,2707.0,3,0,0.005,Cade Otton (healthy); Payne Durham (healthy); Ko Kieft (healthy)
+00-0040129,Emeka Egbuka,TB,WR,1,1.0,0.0,healthy,0.97,,,60.2,0,0,0.0,nobody
+00-0033921,Chris Godwin Jr.,TB,WR,2,2.0,0.0,healthy,0.97,,,60.2,1,0,0.007,Emeka Egbuka (healthy)
+00-0039855,Jalen McMillan,TB,WR,3,3.0,0.0,healthy,0.97,,,42.4,2,0,0.012,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy)
+00-0041048,Ted Hurst III,TB,WR,4,4.0,0.0,healthy,0.97,,,42.5,3,0,0.013,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy)
+00-0040237,Tez Johnson,TB,WR,5,5.0,0.0,healthy,0.97,,,14.9,4,0,0.017,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy)
+00-0039589,Kameron Johnson,TB,WR,6,6.0,0.0,healthy,0.97,,,2205.0,5,0,0.018,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy); Tez Johnson (healthy)
+00-0035359,David Sills V,TB,WR,7,7.0,0.0,ir,0.02,Undisclosed,,548.5,6,0,0.019,Emeka Egbuka (healthy); Chris Godwin Jr. (healthy); Jalen McMillan (healthy); Ted Hurst III (healthy); Tez Johnson (healthy); Kameron Johnson (healthy)
+00-0040676,Cam Ward,TEN,QB,1,1.0,0.0,healthy,0.97,,,13.1,0,0,0.0,nobody
+00-0033869,Mitchell Trubisky,TEN,QB,2,2.0,0.0,healthy,0.97,,,331.4,1,0,0.0,Cam Ward (healthy)
+00-0035261,Tony Pollard,TEN,RB,1,1.0,0.0,questionable,0.72,Undisclosed,,0.4,0,0,0.0,nobody
+00-0039032,Tyjae Spears,TEN,RB,2,2.0,0.0,questionable,0.72,Undisclosed,,0.4,1,0,0.136,Tony Pollard (questionable)
+00-0037594,Julius Chestnut,TEN,RB,3,4.0,1.0,healthy,0.97,,,2823.0,2,0,0.207,Tony Pollard (questionable); Tyjae Spears (questionable)
+00-0040886,Nicholas Singleton,TEN,RB,4,3.0,1.0,healthy,0.97,,,41.6,3,0,0.208,Tony Pollard (questionable); Tyjae Spears (questionable); Julius Chestnut (healthy)
+00-0040584,Gunnar Helm,TEN,TE,1,1.0,0.0,healthy,0.97,,,56.8,0,0,0.0,nobody
+00-0038115,Daniel Bellinger,TEN,TE,2,2.0,0.0,healthy,0.97,,,100.6,1,0,0.004,Gunnar Helm (healthy)
+00-0039648,David Martin-Robinson,TEN,TE,3,5.0,2.0,healthy,0.97,,,6156.3,2,0,0.005,Gunnar Helm (healthy); Daniel Bellinger (healthy)
+00-0036876,Kylen Granson,TEN,TE,4,3.0,1.0,healthy,0.97,,,74.3,3,0,0.005,Gunnar Helm (healthy); Daniel Bellinger (healthy); David Martin-Robinson (healthy)
+00-0040901,Jaren Kanak,TEN,TE,5,6.0,1.0,ir,0.02,Pectoral,,900.3,4,0,0.005,Gunnar Helm (healthy); Daniel Bellinger (healthy); David Martin-Robinson (healthy); Kylen Granson (healthy)
+00-0041438,Carnell Tate,TEN,WR,1,1.0,0.0,healthy,0.97,,,56.9,0,0,0.0,nobody
+00-0038117,Wan'Dale Robinson,TEN,WR,2,2.0,0.0,healthy,0.97,,,56.8,1,0,0.006,Carnell Tate (healthy)
+00-0034837,Calvin Ridley,TEN,WR,3,3.0,0.0,healthy,0.97,,,41.9,2,0,0.012,Carnell Tate (healthy); Wan'Dale Robinson (healthy)
+00-0040170,Elic Ayomanor,TEN,WR,4,4.0,0.0,healthy,0.97,,,41.7,3,0,0.015,Carnell Tate (healthy); Wan'Dale Robinson (healthy); Calvin Ridley (healthy)
+00-0040705,Chimere Dike,TEN,WR,5,5.0,0.0,healthy,0.97,,,182.3,4,0,0.019,Carnell Tate (healthy); Wan'Dale Robinson (healthy); Calvin Ridley (healthy); Elic Ayomanor (healthy)
+00-0039910,Jayden Daniels,WAS,QB,1,2.0,1.0,out,0.02,Elbow,,1.4,0,0,0.0,nobody
+00-0032268,Marcus Mariota,WAS,QB,2,1.0,1.0,healthy,0.97,,,23.9,1,1,0.0,Jayden Daniels (out)
+00-0041117,Athan Kaliakmanis,WAS,QB,3,4.0,1.0,healthy,0.97,,,71.2,2,1,0.0,Jayden Daniels (out); Marcus Mariota (healthy)
+00-0040242,Jacory Croskey-Merritt,WAS,RB,1,1.0,0.0,healthy,0.97,,,62.6,0,0,0.0,nobody
+00-0037256,Rachaad White,WAS,RB,2,2.0,0.0,healthy,0.97,,,62.6,1,0,0.014,Jacory Croskey-Merritt (healthy)
+00-0041096,Kaytron Allen,WAS,RB,3,3.0,0.0,healthy,0.97,,,38.6,2,0,0.02,Jacory Croskey-Merritt (healthy); Rachaad White (healthy)
+00-0033955,Jeremy McNichols,WAS,RB,4,4.0,0.0,ir,0.02,Quadriceps,,552.2,3,0,0.023,Jacory Croskey-Merritt (healthy); Rachaad White (healthy); Kaytron Allen (healthy)
+00-0037809,Chig Okonkwo,WAS,TE,1,1.0,0.0,questionable,0.72,Hamstring,,0.1,0,0,0.0,nobody
+00-0039912,Ben Sinnott,WAS,TE,2,2.0,0.0,healthy,0.97,,,38.3,1,0,0.034,Chig Okonkwo (questionable)
+00-0036628,John Bates,WAS,TE,3,3.0,0.0,healthy,0.97,,,14.3,2,0,0.036,Chig Okonkwo (questionable); Ben Sinnott (healthy)
+00-0039686,Colson Yankoff,WAS,TE,4,4.0,0.0,healthy,0.97,,,14.3,3,0,0.037,Chig Okonkwo (questionable); Ben Sinnott (healthy); John Bates (healthy)
+00-0035659,Terry McLaurin,WAS,WR,1,1.0,0.0,healthy,0.97,,,64.3,0,0,0.0,nobody
+00-0031588,Stefon Diggs,WAS,WR,2,2.0,0.0,healthy,0.97,,,52.4,1,0,0.007,Terry McLaurin (healthy)
+00-0041040,Antonio Williams,WAS,WR,3,3.0,0.0,healthy,0.97,,,27.4,2,0,0.013,Terry McLaurin (healthy); Stefon Diggs (healthy)
+00-0036626,Dyami Brown,WAS,WR,4,4.0,0.0,healthy,0.97,,,38.4,3,0,0.016,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy)
+00-0037742,Treylon Burks,WAS,WR,5,7.0,2.0,healthy,0.97,,,14.3,4,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy)
+00-0040164,Jaylin Lane,WAS,WR,6,6.0,0.0,healthy,0.97,,,14.1,5,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy); Treylon Burks (healthy)
+00-0039355,Luke McCaffrey,WAS,WR,7,5.0,2.0,healthy,0.97,,,71.2,6,0,0.018,Terry McLaurin (healthy); Stefon Diggs (healthy); Antonio Williams (healthy); Dyami Brown (healthy); Treylon Burks (healthy); Jaylin Lane (healthy)
