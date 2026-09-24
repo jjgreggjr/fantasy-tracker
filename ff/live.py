@@ -123,12 +123,37 @@ def _snapshot_view(slug: str, meta: dict, d: Path) -> dict:
     st = set()
     if not snap.empty and "sleeper_id" in snap.columns:
         st = set(snap[snap.is_starter == 1].sleeper_id.map(norm_id).dropna())
+    # The per-league roster.csv is scored players only (score.compute keeps just
+    # QB/RB/WR/TE), so K, DEF and any unmatched player are absent from it. Surface
+    # them the way the Sleeper live read does, from my_roster.csv (which does keep
+    # them), so an ESPN snapshot names them instead of leaving them invisible.
+    unscored = []
+    try:
+        mr = pd.read_csv(d.parent.parent / "data" / "my_roster.csv",
+                         dtype={"sleeper_id": str})
+        mr = mr[mr.league_id.astype(str) == str(meta.get("league_id"))]
+        if not mr.empty:
+            # season first, then the newest week within it — week numbers reset
+            # each season and an ESPN league keeps one league_id across seasons
+            mr = mr[mr.season == mr.season.max()]
+            mr = mr[mr.week == mr.week.max()]
+            for _, x in mr[mr.gsis_id.isna()].iterrows():
+                nm = x.get("name")
+                if isinstance(nm, str) and nm.strip():
+                    tag = ", ".join(str(v) for v in (x.get("position"), x.get("team"))
+                                    if isinstance(v, str) and v.strip())
+                    unscored.append(f"{nm} ({tag})" if tag else nm)
+                elif isinstance(x.get("sleeper_id"), str) and x["sleeper_id"].strip():
+                    unscored.append(x["sleeper_id"])
+    except Exception:
+        # Never let this break the snapshot; an empty list is the old behavior.
+        unscored = []
     return {
         "slug": slug, "league": meta.get("name"),
         "platform": meta.get("platform", "sleeper"), "live": False,
         "fetched_at": meta.get("roster_fetched_at"),
         "snapshot_at": meta.get("roster_fetched_at"),
-        "mine": snap, "available": avail, "unscored": [],
+        "mine": snap, "available": avail, "unscored": unscored,
         "diff": {"started_since_snapshot": [], "benched_since_snapshot": []},
         "live_starter_ids": st,
     }
