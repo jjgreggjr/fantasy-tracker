@@ -80,6 +80,31 @@ def upsert(path: Path, new: pd.DataFrame, keys: list[str]) -> int:
     return len(new)
 
 
+def replace_partition(path: Path, new: pd.DataFrame, partition: list[str],
+                      keys: list[str]) -> int:
+    """Replace every existing row whose `partition` tuple appears in `new`, then append `new`.
+
+    Each fetch is the complete roster for its league-week, so anything absent
+    from it is no longer rostered; a key-level upsert would keep dropped
+    players around forever.
+    """
+    if new.empty:
+        return 0
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        old = pd.read_csv(path, low_memory=False)
+        if all(k in old.columns for k in partition):
+            idx = pd.MultiIndex.from_frame(new[partition].astype(str))
+            oidx = pd.MultiIndex.from_frame(old[partition].astype(str))
+            old = old[~oidx.isin(idx)]
+        combined = pd.concat([old, new], ignore_index=True)
+    else:
+        combined = new
+    combined = combined.sort_values(keys).reset_index(drop=True)
+    combined.to_csv(path, index=False)
+    return len(new)
+
+
 # --------------------------------------------------------------------------
 def build_players(roster: pd.DataFrame, sleeper: dict | None,
                   asof: pd.Timestamp) -> pd.DataFrame:
