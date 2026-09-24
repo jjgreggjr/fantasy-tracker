@@ -1,6 +1,6 @@
 # Week 3 digest — 2026
 
-Generated 2026-09-24 15:19 UTC  
+Generated 2026-09-24 16:40 UTC  
 Stats through: **Week 2** · Baselines: **75% 2026 / 25% 2025**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 2** · Baselines: **75% 2026 / 25% 2025**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 935
 - Sleeper players cache: 2026-09-24
-- projections: 852 players (Sleeper, 2026-09-24T15:19:08Z)
-- league rosters: 3 leagues, lineups read 2026-09-24T15:19:07Z
-- ESPN rosters: Average Joes (2026-09-24T15:19:11Z)
+- projections: 852 players (Sleeper, 2026-09-24T16:40:29Z)
+- league rosters: 3 leagues, lineups read 2026-09-24T16:40:27Z
+- ESPN rosters: Average Joes (2026-09-24T16:40:33Z)
 - status rows: 568 players; 0 with practice reports
 
 ### Data integrity
@@ -97,7 +97,7 @@ Full report: `leagues/where-you-at/report.md`
 | Kyle Monangai | RB | CHI | PHI | 9.1 | 11.3 | 31% | 2 | 19 | Med | QUESTIONABLE |
 
 
-**Needs a decision:** Aaron Jones (QUESTIONABLE), Kyle Monangai (QUESTIONABLE), Rico Dowdle (QUESTIONABLE), Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE), Puka Nacua (QUESTIONABLE), Nico Collins (QUESTIONABLE), Alec Pierce (OUT)
+**Needs a decision:** Aaron Jones (QUESTIONABLE), Kyle Monangai (QUESTIONABLE), Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE), Puka Nacua (QUESTIONABLE), Nico Collins (QUESTIONABLE), Alec Pierce (OUT)
 
 **Trending and still free here:** Bryce Young (QB, 20.7), C.J. Stroud (QB, 17.8), Drew Lock (QB, 15.4)
 

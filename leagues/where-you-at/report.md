@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 3
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-24 15:19 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-24T15:19:07Z
+Generated 2026-09-24 16:40 UTC · baselines: 75% 2026 / 25% 2025 · lineup as of 2026-09-24T16:40:27Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -86,7 +86,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Cole Kmet | TE | CHI | PHI | 3.5 | 2.2 | 7% | 2 | 32 | High |  |
 | Eli Raridon | TE | NE | JAX | 3.3 | 1.0 | 3% | 2 | 16 | Med |  |
 | Jonnu Smith | TE | GB | ATL | 3.2 | 2.2 | 6% | 2 | 5 | Med |  |
-| Daniel Bellinger | TE | TEN | NYG | 3.0 | 1.2 | 4% | 2 | 11 | High |  |
+| Josh Oliver | TE | MIN | TB | 3.0 | 1.8 | 4% | 2 | 2 | Med |  |
 | Kalif Raymond | WR | CHI | PHI | 6.8 | 4.9 | 13% | 3 | 20 | Med |  |
 | Xavier Hutchinson | WR | HOU | IND | 6.2 | 5.1 | 11% | 2 | 2 | Med |  |
 | Ryan Flournoy | WR | DAL | BAL | 6.1 | 4.6 | 12% | 3 | 15 | Med |  |
@@ -103,17 +103,17 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Xavier Hutchinson | WR | HOU | 26.3 | 3 | 2 (was 2) | 66% | WR2 on depth chart; snap share trending +25%/wk; team passes #1; age 26 |
 | Roman Wilson | WR | PIT | 25.3 | 2 | 3 (was 3) | 61% | WR3 on depth chart; snap share trending +24%/wk; team passes #3; age 25 |
 | Isaiah Williams | WR | NYJ | 25.7 | 2 | 3 (was 3) | 62% | WR3 on depth chart; snap share trending +22%/wk; team passes #13; age 26 |
-| Mitchell Evans | TE | CAR | 23.4 | 1 | 3 (was 2) | 47% | TE3 on depth chart; snap share trending +18%/wk; team passes #6; age 23 |
+| Mitchell Evans | TE | CAR | 23.4 | 1 | 3 (was 3) | 47% | TE3 on depth chart; snap share trending +18%/wk; team passes #6; age 23 |
 | Brevyn Spann-Ford | TE | DAL | 26.7 | 2 | 2 (was 2) | 29% | TE2 on depth chart; snap share trending +16%/wk; team passes #10; age 27 |
-| CJ Donaldson | RB | NO | 22.2 | 0 | 3 (was 4) | 23% | RB3 on depth chart; up from 4; snap share trending +12%/wk; age 22 |
+| CJ Donaldson | RB | NO | 22.2 | 0 | 3 (was 3) | 23% | RB3 on depth chart; snap share trending +12%/wk; age 22 |
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 74% | WR3 on depth chart; snap share trending +10%/wk; team passes #2; age 24 |
 | Josh Whyle | TE | GB | 27.0 | 3 | 3 (was 3) | 51% | TE3 on depth chart; snap share trending +7%/wk; team passes #9; age 27 |
 | Ryan Flournoy | WR | DAL | 26.9 | 2 | 3 (was 3) | 67% | WR3 on depth chart; snap share trending +5%/wk; team passes #10; age 27 |
 | Jalen McMillan | WR | TB | 24.8 | 2 | 3 (was 3) | 52% | WR3 on depth chart; team passes #14; age 25 |
-| Dohnte Meyers | WR | CIN | 26.2 | 0 | 4 (was 5) | 17% | WR4 on depth chart; up from 5; team passes #7; age 26 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
 | Payne Durham | TE | TB | 26.3 | 3 | 2 (was 2) | 28% | TE2 on depth chart; team passes #14; age 26 |
-| Ke'Shawn Williams | WR | CIN | 24.7 | 1 | 5 (was 6) | 4% | WR5 on depth chart; up from 6; team passes #7; age 25 |
+| Sean Tucker | RB | TB | 24.9 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 25 |
+| Jordan James | RB | SF | 22.5 | 1 | 3 (was 3) | 15% | RB3 on depth chart; age 22 |
 
 
 ## Ask me
