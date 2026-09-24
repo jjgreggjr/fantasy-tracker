@@ -46,6 +46,24 @@ def _my_rows(lr: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     return lr[lr.owner_name.astype(str).str.lower() == name]
 
 
+def _write_snapshot(path: Path, fetched: pd.DataFrame, keyed: pd.DataFrame) -> None:
+    """Replace the (season, week, league_id) partition with `keyed`, but only
+    when `keyed` is the complete fetch (no rows dropped for lacking a
+    sleeper_id). A row with no sleeper_id can't be written at all, so if the
+    Sleeper id lookup is degraded this run, `keyed` can be short of rows that
+    are still rostered — replacing the partition would delete their earlier
+    rows. Fall back to a per-key upsert, which never deletes a row it can't
+    re-key."""
+    if len(keyed) == len(fetched):
+        build.replace_partition(path, keyed, ["season", "week", "league_id"],
+                                ["season", "week", "league_id", "sleeper_id"])
+    else:
+        log.info("%s: %d of %d rows missing sleeper_id this run; falling back "
+                 "to per-key upsert so unkeyable rows aren't wiped",
+                 path.name, len(fetched) - len(keyed), len(fetched))
+        build.upsert(path, keyed, ["season", "week", "league_id", "sleeper_id"])
+
+
 def load_config() -> dict:
     if not CONFIG.exists():
         raise SystemExit(f"Missing {CONFIG}. Copy config.example.json and edit it.")
@@ -208,16 +226,18 @@ def main(argv=None) -> int:
     leagues_raw = [] if args.skip_sleeper else resolve_leagues(cfg, season, warnings)
     lr = build.build_league_rosters(leagues_raw, players, season, preview_week)
     if not lr.empty:
-        build.upsert(DATA / "league_rosters.csv", lr,
-                     ["season", "week", "league_id", "sleeper_id"])
+        build.replace_partition(DATA / "league_rosters.csv", lr,
+                                ["season", "week", "league_id"],
+                                ["season", "week", "league_id", "sleeper_id"])
         mine = _my_rows(lr, cfg)
         if mine.empty:
             warnings.append(
                 "Could not identify your teams in the league rosters "
                 f"(user_id={cfg.get('sleeper_user_id')}). Start/sit skipped.")
         else:
-            build.upsert(DATA / "my_roster.csv", mine,
-                         ["season", "week", "league_id", "sleeper_id"])
+            build.replace_partition(DATA / "my_roster.csv", mine,
+                                    ["season", "week", "league_id"],
+                                    ["season", "week", "league_id", "sleeper_id"])
 
     # ---- analysis -------------------------------------------------------
     trailing = cfg["startsit"]["trailing_weeks"]
@@ -326,10 +346,8 @@ def main(argv=None) -> int:
                 log.info("ESPN %s: %d rostered players have no Sleeper id and "
                          "stay out of data/league_rosters.csv",
                          meta["name"], len(rosters) - len(keyed))
-            build.upsert(DATA / "league_rosters.csv", keyed,
-                         ["season", "week", "league_id", "sleeper_id"])
-            build.upsert(DATA / "my_roster.csv", mine.dropna(subset=["sleeper_id"]),
-                         ["season", "week", "league_id", "sleeper_id"])
+            _write_snapshot(DATA / "league_rosters.csv", rosters, keyed)
+            _write_snapshot(DATA / "my_roster.csv", mine, mine.dropna(subset=["sleeper_id"]))
         log.info("ESPN %s: %d teams, %d rostered, my team %s, slots %s",
                  meta["name"], len(meta.get("owners", {})), len(rosters), my_tid,
                  meta.get("roster_positions"))
