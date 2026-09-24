@@ -129,7 +129,10 @@ def roster_overage(slug: str) -> tuple[int, dict]:
     info = {"rostered": len(full), "ir": ir, "taxi": taxi, "active": active,
             "cap": cap, "taxi_slots": meta.get("taxi_slots", 0),
             "ir_slots": meta.get("reserve_slots", 0),
-            "non_skill": int(full.position.isna().sum())}
+            # K/DEF read as null position on Sleeper rows and as "K"/"DEF" on
+            # ESPN rows — count both so the footer's "N K/DEF" is truthful.
+            "non_skill": int((full.position.isna()
+                              | full.position.isin(["K", "DEF"])).sum())}
     return max(0, active - cap), info
 
 

@@ -52,6 +52,17 @@ IDP_SLOTS = {"DT", "DE", "LB", "DL", "CB", "S", "DB", "DP", "ER"}
 NON_STARTING = {"BN", "IR"}
 POS_ID = {1: "QB", 2: "RB", 3: "WR", 4: "TE", 5: "K", 16: "DEF"}
 
+# ESPN proTeamId -> nflverse team abbreviation (0 = free agent, omitted). Used
+# only to label the K/DEF roster rows that have no crosswalk entry; matches the
+# abbreviations the rest of the pipeline uses (LA not LAR, LV not OAK, JAX, WAS).
+PRO_TEAM = {
+    1: "ATL", 2: "BUF", 3: "CHI", 4: "CIN", 5: "CLE", 6: "DAL", 7: "DEN",
+    8: "DET", 9: "GB", 10: "TEN", 11: "IND", 12: "KC", 13: "LV", 14: "LA",
+    15: "MIA", 16: "MIN", 17: "NE", 18: "NO", 19: "NYG", 20: "NYJ", 21: "PHI",
+    22: "ARI", 23: "PIT", 24: "LAC", 25: "SF", 26: "SEA", 27: "TB", 28: "WAS",
+    29: "CAR", 30: "JAX", 33: "BAL", 34: "HOU",
+}
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -223,18 +234,38 @@ def parse_rosters(data: dict, players: pd.DataFrame, season: int,
     for t in (data.get("teams") or []):
         tid = t.get("id")
         for e in ((t.get("roster") or {}).get("entries") or []):
-            pid = norm_id(((e.get("playerPoolEntry") or {}).get("player") or {}).get("id"))
+            player = (e.get("playerPoolEntry") or {}).get("player") or {}
+            pid = norm_id(player.get("id"))
             slot = SLOT_ID.get(e.get("lineupSlotId"), str(e.get("lineupSlotId")))
             info = xw.loc[pid].to_dict() if not pd.isna(pid) and pid in xw.index else {}
             sid = norm_id(info.get("sleeper_id"))
+            name = info.get("name")
+            position = info.get("position")
+            team = info.get("team")
+            # K and DEF are never in the skill-only crosswalk (build.SKILL), so
+            # without this they have no sleeper_id and run_weekly's upsert drops
+            # them. Take their identity from ESPN's own payload and key them as
+            # "espn-<id>": that key is stable because K/DEF can never gain a
+            # crosswalk entry, and score.compute's position filter keeps them out
+            # of the scored roster.csv. Deliberately NOT applied to unmatched skill
+            # players: their key would change once nflverse crosswalks them
+            # (duplicating the row in the upsert log), and a skill position would
+            # leak an unscoreable row into the scored CSVs.
+            payload_pos = POS_ID.get(player.get("defaultPositionId"))
+            if pd.isna(sid) and not pd.isna(pid) and payload_pos in ("K", "DEF"):
+                sid = f"espn-{pid}"
+                position = payload_pos
+                team = team or PRO_TEAM.get(player.get("proTeamId"))
+                name = name or player.get("fullName") or (
+                    f"{team} DEF" if position == "DEF" and team else None)
             rows.append({
                 "season": season, "week": week,
                 "league_id": meta["league_id"], "league_name": meta["name"],
                 "roster_id": tid, "owner_id": str(tid),
                 "owner_name": owners.get(str(tid), f"team {tid}"),
                 "sleeper_id": sid, "espn_id": pid,
-                "gsis_id": info.get("gsis_id"), "name": info.get("name"),
-                "position": info.get("position"), "team": info.get("team"),
+                "gsis_id": info.get("gsis_id"), "name": name,
+                "position": position, "team": team,
                 "is_starter": int(slot not in NON_STARTING),
                 "is_taxi": 0, "is_ir": int(slot == "IR"),
                 "roster_fetched_at": meta.get("fetched_at"),
