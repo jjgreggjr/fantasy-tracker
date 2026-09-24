@@ -118,6 +118,9 @@ def roster_overage(slug: str) -> tuple[int, dict]:
     if p.exists():
         mr = _pd.read_csv(p, dtype={"sleeper_id": str})
         full = mr[mr.league_id.astype(str) == str(meta["league_id"])]
+        # the file keeps one row per player per week — count only the newest snapshot
+        full = full[full.season == full.season.max()]
+        full = full[full.week == full.week.max()]
     if full is None or full.empty:
         return 0, {}
     ir = int(full.is_ir.sum()); taxi = int(full.is_taxi.sum())
