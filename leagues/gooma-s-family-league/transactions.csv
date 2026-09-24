@@ -11,6 +11,14 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,IND,,2
 2026,1,free_agent,add,8800,Malik Davis,1
 2026,1,free_agent,drop,11589,Trey Benson,1
+2026,2,waiver,add,7571,Rashod Bateman,8
+2026,2,waiver,drop,13320,Zachariah Branch,8
+2026,2,waiver,add,2505,Darren Waller,8
+2026,2,waiver,drop,5022,Dallas Goedert,8
+2026,2,waiver,add,5854,Drew Lock,3
+2026,2,waiver,drop,13288,Nicholas Singleton,3
+2026,2,waiver,add,11435,Emanuel Wilson,11
+2026,2,waiver,drop,13405,Kaytron Allen,11
 2026,2,free_agent,drop,12530,Travis Hunter,3
 2026,2,free_agent,add,9504,Kayshon Boutte,4
 2026,2,free_agent,add,9501,DeMario Douglas,11
@@ -25,3 +33,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,free_agent,add,6130,Devin Singletary,1
 2026,2,free_agent,drop,8800,Malik Davis,1
 2026,2,free_agent,drop,8408,Jordan Mason,1
+2026,3,free_agent,add,NO,,2
+2026,3,free_agent,drop,TB,,2
+2026,3,free_agent,add,9486,Dontayvion Wicks,2
+2026,3,free_agent,drop,6783,Jerry Jeudy,2
