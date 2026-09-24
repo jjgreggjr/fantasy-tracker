@@ -119,6 +119,8 @@ If a question doesn't name a league and the answer would differ, ask which.
 
 Lead with the decision. Then the two or three numbers that drove it. Then what would change it. Keep tables small; prose for the reasoning.
 
+**Keep it short.** James has asked for this explicitly: the decision in one line, then at most 3–5 bullets or one small table. No preamble or recap. Offer the full breakdown instead of writing it.
+
 **Points and volume, together, every time.** `E_pts` is derived from
 opportunity — POLICY.md's premise is that the opportunity predicts the points.
 So a recommendation that cites points alone is hiding its own reasoning. For
