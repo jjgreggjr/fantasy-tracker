@@ -10,3 +10,7 @@ James wants short answers, for fantasy questions and repo work alike:
 - Offer depth ("want the full breakdown?") instead of writing it.
 
 For fantasy questions, `skills/fantasy/SKILL.md` has the rest of the rules (status checks, points with volume).
+
+## League plans
+
+Standing plans live in `plans/<league-slug>.md`. When a question touches a league that has one: read it, mention the next open move in one line, and update the file (open moves, date) after anything changes.
