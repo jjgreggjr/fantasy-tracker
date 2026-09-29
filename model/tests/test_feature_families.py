@@ -23,7 +23,7 @@ from unittest import mock
 import numpy as np
 import pandas as pd
 
-from model import adp, audit, build_features as bf, features, fetch_adp, fetch_cfbd, labels
+from model import adp, audit, build_features as bf, college, features, fetch_adp, fetch_cfbd, labels
 from model import point_in_time as pit
 from model.features import RESULT_LAG, build_features, fingerprint, spine_for
 from model.point_in_time import KNOWN_AT, RawStore, RawTable, as_of_join, as_of_join_reference
@@ -54,6 +54,13 @@ def feats() -> pd.DataFrame:
     if "feats" not in _C:
         _C["feats"] = pd.DataFrame([build_features(store(), t) for t in rows()])
     return _C["feats"]
+
+
+def college_rows() -> list[pit.TargetRow]:
+    """Rookies with a college line, on their drafting team, weeks 1-2 of their draft season (2022/24/25/26)."""
+    if "crows" not in _C:
+        _C["crows"] = audit.sample_college_rows(store())
+    return _C["crows"]
 
 
 def ts(s: str) -> pd.Timestamp:
@@ -137,6 +144,9 @@ def _pick(pos: str, season: int, week: int, need_history: bool = True) -> pit.Ta
 
 # ------------------------------------------------------------------ constants + registry
 class Registry(unittest.TestCase):
+    def test_college_columns_registry_and_loader_agree(self):
+        self.assertEqual(features.FAMILIES["college"], college.COLLEGE_COLUMNS)
+
     def test_constants_repeated_from_point_in_time_agree(self):
         self.assertEqual(features.CAREER_CUTOFF_SEASON, pit.CAREER_CUTOFF_SEASON)
         self.assertEqual(features.POSITIONS, pit.SKILL_POSITIONS)
@@ -293,6 +303,21 @@ class FamilyTruncationAudit(unittest.TestCase):
         self.assertGreater(f["draft_round"].notna().sum(), 300)
         for season in PLAN:
             self.assertGreater((f["season"] == season).sum(), 50)
+        self.assertGreater(f["adp_ppr"].notna().sum(), 50)                                     # ADP (wired in Phase 1)
+
+    def test_college_sample_exercises_the_family(self):
+        """The general sample has few rookies with a college line; this one is built from the college table."""
+        r = college_rows()
+        cf = pd.DataFrame([build_features(store(), t) for t in r])
+        self.assertGreaterEqual(len(r), 30)
+        self.assertEqual({t.season for t in r}, {2022, 2024, 2025, 2026})
+        self.assertGreaterEqual(len({t.position for t in r}), 3)
+        self.assertGreaterEqual(int(cf["college_rec_market_share"].notna().sum()), 0.9 * len(r))
+        self.assertTrue((cf["is_rookie"] == 1).mean() > 0.9)
+
+    def test_college_rows_identical_from_physically_truncated_tables(self):
+        bad = audit.audit_truncation(build_features, store(), college_rows())
+        self.assertEqual(bad, [], f"{len(bad)} college rows changed under truncation: {bad[:2]}")
 
     def test_every_feature_identical_from_physically_truncated_tables(self):
         bad = audit.audit_truncation(build_features, store(), rows())
@@ -567,6 +592,196 @@ class Adp(unittest.TestCase):
         gated = build_features(RawStore([*store()._tables.values(), RawTable("adp", late, "test")]), t)
         self.assertTrue(all(pd.isna(gated[c]) for c in features.FAMILIES["adp"]))
         self.assertTrue(all(pd.isna(build_features(store(), t)[c]) for c in features.FAMILIES["adp"]) or store().has("adp"))
+
+
+# ------------------------------------------------------------------ college (real CFBD CSVs + synthetic rules)
+def _cf(rows: list[tuple]) -> pd.DataFrame:
+    """CFBD-shaped WIDE player rows: (season, playerId, player, position, team, conference)."""
+    return pd.DataFrame(rows, columns=["season", "playerId", "player", "position", "team", "conference"])
+
+
+def _dr(rows: list[tuple]) -> pd.DataFrame:
+    return pd.DataFrame(rows, columns=["season", "gsis_id", "pfr_player_name", "position", "college"])
+
+
+class CollegeIdentity(unittest.TestCase):
+    def reason(self, cf, dr) -> dict:
+        m = college.match_draftees(cf, dr)
+        return dict(zip(m["player_id"], zip(m["reason"], m["tier"], m["cfbd_player_id"])))
+
+    def test_the_college_must_agree_so_namesakes_get_their_own_line(self):
+        cf = _cf([(2021, 1, "Kevin Harris", "RB", "South Carolina", "SEC"),
+                  (2021, 2, "Kevin Harris", "RB", "Texas Southern", "SWAC")])
+        r = self.reason(cf, _dr([(2022, "A", "Kevin Harris", "RB", "South Carolina")]))
+        self.assertEqual(r["A"], ("matched", "name_pos_college", 1))
+        r = self.reason(cf, _dr([(2022, "B", "Kevin Harris", "RB", "Texas Southern")]))
+        self.assertEqual(r["B"][2], 2)
+        # a namesake at the wrong school, nobody at the right one: NA, not the namesake's stats
+        r = self.reason(_cf([(2021, 2, "Kevin Harris", "RB", "Texas Southern", "SWAC")]),
+                        _dr([(2022, "A", "Kevin Harris", "RB", "South Carolina")]))
+        self.assertEqual(r["A"][0], "college_disagree")
+
+    def test_position_switch_is_matched_only_on_college_agreement_and_never_on_name_alone(self):
+        cf = _cf([(2021, 1, "Connor Heyward", "RB", "Michigan State", "Big Ten")])
+        self.assertEqual(self.reason(cf, _dr([(2022, "A", "Connor Heyward", "TE", "Michigan St.")]))["A"],
+                         ("matched", "name_college_posswitch", 1))
+        self.assertEqual(self.reason(cf, _dr([(2022, "A", "Connor Heyward", "TE", "Ohio St.")]))["A"][0], "college_disagree")
+
+    def test_ambiguity_shared_ids_missing_college_and_wrong_class_year_are_all_na(self):
+        two = _cf([(2021, 1, "Sam Jones", "WR", "Ohio State", "Big Ten"), (2021, 2, "Sam Jones", "WR", "Ohio State", "Big Ten")])
+        self.assertEqual(self.reason(two, _dr([(2022, "A", "Sam Jones", "WR", "Ohio St.")]))["A"][0], "ambiguous")
+        one = _cf([(2021, 1, "Sam Jones", "WR", "Ohio State", "Big Ten")])
+        r = self.reason(one, _dr([(2022, "A", "Sam Jones", "WR", "Ohio St."), (2022, "B", "Sam Jones Jr.", "WR", "Ohio St.")]))
+        self.assertEqual((r["A"][0], r["B"][0]), ("shared_cfbd_id", "shared_cfbd_id"))     # two draftees, one CFBD player
+        self.assertEqual(self.reason(one, _dr([(2022, "A", "Sam Jones", "WR", "")]))["A"][0], "no_draft_college")
+        self.assertEqual(self.reason(one, _dr([(2022, "A", "Sam Jones", "WR", None)]))["A"][0], "no_draft_college")
+        # class Y needs college season Y-1: the same lines two years early or late are not his
+        self.assertEqual(self.reason(one, _dr([(2023, "A", "Sam Jones", "WR", "Ohio St.")]))["A"][0], "no_name_match")
+        self.assertEqual(self.reason(one, _dr([(2021, "A", "Sam Jones", "WR", "Ohio St.")]))["A"][0], "no_name_match")
+        self.assertEqual(self.reason(one, _dr([(2022, "A", "Nobody Here", "WR", "Ohio St.")]))["A"][0], "no_name_match")
+
+    def test_college_spelling_crosswalk(self):
+        same = [("Mississippi", "Ole Miss"), ("Ohio St.", "Ohio State"), ("Boston Col.", "Boston College"),
+                ("Central Florida", "UCF"), ("Ala-Birmingham", "UAB"), ("Connecticut", "UConn"),
+                ("North Carolina St.", "NC State"), ("SE Missouri St.", "Southeast Missouri State"),
+                ("Miami (FL)", "Miami"), ("Texas A&M", "Texas A&M")]
+        for a, b in same:
+            self.assertEqual(college.norm_college(a), college.norm_college(b), (a, b))
+        for a, b in [("Miami (OH)", "Miami"), ("Ohio St.", "Ohio"), ("Michigan", "Michigan State"),
+                     ("Mississippi St.", "Ole Miss"), ("Washington", "Washington State")]:
+            self.assertNotEqual(college.norm_college(a), college.norm_college(b), (a, b))
+        self.assertEqual(college.norm_college(None), "")
+        self.assertEqual(college.norm_college(float("nan")), "")
+
+    def test_real_namesakes_resolve_to_the_right_college(self):
+        col = store()._tables["college"].df
+        dp = store()._tables["draft_picks"].df
+        have = lambda name, season: col[col["player_id"].isin(dp[(dp["pfr_player_name"] == name) & (dp["season"] == season)]["player_id"])]   # noqa: E731
+        self.assertEqual(have("Kevin Harris", 2022)["cfbd_team"].tolist(), ["South Carolina"])        # not Texas Southern
+        self.assertEqual(have("Zach Evans", 2023)["cfbd_team"].tolist(), ["Ole Miss"])                # not Minnesota
+        self.assertEqual(have("Justin Shorter", 2023)["cfbd_team"].tolist(), ["Florida"])             # not Holy Cross
+        self.assertEqual(have("Brian Thomas", 2024)["cfbd_team"].tolist(), ["LSU"])                   # not Valparaiso
+        self.assertEqual(len(have("Isaiah Davis", 2024)), 0)                                          # South Dakota State: FCS, NA
+        self.assertEqual(have("Connor Heyward", 2022)["match_tier"].tolist(), ["name_college_posswitch"])
+
+    def test_real_match_rates_and_tiers(self):
+        t = college.match_report()
+        self.assertEqual(list(t.index), [2021, 2022, 2023, 2024, 2025, 2026])
+        self.assertGreaterEqual(float(t["match_rate"].min()), 0.85)
+        self.assertEqual(int(t["ambiguous"].sum() + t["shared_cfbd_id"].sum()), 0)
+        self.assertTrue(((t["matched"] + t["no_draft_college"] + t["no_name_match"] + t["college_disagree"]
+                          + t["ambiguous"] + t["shared_cfbd_id"] + t["non_fbs"]) == t["drafted_skill"]).all())
+        col = store()._tables["college"].df
+        self.assertEqual(int(t["matched"].sum()), len(col))
+        self.assertEqual(col.duplicated("player_id").sum(), 0)
+        self.assertEqual(set(col["match_tier"]), {"name_pos_college", "name_college_posswitch"})
+
+    def test_a_schema_change_is_an_error_not_silent_na(self):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "player_stats_2020.csv").write_text("season,playerId,player\n2020,1,A B\n")
+            (Path(d) / "team_stats_2020.csv").write_text("season,team,statName,statValue\n2020,X,games,12\n")
+            with self.assertRaises(ValueError):
+                college.read_cfbd(Path(d))
+        with tempfile.TemporaryDirectory() as d:
+            self.assertIsNone(college.read_cfbd(Path(d)))
+
+
+class CollegeFeatures(unittest.TestCase):
+    def synthetic(self):
+        ps = pd.DataFrame(
+            [(2021, 1, "Run Back", "RB", "Alpha", "SEC", cat, st, v) for cat, st, v in [
+                ("receiving", "REC", 30), ("receiving", "YDS", 300), ("receiving", "TD", 3),
+                ("rushing", "CAR", 200), ("rushing", "YDS", 1000), ("rushing", "TD", 10)]]
+            + [(2021, 2, "Pass Man", "QB", "Alpha", "SEC", cat, st, v) for cat, st, v in [
+                ("passing", "ATT", 400), ("passing", "YDS", 3200), ("passing", "TD", 24),
+                ("rushing", "CAR", 60), ("rushing", "YDS", 240), ("rushing", "TD", 4)]]
+            + [(2021, 3, "Small School", "WR", "Nowhere State", "Big Sky", cat, st, v) for cat, st, v in [
+                ("receiving", "REC", 60), ("receiving", "YDS", 900), ("receiving", "TD", 8)]],
+            columns=["season", "playerId", "player", "position", "team", "conference", "category", "statType", "stat"])
+        ts = pd.DataFrame([(2021, "Alpha", s, v) for s, v in [("games", 12), ("netPassingYards", 3000), ("passingTDs", 24),
+                                                              ("rushingYards", 2000), ("rushingTDs", 20), ("sacks", 30)]],
+                          columns=["season", "team", "statName", "statValue"])
+        dr = _dr([(2022, "RB1", "Run Back", "RB", "Alpha"), (2022, "QB1", "Pass Man", "QB", "Alpha"),
+                  (2022, "WR1", "Small School", "WR", "Nowhere St.")])
+        starts = pd.Series({2022: pd.Timestamp("2022-09-01", tz="UTC")})
+        return college.build_college_frame(ps, ts, dr, starts)
+
+    def test_hand_computed_shares_rates_and_the_qb_rules(self):
+        tab, m = self.synthetic()
+        rb = tab[tab["player_id"] == "RB1"].iloc[0]
+        self.assertAlmostEqual(rb["college_rec_market_share"], 300 / 3000)
+        self.assertAlmostEqual(rb["college_rec_td_share"], 3 / 24)
+        self.assertAlmostEqual(rb["college_rec_pg"], 30 / 12)
+        self.assertAlmostEqual(rb["college_ypr"], 10.0)
+        self.assertAlmostEqual(rb["college_rush_share"], 1000 / 2000)
+        self.assertAlmostEqual(rb["college_car_pg"], 200 / 12)
+        self.assertAlmostEqual(rb["college_ypc"], 5.0)
+        self.assertAlmostEqual(rb["college_dominator"], ((1300 / 5000) + (13 / 44)) / 2)
+        self.assertTrue(pd.isna(rb["college_pass_att_pg"]) and pd.isna(rb["college_pass_ypa"]))     # not a passer
+        self.assertEqual(rb["college_power_conf"], 1.0)
+        qb = tab[tab["player_id"] == "QB1"].iloc[0]
+        self.assertTrue(pd.isna(qb["college_dominator"]))                                           # a QB is not scored on scrimmage share
+        self.assertAlmostEqual(qb["college_pass_att_pg"], 400 / 12)
+        self.assertAlmostEqual(qb["college_pass_ypa"], 8.0)
+        self.assertAlmostEqual(qb["college_pass_td_rate"], 24 / 400)
+        self.assertAlmostEqual(qb["college_rush_share"], 240 / 2000)
+        self.assertTrue(pd.isna(qb["college_ypr"]) and qb["college_rec_market_share"] == 0.0)        # no receptions: share 0, efficiency NA
+        self.assertTrue(tab["college_breakout_age"].isna().all())
+
+    def test_a_school_without_team_totals_is_na_not_a_partial_line(self):
+        tab, m = self.synthetic()
+        self.assertEqual(set(tab["player_id"]), {"RB1", "QB1"})
+        self.assertEqual(m.set_index("player_id").loc["WR1", "reason"], "non_fbs")
+        self.assertEqual(tab[KNOWN_AT].nunique(), 1)
+        self.assertEqual(tab[KNOWN_AT].iloc[0], pd.Timestamp("2022-09-01", tz="UTC"))               # NFL season start of the draft year
+
+    def test_low_volume_efficiency_is_na(self):
+        wide = pd.DataFrame({"receiving_REC": [3.0], "receiving_YDS": [-8.0], "rushing_CAR": [5.0], "rushing_YDS": [69.0],
+                             "conference": ["SEC"]})
+        team = pd.DataFrame({"games": [12.0], "netPassingYards": [3000.0], "passingTDs": [20.0], "rushingYards": [2000.0],
+                             "rushingTDs": [20.0]})
+        f = college.derive_features(wide, team, pd.Series(["WR"]))
+        self.assertTrue(pd.isna(f.loc[0, "college_ypr"]) and pd.isna(f.loc[0, "college_ypc"]))
+
+    def test_real_columns_are_sane(self):
+        col = store()._tables["college"].df
+        for c in ("college_rec_market_share", "college_rec_td_share", "college_rush_share", "college_dominator"):
+            self.assertTrue(col[c].dropna().between(-0.1, 1.0).all(), c)
+        self.assertTrue(col["college_power_conf"].isin([0.0, 1.0]).all())
+        self.assertTrue(col["college_breakout_age"].isna().all())
+        self.assertTrue(col.loc[col["position"] == "QB", "college_dominator"].isna().all())
+        self.assertGreater(col["college_rec_market_share"].max(), 0.3)       # the real stars are in there
+        self.assertTrue((col["draft_season"].between(2021, 2026)).all())
+
+    def test_only_a_rookie_season_row_shows_college_and_only_through_the_gate(self):
+        t = college_rows()[0]
+        base = build_features(store(), t)
+        self.assertTrue(pd.notna(base["college_rec_market_share"]) or pd.notna(base["college_pass_att_pg"]))
+        tab = store()._tables["college"].df
+        mine = tab["player_id"] == t.player_id
+        vet = store().with_frame("college", tab.assign(draft_season=np.where(mine, t.season - 1, tab["draft_season"])))
+        self.assertTrue(all(pd.isna(build_features(vet, t)[c]) for c in features.FAMILIES["college"]))   # a veteran row never sees it
+        exactly = tab.copy()
+        exactly.loc[mine, KNOWN_AT] = t.kickoff
+        self.assertTrue(all(pd.isna(build_features(store().with_frame("college", exactly), t)[c])
+                            for c in features.FAMILIES["college"]))                                       # stamped AT kickoff: hidden
+        inside = tab.copy()
+        inside.loc[mine, KNOWN_AT] = t.kickoff - pd.Timedelta(nanoseconds=1)
+        self.assertEqual(fingerprint({c: build_features(store().with_frame("college", inside), t)[c] for c in features.FAMILIES["college"]}),
+                         fingerprint({c: base[c] for c in features.FAMILIES["college"]}))                 # 1 ns before: read
+
+    def test_canaries_stamped_at_or_after_kickoff_move_no_college_column_and_one_second_before_moves_them(self):
+        cols = features.FAMILIES["college"]
+        for t in canary_rows() + college_rows()[:4]:
+            base = build_features(store(), t)
+            for stamp in (t.kickoff, t.kickoff + pd.Timedelta(hours=1), t.kickoff + pd.Timedelta(days=7)):
+                self.assertEqual(moved(base, build_features(audit.inject_college(store(), t, stamp), t), cols), [],
+                                 f"{t.player_id} {stamp}")
+            live = build_features(audit.inject_college(store(), t, t.kickoff - pd.Timedelta(seconds=1)), t)
+            self.assertEqual(live["college_rec_market_share"], 0.987)                                     # control: it does bite
+            self.assertEqual(live["college_dominator"], 0.987)
+            veteran = build_features(audit.inject_college(store(), t, t.kickoff - pd.Timedelta(seconds=1), draft_offset=-1), t)
+            self.assertTrue(all(pd.isna(veteran[c]) for c in cols), "a prior-draft-class line must not show in a later season")
 
 
 class Fetchers(unittest.TestCase):

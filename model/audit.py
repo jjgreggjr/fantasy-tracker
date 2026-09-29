@@ -26,6 +26,10 @@ from model.point_in_time import KNOWN_AT, RawStore, TargetRow, make_target
 
 Builder = Callable[[RawStore, TargetRow], dict]
 MONSTER = 987654.0
+COLLEGE_MONSTER = {"college_rec_market_share": 0.987, "college_rec_td_share": 0.987, "college_rec_pg": 98.7,
+                   "college_ypr": 98.7, "college_rush_share": 0.987, "college_car_pg": 98.7, "college_ypc": 98.7,
+                   "college_dominator": 0.987, "college_pass_att_pg": 98.7, "college_pass_ypa": 98.7,
+                   "college_pass_td_rate": 0.987, "college_power_conf": 1.0}
 
 
 # --------------------------------------------------------------------------- sampling
@@ -146,6 +150,9 @@ def inject_canaries(store: RawStore, t: TargetRow, stamps: Iterable[pd.Timestamp
                                         **{KNOWN_AT: ts}))
         add["career_pre_cutoff"].append(_template(tabs["career_pre_cutoff"], player_id=t.player_id, games=9999.0,
                                                   **{KNOWN_AT: ts}))
+        if "college" in tabs:              # a rookie-season college line (the feature is shown only in the draft season)
+            add["college"].append(_template(tabs["college"], player_id=t.player_id, draft_season=t.season,
+                                            **COLLEGE_MONSTER, **{KNOWN_AT: ts}))
     out = store
     for name, frames in add.items():
         if frames:
@@ -254,6 +261,16 @@ def inject_prev_season_game(store: RawStore, t: TargetRow, stamp,
     return _append(store, "player_games", [row])
 
 
+def inject_college(store: RawStore, t: TargetRow, stamp, draft_offset: int = 0) -> RawStore:
+    """A monster college line for the target, stamped `stamp`, for the draft class `t.season + draft_offset`.
+    offset 0 = his rookie season (the feature shows it if the gate lets it in); -1 = a veteran (the feature
+    must not show it at all)."""
+    tab = store._tables["college"].df
+    row = _template(tab, player_id=t.player_id, draft_season=t.season + draft_offset, **COLLEGE_MONSTER,
+                    **{KNOWN_AT: _stamp(stamp)})
+    return _append(store, "college", [row])
+
+
 def drop_own_game(store: RawStore, t: TargetRow) -> RawStore:
     """Delete every stats/snap/xFP/result row of the target game, as if it had not been recorded (or
     everyone had been a DNP). The row universe and every feature must not notice: eligibility is not
@@ -291,6 +308,33 @@ def sample_team_games(store: RawStore, plan: dict[int, int], seed: int = 2026092
 def sample_spine_rows(store: RawStore, team_games: list[TargetRow]) -> list[TargetRow]:
     from model.features import spine_for
     return [t for tg in team_games for t in spine_for(store, tg)]
+
+
+def sample_college_rows(store: RawStore, seasons=(2022, 2024, 2025, 2026), per_season: int = 5,
+                        weeks=(1, 2), seed: int = 20260930) -> list[TargetRow]:
+    """Rookies with a college line, on the team that drafted them, in `weeks` of their draft season: the rows
+    the college family can actually move. Spine rows, so the players are eligible exactly as in the matrix."""
+    from model.features import spine_for
+    rng = random.Random(seed)
+    col = store._tables["college"].df
+    dp = store._tables["draft_picks"].df
+    out: list[TargetRow] = []
+    for season in seasons:
+        ids = sorted(col.loc[col["draft_season"] == season, "player_id"])
+        by = {(g.team, g.week): g for g in pit.team_games(store, [season])}
+        kept = 0
+        for pid in rng.sample(ids, len(ids)):
+            team = dp.loc[(dp["player_id"] == pid) & (dp["season"] == season), "team"]
+            if team.empty:
+                continue
+            rows = [r for wk in weeks if (team.iloc[0], wk) in by
+                    for r in spine_for(store, by[(team.iloc[0], wk)]) if r.player_id == pid]
+            if rows:
+                out += rows
+                kept += 1
+            if kept == per_season:
+                break
+    return out
 
 
 def audit_spine_truncation(store: RawStore, team_games: list[TargetRow]) -> list[dict]:

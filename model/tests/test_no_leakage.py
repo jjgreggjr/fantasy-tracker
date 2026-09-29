@@ -91,7 +91,8 @@ class LoaderContracts(unittest.TestCase):
         self.assertEqual(set(d["table"]), {"fixtures", "lines", "weather_obs", "game_results", "player_games",
                                            "snap_counts", "xfp", "injuries", "depth_charts",
                                            "players_static", "draft_picks", "combine",
-                                           "career_pre_cutoff"})       # Phase 1: pre-2020 career games
+                                           "career_pre_cutoff",        # Phase 1: pre-2020 career games
+                                           "adp", "college"})          # fetched CSVs (ADP since Phase 1's fetch, college: Phase 2)
         for name in store().names():
             t = store()._tables[name]
             self.assertTrue(t.known_at_rule, name)
@@ -115,8 +116,10 @@ class LoaderContracts(unittest.TestCase):
         self.assertTrue((fx.loc[reg, KNOWN_AT] == fx.loc[reg, "kickoff"].min() - pit.SEASON_START_LEAD).all())
         self.assertTrue((fx.loc[~reg, KNOWN_AT] == fx.loc[~reg, "kickoff"] - pit.NON_REG_FIXTURE_LEAD).all())
         starts = set(pit._season_starts())
-        for name in ("players_static", "draft_picks", "combine"):      # season-static: always exactly a season start
+        for name in ("players_static", "draft_picks", "combine", "college"):   # season-static: exactly a season start
             self.assertLessEqual(set(t[name].df[KNOWN_AT]), starts, name)
+        col = t["college"].df
+        self.assertTrue((col[KNOWN_AT] == col["draft_season"].map(pit._season_starts())).all())   # the DRAFT year's start
         dp = t["draft_picks"].df
         rookies_2024 = dp[dp["season"] == 2024]
         self.assertTrue((rookies_2024[KNOWN_AT] == ko.min() - pit.SEASON_START_LEAD).all())
@@ -217,7 +220,8 @@ class FutureRowCanaries(unittest.TestCase):
         The same rows, stamped one second BEFORE kickoff, must move every feature family they touch."""
         expect = {"pts_ppr_l1", "carries_l1", "targets_l1", "snap_pct_l1", "xfp_l1",
                   "dvp_ppr_l2", "dvp_ppr_l4", "team_spread", "total_line", "implied_team_total",
-                  "wx_temp_obs", "wx_wind_obs", "inj_days_since_report", "draft_round", "draft_overall"}
+                  "wx_temp_obs", "wx_wind_obs", "inj_days_since_report", "draft_round", "draft_overall",
+                  "college_rec_market_share", "college_dominator"}
         for t in canary_targets():
             base = build_features(store(), t)
             want = set(expect)

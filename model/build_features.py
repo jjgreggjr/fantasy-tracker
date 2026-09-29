@@ -90,7 +90,8 @@ def schema(df: pd.DataFrame) -> dict:
             "baselines": BASELINES, "excluded_from_matrix": F.EXCLUDED_FROM_MATRIX,
             "notes": {"weather": "OBSERVED post-game values: backtest-only (weather_is_backtest_only); ablate wx_* columns",
                       "depth_rank": "not a feature: depth-chart semantics differ between <=2024 and 2025+",
-                      "adp": "NA unless model/data/adp/*.csv exist", "college": "NA: CFBD unreachable, no key",
+                      "adp": "NA unless model/data/adp/*.csv exist (NA also means undrafted)",
+                      "college": "CFBD final-college-season priors, rookie season only (model/college.py); breakout age is always NA",
                       "spine_depth_only": "rows admitted only by the newest depth chart; ~absent in <=2024 (see PLAN_MODEL.md)"}}
 
 

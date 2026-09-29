@@ -31,7 +31,9 @@ Feature families (FAMILIES below is the registry; `feature_columns()` is what Ph
               prefixed `wx_` so Phase 2 can ablate the family in one line.
   static      age, experience, career games, draft capital, height/weight, combine (season-start known_at)
   adp         FFC ADP as a season prior (NA until model_fetch has run and the CSVs are committed)
-  college     present-but-NA: CollegeFootballData is unreachable and has no key yet
+  college     final-college-season production and market share (CFBD), ROOKIE SEASON ONLY: the columns are NA once
+              a player is past the season he was drafted into (model/college.py has the identity rules; breakout age
+              is always NA, it needs more than the final college season)
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -93,7 +95,10 @@ FAMILIES: dict[str, list[str]] = {
                "is_undrafted", "height_in", "weight_lb", "combine_forty", "combine_bench", "combine_vertical",
                "combine_broad_jump", "combine_cone", "combine_shuttle"],
     "adp": ["adp_ppr", "adp_std", "adp_ppr_pos_rank", "adp_std_pos_rank"],
-    "college": ["college_rec_market_share", "college_rush_share", "college_dominator", "college_breakout_age"],
+    "college": ["college_rec_market_share", "college_rec_td_share", "college_rec_pg", "college_ypr",
+                "college_rush_share", "college_car_pg", "college_ypc", "college_dominator",
+                "college_pass_att_pg", "college_pass_ypa", "college_pass_td_rate", "college_power_conf",
+                "college_breakout_age"],
 }
 # Produced, but never a model input.
 IDENTITY = ["player_id", "season", "week", "team", "opponent", "position", "game_id", "kickoff_utc"]
@@ -518,9 +523,22 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- ADP (season prior) ----------------------------------------------------------
     out.update(_adp_features(store, t, trace))
 
-    # ---- college production: present-but-NA (CFBD blocked, no key) --------------------
-    out.update(college_rec_market_share=NAN, college_rush_share=NAN, college_dominator=NAN,
-               college_breakout_age=NAN)
+    # ---- college production (rookie priors; season-start known_at) ---------------------
+    out.update(_college_features(store, t, trace))
+    return out
+
+
+def _college_features(store, t: TargetRow, trace) -> dict[str, float]:
+    """Rookie priors from the `college` table, through the gate. Shown only in the season the player was drafted
+    into: a veteran row is NA, so coverage never depends on how many draft classes the CFBD pull holds."""
+    out = {c: NAN for c in FAMILIES["college"]}
+    if not store.has("college"):
+        return out
+    c = _last(as_of_join(store, "college", t.kickoff, player_id=t.player_id, trace=trace))
+    if c is None or _f(c["draft_season"]) != t.season:
+        return out
+    for col in out:
+        out[col] = _f(c[col])
     return out
 
 

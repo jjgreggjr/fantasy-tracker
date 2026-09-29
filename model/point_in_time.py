@@ -630,9 +630,10 @@ def load_static_tables() -> list[RawTable]:
             RawTable("combine", cb.reset_index(drop=True), rule, dropped={"pfr_id_not_mapped": n_cb})]
 
 
-def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True) -> RawStore:
+def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
-    career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/)."""
+    career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
+    adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/)."""
     seasons = list(seasons)
     tables = [*load_schedule_tables(seasons), load_player_games(seasons), load_snap_counts(seasons),
               load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
@@ -640,6 +641,11 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True) -> RawStor
     if adp:
         from model.adp import load_adp_table       # local import: adp.py needs this module's helpers
         t = load_adp_table()
+        if t is not None:
+            tables.append(t)
+    if college:
+        from model.college import load_college_table   # local import: college.py needs this module's helpers
+        t = load_college_table()
         if t is not None:
             tables.append(t)
     return RawStore(tables)
