@@ -16,4 +16,10 @@ requests>=2.28
 # Python 3.12), its weekly stats read the frozen legacy `player_stats` release (no 2025+),
 # and its schedules/weekly-rosters fetch plain-HTTP habitatring.com (403 through the
 # sandbox proxy). model/point_in_time.py reads the nflverse release assets directly.
-# lightgbm / xgboost / catboost / shap arrive in Phase 2.
+
+# Phase 2: the three boosted-tree libraries and SHAP (scikit-learn and scipy arrive with shap).
+# Versions used for the reported results: lightgbm 4.7.0, xgboost 3.4.1, catboost 1.2.10, shap 0.52.0.
+lightgbm>=4.5,<5
+xgboost>=3.0,<4
+catboost>=1.2,<2
+shap>=0.48,<1
