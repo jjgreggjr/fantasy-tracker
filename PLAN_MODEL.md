@@ -223,3 +223,167 @@ all NaN except static features). Keep every new family in `features.py` behind t
 `test_no_leakage.py` per family (truncation sample, canary keys, `expect` set in the control). Never add a column
 to a static loader without checking it is knowable at season start. Train/test skew list: depth-chart semantics,
 `inj_days_since_report`, weather. Fix the numpy pin (`<2.5`) only when pandas is bumped.
+
+## Phase 1 findings
+
+Done 2026-09-29 (branch `claude/eager-goldberg-zmevs9`). Shipped: `model/features.py` (spine + every feature
+family, still only `as_of_join`), `model/labels.py` (y_* and baselines: the only reader of target-week rows besides
+the spine plumbing), `model/build_features.py`, `model/adp.py`, `model/fetch_adp.py`, `model/fetch_cfbd.py`,
+`.github/workflows/model_fetch.yml`, an indexed gate in `model/point_in_time.py`, `model/tests/test_feature_families.py`.
+Run: `model/.venv/bin/pip install -r model/requirements.txt`; `model/.venv/bin/python -m model.build_features` writes the
+git-ignored `model/cache/features.parquet` plus `features_schema.json` (column -> family/role) and a report;
+`model/.venv/bin/python -m unittest discover -s model/tests -t .` (70 tests, ~3.5 min). Nothing under `ff/`,
+`pipeline.yml` or committed pipeline data was touched; the pipeline's own 20 tests still pass.
+
+### Result
+
+48,658 rows x 133 columns (107 feature columns in 12 families; the rest are identity, spine flags, `y_*`, `base_*`),
+4.9 MB parquet, 72 MB in pandas. Build: 310 s single process (15 s store load, ~6 ms per row), 1.25 GB peak RSS.
+33,423 rows are `y_played == 1` (29,391 with a stats row, 4,032 snap-only appearances scored 0.0); 15,235 spine rows
+are DNP/unused (NaN target). Regular season, completed games only (2026 = weeks 1-3; week 4 has lines but no result).
+
+| season | QB | RB | TE | WR | rows | played | depth-only rows |
+|---|---|---|---|---|---|---|---|
+| 2021 | 1,366 | 2,232 | 2,034 | 3,574 | 9,206 | 6,344 | 625 |
+| 2022 | 1,321 | 2,190 | 2,058 | 3,486 | 9,055 | 6,302 | 686 |
+| 2023 | 1,342 | 2,114 | 2,010 | 3,493 | 8,959 | 6,407 | 598 |
+| 2024 | 1,323 | 2,051 | 2,024 | 3,499 | 8,897 | 6,407 | 549 |
+| 2025 | 1,542 | 2,584 | 2,366 | 4,060 | 10,552 | 6,755 | 2,201 |
+| 2026 wk1-3 | 297 | 438 | 487 | 767 | 1,989 | 1,208 | 445 |
+
+Mean null rate by family on played rows (2021 / 2022 / 2023 / 2024 / 2025 / 2026): lags .13/.13/.12/.12/.15/.62 (2026
+has three weeks), prev_season .16/.16/.18/.16/.18/.13 (rookies), td_luck .09/.09/.09/.08/.11/.34, role .00 all, injury
+.47/.45/.46/.46/.48/.66 (NA = not on a report, the normal state), dvp .05/.04/.04/.04/.06/.33, vegas 0, context 0,
+weather .16/.32/.22/.18/.17/.16 (see below), static .21/.21/.21/.23/.24/.24 (combine coverage, undrafted), adp 1.0,
+college 1.0 (both NA by design, below). Baselines on played rows with >=3 games: trailing-3 average MAE 4.35-4.66,
+corr .62-.65; same-week xFP MAE 2.56-2.77, corr .85-.87; both stable across 2021-25, so the bar Phase 2 has to beat is
+about 4.4 MAE (trailing) and 2.6 (xFP, an oracle: it is post-game).
+
+### The row universe (spine)
+
+A row is a (player, game) admitted by at least one signal known before kickoff, recorded in `spine_src`: `usage`
+(appeared for the team in one of its last 3 games, crossing seasons), `injury` (this week's report, any designation,
+so Out players with no stats row are rows), `depth` (the newest chart known before kickoff, if under 21 days old),
+`draft` (the draft class, week 1 only). Usage-only candidates are dropped if a fresher signal puts them on another team.
+`y_played` = stats row OR offense_snaps > 0; `y_points_ppr` = the stats value, 0.0 for a snap-only appearance, NaN for a
+DNP. Deleting or absurdifying the target game's rows changes no row and no feature (tested).
+
+Recall of players who actually played (share reached by the pre-kickoff spine):
+
+| season | all played rows | week 1 | weeks 2+ | rows with >=5 opportunities | PPR-weighted |
+|---|---|---|---|---|---|
+| 2021 | .937 | .737 | .950 | .965 | .970 |
+| 2022 | .943 | .698 | .959 | .970 | .969 |
+| 2023 | .954 | .714 | .969 | .978 | .981 |
+| 2024 | .954 | .731 | .967 | .979 | .980 |
+| 2025 | .996 | .992 | .997 | .999 | 1.000 |
+| 2026 | .993 | .990 | .995 | 1.000 | .999 |
+
+**This is the biggest Phase 2 trap.** The 2025 depth chart is a timestamped daily snapshot, so it sees offseason
+signings and trades; 2021-24 have no pre-kickoff roster source, so a veteran who changed teams in the offseason and is
+not on the week-1 injury report is absent from week 1 (recall ~.70-.74, weeks 2+ ~.95-.97). Training rows therefore miss
+~5% of played rows (mostly low-volume, new-to-team players) that the 2025 test set contains. `spine_depth_only == 1`
+(admitted only by the chart: 549-686 rows a year to 2024, 2,201 in 2025) marks that population; score 2025 both with and
+without it. Nothing better exists: nflverse rosters carry no snapshot time, so they cannot be stamped.
+
+### Feature families and the calls behind them
+
+- **Lags**: last 1/2/3 appearances this season (points, opportunities = carries + targets, carries, targets, pass
+  attempts, target share, carry share, snap share, lagged xFP) with weeks-ago, plus season-to-date means. Carry share is
+  computed at load from the same game's team totals (nflverse has no such column). Lags stay within-season, so week 1 is
+  NaN; **`prev_season_*` (games, ppg, opps/carries/targets per game, target share, snap share, xFP per game) carries the
+  prior season** and `td_luck_total_prev` its TD luck. 2020 is loaded as history so 2021 is not a different kind of row.
+- **xFP coverage (finding 9 resolved)**: the 7% null-`player_id` rows in ffopportunity are team-level aggregate rows
+  (no name, no position), not lost players, and of 32,363 regular-season stats rows with any pass attempt, carry or
+  target (2020-26) none lacks an xFP row. Rows without one are exactly the zero-opportunity games, so no xFP row +
+  no opportunity = 0.0, never NaN. Snap-only appearances are 12% of played rows (median 8 snaps) and count as 0-volume
+  games in lags, not skipped games.
+- **TD luck**: cumulative (actual - expected) rush/rec/pass/total TDs this season from lagged ffopportunity.
+- **Role** (usage-derived, not depth-chart derived): `role_score` (trailing-3 snap share, last season's if none),
+  `role_rank_pos`, and teammate-injury context over teammates who appeared in the team's last 3 games: same-position
+  Out/Doubtful count, count ranked above him, Questionable count, group size, trailing volume vacated (same-position
+  opportunities; team-wide targets and carries).
+- **DvP**: opponent PPR allowed to his position over its last 2 / 4 / all completed regular-season games.
+- **Vegas** (closing lines; also opponent implied total), **context** (home, rest days both sides, divisional, neutral,
+  week, season), **static** (age, experience, career games, draft round/pick with the players table as fallback,
+  undrafted flag, height/weight, six combine metrics), **weather** (`wx_temp_obs`, `wx_wind_obs`, `wx_roof_obs`,
+  `wx_indoor_obs`), **adp** and **college** (present, all NA).
+- Career games = a static table of skill-position games through 2019 (stamped at the 2020 opener) + gated history from
+  2020, so the matrix builder refuses a store missing any season since 2020. Draft picks use PFR team codes; mapped to
+  nflverse's (GNB->GB, KAN->KC, LAR->LA, LVR->LV, NOR->NO, NWE->NE, SFO->SF, TAM->TB).
+
+### Cross-season comparability calls
+
+| Field | Problem | Call |
+|---|---|---|
+| Depth-chart rank | Two formats are two signals. The chart in force for the previous game names the week's snap leader at RB 56-66% of the time through 2024 vs 75% (2025) and 82% (2026); WR top-3 overlap .64-.68 vs .79-.80; QB .79-.81 vs .85-.89; the WR "first string" holds 2.4-2.6 players to 2024, exactly 3 from 2025 (agreement measured chart-in-force-for-the-previous-game vs the target week's snaps, weeks 2+) | **Excluded as a feature** (no `depth*` column exists; a test pins that). The chart is used only for spine admission, and role comes from usage. |
+| `inj_days_since_report` | real report timestamps to 2024, derived kickoff-24h from 2025 (always ~1 day): pure train/test skew | Produced (Phase 0 tests read it), **excluded from the matrix** (`EXCLUDED_FROM_MATRIX`); `inj_weeks_since_report` is the feature. |
+| Injury designation mix | Skill-position rows per team-week: Out .49/.57/.50/.52 (2021-24) vs **.74** (2025); Doubtful .11/.09/.09/.13 vs .05; Questionable .75/.80/.85/.72 vs .61; total listed rows stable at 2.8-3.0. Out players who played anyway: ~0% every season, so "Out" means out throughout | Teammate features count only players who appeared in the team's last 3 games (a long-term IR listing cannot move them) and treat Out+Doubtful together. Mean same-position Out/Doubtful teammates on played rows: .155/.178/.141/.151/.189 (2021-25). The own-status column `inj_report_status` still drifts (Out 4.2% of rows in 2024, 6.2% in 2025): consider collapsing it. |
+| Weather | nflverse outdoor-game temp/wind is null for 0% (2021), **46% (2022)**, 17% (2023), 3% (2024), 2% (2025); roof coding split retractable roofs into closed/open through 2023 and calls every one 'closed' from 2024 | `wx_roof_obs` = dome / retractable / outdoors (comparable, and the day-of open/closed decision is not smuggled in); `wx_indoor_obs` = fixed dome only. Observed values stay backtest-only; 2022-23 temp/wind are a missingness artifact, not a signal. `roof` was removed from the season-start fixtures table (it was stamped as known at season start; the retractable state is decided on game day). |
+| Game-result availability | game rows are stamped at kickoff, a lower bound on availability (finding 7). The extended audit found a real case: a teammate on SEA's chart had played the 4:25pm TB@LAC game 3h55m before SEA's Sunday-night kickoff | The four result tables are read at **kickoff - 4h** (`RESULT_LAG`). Thursday -> Sunday and same-team games are untouched. |
+| Weight/height | the players table is an as-of-today bio, so veterans' weight can reflect later seasons | Kept (small, slow-moving); ablate if it ranks high. |
+
+`depth_charts` loading drops 10,560 skill rows with no gsis id and 1,159 no-week SBBYE snapshot rows.
+
+### ADP and CFBD via Actions: not run, exact reason
+
+`.github/workflows/model_fetch.yml` is on the branch (dispatch-only, no schedule, never references pipeline.yml, commits
+`model/data/adp/` and `model/data/cfbd/` CSVs plus `fetch_log.csv` with the exact status/exception of every request, and
+re-runs `model.probe_sources` into `model/data/probe_report_actions.txt`; the `CFBD_KEY` secret reaches one step through
+the environment and is never logged). **Triggering it failed**: `POST /repos/jjgreggjr/fantasy-tracker/actions/workflows/
+model_fetch.yml/dispatches` returned `404 Not Found` (twice, after each push), and `list_workflows` shows only
+`pipeline.yml`. GitHub registers a `workflow_dispatch` workflow from the default branch only, and `main` does not have this
+file; `pipeline.yml`, which does, was dispatched against this branch by James at 17:04Z, so a branch ref works once the file
+is on `main`. Not worked around (pushing another branch or adding a push trigger were outside the brief).
+**To finish, in this order**: put only `.github/workflows/model_fetch.yml` on `main` (the run uses the branch's code
+through `ref`), dispatch it with ref `claude/eager-goldberg-zmevs9`, `git pull`. Then ADP lights up with no code change
+(`load_store` adds an `adp` table when `model/data/adp/adp_*_*.csv` exist; `known_at` = season start, or the FFC drafts
+window end if the response carries one, whichever is later, so it can only hide ADP, never leak it) and the FFC schema is
+finally observed. The sandbox-side FFC error is unchanged (`ProxyError ... Tunnel connection failed: 403 Forbidden`);
+whether Actions can reach FFC/CFBD is still unknown. ADP and the four college columns are 100% NA in the matrix.
+**First Phase 2 to-do**: read `model/data/cfbd/*.csv` and write `model/college.py`. Wiring was deliberately not written
+blind (the CFBD schema was never observed; Phase 0's rule is that nothing is faked), and the college fetch keeps only names
+matching a drafted QB/RB/WR/TE, so market share/dominator can be derived once stat-type names are seen. Breakout age needs
+more than the final college season the fetch pulls.
+
+### Tests
+
+70 tests, all passing with `-W error::DeprecationWarning`: the 24 from Phase 0 plus 46 new (indexed gate == the Phase 0
+mask gate on >1,000 random queries; spine and every feature identical from physically truncated tables over ~700 sampled
+rows from 2022/2024/2025/2026; canaries stamped after/at kickoff move nothing in any family (a post-kickoff teammate
+report, next week's monster game, an opponent's future game, a phantom teammate, phantoms for each spine signal, a
+prior-season game, static rows); controls just inside the cutoff move each family; deleting or perturbing the target game
+changes no row or feature; matrix contract; label recomputation from raw; ADP and fetcher unit tests on synthetic rows,
+including that the CFBD key is never logged). The audit still catches a deliberately leaky teammate builder on a planted
+post-kickoff report. Mutations, each run against the whole suite in an isolated copy (every one is caught): `<=` at kickoff in the gate
+fails 14 tests; the indexed gate ignoring `known_at` 28; `RESULT_LAG = 0` 1 (the 4h invariant; a pin test now also fails
+it, because the controls read the constant); DvP reading a week ahead 10; lags/TD luck reading a day past the target game
+16; the teammate report read a day late 3; **the spine reading injuries a day late 1, the canary test only**. That last
+one is the honest limit of the truncation audit: real data has no injury row inside that 24-hour window (2025+ stamps are
+derived at kickoff - 24h; <=2024 has one late row in ~6,000), so the audit passes and the planted-row canaries are what
+bite. Keep both. Four Phase 0 assertions changed because the extension made them wrong, not to make them pass: the table set gained
+`career_pre_cutoff`; the xFP name list gained `xfp_std_mean` and `prev_season_xfp_pg` (still an exact list); "consumed games
+are from earlier weeks" became "had finished before kickoff (+4h)" (same-week Thursday games are legitimate for a player
+who changed teams); the control canaries for result tables sit inside the 4-hour cutoff.
+Three spot-checks against raw parquet with plain pandas (independent path, 114 fields): Eno Benjamin 2022 wk6 (ARI vs SEA),
+Davante Adams 2025 wk5 (LA vs SF), Dohnte Meyers 2026 wk3 (CIN at PIT, rookie): every lag, mean, TD luck, DvP, Vegas, rest,
+teammate-Out count, age, career games, draft capital, target and same-week xFP matched. The first pass showed 2 diffs on
+the 2022 row, which were the hand check ignoring snap-only appearances in last season's games; with the documented
+definition it matches exactly.
+
+### What Phase 2 must watch for
+
+1. **Spine asymmetry** (above): train on `y_played == 1`, evaluate 2025 with and without `spine_depth_only`. Any rank
+   metric that includes new-to-team veterans is easier or harder for reasons unrelated to the model.
+2. **Weather is backtest-only** and its NaN pattern is a season effect (2022-23). Ablate `wx_*` first; do not ship it
+   without the forecast source (Open-Meteo host still blocked).
+3. **Drop all-NA columns** (`adp_*`, `college_*`) from any fit until they exist; do not let a constant column reach SHAP.
+4. **`season` and `week` are features** (the plan listed them); `season` cannot extrapolate to 2025 in a tree, ablate it.
+5. **Snap-only appearances** (12% of played rows, y = 0): decide whether to train on `y_played` or `y_has_stats_row`.
+6. **2026 has three weeks**: usable for live checks, not for training or a season-level metric.
+7. `inj_report_status` drifts in mix (Out share up in 2025) and `inj_practice_status` was cleaned but not audited for drift.
+8. Lines are closing lines; `base_xfp_sameweek` is post-game and an oracle, so "beating" it is not the goal, matching the
+   trailing-3 baseline's 4.4 MAE by a wide margin is.
+9. Playoffs are not built (fantasy-irrelevant, thin); `build(..., )` takes weeks/seasons and the spine already handles them.
+10. Residual risk the audit cannot see is unchanged: a wrong `known_at`. New stamps this phase: depth snapshots (`dt`),
+    ADP (season start or window end), career table (2020 opener); all pinned by tests except the unobserved FFC window.

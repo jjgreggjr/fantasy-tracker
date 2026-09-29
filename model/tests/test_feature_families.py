@@ -141,6 +141,14 @@ class Registry(unittest.TestCase):
         self.assertEqual(features.CAREER_CUTOFF_SEASON, pit.CAREER_CUTOFF_SEASON)
         self.assertEqual(features.POSITIONS, pit.SKILL_POSITIONS)
 
+    def test_the_availability_rules_are_pinned(self):
+        """The tunables a leak could hide in. Changing one is a decision to write down in PLAN_MODEL.md, not a
+        refactor: the controls read features.RESULT_LAG, so without this pin they would follow it silently."""
+        self.assertEqual(features.RESULT_LAG, pd.Timedelta(hours=4))
+        self.assertEqual(features.DEPTH_MAX_AGE, pd.Timedelta(days=21))
+        self.assertEqual(features.USAGE_WINDOW, 3)
+        self.assertEqual(features.OUT_LIKE, ("Out", "Doubtful"))
+
     def test_every_produced_column_is_classified(self):
         known = set(features.IDENTITY) | set(features.META) | set(features.feature_columns()) | set(features.EXCLUDED_FROM_MATRIX)
         for col in feats().columns:
