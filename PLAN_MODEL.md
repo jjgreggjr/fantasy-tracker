@@ -387,3 +387,127 @@ definition it matches exactly.
 9. Playoffs are not built (fantasy-irrelevant, thin); `build(..., )` takes weeks/seasons and the spine already handles them.
 10. Residual risk the audit cannot see is unchanged: a wrong `known_at`. New stamps this phase: depth snapshots (`dt`),
     ADP (season start or window end), career table (2020 opener); all pinned by tests except the unobserved FFC window.
+
+## Phase 2 findings
+
+Done 2026-09-29 (branch `claude/eager-goldberg-zmevs9`). Shipped: `model/college.py` (CFBD wiring), `model/train.py` (design
+matrix, three libraries, seeded tuning), `model/backtest.py` (walk-forward, scoring, ablation stages), `model/explain.py` (SHAP,
+prune list), `model/report_phase2.py`, `model/tuned_params.json`, `model/reports/phase2_backtest.md` (every table below and more;
+committed), `model/tests/test_backtest.py`; `model/requirements.txt` gained lightgbm/xgboost/catboost/shap. Run, in order:
+`python -m model.train --tune`, `python -m model.backtest bakeoff|quantiles|ablate|replicate|prune|cadence`, `python -m
+model.explain --lib lightgbm [--season 2024]`, `python -m model.report_phase2`. Outputs go to git-ignored `model/cache/phase2/`;
+`ff/` and `pipeline.yml` untouched. 108 model tests (70 + 38 new) and the pipeline's 20 pass. About 35 minutes of compute in all
+(4 cores; bake-off 3 min, one weekly walk-forward of LightGBM 17 s, XGBoost 60 s, CatBoost 120 s).
+
+### Result: the answer to the question
+
+**LightGBM wins by tie-break; it beats the trailing-3 average clearly and closes a fifth of the gap to the post-game oracle.**
+Head-to-head rows (2025 played rows with at least one earlier game, 6,139), ALL positions: MAE 4.02 vs 4.31 trailing vs 2.50 oracle,
+RMSE 5.71 / 6.43 / 4.07, Spearman within position-week .655 / .602 / .866, pick accuracy .773 / .748 / .876 (start/sit-relevant pairs
+.641 / .597 / .784). Bootstrap (18 weeks resampled) intervals for model-minus-trailing exclude zero for every metric in every
+position. Per position (LightGBM / trailing / oracle): MAE QB 6.18 / 6.89 / 4.22, RB 4.24 / 4.54 / 2.71, WR 3.99 / 4.26 / 2.49, TE 3.00 /
+3.17 / 1.65; Spearman QB .48 / .41 / .77, RB .75 / .71 / .91, WR .70 / .63 / .88, TE .69 / .65 / .91. Gap to oracle closed: 16% of MAE,
+31% of RMSE, 20% of Spearman, 20% of pick accuracy. LightGBM, XGBoost and CatBoost are indistinguishable (pooled RMSE 5.711 / 5.706 /
+5.710; both intervals against LightGBM span zero); the pre-declared rule (lowest RMSE, a statistical tie goes to LightGBM) chose the
+library that also does the quantiles and SHAP natively and refits fastest. One model with position as a feature: per-position
+models were worse in both years (dRMSE +0.024 in 2025, +0.017 in 2024, intervals span zero), so no position got its own model.
+Quarterbacks are the weak spot. Tuned parameters are in `tuned_params.json` (12-config random search per library, train 2021-23,
+validate 2024 only; every configuration landed within 0.5% of the others, so tuning barely matters here).
+
+**Quantiles (LightGBM p10/p50/p90), all 2025 played rows:** actuals at or below p10 / p50 / p90 = 11.9% / 53.2% / 89.9% (targets 10 / 50
+/ 90); the p10-p90 band covers 78.1% (target 80%; QB 74.4%, RB 78.9%, WR 78.1%, TE 78.6%). Floor slightly too high, ceiling right,
+QB band too narrow. 3.2% of rows had crossed raw quantiles (TE 6.6%); scored values are sorted per row.
+
+**Which data predicts (SHAP, out of sample, 2025):** lags 51% of total attribution (`xfp_std_mean` 14%, `pts_ppr_std_mean` 11%,
+`snap_pct_l1` 5%), ADP 19% (`adp_ppr_pos_rank` 9%), role 11% (`role_score` 6%, teammate-out volume 2%), prior season 6.5%, static
+4.8%, Vegas 3.0% (`implied_team_total`; the family whose removal hurts quarterbacks most, dRMSE +0.09), then context 1.7%, dvp 1.2%, td_luck 0.9%,
+injury 0.6%, college 0.2%. The same 8-10 features top every position; QB adds `pos_QB`, `is_home`, `pass_att_l1`, RB `carry_share_l1`, TE `weight_lb`
+(heavier = blocker = fewer points). Per-position top-15 tables with one-line readings and three worked predictions (Gibbs wk14 pred 23.4
+actual 37.0; Tucker wk5, a volatile WR, pred 11.2 actual 11.1; Egbuka wk6, a rookie, pred 18.2 actual 4.4) are in the report.
+**SHAP attribution is not marginal value**: ADP holds 19% of attribution but dropping it costs only +0.007 RMSE in 2025 (+0.025 in 2024),
+because season-to-date form substitutes for it after a few weeks. 43 of 114 columns are under 0.15% of attribution (listed in the report).
+
+### Ablations and how far to trust them
+
+Every ablation is scored on the same rows with a week-blocked bootstrap and **replicated on the 2024 walk-forward** (`replicate`
+stage). That replication is what the conclusions rest on: most one-at-a-time 2025 "gains" flipped sign in 2024, and the decisions
+below only use effects that agree.
+
+| Question (watch-list item) | dRMSE 2025 [95% CI] | dRMSE 2024 | Call |
+|---|---|---|---|
+| Train on stats-row players only instead of `y_played` (5) | +0.018 [+0.005, +0.029] | +0.027 | worse in both years: **train on `y_played`** (snap-only 0.0 rows stay) |
+| Add `season` (4) | -0.015 [-0.024, -0.006] | +0.012 | mixed, left out (it is a calendar index; if recency matters, add a league-environment feature instead) |
+| Add all observed weather (2) | -0.022 [-0.036, -0.007] | +0.003 | does not replicate; **weather stays out**; roof structure alone -0.006 / +0.018, temp+wind alone -0.015 / +0.009 |
+| Drop the depth-chart-only rows from training (1) | +0.000 [-0.008, +0.008] | +0.007 | no effect; scoring 2025 without those rows moves model RMSE 5.711 -> 5.727 and trailing 6.432 -> 6.451 (same margin) |
+| One model per position | +0.024 [-0.001, +0.048] | +0.017 | keep one model |
+| Drop `week` | -0.011 [-0.022, -0.000] | +0.007 | mixed |
+| Drop lags / vegas / role / adp | +0.058 / +0.016 / +0.014 / +0.007 | +0.084 / +0.040 / +0.033 / +0.025 | load-bearing in both years (lags and vegas significant in 2025; role and adp only in 2024) |
+| Drop prev_season / injury / static / college / dvp / td_luck / context | -0.001 to -0.017 | +0.001 to +0.022 | sign flips: not separable from noise one at a time; joint drops `lean_A`/`lean_B` picked from the 2025 table also failed in 2024 |
+| **Prune the 39 columns under 0.15% of 2024 SHAP**, test on 2025 | -0.015 [-0.027, -0.002] | n/a | the list came from 2024, so 2025 is clean: 75 columns, no worse |
+| Pruned set **without ADP** (serving candidate) | +0.008 [-0.005, +0.021] vs primary | | 71 columns, RMSE 5.719, Spearman .655: still ahead of trailing-3 |
+| Refit every 4 weeks / never inside the season | -0.007 / +0.003 (both span zero) | +0.010 / +0.028 (both exclude zero) | staleness is free in 2025 and costs 0.2-0.5% in 2024: refit weekly, it is cheap |
+
+The numbering in the dispatch differed from this file's watch list (it called `season` item 7 and the target choice item 8; here they
+are items 4 and 5). Each item was handled by its content: 1 spine asymmetry (above), 2 weather (out of the primary, ablated), 3 all-NA
+columns (`train.dead_columns`: only `college_breakout_age`), 4 season, 5 snap-only rows, 6 2026 (three weeks, not used), 7 injury drift
+(own report status collapsed to none / Questionable / Doubtful-or-Out, practice status to none / full / limited / DNP; on played rows
+Out fell from 1.3% of rows in 2021 to 0.2% in 2025 and DNP practice from 5.0% to 2.4%, so the drift is real but the family carries 0.6%
+of attribution), 8 oracle framing (xFP is reported as an oracle, never as the bar), 9 playoffs (not built), 10 residual risk (a wrong
+`known_at`; the new stamp is the college table's, pinned by a test).
+
+### College wiring (task 1)
+
+`model/college.py` reads the fetched CSVs (long format: `season, playerId, player, position, team, conference, category, statType,
+stat`; team totals `season, team, statName, statValue`, FBS teams only) and produces 13 columns: receiving and rushing shares of team
+yards and TDs, per-game volume, per-touch efficiency behind a minimum-touch floor, a dominator rating (NA for QBs), passing rates for
+real passers, a power-conference flag, and `college_breakout_age`, which is always NA (it needs several college seasons; the fetch pulls
+one). Matching is name + college (+ position, or a position switch on college agreement), because the fetch's name filter is
+over-inclusive: three same-name pairs in the pulls (Kevin Harris, Zach Evans, Justin Shorter) would otherwise take the wrong player's
+line; the college crosswalk is a normaliser plus eight aliases, each read off a real disagreement. Ambiguous, shared-id, FCS (no team
+totals, and one FCS line shows a 28-attempt QB season) and unverifiable cases are NA. **Match rate: 434 of 475 drafted QB/RB/WR/TE
+(91.4%)**: 2021 90.7%, 2022 87.3%, 2023 95.0%, 2024 92.2%, 2025 89.4%, 2026 93.7%. The 41 misses are 14 FCS schools, and 27 with no
+CFBD row under the drafted name (nicknames such as "Cam Ward" = "Cameron Ward", whom the fetch's exact-name filter dropped, and 2020
+opt-outs); a Phase 3 fetch that keeps every FBS QB/RB/WR/TE row would recover the nicknames. `known_at` = the draft year's season start,
+through the gate; the columns show only in the rookie season (a veteran row is NA, so coverage never depends on how many classes the
+CSVs hold). **Coverage on rookie rows that played** (`is_rookie`, `y_played`): 2021 80.4%, 2022 68.1%, 2023 75.3%, 2024 78.1%, 2025 75.8%,
+2026 81.9% (drafted rookies alone 86-94%; undrafted rookies cannot match). Leakage tests: identity rules on synthetic and real
+namesakes, hand-computed features, post-kickoff and at-kickoff canaries plus a 1-second-before control that bites, a veteran-row canary,
+and a truncation audit over 40 sampled rookie rows (added to the family audit). **It earns nothing**: college is 0.2% of attribution, its
+removal moves RMSE by -0.011 (2025) / +0.007 (2024), and rookies are scored 5.25 RMSE (model) against 5.76 (trailing): the draft-capital
+and ADP columns already carry the rookie prior.
+
+### Housekeeping the work exposed
+
+* The Phase 1 suite was 69/70, not 70/70: `test_every_table_has_a_rule...` still expected the pre-ADP table set. Fixed (`adp`,
+  `college` are now expected tables).
+* The matrix was rebuilt for the college columns. Four columns differ from the Phase 1 matrix at the 1e-15 level (`dvp_ppr_l4`,
+  `dvp_ppr_std`, `tm_out_targets_all`, `tm_out_carries_all`: float summation order in the earlier build); the current code builds
+  bit-identically across processes (two `PYTHONHASHSEED`s, checked) and equals this rebuild. The design matrix is float32, which hides
+  the difference from the models.
+* Mutation checks: `<=` in the train mask, or `season <=`, fail 6 of 9 targeted tests each; with the runtime assertion disabled the
+  perturbation tests still fail (predictions move by orders of magnitude when a future label leaks).
+* Not done: a comparison with our pipeline's `E_pts` (it blends platform projections that are not archived for 2025 with trailing form
+  and a DvP multiplier, so it cannot be rebuilt for 2025) or with platform projections; league-scoring variants (the target is PPR).
+
+### Phase 3 recommendation
+
+* **Model:** LightGBM, squared-error point estimate (the conditional mean) plus p10/p50/p90 quantile models, one model with position as
+  a feature, trained on `y_played` rows, parameters as in `tuned_params.json`.
+* **Features (71 columns):** the registered families minus `wx_*`, `season`, `college_*`, the 39 low-attribution columns
+  (`model/cache/phase2/prune_list.json`, regenerated by `backtest prune`) and, **until a preseason snapshot exists, ADP**. Blocker to
+  resolve before any recipe uses the model: the ADP fetch returned only a 29-player in-season window for 2026, so 98.6% of 2026 rows are
+  NA where 67.5% of 2025 rows were; a model trained with ADP would see a train/serve skew. Either schedule an August Actions snapshot of
+  FFC ADP (and stamp it at capture) for 2027, or ship without ADP (costs +0.008 RMSE, within noise). Weather, `season` and college are
+  not worth wiring; the Open-Meteo forecast source is unnecessary. Load-bearing inputs to protect: season-to-date xFP and points,
+  snap share (last game and trailing 3), the prior-season anchor, the Vegas implied total, and teammate-out volume.
+* **Cadence:** features refresh every Tuesday after nflverse stats land (2026 week 3 stats were up 15:45Z, ahead of the 18:37Z run);
+  refit the model weekly (about 1 s for the point model, a few seconds for the quantiles; a stale model cost nothing in 2025 and up to
+  +0.028 RMSE in 2024, so weekly is the safe choice at no cost); retune once each preseason on the prior season (under a minute for LightGBM) and regenerate the prune list
+  then. Recalibrate the quantile band with trailing residuals (the QB band covers 74% against 80% nominal) before showing floors and ceilings.
+* **How to judge it in 2026 before any recipe prefers it:** the pipeline commits point-in-time Sleeper projections since 2026 week 1, so
+  score the model, Sleeper and `E_pts` on the same 2026 weeks with `backtest.score` (Spearman within position-week and pick accuracy;
+  the head-to-head metric is the one that matters; three weeks of 2026 make MAE differences of a few tenths noise). The 2025
+  result to beat: Spearman .655 and pick accuracy .773 pooled, .48 Spearman at QB.
+* **Open design question for James:** league-scoring variants. The model predicts PPR; half-PPR/standard/TE-premium need either component
+  models (receptions, yards, TDs) or a per-position linear map. The component route is the honest one and is a Phase 3 sub-task.
+* Drop `week` from the inputs only if a joint test on both years agrees (it flipped sign); everything else in the prune list was tested.
