@@ -1,0 +1,78 @@
+name: model fetch (ADP + source probe)
+
+# Phase 1 of PLAN_MODEL.md. Manual only, and deliberately separate from pipeline.yml:
+# nothing here schedules, calls, or is triggered by the weekly pipeline. It exists because the
+# Claude sandbox's egress policy blocks fantasyfootballcalculator.com (and CFBD / Open-Meteo);
+# GitHub-hosted runners may not be blocked. It (1) fetches FFC ADP for 2021-2026 in PPR and
+# standard into model/data/adp/ (small CSVs with a fetched_at column, plus fetch_log.csv holding
+# the exact HTTP status/exception of every attempt), (2) re-runs `python -m model.probe_sources`
+# from the runner and saves the report, and (3) commits both to the branch it ran on.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: model-fetch
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: model/requirements.txt
+
+      - run: pip install -r model/requirements.txt
+
+      - name: Fetch FFC ADP (never fails the job; the log records what happened)
+        run: python -m model.fetch_adp --seasons 2021-2026 --formats ppr,standard
+
+      - name: Probe every planned source from this runner
+        run: |
+          mkdir -p model/data
+          {
+            echo "probe run: $(date -u +%Y-%m-%dT%H:%M:%SZ) on ${RUNNER_OS:-?} ${RUNNER_ARCH:-?}, ref ${GITHUB_REF_NAME}, sha ${GITHUB_SHA}"
+            python -m model.probe_sources
+          } 2>&1 | tee model/data/probe_report_actions.txt || true
+
+      - name: Step summary
+        run: |
+          {
+            echo "## ADP fetch log"
+            echo '```'
+            python - <<'PY'
+          import pandas as pd
+          d = pd.read_csv("model/data/adp/fetch_log.csv")
+          print(d[["season", "format", "ok", "n_players", "http_status", "error"]].to_string(index=False))
+          PY
+            echo '```'
+            echo "## Source probe (from this runner)"
+            echo '```'
+            cat model/data/probe_report_actions.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit results to the branch this run used
+        run: |
+          git config user.name  "fantasy-bot"
+          git config user.email "fantasy-bot@users.noreply.github.com"
+          git add model/data
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+            exit 0
+          fi
+          git commit -m "model: fetch ADP [skip ci]"
+          for delay in 0 2 4 8 16; do
+            sleep "$delay"
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+          done
+          echo "::error::could not push ADP results"
+          exit 1
