@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 4
 
 redraft · 20 roster slots  
-Generated 2026-09-29 15:03 UTC · baselines: 2026 only · lineup as of 2026-09-29T15:03:09Z
+Generated 2026-09-29 17:05 UTC · baselines: 2026 only · lineup as of 2026-09-29T17:05:12Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -98,11 +98,9 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Ollie Gordon II | RB | MIA | 22.7 | 1 | 2 (was 3) | 52% | RB2 on depth chart; up from 3; snap share trending +65%/wk; age 23 |
-| Kaleb Johnson | RB | GB | 23.1 | 1 | 1 (was 3) | 21% | RB1 on depth chart; up from 3; snap share trending +18%/wk; age 23 |
+| Ollie Gordon II | RB | MIA | 22.7 | 1 | 2 (was 2) | 52% | RB2 on depth chart; snap share trending +65%/wk; age 23 |
 | Isaiah Williams | WR | NYJ | 25.7 | 2 | 3 (was 3) | 77% | WR3 on depth chart; snap share trending +14%/wk; team passes #11; age 26 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +14%/wk; team passes #5; age 26 |
-| Jalen Royals | WR | KC | 23.6 | 1 | 4 (was 5) | 11% | WR4 on depth chart; up from 5; snap share trending +10%/wk; team passes #13; age 24 |
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +8%/wk; team passes #9; age 27 |
 | Brashard Smith | RB | KC | 23.5 | 1 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
 | Darnell Washington | TE | PIT | 25.1 | 3 | 2 (was 2) | 64% | TE2 on depth chart; snap share trending +6%/wk; team passes #6; age 25 |
@@ -113,6 +111,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 73% | WR3 on depth chart; team passes #1; age 24 |
 | Jacob Saylors | RB | DET | 26.6 | 3 | 3 (was 3) | 1% | RB3 on depth chart; age 27 |
 | Corey Kiner | RB | NE | 24.7 | 1 | 3 (was 3) | 10% | RB3 on depth chart; age 25 |
+| Sione Vaki | RB | DET | 25.2 | 2 | 2 (was 2) | 26% | RB2 on depth chart; age 25 |
+| Demond Claiborne | RB | MIN | 23.0 | 0 | 3 (was 3) | 4% | RB3 on depth chart; age 23 |
 
 
 ## Ask me
