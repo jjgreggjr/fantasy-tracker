@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 4
 
 redraft · 17 roster slots  
-Generated 2026-09-29 17:05 UTC · baselines: 2026 only · lineup as of 2026-09-29T17:05:21Z
+Generated 2026-09-29 22:33 UTC · baselines: 2026 only · lineup as of 2026-09-29T22:33:41Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -63,7 +63,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Bryce Young | QB | CAR | DET | 23.6 | 2.4 |  | 1 | 1 | Low |  |
-| C.J. Stroud | QB | HOU | DAL | 17.9 | 2.6 |  | 1 | 3 | High |  |
+| C.J. Stroud | QB | HOU | DAL | 17.9 | 2.6 |  | 1 | 3 | High | 🔥 |
 | Jacoby Brissett | QB | ARI | NYG | 16.1 | 3.5 |  | 1 | 16 | High |  |
 | Geno Smith | QB | NYJ | CHI | 15.5 | 3.7 |  | 1 | 17 | Med |  |
 | Kirk Cousins | QB | LV | KC | 15.3 | 3.1 |  | 1 | 32 | Med | 🔥 |

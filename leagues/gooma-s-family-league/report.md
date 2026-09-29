@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 4
 
 redraft · 20 roster slots  
-Generated 2026-09-29 17:05 UTC · baselines: 2026 only · lineup as of 2026-09-29T17:05:12Z
+Generated 2026-09-29 22:33 UTC · baselines: 2026 only · lineup as of 2026-09-29T22:33:33Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 

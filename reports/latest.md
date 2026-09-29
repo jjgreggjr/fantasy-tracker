@@ -1,6 +1,6 @@
 # Week 4 digest — 2026
 
-Generated 2026-09-29 17:05 UTC  
+Generated 2026-09-29 22:33 UTC  
 Stats through: **Week 3** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 3** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 936
 - Sleeper players cache: 2026-09-29
-- projections: 853 players (Sleeper, 2026-09-29T17:05:16Z)
-- league rosters: 3 leagues, lineups read 2026-09-29T17:05:12Z
-- ESPN rosters: Average Joes (2026-09-29T17:05:21Z)
+- projections: 853 players (Sleeper, 2026-09-29T22:33:36Z)
+- league rosters: 3 leagues, lineups read 2026-09-29T22:33:33Z
+- ESPN rosters: Average Joes (2026-09-29T22:33:41Z)
 - status rows: 575 players; 0 with practice reports
 
 ### Data integrity
@@ -99,7 +99,7 @@ Full report: `leagues/where-you-at/report.md`
 
 **Needs a decision:** Breece Hall (OUT), Zach Charbonnet (PUP), Puka Nacua (OUT), Nico Collins (OUT), Alec Pierce (IR), Jalen Coker (OUT)
 
-**Trending and still free here:** Kirk Cousins (QB, 15.3), Deshaun Watson (QB, 15.2), Marcus Mariota (QB, 14.9)
+**Trending and still free here:** C.J. Stroud (QB, 17.9), Kirk Cousins (QB, 15.3), Deshaun Watson (QB, 15.2)
 
 
 Full report: `leagues/james-gregg-espn/report.md`
