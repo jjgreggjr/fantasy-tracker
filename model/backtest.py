@@ -389,13 +389,18 @@ def stage_prune(df, lib="lightgbm", share_below=0.0015, force=False, log=print):
     drop = explain.prune_list(contrib, share_below)
     (OUT / "prune_list.json").write_text(json.dumps({"share_below": share_below, "source": f"shap2024_{lib}", "drop": drop}, indent=1))
     log(f"  prune list from 2024 SHAP (share < {share_below:.2%}): {len(drop)} registry columns")
-    if f.exists() and not force:
+    if f.exists() and (OUT / f"prune_{lib}_noadp_2025.parquet").exists() and not force:
         log("  prune 2025: cached")
         return
     spec = Spec("prune_2024_shap", drop_cols=tuple(drop))
     params = T.load_params()["point"][lib]
     _save(walk_forward(df, spec, lib, params), f"prune_{lib}_2025")
     _save(walk_forward(df, spec, lib, params, season=2024), f"prune_{lib}_2024")
+    # the serving candidate for 2026: the pruned set WITHOUT ADP (no preseason 2026 ADP snapshot exists: the fetch returned a
+    # 29-player in-season window, see PLAN_MODEL.md), so the live model cannot depend on it
+    noadp = Spec("prune_no_adp", drop_cols=tuple(drop), drop_families=("adp",))
+    _save(walk_forward(df, noadp, lib, params), f"prune_{lib}_noadp_2025")
+    _save(walk_forward(df, noadp, lib, params, season=2024), f"prune_{lib}_noadp_2024")
 
 
 def stage_quantiles(df, weeks=WEEKS, force=False, log=print):
