@@ -29,8 +29,9 @@ import time
 from dataclasses import dataclass, field
 from datetime import timedelta
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable
 
+import numpy as np
 import pandas as pd
 import requests
 
@@ -55,7 +56,16 @@ INJURY_DERIVED_LEAD = timedelta(hours=24)
 # Playoff pairings are not knowable at season start; treat as known 24h ahead.
 NON_REG_FIXTURE_LEAD = timedelta(hours=24)
 
+# Career games before this season come from a static table (stamped at this season's start);
+# every later season must be in the store for `career_games_prior` to be right.
+# (features.py repeats CAREER_CUTOFF_SEASON, it may import nothing else from here; a test pins them equal.)
+CAREER_CUTOFF_SEASON = 2020
+CAREER_FIRST_SEASON = 1999
+
 SKILL_POSITIONS = ("QB", "RB", "WR", "TE")
+# draft_picks uses Pro-Football-Reference team codes; the schedule (and every other table) uses nflverse's.
+PFR_TEAM_TO_NFLVERSE = {"GNB": "GB", "KAN": "KC", "LAR": "LA", "LVR": "LV", "NOR": "NO", "NWE": "NE",
+                        "SFO": "SF", "TAM": "TB", "OAK": "LV", "SDG": "LAC", "STL": "LA"}
 # Offense labels shared by both depth-chart formats (drops defense, KR/PR, specialists).
 OFFENSE_DEPTH_POS = ("QB", "RB", "HB", "FB", "F", "WR", "TE", "LT", "LG", "C", "RG", "RT")
 
@@ -98,13 +108,32 @@ class RawTable:
 class RawStore:
     """All raw tables for one build. Frames are private on purpose: the way in is
     `as_of_join`. (`_tables` is reachable by design for tests and target lookup;
-    feature code touching it is a bug the AST test catches.)"""
+    feature code touching it is a bug the AST test catches.)
+
+    A store is immutable, so it may cache: `_index` holds per-(table, column) row indexes that make
+    the gate O(rows for that key) instead of O(table), and `memo` holds values computed FROM this
+    store (a team-game context is the same for every player on the team). `truncated_before` and
+    `with_frame` return a new store with empty caches, so nothing computed from one store can reach
+    another."""
 
     def __init__(self, tables: Iterable[RawTable]):
         self._tables: dict[str, RawTable] = {t.name: t for t in tables}
+        self._index: dict[tuple[str, str], tuple[dict, np.ndarray]] = {}
+        self._known_ns: dict[str, np.ndarray] = {}
+        self._memo: dict = {}
 
     def names(self) -> list[str]:
         return list(self._tables)
+
+    def has(self, name: str) -> bool:
+        return name in self._tables
+
+    def memo(self, key, fn: Callable):
+        """Value of `fn()`, computed once per (store, key). `key` must contain everything the value
+        depends on besides the store itself (e.g. game_id + team for a team-game context)."""
+        if key not in self._memo:
+            self._memo[key] = fn()
+        return self._memo[key]
 
     def describe(self) -> pd.DataFrame:
         rows = []
@@ -126,6 +155,32 @@ class RawStore:
         tables[name] = tables[name].with_df(df)
         return RawStore(tables.values())
 
+    # ---- gate internals -------------------------------------------------------------
+    def _known(self, table: str) -> np.ndarray:
+        if table not in self._known_ns:
+            self._known_ns[table] = self._tables[table].df[KNOWN_AT].to_numpy("datetime64[ns]").astype("int64")
+        return self._known_ns[table]
+
+    def _key_index(self, table: str, col: str):
+        """{key value: row positions sorted by (known_at, original order)}. NaN keys are absent
+        (equality never matches NaN). Vectorised: one stable sort by (key code, known_at)."""
+        k = (table, col)
+        if k not in self._index:
+            df = self._tables[table].df
+            known = self._known(table)
+            order = np.argsort(known, kind="stable")               # rows in known_at order (ties: original order)
+            codes, uniques = pd.factorize(df[col].to_numpy()[order])
+            valid = codes >= 0
+            pos, codes = order[valid], codes[valid]
+            by_key = np.argsort(codes, kind="stable")              # stable: keeps known_at order inside each key
+            pos, codes = pos[by_key], codes[by_key]
+            cuts = np.flatnonzero(np.diff(codes)) + 1
+            starts = np.concatenate(([0], cuts))
+            ends = np.concatenate((cuts, [len(codes)]))
+            groups = {uniques[codes[s]]: pos[s:e] for s, e in zip(starts, ends)}
+            self._index[k] = (groups, order)
+        return self._index[k][0]
+
 
 def _utc(ts) -> pd.Timestamp:
     ts = pd.Timestamp(ts)
@@ -139,6 +194,44 @@ def _ns_utc(s: pd.Series) -> pd.Series:
 
 
 # --------------------------------------------------------------------------- the gate
+# Equality keys worth an index, most selective first. Anything else (or a list/set key) takes the
+# plain mask path, which is the reference implementation the indexed path is tested against.
+_INDEXABLE = ("player_id", "game_id", "team", "opponent_team", "opponent")
+
+
+def _gate_positions(store: RawStore, table: str, kickoff: pd.Timestamp, keys: dict) -> np.ndarray:
+    """Row positions of `table` with known_at < kickoff and every key matching, oldest known first."""
+    t = store._tables[table]
+    df = t.df
+    for col, val in keys.items():
+        if col not in df.columns:
+            raise KeyError(f"{table} has no column {col!r}")
+        if val is None:
+            raise ValueError(f"as_of_join({table}, {col}=None): refusing an ambiguous key")
+    kickoff_ns = kickoff.value
+    lead = next((c for c in _INDEXABLE if c in keys and not isinstance(keys[c], (list, tuple, set, frozenset))), None)
+    if lead is None:
+        mask = df[KNOWN_AT] < kickoff
+        for col, val in keys.items():
+            mask &= df[col].isin(list(val)) if isinstance(val, (list, tuple, set, frozenset)) else df[col] == val
+        pos = np.flatnonzero(mask.to_numpy())
+        return pos[np.argsort(store._known(table)[pos], kind="stable")]
+    groups = store._key_index(table, lead)
+    pos = groups.get(keys[lead])
+    if pos is None:
+        return np.empty(0, dtype="int64")
+    known = store._known(table)[pos]                         # ascending: pos is in known_at order
+    pos = pos[: int(np.searchsorted(known, kickoff_ns, side="left"))]     # strictly before kickoff
+    rest = [(c, v) for c, v in keys.items() if c != lead]
+    if rest and len(pos):
+        sub = df.iloc[pos]
+        ok = np.ones(len(pos), dtype=bool)
+        for col, val in rest:
+            ok &= (sub[col].isin(list(val)) if isinstance(val, (list, tuple, set, frozenset)) else sub[col] == val).to_numpy()
+        pos = pos[ok]
+    return pos
+
+
 def as_of_join(store: RawStore, table: str, kickoff_ts, *, trace: list | None = None,
                **keys) -> pd.DataFrame:
     """THE gate. Rows of `table` with known_at < kickoff_ts (strict), restricted by
@@ -149,6 +242,18 @@ def as_of_join(store: RawStore, table: str, kickoff_ts, *, trace: list | None = 
     feature row actually consumed.
     """
     kickoff = _utc(kickoff_ts)
+    out = store._tables[table].df.iloc[_gate_positions(store, table, kickoff, keys)].reset_index(drop=True)
+    if trace is not None:
+        trace.append({"table": table, "rows": len(out), "kickoff": kickoff,
+                      "max_known_at": out[KNOWN_AT].max() if len(out) else None,
+                      "game_ids": set(out["game_id"]) if "game_id" in out.columns else set()})
+    return out
+
+
+def as_of_join_reference(store: RawStore, table: str, kickoff_ts, **keys) -> pd.DataFrame:
+    """The Phase 0 gate, verbatim: a boolean mask over the whole table. Kept only so a test can prove
+    the indexed gate returns identical frames (same rows, same order, same index)."""
+    kickoff = _utc(kickoff_ts)
     df = store._tables[table].df
     mask = df[KNOWN_AT] < kickoff
     for col, val in keys.items():
@@ -157,12 +262,7 @@ def as_of_join(store: RawStore, table: str, kickoff_ts, *, trace: list | None = 
         if val is None:
             raise ValueError(f"as_of_join({table}, {col}=None): refusing an ambiguous key")
         mask &= df[col].isin(list(val)) if isinstance(val, (list, tuple, set, frozenset)) else df[col] == val
-    out = df[mask].sort_values(KNOWN_AT, kind="mergesort").reset_index(drop=True)
-    if trace is not None:
-        trace.append({"table": table, "rows": len(out), "kickoff": kickoff,
-                      "max_known_at": out[KNOWN_AT].max() if len(out) else None,
-                      "game_ids": set(out["game_id"]) if "game_id" in out.columns else set()})
-    return out
+    return df[mask].sort_values(KNOWN_AT, kind="mergesort").reset_index(drop=True)
 
 
 @dataclass(frozen=True)
@@ -177,6 +277,7 @@ class TargetRow:
     game_id: str
     kickoff: pd.Timestamp     # UTC
     is_home: bool
+    src: tuple = ()           # which pre-kickoff signals admitted him to the spine (features.spine_for)
 
 
 def make_target(store: RawStore, player_id: str, season: int, week: int) -> TargetRow:
@@ -204,6 +305,27 @@ def make_target(store: RawStore, player_id: str, season: int, week: int) -> Targ
     return TargetRow(player_id, int(season), int(week), team,
                      g["away_team"] if home else g["home_team"], pos, g["game_id"],
                      g["kickoff"], bool(home))
+
+
+def team_games(store: RawStore, seasons: Iterable[int], *, completed_only: bool = True,
+               regular_season_only: bool = True) -> list[TargetRow]:
+    """Skeleton of the row universe: one TargetRow per (team, game) with `player_id=""`. Reads the
+    fixture table (who plays whom, when: known at season start) and, when `completed_only`, which games
+    have a result so an unplayed week is never scored as 'everyone DNP'. Like make_target it is spine
+    plumbing, not a feature path; the players in each team-game come from `features.spine_for`."""
+    seasons = set(seasons)
+    fx = store._tables["fixtures"].df
+    fx = fx[fx["season"].isin(seasons)]
+    if regular_season_only:
+        fx = fx[fx["game_type"] == "REG"]
+    if completed_only:
+        done = set(store._tables["game_results"].df["game_id"])
+        fx = fx[fx["game_id"].isin(done)]
+    out = []
+    for r in fx.sort_values(["kickoff", "game_id"]).itertuples(index=False):
+        for team, opp, home in ((r.home_team, r.away_team, True), (r.away_team, r.home_team, False)):
+            out.append(TargetRow("", int(r.season), int(r.week), team, opp, "", r.game_id, r.kickoff, home))
+    return out
 
 
 # --------------------------------------------------------------------------- loaders
@@ -268,9 +390,10 @@ def load_schedule_tables(seasons: Iterable[int]) -> list[RawTable]:
     starts = _season_starts()
     reg = g["game_type"] == "REG"
 
+    # `roof` is deliberately NOT here: nflverse records the OBSERVED state ('closed'/'open' for
+    # retractable roofs is decided on game day), so it lives in weather_obs with the other proxy.
     fx = g[["game_id", "season", "week", "game_type", "kickoff", "home_team", "away_team",
-            "location", "roof", "surface", "stadium_id", "div_game", "home_rest",
-            "away_rest"]].copy()
+            "location", "stadium_id", "div_game", "home_rest", "away_rest"]].copy()
     fx[KNOWN_AT] = fx["kickoff"] - NON_REG_FIXTURE_LEAD
     fx.loc[reg, KNOWN_AT] = fx.loc[reg, "season"].map(starts)
     fx[KNOWN_AT] = _ns_utc(fx[KNOWN_AT])
@@ -316,6 +439,10 @@ def load_player_games(seasons: Iterable[int]) -> RawTable:
     df = pd.concat(frames, ignore_index=True)
     n0 = len(df)
     df = df[df["position"].isin(SKILL_POSITIONS)].copy()
+    # carry share: a function of the same game's rows only, so it is known when the game is
+    # (nflverse publishes target_share but no carry share). QB scrambles count as team carries.
+    team_carries = df.groupby(["game_id", "team"])["carries"].transform("sum")
+    df["carry_share"] = (df["carries"] / team_carries.where(team_carries > 0)).astype("float64")
     df[KNOWN_AT] = _ns_utc(df["game_id"].map(_kickoffs()))   # RawTable raises if a game_id is unmatched
     return RawTable("player_games", df.reset_index(drop=True), "game kickoff (plan: game rows)",
                     dropped={"non_skill_position": n0 - len(df)})
@@ -333,19 +460,27 @@ def load_snap_counts(seasons: Iterable[int]) -> RawTable:
     n_unmapped = int(df["player_id"].isna().sum())
     df = df[df["player_id"].notna()].copy()
     df[KNOWN_AT] = _ns_utc(df["game_id"].map(_kickoffs()))
-    df = df[["player_id", "season", "week", "game_id", "team", "position", "offense_snaps",
+    df = df[["player_id", "season", "week", "game_id", "game_type", "team", "position", "offense_snaps",
              "offense_pct", "defense_snaps", "st_snaps", KNOWN_AT]]
     return RawTable("snap_counts", df.reset_index(drop=True), "game kickoff (plan: game rows)",
                     dropped={"pfr_id_not_in_players_table": n_unmapped})
 
 
 def load_xfp(seasons: Iterable[int]) -> RawTable:
-    """ffopportunity expected fantasy points. Week N's xFP is computed FROM week N, so
+    """ffopportunity expected fantasy points and expected TDs. Week N's xFP is computed FROM week N, so
     for a week-N target only rows from earlier games pass the gate (own game: known_at
-    == kickoff, excluded). Same-week xFP is a baseline to beat, never an input."""
+    == kickoff, excluded). Same-week xFP is a baseline to beat, never an input.
+
+    The rows with a null player_id (7% of the file) are TEAM-level aggregate rows (no name, no
+    position), not lost players: dropping them loses nothing. Players with no row here are exactly
+    those with zero pass attempts + carries + targets in the game (verified 2021/2024/2025: 0 of the
+    stat rows with any opportunity lack an xFP row), so features treat 'no row + no opportunity' as
+    xFP = 0, not missing."""
     keep = ["season", "week", "game_id", "posteam", "player_id", "full_name", "position",
             "total_fantasy_points_exp", "pass_fantasy_points_exp", "rec_fantasy_points_exp",
-            "rush_fantasy_points_exp", "total_fantasy_points"]
+            "rush_fantasy_points_exp", "total_fantasy_points",
+            "pass_touchdown", "pass_touchdown_exp", "rec_touchdown", "rec_touchdown_exp",
+            "rush_touchdown", "rush_touchdown_exp"]
     df = pd.concat([pd.read_parquet(_fetch(f"{FFOPP}/ep_weekly_{y}.parquet",
                                            CACHE_DIR / "ffopportunity" / f"ep_weekly_{y}.parquet"))[keep]
                     for y in seasons], ignore_index=True)
@@ -391,33 +526,49 @@ def load_injuries(seasons: Iterable[int]) -> RawTable:
                     dropped={"no_timestamp_derivable": n_bad})
 
 
+# Depth-chart position labels -> our four. Linemen, defense, returners and fullbacks are dropped: no
+# feature or spine rule reads them, and they were 90% of the 2025+ snapshot rows.
+DEPTH_SKILL_MAP = {"QB": "QB", "RB": "RB", "HB": "RB", "WR": "WR", "TE": "TE"}
+
+
 def load_depth_charts(seasons: Iterable[int]) -> RawTable:
     """Two formats. <=2024: weekly, no snapshot time -> known_at = the team's kickoff that
     week (so week N's chart is unusable for game N, usable for N+1; bye teams get the
-    league's last kickoff that week). >=2025: ESPN-style snapshots with a real `dt`."""
+    league's last kickoff that week). >=2025: ESPN-style snapshots with a real `dt`.
+
+    Skill positions only. The two formats do NOT mean the same thing (PLAN_MODEL.md Phase 1
+    findings: the chart's #1 RB is the week's snap leader 56-66% of the time <=2024 and 75-82% from
+    2025, WR 'string one' holds 2.4-2.6 players <=2024 vs exactly 3 from 2025), so `rank` is NOT
+    a model feature. The table exists to say who is ON a team's chart, which the spine uses."""
     g = _games()
     tw = pd.concat([g[["season", "week", "home_team", "kickoff"]].rename(columns={"home_team": "team"}),
                     g[["season", "week", "away_team", "kickoff"]].rename(columns={"away_team": "team"})])
     team_ko = tw.set_index(["season", "week", "team"])["kickoff"]
     wk_last = g.groupby(["season", "week"])["kickoff"].max()
-    frames, n_sbbye = [], 0
+    frames, n_sbbye, n_noid = [], 0, 0
     for y in seasons:
         d = _nflverse("depth_charts", f"depth_charts_{y}.parquet")
         if "dt" in d.columns:
-            d = d[d["pos_abb"].isin(OFFENSE_DEPTH_POS)]
+            d = d[d["pos_abb"].isin(DEPTH_SKILL_MAP)]
+            n_noid += int(d["gsis_id"].isna().sum())
+            d = d[d["gsis_id"].notna()]
             out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["team"], "season": y,
-                                "week": pd.NA, "pos": d["pos_abb"], "rank": d["pos_rank"].astype(int),
+                                "week": pd.NA, "pos": d["pos_abb"].map(DEPTH_SKILL_MAP),
+                                "rank": d["pos_rank"].astype(int),
                                 KNOWN_AT: _ns_utc(d["dt"]), "known_at_source": "snapshot_dt"})
         else:
             n_sbbye += int(d["week"].isna().sum())          # 'SBBYE' snapshots have no week
             d = d[(d["formation"] == "Offense") & d["week"].notna()]
+            d = d[d["depth_position"].str.strip().isin(DEPTH_SKILL_MAP)]
+            n_noid += int(d["gsis_id"].isna().sum())
+            d = d[d["gsis_id"].notna()]
             keys = list(zip(d["season"], d["week"].astype(int), d["club_code"]))
             k = pd.Series(keys, index=d.index).map(team_ko)
             bye = k.isna()
             k[bye] = pd.Series(list(zip(d["season"], d["week"].astype(int))), index=d.index)[bye].map(wk_last)
             out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["club_code"], "season": d["season"],
                                 "week": d["week"].astype(int),
-                                "pos": d["depth_position"].str.strip().replace("", None),
+                                "pos": d["depth_position"].str.strip().map(DEPTH_SKILL_MAP),
                                 "rank": pd.to_numeric(d["depth_team"]).astype(int),
                                 KNOWN_AT: _ns_utc(k), "known_at_source": "derived_team_kickoff"})
         frames.append(out)
@@ -425,7 +576,26 @@ def load_depth_charts(seasons: Iterable[int]) -> RawTable:
     n_bad = int(df[KNOWN_AT].isna().sum())
     return RawTable("depth_charts", df[df[KNOWN_AT].notna()].reset_index(drop=True),
                     "<=2024: team kickoff that week (derived); >=2025: snapshot dt",
-                    dropped={"no_timestamp_derivable": n_bad, "sbbye_snapshot_no_week": n_sbbye})
+                    dropped={"no_timestamp_derivable": n_bad, "sbbye_snapshot_no_week": n_sbbye,
+                             "no_gsis_id": n_noid})
+
+
+def load_career_pre_cutoff() -> RawTable:
+    """Skill-position appearance rows per player through the season before CAREER_CUTOFF_SEASON,
+    stamped at that season's start. Later seasons' games come from `player_games` through the gate,
+    so `career_games_prior` = this + gated history (valid only if every season since the cutoff is
+    in the store: the matrix builder asserts it)."""
+    frames = []
+    for y in range(CAREER_FIRST_SEASON, CAREER_CUTOFF_SEASON):
+        d = pd.read_parquet(_fetch(f"{NFLVERSE}/stats_player/stats_player_week_{y}.parquet",
+                                   CACHE_DIR / "nflverse" / f"stats_player_week_{y}.parquet"),
+                            columns=["player_id", "position", "season_type"])
+        d = d[d["position"].isin(SKILL_POSITIONS) & (d["season_type"] == "REG") & d["player_id"].notna()]
+        frames.append(d.groupby("player_id").size().rename("games"))
+    tot = pd.concat(frames).groupby(level=0).sum().reset_index()
+    tot["games"] = tot["games"].astype(float)
+    tot[KNOWN_AT] = _ns_utc(pd.Series(_season_starts()[CAREER_CUTOFF_SEASON], index=tot.index))
+    return RawTable("career_pre_cutoff", tot, f"start of the {CAREER_CUTOFF_SEASON} season (first REG kickoff - 7d)")
 
 
 def load_static_tables() -> list[RawTable]:
@@ -444,6 +614,7 @@ def load_static_tables() -> list[RawTable]:
     dp = _nflverse("draft_picks", "draft_picks.parquet")[DRAFT_COLS].copy()
     n_dp = int(dp["gsis_id"].isna().sum())
     dp = dp[dp["gsis_id"].notna() & dp["season"].isin(starts.index)].rename(columns={"gsis_id": "player_id"})
+    dp["team"] = dp["team"].replace(PFR_TEAM_TO_NFLVERSE)          # PFR codes -> nflverse codes
     dp[KNOWN_AT] = _ns_utc(dp["season"].map(starts))
 
     cb = _nflverse("combine", "combine.parquet")[COMBINE_COLS].copy()
@@ -459,10 +630,16 @@ def load_static_tables() -> list[RawTable]:
             RawTable("combine", cb.reset_index(drop=True), rule, dropped={"pfr_id_not_mapped": n_cb})]
 
 
-def load_store(seasons: Iterable[int] = (2024,)) -> RawStore:
-    """Every raw table, each with known_at. Season-scoped except the static tables."""
+def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True) -> RawStore:
+    """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
+    career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/)."""
     seasons = list(seasons)
     tables = [*load_schedule_tables(seasons), load_player_games(seasons), load_snap_counts(seasons),
               load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
-              *load_static_tables()]
+              *load_static_tables(), load_career_pre_cutoff()]
+    if adp:
+        from model.adp import load_adp_table       # local import: adp.py needs this module's helpers
+        t = load_adp_table()
+        if t is not None:
+            tables.append(t)
     return RawStore(tables)
