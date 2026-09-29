@@ -35,6 +35,13 @@ jobs:
       - name: Fetch FFC ADP (never fails the job; the log records what happened)
         run: python -m model.fetch_adp --seasons 2021-2026 --formats ppr,standard
 
+      # The key is exposed to this one step only, through the environment. It is never echoed, never a
+      # workflow input (public repo), and fetch_cfbd never writes it anywhere (see its docstring).
+      - name: Fetch CFBD college stat lines (skips itself when the secret is unset)
+        env:
+          CFBD_KEY: ${{ secrets.CFBD_KEY }}
+        run: python -m model.fetch_cfbd --seasons 2020-2025
+
       - name: Probe every planned source from this runner
         run: |
           mkdir -p model/data
@@ -54,6 +61,14 @@ jobs:
           print(d[["season", "format", "ok", "n_players", "http_status", "error"]].to_string(index=False))
           PY
             echo '```'
+            echo "## CFBD fetch log"
+            echo '```'
+            python - <<'PY'
+          import pandas as pd
+          d = pd.read_csv("model/data/cfbd/fetch_log.csv")
+          print(d[["path", "params", "ok", "rows", "http_status", "error"]].to_string(index=False))
+          PY
+            echo '```'
             echo "## Source probe (from this runner)"
             echo '```'
             cat model/data/probe_report_actions.txt
@@ -69,7 +84,7 @@ jobs:
             echo "no changes to commit"
             exit 0
           fi
-          git commit -m "model: fetch ADP [skip ci]"
+          git commit -m "model: fetch ADP and CFBD [skip ci]"
           for delay in 0 2 4 8 16; do
             sleep "$delay"
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
