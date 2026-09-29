@@ -1,0 +1,38 @@
+probe run: 2026-09-29T20:13:02Z on Linux X64, ref claude/eager-goldberg-zmevs9, sha 2e3606ac39640ccbd9080f1d22dba93e2dfceb57
+== nflverse release assets ==
+[OK] legacy player_stats_2024 (nfl_data_py's weekly source): 5,597 rows x 53 cols
+[FAIL] legacy player_stats_2025 (nfl_data_py's weekly source): RuntimeError: could not fetch https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats_2025.parquet: 404 Client Error: Not Found for url: https:/
+[OK] stats_player_week_2024: 18,983 rows x 150 cols
+[OK] stats_player_week_2025: 19,422 rows x 150 cols
+[OK] stats_player_week_2026: 3,339 rows x 150 cols
+[OK] schedules games.parquet: 7,548 rows x 46 cols
+   2024 non-null: {'gameday': 1.0, 'gametime': 1.0, 'roof': 1.0, 'temp': 0.639, 'wind': 0.639, 'spread_line': 1.0, 'total_line': 1.0}
+   outdoor-game temp/wind non-null: 0.973
+[OK] snap_counts_2024: 26,615 rows x 16 cols
+[OK] injuries_2024: 6,215 rows x 16 cols
+   has date_modified: True
+[OK] injuries_2025: 6,068 rows x 16 cols
+   has date_modified: False
+[OK] depth_charts_2024: 37,312 rows x 15 cols
+   has snapshot dt: False | has week: True
+[OK] depth_charts_2025: 554,215 rows x 12 cols
+   has snapshot dt: True | has week: False
+[OK] combine: 8,968 rows x 18 cols
+[OK] draft_picks: 12,927 rows x 36 cols
+[OK] players: 24,834 rows x 39 cols
+
+== ffopportunity ==
+[OK] ep_weekly_2024: 6,005 rows x 159 cols
+   xFP cols: ['pass_fantasy_points_exp', 'rec_fantasy_points_exp', 'rush_fantasy_points_exp', 'total_fantasy_points_exp']
+
+== FantasyFootballCalculator ADP ==
+[HTTP 200] content-type=text/html; charset=utf-8
+   top-level keys: ['status', 'meta', 'players'] | meta: {'type': 'PPR', 'teams': 12, 'rounds': 15, 'total_drafts': 1371, 'start_date': '2024-08-31', 'end_date': '2024-09-01'}
+   players: 205 | first: {'player_id': 2434, 'name': 'Christian McCaffrey', 'position': 'RB', 'team': 'SF', 'adp': 1.4, 'adp_formatted': '1.01', 'times_drafted': 181, 'high': 1, 'low': 5, 'stdev': 0.7, 'bye': 8}
+
+== CollegeFootballData ==
+[HTTP 401] key=absent body: {"message":"Unauthorized. Did you forget to add \"Bearer \" before your key? Go to CollegeFootballData.com to register for your free API key. See the CFBD Blog for examples on usage: https://blog.coll
+
+== Open-Meteo archive ==
+[HTTP 200]
+   keys: ['latitude', 'longitude', 'generationtime_ms', 'utc_offset_seconds', 'timezone', 'timezone_abbreviation', 'elevation', 'hourly_units', 'hourly'] | hourly keys: ['time', 'temperature_2m', 'wind_speed_10m'] | n: 48
