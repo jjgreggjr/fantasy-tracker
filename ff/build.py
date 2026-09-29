@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import statistics
 from pathlib import Path
 
 import numpy as np
@@ -13,6 +14,20 @@ SKILL = ["QB", "RB", "WR", "TE"]
 OFFENSE_GRP = "3WR 1TE"
 
 ID_COLS = ["sleeper_id", "espn_id", "pfr_id", "gsis_id"]
+
+# What each platform recorded for a completed week (see build_sleeper_played
+# and espn.parse_played). One row per player per team, and one per team.
+PLAYED_COLS = ["season", "week", "league_id", "league_name", "roster_id",
+               "owner_id", "owner_name", "sleeper_id", "gsis_id", "espn_id",
+               "name", "position", "team", "started", "slot", "points",
+               "fetched_at"]
+RESULT_COLS = ["season", "week", "league_id", "league_name", "roster_id",
+               "owner_id", "owner_name", "matchup_id", "opponent_roster_id",
+               "opponent_owner_name", "points_for", "points_against", "won",
+               "tie", "median_won", "fetched_at"]
+PLAYED_PARTITION = ["season", "week", "league_id"]
+PLAYED_KEYS = PLAYED_PARTITION + ["roster_id", "sleeper_id"]
+RESULT_KEYS = PLAYED_PARTITION + ["roster_id"]
 
 
 def norm_id(v) -> object:
@@ -335,17 +350,22 @@ def build_defense_vs_pos(pw: pd.DataFrame, games: pd.DataFrame) -> pd.DataFrame:
     return out.sort_values(["season", "week", "defense", "position"]).reset_index(drop=True)
 
 
+def _sleeper_crosswalk(players: pd.DataFrame) -> pd.DataFrame:
+    """The player dimension indexed by Sleeper id."""
+    px = players.copy()
+    px["sleeper_id"] = px.sleeper_id.map(norm_id)
+    return (px.dropna(subset=["sleeper_id"])
+              .drop_duplicates("sleeper_id")
+              .set_index("sleeper_id"))
+
+
 def build_league_rosters(leagues: list[dict], players: pd.DataFrame,
                          season: int, week: int) -> pd.DataFrame:
     """`owner_id` is kept so "my team" is identified by user id, not by a
     display-name string that the user can change at any time."""
     """One row per rostered player per league."""
     rows = []
-    px = players.copy()
-    px["sleeper_id"] = px.sleeper_id.map(norm_id)
-    xw = (px.dropna(subset=["sleeper_id"])
-            .drop_duplicates("sleeper_id")
-            .set_index("sleeper_id"))
+    xw = _sleeper_crosswalk(players)
     for lg in leagues:
         meta, rosters, users = lg["league"], lg["rosters"], lg["users"]
         names = {u["user_id"]: (u.get("display_name") or u.get("username") or u["user_id"])
@@ -377,3 +397,109 @@ def build_league_rosters(leagues: list[dict], players: pd.DataFrame,
                     "roster_fetched_at": lg.get("fetched_at"),
                 })
     return pd.DataFrame(rows)
+
+
+def build_sleeper_played(lg: dict, matchups: dict[int, list], players: pd.DataFrame,
+                         season: int, sleeper: dict | None = None,
+                         fetched_at: str | None = None
+                         ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(lineups, results) for the completed weeks in `matchups` ({week: the
+    payload of GET /league/<id>/matchups/<week>}).
+
+    Sleeper freezes a week's payload once it is played, so this is what each
+    team actually started, unlike the pre-game roster snapshots in
+    league_rosters.csv. `starters` lines up with the league's non-bench
+    `roster_positions`, which is where `slot` comes from; Sleeper does not
+    say where a non-starter sat, so his slot is blank. K, DEF and IDP are not
+    in the skill-only crosswalk, so their labels fall back to `sleeper`, the
+    player dictionary, when the caller has it.
+
+    A week whose points are all zero is skipped: that is the shape of a week
+    that has not been played, and writing it would record a pre-game lineup
+    as a played one.
+    """
+    meta, rosters, users = lg["league"], lg["rosters"], lg["users"]
+    lid, lname = meta["league_id"], meta.get("name")
+    names = {u["user_id"]: (u.get("display_name") or u.get("username") or u["user_id"])
+             for u in users}
+    by_rid = {r.get("roster_id"): r for r in rosters}
+
+    def owner_of(rid):
+        oid = by_rid.get(rid, {}).get("owner_id")
+        return str(oid), names.get(oid, str(oid))
+
+    slots = [p for p in (meta.get("roster_positions") or [])
+             if p not in ("BN", "TAXI", "IR")]
+    vs_median = bool((meta.get("settings") or {}).get("league_average_match"))
+    xw = _sleeper_crosswalk(players)
+    fetched_at = fetched_at or lg.get("fetched_at")
+
+    def who(pid):
+        info = xw.loc[pid].to_dict() if pid in xw.index else {}
+        d = (sleeper or {}).get(pid) or {}
+        return (info.get("gsis_id"),
+                info.get("name") or d.get("full_name")
+                or " ".join(x for x in (d.get("first_name"), d.get("last_name")) if x)
+                or None,
+                info.get("position") or d.get("position"),
+                info.get("team") or d.get("team"))
+
+    lineup_rows, result_rows = [], []
+    for week, payload in sorted(matchups.items()):
+        payload = payload or []
+        if not any((m.get("points") or 0) > 0 for m in payload):
+            log.warning("league %s week %s: no points in the matchup payload; "
+                        "not recording it as played", lid, week)
+            continue
+        for m in payload:
+            oid, owner = owner_of(m.get("roster_id"))
+            starters = [norm_id(x) for x in (m.get("starters") or [])]
+            aligned = len(starters) == len(slots)
+            slot_of = {pid: slots[i] for i, pid in enumerate(starters)
+                       if aligned and pid != "0"}
+            started = [pid for pid in starters if pid != "0" and not pd.isna(pid)]
+            start_set = set(started)
+            pts = {norm_id(k): v for k, v in (m.get("players_points") or {}).items()}
+            bench = [pid for pid in (norm_id(x) for x in (m.get("players") or []))
+                     if not pd.isna(pid) and pid not in start_set]
+            bench.sort(key=lambda pid: -(pts.get(pid) or 0.0))
+            for pid in started + bench:
+                gsis, name, position, team = who(pid)
+                v = pts.get(pid)
+                lineup_rows.append({
+                    "season": season, "week": week, "league_id": lid,
+                    "league_name": lname, "roster_id": m.get("roster_id"),
+                    "owner_id": oid, "owner_name": owner,
+                    "sleeper_id": pid, "gsis_id": gsis, "espn_id": pd.NA,
+                    "name": name, "position": position, "team": team,
+                    "started": int(pid in start_set),
+                    "slot": slot_of.get(pid), "points": v,
+                    "fetched_at": fetched_at})
+
+        totals = [float(m["points"]) for m in payload if m.get("points") is not None]
+        median = statistics.median(totals) if totals else None
+        groups: dict = {}
+        for m in payload:
+            if m.get("matchup_id") is not None:
+                groups.setdefault(m["matchup_id"], []).append(m)
+        for mid, pair in groups.items():
+            if len(pair) != 2:
+                log.info("league %s week %s matchup %s has %d rosters; no result "
+                         "row", lid, week, mid, len(pair))
+                continue
+            for me, opp in (pair, pair[::-1]):
+                pf, pa = float(me.get("points") or 0.0), float(opp.get("points") or 0.0)
+                oid, owner = owner_of(me["roster_id"])
+                result_rows.append({
+                    "season": season, "week": week, "league_id": lid,
+                    "league_name": lname, "roster_id": me["roster_id"],
+                    "owner_id": oid, "owner_name": owner, "matchup_id": mid,
+                    "opponent_roster_id": opp["roster_id"],
+                    "opponent_owner_name": owner_of(opp["roster_id"])[1],
+                    "points_for": pf, "points_against": pa,
+                    "won": int(pf > pa), "tie": int(pf == pa),
+                    "median_won": (int(pf > median) if vs_median and median is not None
+                                   else pd.NA),
+                    "fetched_at": fetched_at})
+    return (pd.DataFrame(lineup_rows, columns=PLAYED_COLS),
+            pd.DataFrame(result_rows, columns=RESULT_COLS))
