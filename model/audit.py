@@ -97,33 +97,38 @@ def _stamp(ts) -> pd.Timestamp:
 
 
 def inject_canaries(store: RawStore, t: TargetRow, stamps: Iterable[pd.Timestamp],
-                    week_offset: int = 1) -> RawStore:
+                    week_offset: int = 1, result_lag: pd.Timedelta = pd.Timedelta(0)) -> RawStore:
     """Add synthetic monster rows for `t`, one full set per stamp: a monster game for the player
     (stats, snaps, xFP), a monster the opponent allowed at his position (and the opponent's game
     row that makes it a window member), a fake 'Out' injury report, a wild closing line, wild
-    weather, a phantom draft pick. Everything stamped `known_at = stamp`."""
+    weather, a phantom draft pick. Everything stamped `known_at = stamp`, except the game-result tables
+    (player_games, snap_counts, xfp, game_results), which are stamped `stamp - result_lag`: the builder
+    reads them at kickoff - RESULT_LAG, so a control canary must sit just inside THAT cutoff."""
     tabs = {n: store._tables[n].df for n in store.names()}
     add: dict[str, list[pd.DataFrame]] = {n: [] for n in tabs}
     for i, stamp in enumerate(stamps):
         ts = _stamp(stamp)
+        rts = _stamp(pd.Timestamp(stamp) - result_lag)       # result-table stamp
         gid = f"{t.season}_{t.week + week_offset:02d}_CANARY{i}"
         wk = t.week + week_offset
         add["player_games"].append(_template(
             tabs["player_games"], player_id=t.player_id, season=t.season, week=wk, season_type="REG",
             game_id=gid, team=t.team, opponent_team=t.opponent, position=t.position,
             fantasy_points_ppr=MONSTER, fantasy_points=MONSTER, carries=MONSTER, targets=MONSTER,
-            attempts=MONSTER, target_share=0.99, **{KNOWN_AT: ts}))
+            attempts=MONSTER, target_share=0.99, carry_share=0.99, **{KNOWN_AT: rts}))
         add["player_games"].append(_template(          # a monster scored AGAINST the opponent
             tabs["player_games"], player_id="00-CANARY", season=t.season, week=wk, season_type="REG",
             game_id=gid, team="ZZZ", opponent_team=t.opponent, position=t.position,
-            fantasy_points_ppr=MONSTER, fantasy_points=MONSTER, **{KNOWN_AT: ts}))
+            fantasy_points_ppr=MONSTER, fantasy_points=MONSTER, **{KNOWN_AT: rts}))
         add["snap_counts"].append(_template(tabs["snap_counts"], player_id=t.player_id, season=t.season,
-                                            week=wk, game_id=gid, offense_pct=9.99, **{KNOWN_AT: ts}))
+                                            week=wk, game_id=gid, offense_pct=9.99, **{KNOWN_AT: rts}))
         add["xfp"].append(_template(tabs["xfp"], player_id=t.player_id, season=t.season, week=wk,
-                                    game_id=gid, total_fantasy_points_exp=MONSTER, **{KNOWN_AT: ts}))
+                                    game_id=gid, total_fantasy_points_exp=MONSTER, rush_touchdown=5.0,
+                                    rush_touchdown_exp=0.0, rec_touchdown=5.0, rec_touchdown_exp=0.0,
+                                    pass_touchdown=5.0, pass_touchdown_exp=0.0, **{KNOWN_AT: rts}))
         add["game_results"].append(_template(
             tabs["game_results"], game_id=gid, season=t.season, week=wk, game_type="REG",
-            team=t.opponent, opponent="ZZZ", **{KNOWN_AT: ts}))
+            team=t.opponent, opponent="ZZZ", **{KNOWN_AT: rts}))
         add["injuries"].append(_template(
             tabs["injuries"], player_id=t.player_id, season=t.season, week=t.week, game_type="REG",
             team=t.team, position=t.position, report_status="Out",
@@ -134,6 +139,13 @@ def inject_canaries(store: RawStore, t: TargetRow, stamps: Iterable[pd.Timestamp
                                             week=t.week, temp=-40.0, wind=99.0, **{KNOWN_AT: ts}))
         add["draft_picks"].append(_template(tabs["draft_picks"], player_id=t.player_id, season=t.season,
                                             round=99.0, pick=999.0, **{KNOWN_AT: ts}))
+        add["players_static"].append(_template(tabs["players_static"], player_id=t.player_id,
+                                               birth_date=pd.Timestamp("1970-01-01"), rookie_season=t.season - 30.0,
+                                               height=99.0, weight=999.0, **{KNOWN_AT: ts}))
+        add["combine"].append(_template(tabs["combine"], player_id=t.player_id, season=t.season, forty=9.99,
+                                        **{KNOWN_AT: ts}))
+        add["career_pre_cutoff"].append(_template(tabs["career_pre_cutoff"], player_id=t.player_id, games=9999.0,
+                                                  **{KNOWN_AT: ts}))
     out = store
     for name, frames in add.items():
         if frames:
@@ -152,6 +164,149 @@ def perturb_own_game(store: RawStore, t: TargetRow) -> RawStore:
             df.loc[m, c] = MONSTER
         out = out.with_frame(name, df)
     return out
+
+
+# --------------------------------------------------------------------------- family canaries
+def _append(store: RawStore, name: str, frames: list[pd.DataFrame]) -> RawStore:
+    return store.with_frame(name, pd.concat([store._tables[name].df, *frames], ignore_index=True))
+
+
+def _prev_game_id(store: RawStore, t: TargetRow) -> str:
+    """The target team's most recent completed game before kickoff (raw read: audit code only)."""
+    gr = store._tables["game_results"].df
+    gr = gr[(gr["team"] == t.team) & (gr[KNOWN_AT] < t.kickoff)].sort_values(KNOWN_AT)
+    return gr["game_id"].iloc[-1]
+
+
+def inject_teammate_out(store: RawStore, t: TargetRow, stamp) -> tuple[RawStore, str | None]:
+    """An 'Out' report for one REAL teammate at the target's position who was not already listed Out or
+    Doubtful, for the target's own week, stamped `stamp`. Returns (store, teammate id or None)."""
+    from model.features import spine_for
+    tg = TargetRow("", t.season, t.week, t.team, t.opponent, "", t.game_id, t.kickoff, t.is_home)
+    inj = store._tables["injuries"].df
+    out_now = set(inj.loc[(inj["season"] == t.season) & (inj["week"] == t.week)
+                          & inj["report_status"].isin(["Out", "Doubtful"]), "player_id"])
+    mates = [r for r in spine_for(store, tg) if r.player_id != t.player_id and r.position == t.position
+             and "usage" in r.src and r.player_id not in out_now]
+    if not mates:
+        return store, None
+    mate = mates[0].player_id
+    row = _template(inj, player_id=mate, season=t.season, week=t.week, game_type="REG", team=t.team,
+                    position=t.position, report_status="Out", practice_status="Did Not Participate In Practice",
+                    known_at_source="canary", **{KNOWN_AT: _stamp(stamp)})
+    return _append(store, "injuries", [row]), mate
+
+
+def inject_phantom_teammate(store: RawStore, t: TargetRow, stamp,
+                            result_lag: pd.Timedelta = pd.Timedelta(0)) -> RawStore:
+    """A teammate who does not exist: a monster-usage game in the team's previous game (so he is a
+    'recent' spine candidate; a result row, stamped `stamp - result_lag`) and an 'Out' report for this
+    week (stamped `stamp`)."""
+    ts, gid = _stamp(stamp), _prev_game_id(store, t)
+    rts = _stamp(pd.Timestamp(stamp) - result_lag)
+    pg, inj = store._tables["player_games"].df, store._tables["injuries"].df
+    prev = pg[pg["game_id"] == gid].iloc[0]
+    row = _template(pg, player_id="00-CANARY-TM", season=int(prev["season"]), week=int(prev["week"]),
+                    season_type="REG", game_id=gid, team=t.team, opponent_team=prev["opponent_team"],
+                    position=t.position, carries=MONSTER, targets=MONSTER, fantasy_points_ppr=MONSTER,
+                    **{KNOWN_AT: rts})
+    ij = _template(inj, player_id="00-CANARY-TM", season=t.season, week=t.week, game_type="REG", team=t.team,
+                   position=t.position, report_status="Out", known_at_source="canary", **{KNOWN_AT: ts})
+    return _append(_append(store, "player_games", [row]), "injuries", [ij])
+
+
+def inject_spine_phantoms(store: RawStore, t: TargetRow, stamp,
+                          result_lag: pd.Timedelta = pd.Timedelta(0)) -> RawStore:
+    """Players who do not exist, on the target's team, admitted (if the gate lets them in) by each of
+    the four spine signals: this week's injury report, a depth snapshot, a game in the team's previous
+    game (usage; a result row, stamped `stamp - result_lag`) and, in week 1, a draft pick.
+    Ids: 00-CANARY-{INJ,DEPTH,USE,DRAFT}."""
+    ts, gid = _stamp(stamp), _prev_game_id(store, t)
+    rts = _stamp(pd.Timestamp(stamp) - result_lag)
+    tabs = {n: store._tables[n].df for n in ("player_games", "injuries", "depth_charts", "draft_picks")}
+    prev = tabs["player_games"][tabs["player_games"]["game_id"] == gid].iloc[0]
+    out = _append(store, "injuries", [_template(
+        tabs["injuries"], player_id="00-CANARY-INJ", season=t.season, week=t.week, game_type="REG", team=t.team,
+        position=t.position, report_status="Questionable", known_at_source="canary", **{KNOWN_AT: ts})])
+    out = _append(out, "depth_charts", [_template(
+        tabs["depth_charts"], player_id="00-CANARY-DEPTH", team=t.team, season=t.season, pos=t.position,
+        known_at_source="canary", **{KNOWN_AT: ts})])
+    out = _append(out, "player_games", [_template(
+        tabs["player_games"], player_id="00-CANARY-USE", season=int(prev["season"]), week=int(prev["week"]),
+        season_type=prev["season_type"], game_id=gid, team=t.team, opponent_team=prev["opponent_team"],
+        position=t.position, carries=3.0, fantasy_points_ppr=3.0, **{KNOWN_AT: rts})])
+    if t.week == 1:
+        out = _append(out, "draft_picks", [_template(
+            tabs["draft_picks"], player_id="00-CANARY-DRAFT", season=t.season, team=t.team, position=t.position,
+            round=1.0, pick=1.0, **{KNOWN_AT: ts})])
+    return out
+
+
+def inject_prev_season_game(store: RawStore, t: TargetRow, stamp,
+                            result_lag: pd.Timedelta = pd.Timedelta(0)) -> RawStore:
+    """A monster regular-season game for the target in LAST season, stamped `stamp` (a post-kickoff stamp
+    is physically impossible, which is the point: the gate must still not read it)."""
+    pg = store._tables["player_games"].df
+    row = _template(pg, player_id=t.player_id, season=t.season - 1, week=17, season_type="REG",
+                    game_id=f"{t.season - 1}_17_CANARY", team=t.team, opponent_team=t.opponent, position=t.position,
+                    fantasy_points_ppr=MONSTER, carries=MONSTER, targets=MONSTER, attempts=MONSTER,
+                    **{KNOWN_AT: _stamp(pd.Timestamp(stamp) - result_lag)})
+    return _append(store, "player_games", [row])
+
+
+def drop_own_game(store: RawStore, t: TargetRow) -> RawStore:
+    """Delete every stats/snap/xFP/result row of the target game, as if it had not been recorded (or
+    everyone had been a DNP). The row universe and every feature must not notice: eligibility is not
+    'has a stats row that week'."""
+    out = store
+    for name in ("player_games", "snap_counts", "xfp", "game_results"):
+        df = store._tables[name].df
+        out = out.with_frame(name, df[df["game_id"] != t.game_id].copy())
+    return out
+
+
+# --------------------------------------------------------------------------- multi-season samplers
+def sample_team_games(store: RawStore, plan: dict[int, int], seed: int = 20260929) -> list[TargetRow]:
+    """Deterministic team-games across seasons: `plan` = {season: n}. Always includes week-1 games,
+    a post-bye game and the season's latest completed week; the rest are random regular-season games."""
+    rng = random.Random(seed)
+    out: list[TargetRow] = []
+    for season, n in plan.items():
+        tgs = pit.team_games(store, [season])
+        by = {(g.team, g.week): g for g in tgs}
+        weeks = sorted({g.week for g in tgs})
+        wk1 = [g for g in tgs if g.week == 1]
+        picks = rng.sample(wk1, min(2, len(wk1)))
+        postbye = [g for g in tgs if g.week > 1 and (g.team, g.week - 1) not in by and (g.team, g.week - 2) in by]
+        if postbye:
+            picks.append(rng.choice(postbye))
+        last = [g for g in tgs if g.week == weeks[-1]]
+        picks.append(rng.choice(last))
+        rest = [g for g in tgs if g not in picks]
+        picks += rng.sample(rest, max(0, n - len(picks)))
+        out += picks
+    return out
+
+
+def sample_spine_rows(store: RawStore, team_games: list[TargetRow]) -> list[TargetRow]:
+    from model.features import spine_for
+    return [t for tg in team_games for t in spine_for(store, tg)]
+
+
+def audit_spine_truncation(store: RawStore, team_games: list[TargetRow]) -> list[dict]:
+    """[] when the spine (who is eligible, at which position, admitted by which signals) is identical
+    from a store physically cut to known_at < kickoff."""
+    from model.features import spine_for
+    bad, cut_ts, cut = [], None, None
+    for tg in sorted(team_games, key=lambda x: (x.kickoff, x.team)):
+        if tg.kickoff != cut_ts:
+            cut_ts, cut = tg.kickoff, store.truncated_before(tg.kickoff)
+        a = [(r.player_id, r.position, r.src) for r in spine_for(store, tg)]
+        b = [(r.player_id, r.position, r.src) for r in spine_for(cut, tg)]
+        if a != b:
+            bad.append({"game_id": tg.game_id, "team": tg.team, "only_full": sorted(set(a) - set(b))[:3],
+                        "only_truncated": sorted(set(b) - set(a))[:3]})
+    return bad
 
 
 # --------------------------------------------------------------------------- the leaky join

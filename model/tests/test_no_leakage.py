@@ -90,7 +90,8 @@ class LoaderContracts(unittest.TestCase):
         d = store().describe()
         self.assertEqual(set(d["table"]), {"fixtures", "lines", "weather_obs", "game_results", "player_games",
                                            "snap_counts", "xfp", "injuries", "depth_charts",
-                                           "players_static", "draft_picks", "combine"})
+                                           "players_static", "draft_picks", "combine",
+                                           "career_pre_cutoff"})       # Phase 1: pre-2020 career games
         for name in store().names():
             t = store()._tables[name]
             self.assertTrue(t.known_at_rule, name)
@@ -224,8 +225,10 @@ class FutureRowCanaries(unittest.TestCase):
                 want.add("inj_report_status")
             if base["inj_practice_status"] != "Did Not Participate In Practice":
                 want.add("inj_practice_status")
+            # injury/line/weather/static rows sit 1 s before kickoff; the game-result tables are read at
+            # kickoff - RESULT_LAG (Phase 1), so those canary rows sit 1 s inside THAT cutoff
             live = build_features(audit.inject_canaries(store(), t, [t.kickoff - pd.Timedelta(seconds=1)],
-                                                        week_offset=-1), t)
+                                                        week_offset=-1, result_lag=features.RESULT_LAG), t)
             moved = set(audit.diff_keys(base, live))
             self.assertTrue(want <= moved, f"{t.player_id} wk{t.week}: did not move {sorted(want - moved)}")
             self.assertEqual(live["inj_report_status"], "Out")
@@ -239,7 +242,12 @@ RESULT_TABLES = ("player_games", "snap_counts", "xfp", "game_results")
 
 class ScheduleSanity(unittest.TestCase):
     def test_no_input_is_the_target_game_or_later(self):
-        fx = store()._tables["fixtures"].df.set_index("game_id")["week"]
+        # Phase 0 asserted "every consumed game is from an EARLIER WEEK". Phase 1 also reads teammates'
+        # histories, and a teammate who changed teams between a Thursday game and a Sunday kickoff has a
+        # same-week game that is legitimately finished. The invariant that matters is "the consumed game
+        # had finished before this kickoff", so it is asserted directly (kickoff + 4h, finding 7), and a
+        # same-day earlier slot (1pm game feeding a 4:25pm row) would fail it.
+        kick = store()._tables["fixtures"].df.set_index("game_id")["kickoff"]
         for t in targets():
             trace: list = []
             f = build_features(store(), t, trace=trace)
@@ -248,8 +256,9 @@ class ScheduleSanity(unittest.TestCase):
                     self.assertLess(rec["max_known_at"], t.kickoff, f"{rec['table']} {t.player_id} wk{t.week}")
                 if rec["table"] in RESULT_TABLES:
                     self.assertNotIn(t.game_id, rec["game_ids"], f"{rec['table']} fed the target game itself")
-                    weeks = {fx[g] for g in rec["game_ids"]}
-                    self.assertTrue(all(w < t.week for w in weeks), f"{rec['table']} consumed week >= {t.week}")
+                    for g in rec["game_ids"]:
+                        self.assertLessEqual(kick[g] + pd.Timedelta(hours=4), t.kickoff,
+                                             f"{rec['table']} consumed {g}, which had not finished before {t.player_id} wk{t.week}")
 
             lag_weeks = [f[f"lag{k}_week"] for k in (1, 2, 3) if f[f"lag{k}_week"] is not None]
             self.assertTrue(all(w < t.week for w in lag_weeks), (t.player_id, t.week, lag_weeks))
@@ -266,10 +275,12 @@ class ScheduleSanity(unittest.TestCase):
                 self.assertGreater(f["inj_days_since_report"], 0)
 
     def test_same_week_xfp_is_never_a_feature(self):
-        """ffopportunity xFP for week N is computed from week N: only xfp_l{1,2,3} may exist."""
+        """ffopportunity xFP for week N is computed from week N: only lagged xFP may exist. Phase 1 widened
+        the exact list with two more LAGGED aggregates (season-to-date mean, last season's per-game mean);
+        it is still an exact list, and the own-game-perturbation test proves none reads the target game."""
         t = make_target(store(), "00-0034844", 2024, 10)
         names = [k for k in build_features(store(), t) if "xfp" in k]
-        self.assertEqual(names, ["xfp_l1", "xfp_l2", "xfp_l3"])
+        self.assertEqual(names, ["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg"])
 
     def test_week_one_has_no_history_and_says_so(self):
         for t in [x for x in targets() if x.week == 1]:
