@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 4
 
 redraft · 20 roster slots  
-Generated 2026-09-29 22:33 UTC · baselines: 2026 only · lineup as of 2026-09-29T22:33:33Z
+Generated 2026-09-29 23:10 UTC · baselines: 2026 only · lineup as of 2026-09-29T23:10:56Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -79,7 +79,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Justice Hill | RB | BAL | TEN | 4.8 | 5.5 | 11% | 2 | 14 | High |  |
 | Samaje Perine | RB | CIN | JAX | 4.8 | 5.8 | 18% | 2 | 25 | High |  |
 | Isaiah Davis | RB | NYJ | CHI | 4.5 | 3.4 | 22% | 3 | 18 | Low | 🔥 |
-| Tyler Badie | RB | DEN | SF | 3.7 | 2.9 | 4% | 3 | 10 | Med |  |
+| Najee Harris | RB | NYG | ARI | 3.7 | 6.8 | 22% | 2 | 27 | High |  |
 | Noah Fant | TE | NO | ATL | 9.5 | 3.6 | 9% | 2 | 9 | Med |  |
 | Tyler Higbee | TE | LA | PHI | 9.2 | 5.0 | 12% | 4 | 31 | Low | 🔥 |
 | Michael Mayer | TE | LV | KC | 7.6 | 4.1 | 11% | 2 | 14 | Med |  |

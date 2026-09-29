@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 4
 
 dynasty · 31 roster slots  
-Generated 2026-09-29 22:33 UTC · baselines: 2026 only · lineup as of 2026-09-29T22:33:33Z
+Generated 2026-09-29 23:10 UTC · baselines: 2026 only · lineup as of 2026-09-29T23:10:56Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -94,8 +94,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Ollie Gordon II | RB | MIA | MIN | 5.6 | 11.9 | 44% | 2 | 30 | Med | 🔥 |
 | Raheim Sanders | RB | CLE | PIT | 5.2 | 4.9 | 15% | 2 | 12 | Med | 🔥 |
 | Ty Johnson | RB | BUF | NE | 5.0 | 3.0 | 6% | 2 | 13 | Med |  |
-| Samaje Perine | RB | CIN | JAX | 4.8 | 5.8 | 18% | 2 | 25 | High |  |
 | Justice Hill | RB | BAL | TEN | 4.8 | 5.5 | 11% | 2 | 14 | High |  |
+| Samaje Perine | RB | CIN | JAX | 4.8 | 5.8 | 18% | 2 | 25 | High |  |
 | Isaiah Davis | RB | NYJ | CHI | 4.5 | 3.4 | 22% | 3 | 18 | Low | 🔥 |
 | Michael Mayer | TE | LV | KC | 9.3 | 4.1 | 11% | 2 | 14 | Med |  |
 | Cade Otton | TE | TB | GB | 9.0 | 5.1 | 15% | 1 | 20 | High |  |

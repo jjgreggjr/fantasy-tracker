@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 4
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-29 22:33 UTC · baselines: 2026 only · lineup as of 2026-09-29T22:33:33Z
+Generated 2026-09-29 23:10 UTC · baselines: 2026 only · lineup as of 2026-09-29T23:10:56Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
