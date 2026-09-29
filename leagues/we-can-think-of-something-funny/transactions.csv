@@ -79,5 +79,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,free_agent,drop,4177,Mack Hollins,6
 2026,2,free_agent,add,13405,Kaytron Allen,3
 2026,2,free_agent,drop,12471,DJ Giddens,3
+2026,3,free_agent,add,7600,Pat Freiermuth,8
+2026,3,free_agent,drop,8205,Isiah Pacheco,8
 2026,3,free_agent,add,2306,Jameis Winston,6
 2026,3,free_agent,drop,8800,Malik Davis,6

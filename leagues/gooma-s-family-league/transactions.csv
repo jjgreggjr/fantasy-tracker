@@ -33,6 +33,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,free_agent,add,6130,Devin Singletary,1
 2026,2,free_agent,drop,8800,Malik Davis,1
 2026,2,free_agent,drop,8408,Jordan Mason,1
+2026,3,free_agent,drop,8205,Isiah Pacheco,4
+2026,3,free_agent,drop,12484,Jayden Higgins,4
 2026,3,free_agent,add,NO,,2
 2026,3,free_agent,drop,TB,,2
 2026,3,free_agent,add,9486,Dontayvion Wicks,2

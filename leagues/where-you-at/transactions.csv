@@ -116,4 +116,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,waiver,add,4177,Mack Hollins,10
 2026,2,waiver,drop,11655,Tyrone Tracy Jr.,10
 2026,2,waiver,add,9486,Dontayvion Wicks,10
+2026,3,free_agent,drop,7765,,3
+2026,3,free_agent,drop,8290,,3
+2026,3,waiver,add,6900,,5
+2026,3,waiver,drop,12015,,5
 2026,3,waiver,add,11370,Chris Brooks,6
