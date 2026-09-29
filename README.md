@@ -109,12 +109,19 @@ teams. From this folder:
 
 ```
 python -m ff.ask lineup  where-you-at
+python -m ff.ask played  where-you-at 3
 python -m ff.ask cut     where-you-at 3
 python -m ff.ask options where-you-at "Kyle Pitts"
 python -m ff.ask explain where-you-at "Kyle Pitts"
 python -m ff.ask trade   where-you-at
 python -m ff.ask trade   where-you-at "Alvin Kamara"
 ```
+
+`played` is the one that looks backward: what you actually started in a
+completed week (default: the latest), with each player's points, the team
+total, the opponent and result, and your scoring rank. It reads
+`data/lineups_played.csv` and `data/matchup_results.csv`, never the
+pre-game roster snapshots.
 
 Or just ask in a Cowork session with your Projects folder connected — same
 answers, in plain English.
@@ -144,7 +151,11 @@ reappear on the next run. Depth charts are snapshots, so the pipeline rebuilds
 missing weeks from the snapshot that was current on that week's first game day.
 Two things cannot be recovered because the source only ever reports *now*:
 league rosters and injury status for that week. Those gaps are logged, not
-silently skipped.
+silently skipped. What a team actually *played* is the exception: Sleeper and
+ESPN both keep each completed week's lineup and points, so every run re-fetches
+all completed weeks into `data/lineups_played.csv` and
+`data/matchup_results.csv`, which also backfills a league the tracker has only
+just started following.
 
 **Every run is checked and recorded.** `logs/runs.csv` gets a row per run with
 pass/fail counts and what went wrong. Each report carries a "Data integrity"
@@ -155,7 +166,7 @@ python -m ff.run_weekly --verify-only
 ```
 
 That prints every check — team counts, duplicate rows, week continuity, ID
-match rate, projection coverage, file freshness — plus how long since the last
+match rate, projection coverage, played-lineup coverage, file freshness — plus how long since the last
 recorded run.
 
 ## What lands where
@@ -177,11 +188,21 @@ recorded run.
 | `leagues/<slug>/player_points.csv` | Every player's points in that league's scoring, all weeks |
 | `leagues/<slug>/transactions.csv` | Adds, drops, claims and trades by week |
 | `leagues/<slug>/report.md` | That league's weekly report |
-| `data/league_rosters.csv` | Every rostered player in every league you're in, with owner |
+| `data/league_rosters.csv` | Every rostered player in every league you're in, with owner. Weekly snapshots are read before games: pre-game, not what played |
 | `data/my_roster.csv` | Just your teams |
+| `data/lineups_played.csv` | What each team actually started in each completed week: one row per player per team, with slot, started 0/1 and the platform's points. The only valid source for "who played" |
+| `data/matchup_results.csv` | One row per team per completed week: opponent, points for/against, won/tie (and `median_won` in leagues that score against the league median) |
 | `reports/latest.md` | The newest report; also saved as `reports/2026_wkNN.md` |
 | `raw/` | Cached downloads. Safe to delete; they re-download. |
 | `logs/` | One log per run, including any player that failed to match an ID |
+
+## Tests
+
+```
+python -m unittest discover -s tests -t .
+```
+
+They need no network and touch none of the data files.
 
 ## Reading the report
 

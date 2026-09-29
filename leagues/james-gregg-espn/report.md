@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 4
 
 redraft · 17 roster slots  
-Generated 2026-09-29 15:03 UTC · baselines: 2026 only · lineup as of 2026-09-29T15:03:17Z
+Generated 2026-09-29 17:05 UTC · baselines: 2026 only · lineup as of 2026-09-29T17:05:21Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -92,21 +92,21 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Ollie Gordon II | RB | MIA | 22.7 | 1 | 2 (was 3) | 52% | RB2 on depth chart; up from 3; snap share trending +65%/wk; age 23 |
-| Kaleb Johnson | RB | GB | 23.1 | 1 | 1 (was 3) | 21% | RB1 on depth chart; up from 3; snap share trending +18%/wk; age 23 |
+| Ollie Gordon II | RB | MIA | 22.7 | 1 | 2 (was 2) | 52% | RB2 on depth chart; snap share trending +65%/wk; age 23 |
 | Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 18% | RB3 on depth chart; snap share trending +15%/wk; age 25 |
 | Isaiah Williams | WR | NYJ | 25.7 | 2 | 3 (was 3) | 77% | WR3 on depth chart; snap share trending +14%/wk; team passes #11; age 26 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +14%/wk; team passes #5; age 26 |
 | Adonai Mitchell | WR | NYJ | 24.0 | 2 | 2 (was 2) | 75% | WR2 on depth chart; snap share trending +13%/wk; team passes #11; age 24 |
 | Kayshon Boutte | WR | HOU | 24.4 | 3 | 3 (was 3) | 62% | WR3 on depth chart; snap share trending +12%/wk; team passes #4; age 24 |
-| Jalen Royals | WR | KC | 23.6 | 1 | 4 (was 5) | 11% | WR4 on depth chart; up from 5; snap share trending +10%/wk; team passes #13; age 24 |
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +8%/wk; team passes #9; age 27 |
 | Brashard Smith | RB | KC | 23.5 | 1 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
 | Braelon Allen | RB | NYJ | 22.7 | 2 | 2 (was 2) | 41% | RB2 on depth chart; snap share trending +6%/wk; age 23 |
 | Darnell Washington | TE | PIT | 25.1 | 3 | 2 (was 2) | 64% | TE2 on depth chart; snap share trending +6%/wk; team passes #6; age 25 |
-| Ray Davis | RB | BUF | 26.9 | 2 | 3 (was 2) | 12% | RB3 on depth chart; snap share trending +5%/wk; age 27 |
+| Ray Davis | RB | BUF | 26.9 | 2 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +5%/wk; age 27 |
 | Will Shipley | RB | PHI | 24.1 | 2 | 3 (was 3) | 32% | RB3 on depth chart; age 24 |
 | Raheim Sanders | RB | CLE | 24.3 | 1 | 2 (was 2) | 32% | RB2 on depth chart; age 24 |
+| Keaton Mitchell | RB | LAC | 24.7 | 3 | 2 (was 2) | 31% | RB2 on depth chart; age 25 |
+| LeQuint Allen Jr. | RB | JAX | 22.1 | 1 | 3 (was 3) | 16% | RB3 on depth chart; age 22 |
 
 
 ## Ask me

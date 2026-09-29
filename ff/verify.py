@@ -29,8 +29,19 @@ def _r(sev, check, detail):
     return {"severity": sev, "check": check, "detail": detail}
 
 
-def verify(data_dir: Path, season: int, week: int) -> list[dict]:
-    """Structural checks on everything the pipeline just wrote."""
+MAX_WEEK = 18   # NFL regular season length; Sleeper has no matchups past it
+
+
+def completed_weeks(current_week: int) -> list[int]:
+    """Weeks fully played: strictly below the current NFL week."""
+    return list(range(1, min(current_week, MAX_WEEK + 1)))
+
+
+def verify(data_dir: Path, season: int, week: int,
+           league_ids: list | None = None) -> list[dict]:
+    """Structural checks on everything the pipeline just wrote. `league_ids`
+    are the configured leagues that must have every completed week recorded
+    in lineups_played.csv and matchup_results.csv."""
     out = []
     rd = lambda n: (pd.read_csv(data_dir / n, low_memory=False)
                     if (data_dir / n).exists() else None)
@@ -137,6 +148,23 @@ def verify(data_dir: Path, season: int, week: int) -> list[dict]:
         out.append(_r(OK if prac > 0 else WARN, "status.practice",
                       f"{prac:.0%} have practice reports"
                       + (" (normal before Wednesday)" if prac == 0 else "")))
+
+    # --- played lineups: every completed week, every configured league ------
+    done = completed_weeks(week)
+    if league_ids and done:
+        for name in ("lineups_played.csv", "matchup_results.csv"):
+            f = rd(name)
+            have = set()
+            if f is not None and not f.empty:
+                cur = f[f.season == season]
+                have = set(zip(cur.league_id.astype(str), cur.week.astype(int)))
+            gaps = {str(lid): [w for w in done if (str(lid), w) not in have]
+                    for lid in league_ids}
+            gaps = {k: v for k, v in gaps.items() if v}
+            out.append(_r(OK if not gaps else WARN, f"{name[:-4]}.coverage",
+                          f"weeks {done[0]}-{done[-1]} recorded for every league"
+                          if not gaps else "missing " + ", ".join(
+                              f"league {k} wk{v}" for k, v in gaps.items())))
 
     # --- freshness --------------------------------------------------------
     now = datetime.now(timezone.utc)

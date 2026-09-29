@@ -147,6 +147,13 @@ def sleeper_transactions(league_id: str, week: int) -> list:
         return []
 
 
+def sleeper_matchups(league_id: str, week: int) -> list:
+    """Each roster's starters, players and points for one week. Frozen once the
+    week is played. For the week in progress it is only the current lineup
+    with zero points, so ask for completed weeks only."""
+    return _get(f"league/{league_id}/matchups/{week}")
+
+
 def sleeper_trending(kind: str = "add", hours: int = 24, limit: int = 50) -> list:
     """Most-added or most-dropped players across all of Sleeper."""
     try:

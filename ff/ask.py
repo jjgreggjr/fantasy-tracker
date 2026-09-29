@@ -5,6 +5,7 @@ Each takes a league slug, reads only that league's files plus shared data,
 and returns a small frame plus a sentence. Read-only by design.
 
     python -m ff.ask live where-you-at      # current Sleeper lineup, live
+    python -m ff.ask played where-you-at 3  # what he actually started in week 3
     python -m ff.ask lineup where-you-at
     python -m ff.ask cut where-you-at 3
     python -m ff.ask options where-you-at "Kyle Pitts"
@@ -107,6 +108,97 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     if not close.empty:
         note += " Near-ties on the bench: " + ", ".join(close["name"].head(3).tolist()) + "."
     return start, note, bench
+
+
+# Display order for played lineups: a starter's slot, not his position.
+_SLOT_ORDER = ["QB", "RB", "WR", "TE", "WRRB_FLEX", "REC_FLEX", "WRRB_WRT",
+               "FLEX", "SUPER_FLEX", "OP", "K", "DEF", "DL", "DE", "DT", "LB",
+               "DB", "CB", "S", "IDP_FLEX"]
+
+
+def _data_csv(name: str) -> pd.DataFrame:
+    p = ROOT / "data" / name
+    return (pd.read_csv(p, low_memory=False,
+                        dtype={"sleeper_id": str, "gsis_id": str, "espn_id": str})
+            if p.exists() else pd.DataFrame())
+
+
+def played(slug: str, week: int | None = None):
+    """What his team actually started in a completed week, with the points each
+    player scored, from the platform's own record (data/lineups_played.csv and
+    data/matchup_results.csv). The weekly roster snapshots are read before
+    games and edited until kickoff, so they say nothing about who played."""
+    meta, *_ = _load(slug)
+    lid, name = str(meta["league_id"]), meta.get("name")
+    none = pd.DataFrame()
+    lp, mr = _data_csv("lineups_played.csv"), _data_csv("matchup_results.csv")
+    if not lp.empty:
+        lp = lp[lp.league_id.astype(str) == lid]
+    if lp.empty:
+        return none, (f"No played lineups recorded for {name} yet. They come "
+                      "from the pipeline run; press Run workflow on the "
+                      "Actions tab. The roster snapshots are pre-game and are "
+                      "not a substitute."), none
+    lp = lp[lp.season == lp.season.max()]
+    season = int(lp.season.iloc[0])
+    weeks = sorted(int(w) for w in lp.week.unique())
+    wk = week or weeks[-1]
+    if wk not in weeks:
+        return none, (f"Week {wk} is not recorded for {name} (have weeks "
+                      f"{weeks}). Only completed weeks are stored."), none
+
+    rid = meta.get("my_roster_id")
+    if rid is None:
+        mine = _data_csv("my_roster.csv")
+        mine = mine[mine.league_id.astype(str) == lid] if not mine.empty else mine
+        rid = mine.roster_id.iloc[-1] if not mine.empty else None
+    if rid is None:
+        return none, f"Could not tell which team is yours in {name}.", none
+
+    lp = lp[lp.week == wk]
+    mr = (mr[(mr.league_id.astype(str) == lid) & (mr.season == season)
+             & (mr.week == wk)] if not mr.empty else mr)
+    team = lp[lp.roster_id.astype(int) == int(rid)].copy()
+    if team.empty:
+        return none, f"No lineup recorded for your team in {name} week {wk}.", none
+
+    team["_ord"] = team.slot.map(lambda x: _SLOT_ORDER.index(x)
+                                 if x in _SLOT_ORDER else len(_SLOT_ORDER))
+    start = (team[team.started == 1].sort_values(["_ord", "points"],
+                                                 ascending=[True, False],
+                                                 kind="stable"))
+    bench = team[team.started == 0].sort_values("points", ascending=False)
+    summed = round(float(start.points.sum()), 2)
+
+    totals = (mr.set_index("roster_id").points_for if not mr.empty else
+              lp[lp.started == 1].groupby("roster_id").points.sum())
+    pf = float(totals.get(int(rid), summed))
+    rank = int((totals > pf).sum()) + 1
+    note = f"{name} {season} week {wk}: your started lineup scored {pf:.2f}"
+    row = mr[mr.roster_id.astype(int) == int(rid)] if not mr.empty else mr
+    if not row.empty:
+        r = row.iloc[0]
+        res = "TIE" if r.tie == 1 else ("WIN" if r.won == 1 else "LOSS")
+        note += (f" against {r.opponent_owner_name} ({float(r.points_against):.2f})"
+                 f" — {res}.")
+        if pd.notna(r.median_won):
+            note += f" Versus the league median: {'WIN' if r.median_won == 1 else 'LOSS'}."
+    else:
+        note += "; no matchup result recorded."
+    note += (f" Scoring rank {rank} of {len(totals)} "
+             f"(high {totals.max():.2f}, median {totals.median():.2f}).")
+    if abs(summed - pf) > 0.5:
+        note += f" The started players sum to {summed:.2f}, not {pf:.2f}."
+    slots = len(scoring.starting_slots(meta))
+    if len(start) != slots:
+        note += f" {len(start)} players started for {slots} starting slots."
+
+    start = start[["slot", "name", "position", "team", "points"]]
+    start.attrs["header"] = (
+        f"ACTUAL PLAYED LINEUP - {name} - {season} week {wk} - {meta.get('platform')} "
+        f"points, recorded {team.fetched_at.max()} (data/lineups_played.csv, "
+        "not the pre-game roster snapshot)")
+    return start, note, bench[["name", "position", "team", "points"]]
 
 
 def roster_overage(slug: str) -> tuple[int, dict]:
@@ -296,7 +388,8 @@ def explain(slug: str, player: str) -> tuple[pd.DataFrame, str]:
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Ask the tracker a question.")
     ap.add_argument("recipe",
-                    choices=["live", "lineup", "cut", "options", "explain", "trade"])
+                    choices=["live", "lineup", "played", "cut", "options", "explain",
+                             "trade"])
     ap.add_argument("slug")
     ap.add_argument("arg", nargs="?", default=None)
     a = ap.parse_args(argv)
@@ -339,6 +432,26 @@ def main(argv=None):
             print("\nBench:")
             print(bench[["name", "position", "E_pts", "gap_to_starter", "conf", "flag"]]
                   .head(12).to_string(index=False))
+    elif a.recipe == "played":
+        try:
+            week = int(a.arg) if a.arg else None
+        except ValueError:
+            print(f"`played` takes a week number, not a name (got '{a.arg}'). "
+                  f"Omit it for the latest completed week:\n"
+                  f"    python -m ff.ask played {a.slug}")
+            return
+        start, note, bench = played(a.slug, week)
+        if start.empty:
+            print(note)
+            return
+        print(start.attrs["header"] + "\n")
+        print(start.to_string(index=False))
+        print("\n" + note)
+        if not bench.empty:
+            print("\nBench (did not start), by points:")
+            print(bench.head(12).to_string(index=False))
+            if len(bench) > 12:
+                print(f"  ... and {len(bench) - 12} more")
     elif a.recipe == "cut":
         try:
             n = int(a.arg) if a.arg else None

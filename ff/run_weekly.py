@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+import requests
 
 from . import (analyze, build, espn, leagues, projections, report, score,
                scoring, sources, status as status_mod, verify as verify_mod)
@@ -46,7 +47,8 @@ def _my_rows(lr: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     return lr[lr.owner_name.astype(str).str.lower() == name]
 
 
-def _write_snapshot(path: Path, fetched: pd.DataFrame, keyed: pd.DataFrame) -> None:
+def _write_snapshot(path: Path, fetched: pd.DataFrame, keyed: pd.DataFrame,
+                    keys: list[str] | None = None) -> None:
     """Replace the (season, week, league_id) partition with `keyed`, but only
     when `keyed` is the complete fetch (no rows dropped for lacking a
     sleeper_id). A row with no sleeper_id can't be written at all, so if the
@@ -54,14 +56,98 @@ def _write_snapshot(path: Path, fetched: pd.DataFrame, keyed: pd.DataFrame) -> N
     are still rostered — replacing the partition would delete their earlier
     rows. Fall back to a per-key upsert, which never deletes a row it can't
     re-key."""
+    keys = keys or ["season", "week", "league_id", "sleeper_id"]
     if len(keyed) == len(fetched):
-        build.replace_partition(path, keyed, ["season", "week", "league_id"],
-                                ["season", "week", "league_id", "sleeper_id"])
+        build.replace_partition(path, keyed, ["season", "week", "league_id"], keys)
     else:
         log.info("%s: %d of %d rows missing sleeper_id this run; falling back "
                  "to per-key upsert so unkeyable rows aren't wiped",
                  path.name, len(fetched) - len(keyed), len(fetched))
-        build.upsert(path, keyed, ["season", "week", "league_id", "sleeper_id"])
+        build.upsert(path, keyed, keys)
+
+
+def _write_played(lineups: pd.DataFrame, results: pd.DataFrame,
+                  weeks: list[int]) -> None:
+    """Record fetched league-weeks in lineups_played.csv and matchup_results.csv.
+    `weeks` are the completed weeks, and nothing outside them is written: the
+    in-progress week's payload is only the pre-game lineup. Empty frames are
+    no-ops, so a failed fetch deletes nothing."""
+    lineups = lineups[lineups.week.isin(weeks)]
+    results = results[results.week.isin(weeks)]
+    _write_snapshot(DATA / "lineups_played.csv", lineups,
+                    lineups.dropna(subset=["sleeper_id"]), build.PLAYED_KEYS)
+    build.replace_partition(DATA / "matchup_results.csv", results,
+                            build.PLAYED_PARTITION, build.RESULT_KEYS)
+
+
+def _capture_sleeper_played(leagues_raw: list[dict], weeks: list[int],
+                            players: pd.DataFrame, sleeper_players: dict | None,
+                            season: int, warnings: list) -> None:
+    """Fetch every completed week of every Sleeper league and record what was
+    actually started. Refetching a finished week returns the same data, so
+    every run does all of them; that is also what backfills a new league."""
+    lineups, results = [], []
+    for lg in leagues_raw:
+        lid = lg["league"]["league_id"]
+        name = lg["league"].get("name") or lid
+        got = {}
+        for wk in weeks:
+            try:
+                got[wk] = sources.sleeper_matchups(lid, wk)
+            except Exception as e:
+                log.warning("Sleeper %s week %s matchups unavailable: %s", name, wk, e)
+                if isinstance(e, (requests.ConnectionError, requests.Timeout)):
+                    break                       # unreachable: don't wait out every week
+        try:
+            lu, rs = build.build_sleeper_played(lg, got, players, season,
+                                                sleeper_players)
+        except Exception as e:                  # new data must never stop the rest
+            log.warning("Sleeper %s played lineups failed to parse: %s", name, e)
+            lu = rs = pd.DataFrame(columns=["week"])
+        missed = [w for w in weeks if w not in set(lu.week)]
+        if missed:
+            warnings.append(f"Played lineups for {name} week(s) {missed} were "
+                            "not recorded (see the log above); earlier rows kept.")
+        if not lu.empty:
+            lineups.append(lu)
+            results.append(rs)
+    if lineups:
+        _write_played(pd.concat(lineups, ignore_index=True),
+                      pd.concat(results, ignore_index=True), weeks)
+
+
+def _capture_espn_played(lid: str, meta: dict, weeks: list[int],
+                         players: pd.DataFrame, season: int, warnings: list) -> None:
+    """The ESPN counterpart. Unauthorized, unreachable or unparseable is a
+    warning and no write, never a crash and never a deletion."""
+    lineups, results = [], []
+    try:
+        for wk in weeks:
+            data = espn.fetch_week(season, lid, wk, ROOT)
+            if not data:
+                break                           # auth/outage hits every week alike
+            lu, rs = espn.parse_played(data, players, season, wk, meta)
+            if lu.empty:
+                log.warning("ESPN league %s week %s: no roster entries in the "
+                            "payload; not recording it", lid, wk)
+                continue
+            lineups.append(lu)
+            results.append(rs)
+    except Exception as e:
+        log.warning("ESPN league %s played lineups failed to parse: %s", lid, e)
+    got = {int(f.week.iloc[0]) for f in lineups}
+    missed = [w for w in weeks if w not in got]
+    if missed:
+        warnings.append(f"Played lineups for ESPN league {lid} week(s) {missed} "
+                        "were not recorded (see the log above); earlier rows kept.")
+    if lineups:
+        _write_played(pd.concat(lineups, ignore_index=True),
+                      pd.concat(results, ignore_index=True), weeks)
+
+
+def _configured_league_ids(cfg: dict) -> list[str]:
+    return [str(e["league_id"]) for key in ("leagues", "espn_leagues")
+            for e in (cfg.get(key) or []) if e.get("league_id")]
 
 
 def load_config() -> dict:
@@ -129,7 +215,7 @@ def main(argv=None) -> int:
     if args.verify_only:
         season = args.season or cfg.get("season") or now.year
         week = args.week or 1
-        res = verify_mod.verify(DATA, season, week)
+        res = verify_mod.verify(DATA, season, week, _configured_league_ids(cfg))
         for r in res:
             print(f"  [{r['severity']:4s}] {r['check']:28s} {r['detail']}")
         gap = verify_mod.last_run_gap(LOGS)
@@ -238,6 +324,14 @@ def main(argv=None) -> int:
             build.replace_partition(DATA / "my_roster.csv", mine,
                                     ["season", "week", "league_id"],
                                     ["season", "week", "league_id", "sleeper_id"])
+
+    # ---- played lineups -------------------------------------------------
+    # The roster snapshots above are read before games and edited right up to
+    # kickoff, so only these are what a team actually started.
+    weeks_done = verify_mod.completed_weeks(preview_week)
+    if leagues_raw and weeks_done:
+        _capture_sleeper_played(leagues_raw, weeks_done, players, sleeper_players,
+                                season, warnings)
 
     # ---- analysis -------------------------------------------------------
     trailing = cfg["startsit"]["trailing_weeks"]
@@ -351,6 +445,8 @@ def main(argv=None) -> int:
         log.info("ESPN %s: %d teams, %d rostered, my team %s, slots %s",
                  meta["name"], len(meta.get("owners", {})), len(rosters), my_tid,
                  meta.get("roster_positions"))
+        if weeks_done:
+            _capture_espn_played(lid, meta, weeks_done, players, season, warnings)
         ctx = leagues.write_league(ROOT, meta, mine, rosters, players, pw_hist,
                                    base, proj, ranks, sched, depth,
                                    preview_week, season, trending, cfg)
@@ -400,7 +496,8 @@ def main(argv=None) -> int:
            "freshness": freshness, "warnings": warnings,
            "leagues": league_ctx, "dvp": ranks, "trending": trending}
 
-    checks = verify_mod.verify(DATA, season, preview_week)
+    checks = verify_mod.verify(DATA, season, preview_week,
+                               _configured_league_ids(cfg))
     for lid in espn_missing:
         checks.append(verify_mod._r(verify_mod.WARN, "espn.league",
                                     f"league {lid} not loaded this run — secrets "

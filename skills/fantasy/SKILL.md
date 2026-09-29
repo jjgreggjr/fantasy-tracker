@@ -77,6 +77,26 @@ Two things are easy to conflate — always say which you mean:
   `E_pts` regardless of what he set.
 Lead with the difference between the two; that difference *is* the advice.
 
+## What actually started (played weeks)
+
+`data/lineups_played.csv` and `data/matchup_results.csv` are the **only** valid
+source for "what actually started" in a completed week and for season results
+(W-L, points for/against, scoring rank). The pipeline records both from
+Sleeper's and ESPN's own per-week history for every completed week, so never
+reconstruct a played lineup from anything else.
+
+`data/league_rosters.csv` and `data/my_roster.csv` keep a weekly roster
+snapshot, but it is read **before games** and James edits lineups until
+kickoff. It is pre-game: never present it as a played lineup, and never say
+"he started X in week N" from its `is_starter`. That mistake once accused
+James of starting an Out player twice.
+
+Read it with `python -m ff.ask played <slug> [week]` (default: the latest
+completed week). It prints his actual started lineup with the points each
+player scored, the team total, the opponent and result, and his scoring rank
+that week. If a week is not recorded, say so instead of falling back to the
+snapshots.
+
 ## How to answer
 
 Get the repo, then read from it. It is **public**, so this is all it takes:
@@ -96,6 +116,7 @@ Then read:
 - `leagues/<slug>/available.csv` — that league's waiver wire
 - `leagues/<slug>/all_rosters.csv` — everyone's team (trades)
 - `data/status.csv` — availability and blocker chains
+- `data/lineups_played.csv`, `data/matchup_results.csv` — what each team actually started, and the results, for completed weeks
 - `logs/runs.csv` — one row per run; check the newest row's `status` first
 - `leagues/<slug>/league.json` also carries `roster_fetched_at` — when the
   committed lineup was read from Sleeper
