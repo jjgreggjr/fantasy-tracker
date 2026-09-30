@@ -8,3 +8,6 @@ __pycache__/
 # model/ local artifacts (never commit pulled datasets)
 model/cache/
 model/.venv/
+
+# half-written files from an interrupted step (atomic writes go through <name>.tmp)
+*.tmp

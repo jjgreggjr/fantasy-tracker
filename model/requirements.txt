@@ -1,5 +1,5 @@
 # Model dependencies (Python 3.12). Kept apart from the pipeline's requirements.txt;
-# nothing in model/ runs in the weekly workflow until Phase 3.
+# since Phase 3 the weekly workflow installs it (pipeline.yml) and runs `python -m model.serve`.
 #
 #   python3.12 -m venv model/.venv
 #   model/.venv/bin/pip install -r model/requirements.txt
@@ -18,8 +18,10 @@ requests>=2.28
 # sandbox proxy). model/point_in_time.py reads the nflverse release assets directly.
 
 # Phase 2: the three boosted-tree libraries and SHAP (scikit-learn and scipy arrive with shap).
-# Versions used for the reported results: lightgbm 4.7.0, xgboost 3.4.1, catboost 1.2.10, shap 0.52.0.
-lightgbm>=4.5,<5
-xgboost>=3.0,<4
-catboost>=1.2,<2
+# Phase 3 pins the three libraries EXACTLY (the versions every reported number was produced with): the weekly run fits them on a
+# fresh runner and a range would let a new release move a frozen prediction, and the test that a serve reproduces the backtest
+# bit for bit is only meaningful between identical versions. shap is used by the reports only, so it keeps its range.
+lightgbm==4.7.0
+xgboost==3.4.1
+catboost==1.2.10
 shap>=0.48,<1
