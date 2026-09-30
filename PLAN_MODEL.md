@@ -491,6 +491,8 @@ and ADP columns already carry the rookie prior.
 
 ### Phase 3 recommendation
 
+(Updated by Phase 2.5: see the recommendation at the end of "Phase 2.5 findings" for the model design that ships; the feature set below stands unchanged.)
+
 * **Model:** LightGBM, squared-error point estimate (the conditional mean) plus p10/p50/p90 quantile models, one model with position as
   a feature, trained on `y_played` rows, parameters as in `tuned_params.json`.
 * **Features (71 columns):** the registered families minus `wx_*`, `season`, `college_*`, the 39 low-attribution columns
@@ -550,4 +552,92 @@ experiment deltas with the same bootstrap intervals as Phase 2.
 
 ## Phase 2.5 findings
 
-(appended by the Phase 2.5 session)
+Done 2026-09-30 (branch `claude/eager-goldberg-zmevs9`). Shipped: three play-by-play raw tables and four opt-in feature families through the gate
+(`model/point_in_time.py`, `model/features.py`), component labels (`model/labels.py`), `model/p25run.py` (cached walk-forwards, tree counts,
+head-to-head tables), `model/volume.py` (two-stage), `model/components.py` (component models, scoring composition), `model/ensemble.py` (ensemble,
+quantile recalibration), `model/phase25.py` (runner), `model/report_phase25.py`, `model/reports/phase25_experiments.md` (every table below and more;
+committed), `model/tests/test_pbp_families.py` and `test_phase25_models.py`. Run: `python -m model.build_features`, then `python -m model.phase25
+reproduce|exp1|exp2|exp3|exp4|all`, then `python -m model.report_phase25` (about 90 minutes of compute in all, 4 cores, matrix rebuild 12 minutes). `ff/`,
+`pipeline.yml` and the pipeline's 20 tests are untouched and pass; the model suite is 172 tests (108 + 64 new).
+
+**Baseline held.** The matrix was rebuilt with 85 new columns; the 142 Phase 2 columns are bit-identical (same dtypes, same values) and the Phase 2 primary recomputed
+from it equals the Phase 2 predictions exactly (max |difference| 0.0 for LightGBM, XGBoost and CatBoost 2025 and LightGBM 2024); the tree-count protocol reproduces the
+primary's 148. New families are opt-in for the models (`train.OPT_IN_FAMILIES`), so the primary keeps its Phase 2 inputs. Every variant is scored on the same 6,139 (2025) and
+6,025 (2024) head-to-head rows with the Phase 2 week-blocked bootstrap; a variant with new inputs gets its own tree count by early stopping on 2024 after training on 2021-2023
+(the protocol that produced the primary's), so 2024 carries a mild in-sample edge for every variant equally.
+
+### Verdicts against the adoption rule
+
+dRMSE is variant minus primary (negative = better), 95% week-blocked interval. The rule: beat the primary on 2025 AND the same sign on 2024 (component models: a tie within
+noise also ships).
+
+| # | Experiment | 2025 dRMSE | 2024 dRMSE | Verdict |
+|---|---|---|---|---|
+| 1 | play-by-play, servable set (`pbp`: usage + team pace) | -0.008 [-0.024, +0.007] | +0.004 [-0.009, +0.016] | **does not ship** (sign flips) |
+| 1 | usage alone / team alone / participation alone | -0.008 / +0.000 / -0.001 | +0.009 / +0.009 / +0.001 | does not ship |
+| 1 | + participation (`pbp_part`, backtest-only) | -0.010 [-0.028, +0.006] | -0.005 [-0.017, +0.006] | passes on direction only, inside the noise; **not adopted**: feed not published in-season |
+| 2 | two-stage (stage two alone) | +0.067 [+0.031, +0.101] | +0.088 [+0.047, +0.127] | **does not ship** (worse both years) |
+| 2 | flat + stage-one predictions / + efficiency priors / both | -0.003 / -0.004 / -0.010 | +0.020 / +0.006 / +0.009 | does not ship |
+| 3 | component models composed to PPR | -0.008 [-0.029, +0.013] | +0.006 [-0.020, +0.034] | **ships (tie within noise)** |
+| 3 | components + efficiency family | +0.006 [-0.022, +0.034] | +0.003 [-0.030, +0.036] | ties too; not preferred (18 extra features, no gain) |
+| 4a | average of LightGBM / XGBoost / CatBoost | -0.011 [-0.020, -0.003] | -0.004 [-0.012, +0.005] | **ships** (2025 significant, 2024 same direction) |
+| 4a | weights fit on the previous year | -0.009 [-0.015, -0.004] | -0.002 [-0.013, +0.008] | passes, but no better than equal weights: use the plain average |
+| 4b | quantile recalibration from trailing residuals (`underage_only`) | QB coverage .744 to .789 | QB coverage .751 to .794 | **ships, one flagged miss**: RB untouched, WR/TE widened +0.5% / +1.2% (2025), +2.2% / +1.4% (2024) where their own trailing coverage was below 77%; my +2% cap is missed by 0.2 point (2024 WR); `qb_only` meets it exactly |
+
+### 1. Play-by-play micro-signals: nothing to add
+
+Sources (probed 2026-09-30): **play-by-play** covers 2020 through 2026 week 3, every regular-season game, refreshed in-season (2026: Tue 15:44Z). **Participation** covers
+100% of regular-season scrimmage plays 2020-2025 with GSIS ids on the field, but has no per-player route (`route` is one value per play, blank on non-targets, and its vocabulary
+changed in 2023), so route participation proper cannot be built for 2021-2025; pass-play snap share is the proxy. **It is published after the season** (2025 file last modified
+2026-02-10; no 2026 file exists yet), so its columns are 100% NA for 2026 and cannot be served in-season: a declared backtest proxy, like weather. **FTN charting** covers 2022-2025
+(99.7-100% of plays) but 2021 is a 404 and it has no player column: excluded per the plan, not built. NGS receiving is a 404 every year.
+
+The new tables reproduce nflverse's own player stats (targets 100%, carries 99.98% or better, team target totals give `target_share` exactly), and every red-zone / inside-10 /
+air-yards value is recomputed from the raw parquet with plain pandas in the tests. Coverage on played rows, share non-null: `pbp_usage` .87 (2021-24) / .85 (2025) / .60 (2026, three
+weeks), `pbp_team` .96 / .95 / .74, `pbp_part` .92 / .90 / .09 (2026 has no feed), `eff` .45-.47 (null by design for opportunities a player never had). The flat model does not use any of it
+better: the candidate `pbp` moves RMSE by -0.008 then +0.004, and play-by-play usage turns out to be a **substitute for the lagged xFP columns, not an addition** (drop the xFP lags:
++0.010 in 2024; drop them and add `pbp`: -0.000): ffopportunity's expected points are built from the same air yards and field position. Nothing from this experiment enters the feature set.
+
+### 2. Two-stage: volume is the ceiling, and it is only modestly predictable
+
+Stage one (LightGBM on the primary features, honest walk-forward predictions so stage two never trains on a fit that saw its own week) beats the trailing-3 mean of the same quantity by
+5.9% (2025) / 5.8% (2024) on target MAE (RB/WR/TE), 5.4% / 6.1% on carries (RB and QB) and 9.2% / 9.6% on quarterback attempts, every interval excluding zero. In absolute terms targets
+are off by 1.44 a game on a mean of 2.77 (R-squared .57 against .47 for the trailing mean), RB carries by 3.10 on 7.5, quarterback attempts by 7.5 on 26.6. That is worth a few percent of MAE,
+not the 1.6-point RMSE gap to the same-week xFP oracle, which sees the volume the player actually got: nothing knowable before kickoff that was tried here recovers it (game script and in-game
+injuries are the likely sources; that is inference, not measured). The end-to-end two-stage model is worse in
+both years and worse than its matched control (trained on the same 2022+ window: +0.048 / +0.077); stage-one predictions as extra flat inputs do not replicate (2024: +0.020, significantly worse);
+they do not replace lagged xFP; the efficiency priors alone do nothing.
+
+### 3. Component models: a tie, and the league-scoring path works
+
+Fourteen LightGBM models (targets, receptions, receiving yards and TDs, carries, rushing yards and TDs, pass attempts, completions, yards, TDs, interceptions, fumbles lost, a two-point /
+special-teams bucket) compose to PPR exactly as nflverse defines it from actual components (max difference 7.1e-15 over all 33,423 played rows), and the composed prediction ties the flat model
+(2025 -0.008 [-0.029, +0.013], 2024 +0.006 [-0.020, +0.034]; Spearman +0.008 then -0.000), by position too (QB -0.099 significant in 2025, +0.017 in 2024). The alternate scoring composes: the dynasty
+league's TE premium (`bonus_rec_te` 0.5 on full PPR) scored against actual components is as good as or better than the naive route (PPR + 0.5 x recent catches) on tight ends in both years
+(-0.017 / -0.013, spanning zero) and ignoring the premium costs +0.155 / +0.214 on tight ends (significant). Predictable per component (skill against a constant per position, 2025): targets .54,
+receptions .47, carries .60, yards .40-.42, but receiving and rushing TDs .10 / .11, passing TDs .21, interceptions .04, fumbles ~0: touchdowns carry six points and almost no signal, the other half
+of the ceiling. What linear composition cannot do: threshold bonuses (this league's 100/200-yard and 40/50-yard TD bonuses; its interception is -1, which composes trivially).
+
+### 4. Cheap wins
+
+**Ensemble.** The plain average of the three libraries is -0.011 [-0.020, -0.003] in 2025 (Spearman +0.004, pick accuracy +0.001, both significant) and -0.004 [-0.012, +0.005] in 2024; fitted weights
+(2024 weights on 2025: .55 / .17 / .28; 2023 weights on 2024: .21 / .42 / .37) move between years and add nothing. A 0.2% RMSE gain, at 11 seconds of weekly refit instead of 1.
+**Recalibration.** QB p10-p90 coverage .744 to .789 (2025) and .751 to .794 (2024) with 95% intervals that now contain .80, at +12% QB band width and an interval score that is flat (2025) or better
+(2024); RB is untouched. The QB miss flipped sides between years (2025: below p10 14.2%, above p90 11.3%; 2024: 10.6% / 14.3%), so the width is the robust part and the tails are partly noise.
+**Post-hoc lead (not in the adoption table, thought of after the results):** averaging the flat three-library average with the component composition gives -0.020 [-0.033, -0.007] in 2025 and -0.009
+[-0.025, +0.006] in 2024, Spearman +0.008 / +0.002: the two designs make different errors. Worth carrying into the 2026 side-by-side; not adopted on this evidence.
+
+### Phase 3 recommendation (updated; supersedes the one above where they differ)
+
+* **Model design.** Two layers on the same inputs. (1) **PPR point estimate: the plain average of flat LightGBM, XGBoost and CatBoost** (parameters as in `tuned_params.json`, squared error, one model with
+  position as a feature, trained on `y_played` rows, refit every week, about 11 seconds). (2) **A scoring layer of the 14 LightGBM component models** (primary features, own early-stopped tree counts) **composed under
+  each league's linear scoring**: it ties the flat model on PPR, so it costs nothing in accuracy and it is what answers TE premium, half-PPR and any other linear scoring, which the flat model cannot. Run both in
+  the 2026 side-by-side, and test the 50/50 average of the two for PPR (the post-hoc lead). Floors and ceilings: the flat LightGBM p10 / p50 / p90 models plus **`underage_only` recalibration** from trailing
+  residuals (QB coverage to about 79%; use `qb_only` if RB/WR/TE bands must not move at all); means do not compose into quantiles, so a non-PPR league needs its own quantile fit on that scoring's actual points (a
+  Phase 3 sub-task, one extra target per scoring). Threshold bonuses (100-yard, long-TD) need a distributional model and are out of scope; this league's interception at -1 is a one-line weight.
+* **Features: exactly the Phase 2 set (71 columns), no additions.** Play-by-play usage, team pace, participation, the efficiency priors and stage-one volume all failed to replicate; the ADP blocker (no preseason
+  snapshot) and the weather / `season` / college exclusions stand. The play-by-play and participation tables and the opt-in families stay in the repo, tested and off: the weekly pipeline does not need to fetch
+  play-by-play at all. Load-bearing inputs to protect are unchanged: season-to-date xFP and points, snap share, the prior-season anchor, the Vegas implied total, teammate-out volume.
+* **Expectation.** Accuracy at the Phase 2 level: pooled RMSE about 5.70 (from 5.71), Spearman about .66, pick accuracy about .775; per-position QB is still the weak spot (Spearman .48). Volume and touchdowns are at
+  their ceiling for pre-game information, so the next gains are not in richer usage features; look at availability and news (injury timing, inactive lists), which the model treats as a separate layer.
+* **Cadence and judging** are as in Phase 2 (weekly refit, preseason retune, Tuesday feature refresh); score the average, the components and Sleeper on the same 2026 weeks with `backtest.score` before any recipe prefers them.

@@ -306,8 +306,8 @@ is that 2021 has none, so stage two trains on 2022+ and `flat_2022` is its match
   {-a25.loc['QB', 'dMAE'] / a25.loc['QB', 'MAE_trail3']:.1%} / {-a24.loc['QB', 'dMAE'] / a24.loc['QB', 'MAE_trail3']:.1%} on quarterback attempts; every interval excludes zero. In absolute terms a receiver's targets are still off by
   {q25.loc['relevant', 'MAE_model']:.2f} a game on a mean of {q25.loc['relevant', 'y_mean']:.2f} (R-squared {q25.loc['relevant', 'R2_model']:.2f} against {q25.loc['relevant', 'R2_trail3']:.2f} for the trailing mean), a
   back's carries by {c25.loc['RB', 'MAE_model']:.2f} on {c25.loc['RB', 'y_mean']:.2f}, a quarterback's attempts by {a25.loc['QB', 'MAE_model']:.1f} on {a25.loc['QB', 'y_mean']:.1f}. Better volume estimates are worth a few percent of MAE,
-  not the {comp[2025]['scores'].loc['primary', 'RMSE'] - comp[2025]['scores'].loc['xfp_oracle', 'RMSE']:.1f}-point RMSE gap to the same-week xFP oracle, which sees the volume the player actually got: the gap is week-to-week opportunity (game script,
-  in-game injuries, a coordinator's whim), not model capacity or feature richness.
+  not the {comp[2025]['scores'].loc['primary', 'RMSE'] - comp[2025]['scores'].loc['xfp_oracle', 'RMSE']:.1f}-point RMSE gap to the same-week xFP oracle, which sees the volume the player actually got: nothing knowable before kickoff that these experiments tried recovers it. Game script,
+  in-game injuries and coaching choices are the likely sources; that part is inference, not something measured here.
 * **The end-to-end two-stage model loses.** Stage two alone moves RMSE by {d(comp[2025], 'two_stage')} in 2025 and {d(comp[2024], 'two_stage')} in 2024, worse in both years, and
   worse than its matched control that trains on the same window ({d(control[2025], 'two_stage')} / {d(control[2024], 'two_stage')}). Stage-one error compounds, and the structure also drops the
   role, Vegas, injury and prior-season columns the flat model uses (`flat_plus_s1_eff`, which keeps them, does not beat the primary either).
