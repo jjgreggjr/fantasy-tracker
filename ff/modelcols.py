@@ -68,7 +68,8 @@ def week_of(df: pd.DataFrame, mp: pd.DataFrame) -> tuple[int, int] | None:
     if mp is None or mp.empty:
         return None
     if {"season", "week"} <= set(df.columns) and df[["season", "week"]].dropna().shape[0]:
-        s, w = df[["season", "week"]].dropna().mode().iloc[0]
+        pairs = df[["season", "week"]].dropna().astype(int).value_counts()       # the most common PAIR: season and week modes taken
+        s, w = sorted(pairs[pairs == pairs.max()].index)[-1]                      # separately can name a pair no row holds; a tie takes the later
         return int(s), int(w)
     m = mp[["season", "week"]].dropna().astype(int).drop_duplicates().sort_values(["season", "week"])
     return (int(m.iloc[-1]["season"]), int(m.iloc[-1]["week"])) if len(m) else None

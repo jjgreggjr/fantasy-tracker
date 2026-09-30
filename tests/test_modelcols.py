@@ -4,8 +4,10 @@
 
 No network, no ML libraries, none of the committed data files are touched (everything runs in a temp copy). What is proven:
 
-  * the league columns are the composed points and the PPR band moved by the league's scoring difference, NaN where the
-    model has no row
+  * the league columns are that league's composed points and its own floor / ceiling: a non-PPR league uses its own quantile
+    models' columns (`p10_<slug>`, `p90_<slug>`), a PPR league the PPR band, and a non-PPR league with no band of its own gets
+    NaN, never a shifted guess; NaN everywhere the model has no row
+  * the frame's week is its most common (season, week) PAIR, so a season boundary cannot name a week no row holds
   * with no data/model_pts.csv, or no row for the frame's week, the recipes print EXACTLY what they printed before
   * with it, `lineup` picks the same players in the same slots (E_pts still decides everything) and the printed header says
     once that E_pts stays authoritative
@@ -69,6 +71,31 @@ class LeagueColumns(unittest.TestCase):
         m.loc[0, "p10"] = -0.01
         c = modelcols.league_columns(m, "gooma-s-family-league").set_index("gsis_id")
         self.assertEqual(repr(float(c.loc["00-A", "p10"])), "0.0")
+
+
+class WeekOf(unittest.TestCase):
+    def test_the_most_common_season_week_pair_not_the_two_modes_taken_apart(self):
+        """(2025, 18) x3, (2026, 1) x2, (2026, 2) x2: the season mode is 2026 and the week mode is 18, a pair no row holds."""
+        df = pd.DataFrame({"season": [2025] * 3 + [2026] * 4, "week": [18] * 3 + [1] * 2 + [2] * 2})
+        mp = pd.DataFrame({"season": [2025, 2026], "week": [18, 1]})
+        self.assertEqual(modelcols.week_of(df, mp), (2025, 18))
+
+    def test_a_tie_takes_the_later_week_and_a_frame_without_weeks_takes_the_newest_in_the_file(self):
+        df = pd.DataFrame({"season": [2025, 2026], "week": [18, 1]})
+        self.assertEqual(modelcols.week_of(df, pd.DataFrame({"season": [2025], "week": [18]})), (2026, 1))
+        mp = pd.DataFrame({"season": [2025, 2026, 2026], "week": [18, 1, 3]})
+        self.assertEqual(modelcols.week_of(df[["season"]], mp), (2026, 3))
+        self.assertIsNone(modelcols.week_of(df, pd.DataFrame()))
+
+    def test_attach_at_a_season_boundary_joins_the_right_week(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "data").mkdir()
+            pd.concat([model_rows(week=18).assign(season=2025, **{f"pts_{SLUG}": 1.0}), model_rows(week=1).assign(**{f"pts_{SLUG}": 2.0})]) \
+                .to_csv(root / "data" / "model_pts.csv", index=False)
+            frame = pd.DataFrame({"gsis_id": ["00-A"] * 3 + ["00-B"] * 4, "season": [2025] * 3 + [2026] * 4, "week": [18] * 3 + [1] * 2 + [2] * 2})
+            out = modelcols.attach(frame, SLUG, root)
+            self.assertEqual(set(out["E_pts_model"].dropna()), {1.0})           # (2025, 18), the pair most rows hold
 
 
 class Attach(unittest.TestCase):
