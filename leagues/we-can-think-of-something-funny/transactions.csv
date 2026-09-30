@@ -79,7 +79,21 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,free_agent,drop,4177,Mack Hollins,6
 2026,2,free_agent,add,13405,Kaytron Allen,3
 2026,2,free_agent,drop,12471,DJ Giddens,3
+2026,3,waiver,add,2505,Darren Waller,6
+2026,3,waiver,drop,8210,Chig Okonkwo,6
+2026,3,waiver,add,BAL,,6
+2026,3,waiver,drop,KC,,6
+2026,3,waiver,add,2307,Marcus Mariota,6
+2026,3,waiver,drop,2306,Jameis Winston,6
+2026,3,waiver,add,12495,Ollie Gordon II,2
+2026,3,waiver,drop,12483,Jack Bech,2
 2026,3,free_agent,add,7600,Pat Freiermuth,8
 2026,3,free_agent,drop,8205,Isiah Pacheco,8
 2026,3,free_agent,add,2306,Jameis Winston,6
 2026,3,free_agent,drop,8800,Malik Davis,6
+2026,4,free_agent,add,13324,,8
+2026,4,free_agent,drop,7600,Pat Freiermuth,8
+2026,4,free_agent,add,PIT,,4
+2026,4,free_agent,drop,5854,Drew Lock,4
+2026,4,free_agent,add,12718,Konata Mumpfield,2
+2026,4,free_agent,drop,12467,Jordan James,2
