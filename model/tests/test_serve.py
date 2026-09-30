@@ -221,10 +221,10 @@ class Availability(unittest.TestCase):
         ids = ["ok", "sl_out", "nfl_out", "ir", "pup", "sus", "cut", "res", "exe", "ret", "doubtful", "quest", "unknown", "sl_quest"]
         frame = pd.DataFrame({"player_id": ids, "inj_report_status": [None, None, "Out", None, None, None, None, None, None, None,
                                                                       "Doubtful", "Questionable", None, None]})
+        frame["inj_weeks_since_report"] = [None, None, 0, None, None, None, None, None, None, None, 0, 0, None, None]     # this week's reports
         players = pd.DataFrame({"gsis_id": ids[:-2] + ["sl_quest"],
                                 "injury_status": [None, "Out", None, "IR", "PUP", "Sus", None, None, None, None, None, None, "Questionable"],
                                 "nfl_status": ["ACT", "ACT", "ACT", "RES", "RES", "ACT", "CUT", "RES", "EXE", "RET", "ACT", "ACT", "ACT"]})
-        players = players[players.gsis_id != "unknown"]                       # 'unknown' is not in the table at all
         withheld, why = SV.availability(frame, players)
         got = dict(zip(ids, withheld))
         self.assertEqual([i for i, w in got.items() if w],
@@ -234,15 +234,29 @@ class Availability(unittest.TestCase):
         self.assertEqual(why[frame.player_id == "cut"].iloc[0], "status layer: nfl_status CUT")
         self.assertFalse(any(got[i] for i in ("ok", "doubtful", "quest", "unknown", "sl_quest")))
 
+    def test_last_weeks_report_does_not_withhold_and_is_not_shown_as_this_weeks(self):
+        """On a Wednesday the newest report this season can be last week's final 'Out'. Sleeper's live status speaks for this week."""
+        frame = pd.DataFrame({"player_id": ["back", "stale_out", "fresh_out", "none"],
+                              "inj_report_status": ["Out", "Doubtful", "Out", None],
+                              "inj_weeks_since_report": [1, 2, 0, None]})
+        players = pd.DataFrame({"gsis_id": ["back"], "injury_status": ["Questionable"], "nfl_status": ["ACT"]})
+        withheld, _ = SV.availability(frame, players)
+        self.assertEqual(withheld.tolist(), [False, False, True, False])
+        self.assertEqual(SV.current_report(frame).tolist(), [None, None, "Out", None])
+        # ...but last week's Out does not hide a player the status layer still calls Out
+        players = pd.DataFrame({"gsis_id": ["back"], "injury_status": ["Out"], "nfl_status": ["ACT"]})
+        self.assertTrue(SV.availability(frame, players)[0].iloc[0])
+
     def test_every_state_the_pipelines_status_layer_calls_out_is_withheld(self):
         for state in ff_status.OUT_STATES:
-            frame = pd.DataFrame({"player_id": ["p"], "inj_report_status": [None]})
+            frame = pd.DataFrame({"player_id": ["p"], "inj_report_status": [None], "inj_weeks_since_report": [None]})
             players = pd.DataFrame({"gsis_id": ["p"], "injury_status": [state], "nfl_status": ["ACT"]})
             self.assertTrue(SV.availability(frame, players)[0].all(), state)
 
-    def test_without_a_players_table_only_the_nflverse_report_withholds(self):
-        frame = pd.DataFrame({"player_id": ["a", "b"], "inj_report_status": ["Out", "Questionable"]})
-        self.assertEqual(SV.availability(frame, None)[0].tolist(), [True, False])
+    def test_without_a_players_table_only_this_weeks_nflverse_report_withholds(self):
+        frame = pd.DataFrame({"player_id": ["a", "b", "c"], "inj_report_status": ["Out", "Questionable", "Out"],
+                              "inj_weeks_since_report": [0, 0, 1]})
+        self.assertEqual(SV.availability(frame, None)[0].tolist(), [True, False, False])
 
 
 # =========================================================================================== the frozen record

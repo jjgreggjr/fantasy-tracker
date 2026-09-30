@@ -62,8 +62,9 @@ COLUMN_DOCS = {
     "position": "QB / RB / WR / TE",
     "team": "the team he plays for in that game",
     "opponent": "the opponent in that game",
-    "report_status": "his own injury-report designation for the week when served (Questionable / Doubtful); blank if none. "
-                     "Out players have no row. The model itself does not read it",
+    "report_status": "his own injury-report designation FOR THIS WEEK when served (Questionable / Doubtful); blank if there is no report "
+                     "yet this week (last week's designation is not carried over). Players the report or the status layer calls Out "
+                     "have no row. The model itself does not read it",
     "pts_model": "PPR point estimate: the plain average of the LightGBM, XGBoost and CatBoost flat models",
     "pts_model_components": "PPR points from the 14 component models (receptions, yards, TDs, carries, ...), same inputs",
     "pts_<slug>": "points in that league's own scoring: the component models composed with its league.json weights, LINEAR TERMS "
@@ -392,12 +393,23 @@ def predict_week(df, season: int, week: int, cfg: dict, leagues=(), *, cache_dir
 
 
 # --------------------------------------------------------------------------- availability
+def current_report(frame):
+    """His own injury-report designation if it is THIS week's report, else None. The feature is 'the newest report this season', so
+    on a Wednesday a player whose last report was last week's final 'Out' still carries it; that is last week's news."""
+    import pandas as pd
+    fresh = pd.to_numeric(frame["inj_weeks_since_report"], errors="coerce").eq(0)
+    return frame["inj_report_status"].astype(object).where(frame["inj_report_status"].notna() & fresh, None)
+
+
 def availability(frame, players):
-    """(mask of rows to WITHHOLD, reason per row). The status layer owns availability; the model only predicts "if he plays"."""
+    """(mask of rows to WITHHOLD, reason per row). The status layer owns availability; the model only predicts "if he plays". Three
+    signals, any one withholds: the nflverse report for THIS week says Out; Sleeper's `injury_status` is one of the status layer's
+    OUT_STATES (Out, IR, PUP, Sus: Sleeper also uses 'Out' for a coach's-decision inactive); his nflverse roster status is cut,
+    retired, exempt or reserve. Last week's report does not withhold him: Sleeper's status, which is live, speaks for this week."""
     import pandas as pd
     from ff.status import OUT_STATES
     why = pd.Series("", index=frame.index, dtype=object)
-    rep = frame["inj_report_status"].astype(object).where(frame["inj_report_status"].notna(), "")
+    rep = current_report(frame).fillna("")
     why[rep.eq("Out")] = "nflverse report: Out"
     if players is not None and len(players):
         p = players.drop_duplicates("gsis_id").set_index("gsis_id")
@@ -471,7 +483,7 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
     withhold, why = availability(served, players)
     out = pd.DataFrame({"season": season, "week": week, "game_id": served["game_id"], "kickoff_utc": served["kickoff_utc"],
                         "gsis_id": served["player_id"], "position": served["position"], "team": served["team"],
-                        "opponent": served["opponent"], "report_status": served["inj_report_status"]}, index=served.index)
+                        "opponent": served["opponent"], "report_status": current_report(served)}, index=served.index)
     out.insert(5, "name", display_names(store, players, out["gsis_id"]))
     out["pts_model"] = pred["pts_model"]
     out["pts_model_components"] = pred["pts_model_components"]
