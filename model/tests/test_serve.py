@@ -162,6 +162,25 @@ class LeagueComposition(unittest.TestCase):
 
 
 # =========================================================================================== the serving design
+class LeagueTargets(unittest.TestCase):
+    def test_a_points_label_for_each_non_ppr_league_from_the_actual_components_and_nan_where_nothing_was_played(self):
+        leagues = L.load_leagues(REPO)
+        df = pd.DataFrame({"position": ["TE", "WR", "QB", "RB"], **{c: [np.nan, 4.0, 1.0, 0.0] for c in C.TARGETS}})
+        df.loc[0, "y_rec"] = np.nan
+        out = SV.add_league_targets(df, leagues)
+        added = sorted(c for c in out.columns if c.startswith("y_pts_"))
+        self.assertEqual(added, ["y_pts_we-can-think-of-something-funny", "y_pts_where-you-at"])      # PPR leagues need no label of their own
+        ppr_like = sum(w * 4.0 for w in C.PPR.weights.values())              # every component at 4.0 under full PPR
+        half = out["y_pts_where-you-at"]
+        self.assertAlmostEqual(half[1], ppr_like - 0.5 * 4.0)                # half PPR: each of the 4.0 receptions is worth 0.5 less
+        self.assertTrue(np.isnan(half[0]))                                   # nothing known for that row
+        dyn = out["y_pts_we-can-think-of-something-funny"]
+        self.assertAlmostEqual(dyn[1], ppr_like + 4.0)                       # a WR: no TE premium, but 4 interceptions at -1 instead of -2
+        te = SV.add_league_targets(df.assign(position="TE"), leagues)["y_pts_we-can-think-of-something-funny"]
+        self.assertAlmostEqual(te[1] - dyn[1], 0.5 * 4.0)                    # the same stat line as a tight end earns 0.5 more per catch
+        self.assertEqual(len(df.columns), len(C.TARGETS) + 1)                # the input frame is not modified
+
+
 class ShippedDesign(unittest.TestCase):
     def test_the_inputs_are_phase_2s_71_columns_and_nothing_new(self):
         c = cfg()
@@ -303,14 +322,26 @@ def fake_table(path: Path, every: int = 2) -> pd.DataFrame:
 
 class RosterColumns(unittest.TestCase):
     def test_every_existing_byte_of_every_real_roster_csv_is_untouched(self):
+        """Dropping the three new columns from the output gives back the file: compared as text, column by column, after the same
+        drop from the input (a committed roster.csv that has already been through the model step carries them itself)."""
+        names = ("E_pts_model", "p10", "p90")
+
+        def serialise(rows):
+            buf = io.StringIO()
+            csv.writer(buf, lineterminator="\n").writerows(rows)
+            return buf.getvalue()
+
+        def without(rows):
+            drop = [i for i, h in enumerate(rows[0]) if h in names]
+            return [[c for i, c in enumerate(r) if i not in drop] for r in rows]
         for p in sorted((REPO / "leagues").glob("*/roster.csv")):
             original = p.read_text(encoding="utf-8")
             text = SV.roster_text(p, fake_table(p))
             rows = list(csv.reader(io.StringIO(text)))
-            self.assertEqual(rows[0][-3:], ["E_pts_model", "p10", "p90"], p.parent.name)
-            buf = io.StringIO()
-            csv.writer(buf, lineterminator="\n").writerows([r[:-3] for r in rows])
-            self.assertEqual(buf.getvalue(), original, p.parent.name)          # dropping the 3 new columns gives the old file back
+            self.assertEqual(rows[0][-3:], list(names), p.parent.name)
+            self.assertEqual(serialise([r[:-3] for r in rows]), serialise(without(list(csv.reader(io.StringIO(original))))), p.parent.name)
+            if not any(n in original.splitlines()[0].split(",") for n in names):
+                self.assertEqual(serialise([r[:-3] for r in rows]), original, p.parent.name)    # the pre-model file, byte for byte
 
     def test_the_columns_hold_the_joined_values_and_blanks_where_the_model_has_no_row(self):
         p = REPO / "leagues" / "where-you-at" / "roster.csv"
@@ -554,54 +585,73 @@ class NoSkew(unittest.TestCase):
         season, week = 2026, 3
         m, c = matrix(), cfg()
         spec, params = SV.spec_from(c), T.load_params()
+        leagues = L.load_leagues(REPO)
         hist = SV.training_frame(store(), season, week, jobs=4)
         served = SV.serve_frame(store(), tgs_of(season, week))
-        df = SV.join_frames(hist, served)
-        pred, comp = SV.predict_week(df, season, week, c, log=lambda *_: None)
+        df = SV.join_frames(hist, served, leagues)
+        pred, comp, league_bands = SV.predict_week(df, season, week, c, leagues, log=lambda *_: None)
         sidx = df.index[len(hist):]
         skey = key(df.loc[sidx])
+        mk = SV.add_league_targets(m, leagues)
 
         def ref(target=T.TARGET, lib="lightgbm", params_=None, quantile=None) -> pd.Series:
-            r = B.walk_forward(m, spec, lib, params_ if params_ is not None else params["point"][lib], season=season, weeks=(week,),
+            r = B.walk_forward(mk, spec, lib, params_ if params_ is not None else params["point"][lib], season=season, weeks=(week,),
                                target=target, quantile=quantile)
-            return pd.Series(r["pred"].to_numpy(), index=key(m.loc[r.index]))
+            return pd.Series(r["pred"].to_numpy(), index=key(mk.loc[r.index]))
 
         def served_series(s: pd.Series) -> pd.Series:
             return pd.Series(s.loc[sidx].to_numpy(), index=skey)
+
+        def equal(got: pd.Series, want: pd.Series, what: str) -> None:
+            got, want = got.sort_index(), want.sort_index()
+            self.assertEqual(list(got.index), list(want.index), what)
+            self.assertTrue(np.array_equal(got.to_numpy(), want.to_numpy()), what)       # exactly equal, not close
 
         self.assertEqual(sorted(skey), sorted(key(m[(m["season"] == season) & (m["week"] == week)])))     # the same players in the same games
         # the flat models and their plain average
         flat = {lib: ref(lib=lib) for lib in T.LIBS}
         for lib in T.LIBS:
-            self.assertTrue(np.array_equal(served_series(pred[f"lib_{lib}"]).sort_index().to_numpy(), flat[lib].sort_index().to_numpy()), lib)
-        avg = pd.concat(list(flat.values()), axis=1).mean(axis=1)
-        self.assertTrue(np.array_equal(served_series(pred["pts_model"]).sort_index().to_numpy(), avg.sort_index().to_numpy()))
+            equal(served_series(pred[f"lib_{lib}"]), flat[lib], lib)
+        equal(served_series(pred["pts_model"]), pd.concat(list(flat.values()), axis=1).mean(axis=1), "average")
         # every component model, and PPR composed from them
         base = {k: v for k, v in params["point"]["lightgbm"].items() if k != "n_estimators"}
         ref_comp = {t: ref(target=t, params_={**base, "n_estimators": c["components"][t]["n_estimators"]}) for t in C.TARGETS}
         for t in C.TARGETS:
-            self.assertTrue(np.array_equal(served_series(comp[t]).sort_index().to_numpy(), ref_comp[t].sort_index().to_numpy()), t)
-        pos = m.set_index(key(m))["position"].reindex(ref_comp[C.TARGETS[0]].index)
-        ppr = C.compose(ref_comp, pos, C.PPR)
-        self.assertTrue(np.array_equal(served_series(pred["pts_model_components"]).sort_index().to_numpy(), ppr.sort_index().to_numpy()))
-        # the quantile bands and their recalibration
-        q_hist = B.sort_quantiles(B.walk_forward_quantiles(m, spec, params["quantile"], season=season - 1, weeks=B.WEEKS))
-        q_cur = B.sort_quantiles(B.walk_forward_quantiles(m, spec, params["quantile"], season=season, weeks=range(1, week + 1)))
-        rec = E.recalibrate(q_cur.reset_index(drop=True), q_hist, mode=c["recalibration"]["mode"])
-        rec.index = key(m.loc[q_cur.index]).to_numpy()
-        now_rows = q_cur["week"].to_numpy() == week
-        for col, want_col in (("q10", "q10"), ("q50", "q50"), ("q90", "q90"), ("p10", "q10a"), ("p90", "q90a")):
-            got = served_series(pred[col]).sort_index()
-            want = rec[want_col][now_rows].sort_index()
-            self.assertEqual(list(got.index), list(want.index))
-            self.assertTrue(np.array_equal(got.to_numpy(), want.to_numpy()), col)
-        # the published file's columns are all documented
-        out, why = SV.assemble(store(), df.loc[sidx], pred, comp, L.load_leagues(REPO), root=REPO, season=season, week=week,
-                               served_at=NOW, warnings=[])
-        doc = set(SV.COLUMN_DOCS)
-        undocumented = [x for x in out.columns if x not in doc and not any(x.startswith(p) and x[len(p):] in {s.slug for s in L.load_leagues(REPO)}
-                                                                          for p in ("pts_", "sleeper_proj_", "e_pts_"))]
+            equal(served_series(comp[t]), ref_comp[t], t)
+        pos = mk.set_index(key(mk))["position"].reindex(ref_comp[C.TARGETS[0]].index)
+        equal(served_series(pred["pts_model_components"]), C.compose(ref_comp, pos, C.PPR), "components under PPR")
+
+        def ref_quantiles(target: str, season_: int, weeks) -> pd.DataFrame:
+            res = None
+            for a in B.QUANTILES:
+                r = B.walk_forward(mk, spec, "lightgbm", params["quantile"][str(a)], season=season_, weeks=weeks, quantile=a,
+                                   target=target).rename(columns={"pred": f"q{int(a * 100)}"})
+                res = r if res is None else res.assign(**{f"q{int(a * 100)}": r[f"q{int(a * 100)}"]})
+            return B.sort_quantiles(res)
+
+        def check_band(got: pd.DataFrame, target: str, what: str, recal_target=None) -> None:
+            q_hist = (B.sort_quantiles(B.walk_forward_quantiles(m, spec, params["quantile"], season=season - 1, weeks=B.WEEKS))
+                      if target == T.TARGET else ref_quantiles(target, season - 1, B.WEEKS))
+            q_cur = ref_quantiles(target, season, tuple(range(1, week + 1)))
+            rec = E.recalibrate(q_cur.reset_index(drop=True), q_hist, mode=c["recalibration"]["mode"])
+            rec.index = key(mk.loc[q_cur.index]).to_numpy()
+            now_rows = q_cur["week"].to_numpy() == week
+            for col, want_col in (("q10", "q10"), ("q50", "q50"), ("q90", "q90"), ("p10", "q10a"), ("p90", "q90a")):
+                equal(served_series(got[col]), rec[want_col][now_rows], f"{what} {col}")
+        # the PPR quantile bands and their recalibration, then each non-PPR league's own
+        check_band(pred, T.TARGET, "ppr band")
+        self.assertEqual(sorted(league_bands), ["we-can-think-of-something-funny", "where-you-at"])
+        for slug, band in league_bands.items():
+            check_band(band, SV.league_target(slug), f"{slug} band")
+        # the published file's columns are all documented, and only non-PPR leagues carry bands of their own
+        out, why = SV.assemble(store(), df.loc[sidx], pred, comp, leagues, root=REPO, season=season, week=week, served_at=NOW,
+                               warnings=[], league_bands=league_bands)
+        slugs = {s_.slug for s_ in leagues}
+        undocumented = [x for x in out.columns if x not in SV.COLUMN_DOCS
+                        and not any(x.startswith(p_) and x[len(p_):] in slugs for p_ in ("pts_", "sleeper_proj_", "e_pts_", "p10_", "p90_"))]
         self.assertEqual(undocumented, [])
+        self.assertEqual(sorted(x for x in out.columns if x.startswith(("p10_", "p90_"))),
+                         sorted(f"{p_}_{sl}" for sl in league_bands for p_ in ("p10", "p90")))
         self.assertTrue(set(out["gsis_id"]).isdisjoint(set(why.index)))
 
 

@@ -39,26 +39,30 @@ def model_rows(week: int = 4) -> pd.DataFrame:
 
 
 class LeagueColumns(unittest.TestCase):
-    def test_points_are_the_composed_column_and_the_band_moves_by_the_scoring_difference(self):
-        c = modelcols.league_columns(model_rows(), SLUG).set_index("gsis_id")
+    def test_points_are_the_composed_column_and_a_league_with_its_own_band_uses_it(self):
+        m = model_rows().assign(**{f"p10_{SLUG}": [6.0, 4.0, 1.0, 10.0], f"p90_{SLUG}": [25.0, 21.0, 17.0, 31.0]})
+        c = modelcols.league_columns(m, SLUG).set_index("gsis_id")
         self.assertEqual(c["E_pts_model"].tolist(), [13.0, 11.0, 8.5, 19.0])
-        delta = np.array([13.0 - 14.0, 0.0, 0.5, 0.0])
-        np.testing.assert_allclose(c["p10"], np.array([7.0, 5.0, 2.0, 11.0]) + delta)
-        np.testing.assert_allclose(c["p90"], np.array([24.0, 20.0, 15.0, 30.0]) + delta)
+        self.assertEqual(c["p10"].tolist(), [6.0, 4.0, 1.0, 10.0])          # the league's own quantile models, not the PPR band
+        self.assertEqual(c["p90"].tolist(), [25.0, 21.0, 17.0, 31.0])
 
     def test_a_ppr_league_gets_the_ppr_band_unchanged(self):
         c = modelcols.league_columns(model_rows(), "gooma-s-family-league").set_index("gsis_id")
         self.assertEqual(c["p10"].tolist(), [7.0, 5.0, 2.0, 11.0])
         self.assertEqual(c["p90"].tolist(), [24.0, 20.0, 15.0, 30.0])
 
+    def test_a_non_ppr_league_with_no_band_of_its_own_gets_no_band_not_a_shifted_guess(self):
+        c = modelcols.league_columns(model_rows(), SLUG).set_index("gsis_id")     # its points differ from PPR and it has no p10_/p90_ columns
+        self.assertEqual(c["E_pts_model"].tolist(), [13.0, 11.0, 8.5, 19.0])
+        self.assertTrue(c["p10"].isna().all() and c["p90"].isna().all())
+
     def test_a_missing_value_stays_missing_and_an_unknown_league_is_empty(self):
         m = model_rows()
         m.loc[1, "p10"] = np.nan
-        c = modelcols.league_columns(m, SLUG).set_index("gsis_id")
+        c = modelcols.league_columns(m, "gooma-s-family-league").set_index("gsis_id")
         self.assertTrue(np.isnan(c.loc["00-B", "p10"]) and c.loc["00-B", "p90"] == 20.0)
         self.assertTrue(modelcols.league_columns(m, "no-such-league").empty)
         self.assertTrue(modelcols.league_columns(pd.DataFrame(), SLUG).empty)
-
 
     def test_a_tiny_negative_band_edge_does_not_print_as_minus_zero(self):
         m = model_rows()
@@ -117,8 +121,13 @@ class Attach(unittest.TestCase):
 
 
 def copy_league(root: Path, slug: str = SLUG) -> None:
+    """A temp copy of one committed league folder as the PIPELINE wrote it: once the model step has run, the committed roster.csv
+    also carries the three model columns, so they are stripped here (the tests add their own model file)."""
     shutil.copytree(REPO / "leagues" / slug, root / "leagues" / slug)
     (root / "data").mkdir(exist_ok=True)
+    p = root / "leagues" / slug / "roster.csv"
+    r = pd.read_csv(p, low_memory=False)
+    r.drop(columns=[c for c in modelcols.MODEL_COLS if c in r.columns]).to_csv(p, index=False)
 
 
 def model_rows_for(root: Path, slug: str, bump: float = 3.0) -> None:
@@ -126,7 +135,8 @@ def model_rows_for(root: Path, slug: str, bump: float = 3.0) -> None:
     r = pd.read_csv(root / "leagues" / slug / "roster.csv", low_memory=False)
     mp = pd.DataFrame({"season": r["season"], "week": r["week"], "gsis_id": r["gsis_id"],
                        "pts_model": 30.0 - r["E_pts"].fillna(0), "pts_model_components": 29.0 - r["E_pts"].fillna(0),
-                       f"pts_{slug}": 30.0 - r["E_pts"].fillna(0), "p10": 1.0, "p90": 40.0})
+                       f"pts_{slug}": 30.0 - r["E_pts"].fillna(0), "p10": 1.0, "p90": 40.0,
+                       f"p10_{slug}": 2.0, f"p90_{slug}": 41.0})
     mp.to_csv(root / "data" / "model_pts.csv", index=False)
 
 

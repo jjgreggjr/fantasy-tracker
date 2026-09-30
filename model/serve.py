@@ -74,6 +74,10 @@ COLUMN_DOCS = {
     "p10": "PPR floor: LightGBM 10th-percentile model, recalibrated (underage_only) from trailing out-of-sample residuals",
     "p50": "PPR median from the LightGBM 50th-percentile model (not recalibrated)",
     "p90": "PPR ceiling: LightGBM 90th-percentile model, recalibrated like p10",
+    "p10_<slug>": "floor in that league's own scoring, only for a league whose scoring is not PPR (the dynasty and IDP leagues): LightGBM "
+                  "10th-percentile model fit on that league's composed actual points (same linear terms as pts_<slug>), recalibrated "
+                  "(underage_only) from that league's trailing residuals. A PPR-scoring league uses p10",
+    "p90_<slug>": "ceiling in that league's own scoring, for the same leagues, built like p10_<slug>",
     "sleeper_proj": "Sleeper's PPR projection for the player and week, read from data/projections.csv at serve time (no new "
                     "network call) and frozen with the row",
     "sleeper_proj_<slug>": "Sleeper's projection in that league's scoring (`proj_pts_league`), frozen at serve time",
@@ -257,10 +261,28 @@ def serve_frame(store, tgs: list):
     return df
 
 
-def join_frames(hist, served):
-    """One frame: earlier completed games first (matrix order), then the served rows, which no fit can train on."""
+def league_target(slug: str) -> str:
+    return f"y_pts_{slug}"
+
+
+def add_league_targets(df, leagues):
+    """One label column per league whose scoring is not PPR: that league's linear-term points from the ACTUAL components
+    (`y_pts_<slug>`, NaN where the components are NaN: a DNP, or a game not yet played). The floor and ceiling of such a league are
+    quantile models fit on this, because a mean does not compose into a quantile."""
     from model import components as C
-    return C.add_misc(_concat([hist, served]))
+    out = df
+    for ls in leagues:
+        if ls.is_ppr:
+            continue
+        out = out.assign(**{league_target(ls.slug): C.compose({c: out[c] for c in ls.scoring.needs()}, out["position"], ls.scoring)})
+    return out
+
+
+def join_frames(hist, served, leagues=()):
+    """One frame: earlier completed games first (matrix order), then the served rows, which no fit can train on. The misc label and a
+    points label per non-PPR league are derived from the component labels."""
+    from model import components as C
+    return add_league_targets(C.add_misc(_concat([hist, served])), leagues)
 
 
 # --------------------------------------------------------------------------- models
@@ -282,45 +304,61 @@ def component_predictions(df, spec, season: int, week: int, params: dict, cfg: d
                       season, week, target=t) for t in C.TARGETS}
 
 
-def quantile_walk(df, spec, season: int, weeks, params: dict):
-    """Sorted p10/p50/p90 walk-forward rows of `season` (the backtest's own `walk_forward_quantiles`)."""
+def quantile_walk(df, spec, season: int, weeks, params: dict, target: str | None = None):
+    """Sorted p10/p50/p90 walk-forward rows of `season` for `target` (PPR points unless a league's own target is named): the backtest's
+    own `walk_forward_quantiles`, one LightGBM per alpha with the tuned quantile parameters."""
     from model import backtest as B
-    return B.sort_quantiles(B.walk_forward_quantiles(df, spec, params["quantile"], season=season, weeks=tuple(weeks)))
+    from model import train as T
+    target = target or T.TARGET
+    res = None
+    for a in B.QUANTILES:
+        r = B.walk_forward(df, spec, "lightgbm", params["quantile"][str(a)], season=season, weeks=tuple(weeks), quantile=a,
+                           target=target).rename(columns={"pred": f"q{int(a * 100)}"})
+        res = r if res is None else res.assign(**{f"q{int(a * 100)}": r[f"q{int(a * 100)}"]})
+    return B.sort_quantiles(res)
 
 
-def quantile_history(df, spec, season: int, params: dict, *, cache_dir: Path | None = None, log=print):
-    """Last season's out-of-sample quantile rows: what the recalibration is measured against. Cached like the matrix."""
+def quantile_history(df, spec, season: int, params: dict, *, target: str | None = None, cache_dir: Path | None = None, log=print):
+    """Last season's out-of-sample quantile rows for `target`: what the recalibration is measured against. Cached like the matrix, keyed
+    on the feature code, the quantile parameters, the spec and the labels themselves."""
     import pandas as pd
-    from model import backtest as B
+    from model import train as T
+    target = target or T.TARGET
     cache_dir = cache_dir or default_cache()
-    key = code_hash(season, json.dumps([params["quantile"], list(spec.drop_cols), list(spec.drop_families)], sort_keys=True))
-    f = cache_dir / f"qhist_{key}.parquet"
+    labels = int(pd.util.hash_pandas_object(df.loc[df["season"] == season - 1, target], index=False).sum() % (2 ** 63))
+    key = code_hash(season, json.dumps([params["quantile"], list(spec.drop_cols), list(spec.drop_families), target, labels], sort_keys=True))
+    tag = target.replace("y_", "").replace("_", "-")
+    f = cache_dir / f"qhist-{tag}_{key}.parquet"
     if f.exists():
         return pd.read_parquet(f)
     t0 = time.time()
-    h = quantile_walk(df, spec, season - 1, B.WEEKS, params)
+    from model import backtest as B
+    h = quantile_walk(df, spec, season - 1, B.WEEKS, params, target)
     cache_dir.mkdir(parents=True, exist_ok=True)
     h.to_parquet(f)
-    prune_cache(cache_dir, "qhist", f)
-    log(f"  quantile history {season - 1}: {len(h):,} rows in {time.time() - t0:,.0f}s")
+    prune_cache(cache_dir, f"qhist-{tag}", f)              # one file per target: the league and PPR histories live side by side
+    log(f"  quantile history {season - 1} ({target}): {len(h):,} rows in {time.time() - t0:,.0f}s")
     return h
 
 
-def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, *, cache_dir: Path | None = None, log=print):
+def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, *, target: str | None = None,
+                     cache_dir: Path | None = None, log=print):
     """q10 / q50 / q90 for the served week (raw, sorted) and the recalibrated p10 / p90, exactly as the backtest recalibrates a
     week: the shift comes from last season's out-of-sample rows plus this season's weeks before `week`, never `week` itself."""
     import numpy as np
     import pandas as pd
     from model import backtest as B
     from model import ensemble as E
-    q = {a: _preds(df, spec, "lightgbm", params["quantile"][str(a)], season, week, quantile=a) for a in B.QUANTILES}
+    from model import train as T
+    target = target or T.TARGET
+    q = {a: _preds(df, spec, "lightgbm", params["quantile"][str(a)], season, week, quantile=a, target=target) for a in B.QUANTILES}
     served = pd.DataFrame({f"q{int(a * 100)}": s for a, s in q.items()})
     raw = served[["q10", "q50", "q90"]].to_numpy()
     served[["q10", "q50", "q90"]] = np.sort(raw, axis=1)
     served["crossed"] = ((raw[:, 0] > raw[:, 1]) | (raw[:, 1] > raw[:, 2])).astype(float)
-    hist = quantile_history(df, spec, season, params, cache_dir=cache_dir, log=log)
+    hist = quantile_history(df, spec, season, params, target=target, cache_dir=cache_dir, log=log)
     cols = ["position", "week", "y", "y_played", "q10", "q50", "q90"]
-    cur = quantile_walk(df, spec, season, range(1, week), params)[cols] if week > 1 else pd.DataFrame(columns=cols)
+    cur = quantile_walk(df, spec, season, range(1, week), params, target)[cols] if week > 1 else pd.DataFrame(columns=cols)
     srv = pd.DataFrame({"position": df.loc[served.index, "position"], "week": week, "y": np.nan, "y_played": np.nan,
                         "q10": served["q10"], "q50": served["q50"], "q90": served["q90"]})
     rec = E.recalibrate(srv.reset_index(drop=True) if cur.empty else _concat([cur, srv]), hist, mode=cfg["recalibration"]["mode"])
@@ -329,17 +367,20 @@ def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, 
     return served
 
 
-def predict_week(df, season: int, week: int, cfg: dict, *, cache_dir: Path | None = None, log=print):
-    """Everything the model says about the served rows of (season, week), indexed like `df`."""
+def predict_week(df, season: int, week: int, cfg: dict, leagues=(), *, cache_dir: Path | None = None, log=print):
+    """Everything the model says about the served rows of (season, week), indexed like `df`: (the PPR frame, the component
+    predictions, {slug: band frame} for every league whose scoring is not PPR). `df` carries the league label columns
+    (`join_frames(..., leagues)`)."""
     import pandas as pd
     from model import components as C
-    from model import leaguescore as L
     from model import train as T
     spec, params = spec_from(cfg), T.load_params()
     t0 = time.time()
     flat = flat_predictions(df, spec, season, week, params)
     comp = component_predictions(df, spec, season, week, params, cfg)
     bands = band_predictions(df, spec, season, week, params, cfg, cache_dir=cache_dir, log=log)
+    league_bands = {ls.slug: band_predictions(df, spec, season, week, params, cfg, target=league_target(ls.slug), cache_dir=cache_dir, log=log)
+                    for ls in leagues if not ls.is_ppr}
     log(f"  fits and predictions: {time.time() - t0:,.0f}s")
     out = pd.DataFrame({"pts_model": pd.concat(list(flat.values()), axis=1).mean(axis=1)})
     for lib, s in flat.items():
@@ -347,7 +388,7 @@ def predict_week(df, season: int, week: int, cfg: dict, *, cache_dir: Path | Non
     pos = df.loc[out.index, "position"]
     out["pts_model_components"] = C.compose(comp, pos, C.PPR)
     out = out.join(bands[["q10", "q50", "q90", "p10", "p90"]])
-    return out, comp
+    return out, comp, league_bands
 
 
 # --------------------------------------------------------------------------- availability
@@ -417,7 +458,8 @@ def display_names(store, players, ids):
 
 
 # --------------------------------------------------------------------------- the output frame
-def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, week: int, served_at, warnings: list):
+def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, week: int, served_at, warnings: list,
+             league_bands: dict | None = None):
     """One row per predicted (and not withheld) player: the columns of COLUMN_DOCS. Returns (frame, reason Series keyed by gsis_id
     for every withheld player)."""
     import numpy as np
@@ -436,6 +478,9 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
     for ls in leagues:
         out[f"pts_{ls.slug}"] = C.compose(comp, served["position"], ls.scoring)
     out["p10"], out["p50"], out["p90"] = pred["p10"], pred["q50"], pred["p90"]
+    for ls in leagues:                                             # a league whose scoring is not PPR has a band of its own points
+        if not ls.is_ppr and league_bands and ls.slug in league_bands:
+            out[f"p10_{ls.slug}"], out[f"p90_{ls.slug}"] = league_bands[ls.slug]["p10"], league_bands[ls.slug]["p90"]
     proj = sleeper_projection(root, season, week)
     if proj is None:
         warnings.append(f"no Sleeper projections for {season} week {week} in data/projections.csv: sleeper_proj left blank "
@@ -453,7 +498,7 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
         pool = pools[ls.slug]
         out[f"e_pts_{ls.slug}"] = out["gsis_id"].map(pool["E_pts"]) if pool is not None and "E_pts" in pool else np.nan
     out["served_at"] = served_at.strftime("%Y-%m-%dT%H:%M:%SZ")
-    num = [c for c in out.columns if c.startswith(("pts_", "sleeper_proj", "e_pts_")) or c in ("p10", "p50", "p90")]
+    num = [c for c in out.columns if c.startswith(("pts_", "sleeper_proj", "e_pts_", "p10", "p90")) or c == "p50"]
     out[num] = out[num].astype("float64").round(3) + 0.0                      # + 0.0: no "-0.0" in the file
     reasons = why[withhold]
     reasons.index = served.loc[reasons.index, "player_id"].to_numpy()          # keyed by gsis_id
@@ -602,13 +647,13 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     served = serve_frame(store, tgs)
     if served.empty:
         return [f"model.serve: no eligible players for {season} week {week}"]
-    df = join_frames(hist, served)
-    served_index = df.index[len(hist):]
-    pred, comp = predict_week(df, season, week, cfg)
     leagues = L.load_leagues(root)
+    df = join_frames(hist, served, leagues)
+    served_index = df.index[len(hist):]
+    pred, comp, league_bands = predict_week(df, season, week, cfg, leagues)
     served_df = df.loc[served_index]
     out, reasons = assemble(store, served_df, pred, comp, leagues, root=root, season=season, week=week, served_at=now_utc(),
-                            warnings=warnings)
+                            warnings=warnings, league_bands=league_bands)
     lines = summary_lines(out, reasons, leagues, root, season, week)
     if args.dry_run:
         return lines + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
