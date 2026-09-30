@@ -696,8 +696,8 @@ Done 2026-09-30 (branch `claude/eager-goldberg-zmevs9`, not merged). Shipped: `m
 (the frozen design: the 39 pruned columns, the 14 component tree counts, the recalibration mode), `model/leaguescore.py`, `model/scoreboard.py`
 (`python -m model.scoreboard`), `model/phase3.py` (validation of the shipped design), `model/retro.py` (a replay of weeks 1-3), `ff/modelcols.py`
 (the display join), changes to `model/build_features.py` (rows and frames for any list of games, forked workers), `ff/ask.py` and `ff/live.py`
-(print only), `.github/workflows/pipeline.yml`, `POLICY.md`, `skills/fantasy/SKILL.md`, `README.md`, and tests: 61 new model tests (233 in all, all
-green under `-W error::DeprecationWarning`) and 16 new pipeline tests (36 in all). The pipeline's own code path (`ff/run_weekly.py`, `build`, `leagues`, `verify`, ...)
+(print only), `.github/workflows/pipeline.yml`, `POLICY.md`, `skills/fantasy/SKILL.md`, `README.md`, and tests: 70 new model tests (242 in all, all
+green under `-W error::DeprecationWarning`) and 19 new pipeline tests (39 in all). The pipeline's own code path (`ff/run_weekly.py`, `build`, `leagues`, `verify`, ...)
 is untouched, so with the model step removed its outputs are what they were; `git diff 91eb9e8 -- ff` is `ask.py`, `live.py` and the new `modelcols.py` only.
 
 ### What ships, per work-order item
@@ -719,7 +719,7 @@ is untouched, so with the model step removed its outputs are what they were; `gi
    documents every column, including the ignored threshold bonuses. ID columns are `gsis_id` only: `replace_partition` re-reads with default dtypes and would turn a
    gappy `sleeper_id` column into `8183.0`.
 3. **Pipeline step.** After `Run pipeline`: a second `setup-python` (3.12, pip cache keyed on `model/requirements.txt`), install (5 min cap, continue-on-error), `actions/cache`
-   on `model/cache`, then `python -m model.serve && python -m model.scoreboard` (10 min cap, continue-on-error), committed by the usual commit step (which now also
+   on `model/cache` (keyed on content and ISO week after review, below), then `python -m model.serve && python -m model.scoreboard` (10 min cap, continue-on-error), committed by the usual commit step (which now also
    adds `model/reports/live_scoreboard.md`). Both commands catch every exception, append a WARN row through the pipeline's own `verify.log_run` (check `model.serve` or
    `model.scoreboard`, the `week` of the run they belong to) and exit 0 having written nothing: all roster texts are rendered before `model_pts.csv` is replaced, and every file is
    replaced atomically. Tested: a raised error, a missing library, bad data inside `run`, and a log that cannot be written all end in exit 0, one WARN row, byte-identical
@@ -776,14 +776,39 @@ is untouched, so with the model step removed its outputs are what they were; `gi
 
 ### Validation, in the order asked
 
-(a) All model tests (233, 9 min 40 s) and the pipeline's (36) pass under python3.12. (b) `python3.12 -m model.serve --dry-run` and the real write path on a copy of the repo data: 59 s warm / 181 s cold locally, idempotent (a second run changes nothing but `served_at`).
+(a) All model tests (242, 10 min) and the pipeline's (39) pass under python3.12. (b) `python3.12 -m model.serve --dry-run` and the real write path on a copy of the repo data: 59 s warm / 181 s cold locally, idempotent (a second run changes nothing but `served_at`).
 (c) Pushed; `pipeline.yml` dispatched on the branch three times: run **36759198077** (cold caches, success), **36760150982** (warm, success) and **36760474080** (final code, success; the `Fail the job` step skipped). `logs/runs.csv` gained only the expected `status.practice: 0% have practice reports` WARN per run, no FAIL, no `model.*` row.
-(d) One iteration: run 1 exposed the stale-report rule above; fixed in `418862e`, verified in run 3.
+(d) One iteration: run 1 exposed the stale-report rule above; fixed in `418862e`, verified in run 3. The coordinator's review then changed seven things (next section); re-validated by run **36765150760** (success).
 
 **Week-4 serve, final run:** 512 rows (QB 86, RB 113, TE 124, WR 189) for 16 games over 7 kickoffs, 95 withheld (status layer 95; nflverse has no week-4 report yet on a Wednesday). `sleeper_proj` (PPR) on 393 rows, `e_pts_<slug>` and `sleeper_proj_<slug>` on 509.
 Rostered skill players with a row: Gooma's 190 of 209 (18 withheld as unavailable, 1 not in the week's spine), ESPN league 132 of 143 (11, 0), dynasty 214 of 242 (27, 1), IDP 222 of 253 (30, 1); James's own `roster.csv`: 16 of 18, 14 of 15, 28 of 31, 21 of 22 have `E_pts_model`. Spearman of `pts_model` against Sleeper's projection .947, against `pts_model_components` .986; p10 <= p50 <= p90 on every row and `pts_model` inside [p10, p90] on 99%.
 Three spot-checks against raw lines: **A.J. Brown** (NE WR, Sleeper IR, roster status RES), **De'Von Achane** (MIA RB, IR) and **Baker Mayfield** (TB QB, Sleeper Out): no row, status layer; the model would only have said "points if he plays". **Josh Allen** (BUF at NE): last three games 17.5 / 40.8 / 35.7 PPR (raw nflverse lines: 29 / 31 / 26 attempts, 334 / 248 / 204 passing yards), season xFP 25.5 a game, implied team total 27.5,
 model 22.3 (components 23.0, p10-p90 8.8-33.6) against Sleeper 23.1 and E_pts 25.7: the model pulls a 31-point average toward the position mean, as it should. **Marcus Mariota** (WAS QB, his starter out): 8.7 then 20.4 points (31 attempts, all snaps, in week 3), implied total 22.0 as a 3.5-point underdog, model 13.2 (components 13.7, p10-p90 2.8-23.2) against Sleeper 16.7 and E_pts 14.8.
+
+### Review fixes (coordinator review, same day; all tests green, re-validated by run 36765150760)
+
+Must fix:
+1. **roster.csv columns came from the newly predicted rows only.** On a Friday run `out` has no Thursday-night player (his game has kicked off), so every Thursday player lost `E_pts_model`/`p10`/`p90` in
+   `roster.csv` although `model_pts.csv` kept his frozen row. `write_outputs` and the serve summary now build from `merged_week` (frozen rows plus new), the week as `model_pts.csv` will hold it. Regression test
+   `FridayServe` (a Wednesday serve, then a Friday serve with Thursday's game under way: Thursday's columns persist, Sunday's refresh, a player with no row anywhere is blank); it fails against the old code.
+   Verified on the real run: every player in each league's `roster.csv` who has a `model_pts.csv` row has the columns filled (16/18, 14/15, 28/31, 21/22; the rest have no row).
+2. **`week_of` took the season mode and the week mode separately**, which at a season boundary can name a pair no row holds ((2025, 18) x3 beside (2026, 1) and (2026, 2) gave (2026, 18)). It takes the most common
+   (season, week) pair now, the later on a tie. Tests: that exact frame, a tie, and `attach` across the boundary; both fail against `mode()`.
+3. **The frozen `inputs` in `serving_config.json` were never read.** `backtest.walk_forward` silently drops a column that turns dead in the data, so a data shift would have served a model nobody validated.
+   `predict_week` now checks the live encoded inputs against `cfg["inputs"]` before fitting anything and raises `ServingSpecMismatch` naming what is missing or unexpected; the step turns it into the usual WARN row with nothing written.
+   Tests: live set equals frozen, a column gone all-NA is refused, a changed frozen list is refused, and no model is fitted when it is refused.
+
+Cheap fixes:
+4. `model_fetch.yml`: the ADP, CFBD and step-summary steps are `continue-on-error`, so a raise in one cannot discard the CSVs another wrote before the commit step (tested as text).
+5. `scoreboard`: the by-week and coverage tables group on (season, week); a 2026 week 4 and a 2027 week 4 are two rows (tested, including the gate's week count).
+6. `pipeline.yml`: the model cache is keyed on `hashFiles` of the model requirements and feature code plus the ISO week (a one-line step computes it), with the prefix restore-key kept. Observed: restored by prefix from
+   the previous entry, saved once under the new key (34 MB), and the ~700 MB pip caches now report "cache hit on the primary key, not saving". One consequence to know: in a new season the raw files of the season just ended are as of the
+   last run that refreshed them (only the current season's files are re-downloaded).
+7. `tests/test_modelcols.py`'s docstring no longer describes the abandoned shifted-band shortcut.
+
+Optional, done: the scoreboard builds each league-week's comparators once; `serve.quantile_walk` calls `backtest.walk_forward_quantiles`, which takes a `target` now, instead of duplicating it.
+Optional, skipped: `labels.attach_labels` still materialises its dictionaries per call. It is matrix-building code (changing it changes the code hash that keys the history cache and needs a bit-identity proof against the 46,669-row matrix),
+and the cost is seconds in a cold build that happens once per code change.
 
 ### What is not done, and what to watch
 
