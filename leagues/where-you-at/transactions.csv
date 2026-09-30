@@ -19,7 +19,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,3156,,1
 2026,1,free_agent,drop,1433,,1
 2026,1,free_agent,drop,2374,,1
-2026,1,free_agent,drop,4663,,1
+2026,1,free_agent,drop,4663,Austin Ekeler,1
 2026,1,free_agent,drop,8323,,2
 2026,1,free_agent,drop,6900,,2
 2026,1,free_agent,drop,4988,,2
@@ -116,6 +116,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,waiver,add,4177,Mack Hollins,10
 2026,2,waiver,drop,11655,Tyrone Tracy Jr.,10
 2026,2,waiver,add,9486,Dontayvion Wicks,10
+2026,3,waiver,add,12472,Raheim Sanders,8
+2026,3,waiver,add,12495,Ollie Gordon II,3
 2026,3,free_agent,drop,7765,,3
 2026,3,free_agent,drop,8290,,3
 2026,3,waiver,add,6900,,5
