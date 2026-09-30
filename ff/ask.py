@@ -21,7 +21,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import live as live_mod, policy, scoring, status as status_mod, trade as trade_mod
+from . import live as live_mod, modelcols, policy, scoring, status as status_mod, trade as trade_mod
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -64,6 +64,8 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     # slots we cannot fill because those positions are out of scope (IDP, K, DST)
     slots = [s for s in all_slots if scoring.SLOT_ELIGIBILITY.get(s)]
     unscored = [s for s in all_slots if not scoring.SLOT_ELIGIBILITY.get(s)]
+    roster = modelcols.attach(roster, slug, ROOT)        # display only: E_pts stays what every pick below sorts on
+    mcols = [c for c in modelcols.MODEL_COLS if c in roster.columns]
     pool = roster[roster.E_pts.notna()].sort_values("E_pts", ascending=False).copy()
     used, picks = set(), []
 
@@ -77,8 +79,8 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
                 continue
             picks.append({"slot": slot, "name": p["name"], "position": p.position,
                           "team": p.team, "opponent": p.get("opponent"),
-                          "E_pts": p.E_pts, "conf": p.get("conf"),
-                          "why": p.get("why")})
+                          "E_pts": p.E_pts, **{c: p.get(c) for c in mcols},
+                          "conf": p.get("conf"), "why": p.get("why")})
             used.add(p.gsis_id)
             break
 
@@ -422,6 +424,8 @@ def main(argv=None):
         print(f"Optimal lineup from committed scores; lineup snapshot as of "
               f"{meta.get('roster_fetched_at') or 'unknown'} ({hint})\n")
         start, note, bench = lineup(a.slug)
+        if "E_pts_model" in start.columns:
+            print(modelcols.NOTE + "\n")
         print(start.to_string(index=False) if not start.empty else "(no lineup)")
         print("\n" + note)
         if not start.empty:
@@ -430,8 +434,9 @@ def main(argv=None):
                 print(line)
         if not bench.empty:
             print("\nBench:")
-            print(bench[["name", "position", "E_pts", "gap_to_starter", "conf", "flag"]]
-                  .head(12).to_string(index=False))
+            bcols = ["name", "position", "E_pts", *[c for c in modelcols.MODEL_COLS if c in bench.columns],
+                     "gap_to_starter", "conf", "flag"]
+            print(bench[bcols].head(12).to_string(index=False))
     elif a.recipe == "played":
         try:
             week = int(a.arg) if a.arg else None

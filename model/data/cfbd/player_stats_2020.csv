@@ -1,0 +1,656 @@
+season,playerId,player,position,team,conference,category,statType,stat,fetched_at
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,ATT,437,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,COMPLETIONS,301,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,INT,8,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,PCT,0.689,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,TD,43,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,YDS,4283,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,passing,YPA,9.8,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,ATT,353,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,COMPLETIONS,228,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,INT,3,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,PCT,0.646,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,TD,15,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,YDS,2830,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,passing,YPA,8.0,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,ATT,1,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,COMPLETIONS,1,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,PCT,1.000,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,YDS,8,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,passing,YPA,8.0,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,ATT,1,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,COMPLETIONS,1,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,PCT,1.000,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,YDS,11,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,passing,YPA,11.0,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,ATT,2,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,COMPLETIONS,1,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,PCT,0.500,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,YDS,12,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,passing,YPA,6.0,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,ATT,296,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,COMPLETIONS,187,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,INT,3,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,PCT,0.632,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,TD,19,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,YDS,2208,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,passing,YPA,7.5,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,ATT,402,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,COMPLETIONS,311,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,INT,4,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,PCT,0.774,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,TD,41,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,YDS,4500,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,passing,YPA,11.2,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,ATT,322,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,COMPLETIONS,194,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,INT,5,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,PCT,0.602,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,TD,26,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,YDS,2566,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,passing,YPA,8.0,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,ATT,193,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,COMPLETIONS,127,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,INT,3,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,PCT,0.658,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,TD,7,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,YDS,1510,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,passing,YPA,7.8,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,ATT,2,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,COMPLETIONS,0,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,PCT,0.000,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,YDS,0,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,passing,YPA,0.0,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,ATT,334,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,COMPLETIONS,231,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,INT,5,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,PCT,0.692,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,TD,24,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,YDS,3153,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,passing,YPA,9.4,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,ATT,333,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,COMPLETIONS,244,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,INT,3,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,PCT,0.733,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,TD,32,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,YDS,3651,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,passing,YPA,11.0,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,ATT,1,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,COMPLETIONS,1,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,PCT,1.000,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,YDS,15,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,passing,YPA,15.0,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,ATT,225,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,COMPLETIONS,158,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,INT,6,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,PCT,0.702,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,TD,22,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,YDS,2100,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,passing,YPA,9.3,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,ATT,1,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,COMPLETIONS,1,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,INT,0,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,PCT,1.000,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,TD,0,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,YDS,2,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,passing,YPA,2.0,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,rushing,CAR,64,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,rushing,LONG,26,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,rushing,TD,3,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,rushing,YDS,50,2026-09-29T20:11:16Z
+2020,4034946,Kyle Trask,QB,Florida,SEC,rushing,YPC,0.8,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,rushing,CAR,61,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,rushing,LONG,49,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,rushing,TD,4,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,rushing,YDS,339,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,rushing,YPC,5.6,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,rushing,CAR,2,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,rushing,LONG,13,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,rushing,YDS,17,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,rushing,YPC,8.5,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,rushing,CAR,132,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,rushing,LONG,40,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,rushing,TD,5,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,rushing,YDS,668,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,rushing,YPC,5.1,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,rushing,CAR,155,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,rushing,LONG,76,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,rushing,TD,8,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,rushing,YDS,1183,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,rushing,YPC,7.6,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,rushing,CAR,60,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,rushing,LONG,52,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,rushing,TD,3,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,rushing,YDS,511,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,rushing,YPC,8.5,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,rushing,CAR,144,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,rushing,LONG,72,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,rushing,TD,7,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,rushing,YDS,673,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,rushing,YPC,4.7,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,rushing,CAR,1,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,rushing,LONG,0,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,rushing,YDS,0,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,rushing,YPC,0.0,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,rushing,CAR,3,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,rushing,LONG,14,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,rushing,YDS,16,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,rushing,YPC,5.3,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,rushing,CAR,2,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,rushing,LONG,27,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,rushing,YDS,43,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,rushing,YPC,21.5,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,rushing,CAR,16,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,rushing,LONG,16,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,rushing,YDS,73,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,rushing,YPC,4.6,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,rushing,CAR,117,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,rushing,LONG,33,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,rushing,TD,9,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,rushing,YDS,486,2026-09-29T20:11:16Z
+2020,4046678,Ian Book,QB,Notre Dame,ACC,rushing,YPC,4.2,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,rushing,CAR,13,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,rushing,LONG,12,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,rushing,YDS,42,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,rushing,YPC,3.2,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,rushing,CAR,168,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,rushing,LONG,72,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,rushing,TD,14,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,rushing,YDS,914,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,rushing,YPC,5.4,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,rushing,CAR,2,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,rushing,LONG,2,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,rushing,YDS,3,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,rushing,YPC,1.5,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,rushing,CAR,7,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,rushing,LONG,31,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,rushing,YDS,54,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,rushing,YPC,7.7,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,rushing,CAR,19,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,rushing,LONG,50,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,rushing,YDS,161,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,rushing,YPC,8.5,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,rushing,CAR,156,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,rushing,LONG,65,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,rushing,TD,9,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,rushing,YDS,1245,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,rushing,YPC,8.0,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,rushing,CAR,2,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,rushing,LONG,15,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,rushing,YDS,21,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,rushing,YPC,10.5,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,rushing,CAR,74,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,rushing,LONG,26,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,rushing,TD,4,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,rushing,YDS,294,2026-09-29T20:11:16Z
+2020,4240904,Kellen Mond,QB,Texas A&M,SEC,rushing,YPC,4.0,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,rushing,CAR,209,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,rushing,LONG,46,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,rushing,TD,14,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,rushing,YDS,972,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,rushing,YPC,4.7,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,rushing,CAR,116,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,rushing,LONG,65,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,rushing,TD,4,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,rushing,YDS,870,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,rushing,YPC,7.5,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,rushing,CAR,132,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,rushing,LONG,32,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,rushing,TD,5,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,rushing,YDS,623,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,rushing,YPC,4.7,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,rushing,CAR,1,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,rushing,LONG,7,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,rushing,YDS,7,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,rushing,YPC,7.0,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,rushing,CAR,251,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,rushing,LONG,53,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,rushing,TD,26,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,rushing,YDS,1466,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,rushing,YPC,5.8,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,rushing,CAR,35,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,rushing,LONG,14,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,rushing,YDS,16,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,rushing,YPC,0.5,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,rushing,CAR,4,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,rushing,LONG,14,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,rushing,YDS,6,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,rushing,YPC,1.5,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,rushing,CAR,141,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,rushing,LONG,59,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,rushing,TD,8,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,rushing,YDS,878,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,rushing,YPC,6.2,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,rushing,CAR,113,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,rushing,LONG,36,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,rushing,TD,8,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,rushing,YDS,378,2026-09-29T20:11:16Z
+2020,4241820,Sam Ehlinger,QB,Texas,Big 12,rushing,YPC,3.3,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,rushing,CAR,30,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,rushing,LONG,15,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,rushing,TD,3,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,rushing,YDS,37,2026-09-29T20:11:16Z
+2020,4242546,Davis Mills,QB,Stanford,Pac-12,rushing,YPC,1.2,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,rushing,CAR,1,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,rushing,LONG,0,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,rushing,YDS,-3,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,rushing,YPC,-3.0,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,rushing,CAR,86,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,rushing,LONG,34,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,rushing,YDS,386,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,rushing,YPC,4.5,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,rushing,CAR,6,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,rushing,LONG,6,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,rushing,YDS,6,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,rushing,YPC,1.0,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,rushing,CAR,15,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,rushing,LONG,12,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,rushing,YDS,58,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,rushing,YPC,3.9,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,rushing,CAR,68,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,rushing,LONG,34,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,rushing,TD,8,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,rushing,YDS,203,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,rushing,YPC,3.0,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,rushing,CAR,1,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,rushing,LONG,0,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,rushing,YDS,-1,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,rushing,YPC,-1.0,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,rushing,CAR,69,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,rushing,LONG,33,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,rushing,TD,10,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,rushing,YDS,265,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,rushing,YPC,3.8,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,rushing,CAR,157,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,rushing,LONG,65,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,rushing,TD,19,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,rushing,YDS,1140,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,rushing,YPC,7.3,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,rushing,CAR,2,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,rushing,LONG,1,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,rushing,YDS,1,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,rushing,YPC,0.5,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,rushing,CAR,81,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,rushing,LONG,44,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,rushing,TD,5,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,rushing,YDS,383,2026-09-29T20:11:16Z
+2020,4362887,Justin Fields,QB,Ohio State,Big Ten,rushing,YPC,4.7,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,rushing,CAR,4,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,rushing,LONG,1,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,rushing,YDS,-6,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,rushing,YPC,-1.5,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,rushing,CAR,3,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,rushing,LONG,11,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,rushing,YDS,12,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,rushing,YPC,4.0,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,rushing,CAR,14,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,rushing,LONG,13,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,rushing,YDS,64,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,rushing,YPC,4.6,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,rushing,CAR,6,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,rushing,LONG,11,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,rushing,TD,1,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,rushing,YDS,32,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,rushing,YPC,5.3,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,rushing,CAR,1,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,rushing,LONG,4,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,rushing,YDS,4,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,rushing,YPC,4.0,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,rushing,CAR,11,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,rushing,LONG,15,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,rushing,TD,0,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,rushing,YDS,67,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,rushing,YPC,6.1,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,rushing,CAR,133,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,rushing,LONG,82,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,rushing,TD,7,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,rushing,YDS,858,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,rushing,YPC,6.5,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,rushing,CAR,101,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,rushing,LONG,50,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,rushing,TD,7,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,rushing,YDS,664,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,rushing,YPC,6.6,2026-09-29T20:11:16Z
+2020,3932144,Jacob Harris,WR,UCF,American Athletic,receiving,LONG,55,2026-09-29T20:11:16Z
+2020,3932144,Jacob Harris,WR,UCF,American Athletic,receiving,REC,30,2026-09-29T20:11:16Z
+2020,3932144,Jacob Harris,WR,UCF,American Athletic,receiving,TD,8,2026-09-29T20:11:16Z
+2020,3932144,Jacob Harris,WR,UCF,American Athletic,receiving,YDS,539,2026-09-29T20:11:16Z
+2020,3932144,Jacob Harris,WR,UCF,American Athletic,receiving,YPR,18.0,2026-09-29T20:11:16Z
+2020,4035465,Cornell Powell,WR,Clemson,ACC,receiving,LONG,70,2026-09-29T20:11:16Z
+2020,4035465,Cornell Powell,WR,Clemson,ACC,receiving,REC,53,2026-09-29T20:11:16Z
+2020,4035465,Cornell Powell,WR,Clemson,ACC,receiving,TD,7,2026-09-29T20:11:16Z
+2020,4035465,Cornell Powell,WR,Clemson,ACC,receiving,YDS,882,2026-09-29T20:11:16Z
+2020,4035465,Cornell Powell,WR,Clemson,ACC,receiving,YPR,16.6,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,receiving,LONG,11,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,receiving,REC,3,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,receiving,YDS,22,2026-09-29T20:11:16Z
+2020,4035537,Kene Nwangwu,RB,Iowa State,Big 12,receiving,YPR,7.3,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,receiving,LONG,73,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,receiving,REC,29,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,receiving,TD,5,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,receiving,YDS,439,2026-09-29T20:11:16Z
+2020,4035656,Ben Skowronek,WR,Notre Dame,ACC,receiving,YPR,15.1,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,receiving,LONG,28,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,receiving,REC,22,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,receiving,TD,3,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,receiving,YDS,159,2026-09-29T20:11:16Z
+2020,4035826,Demetric Felton,RB,UCLA,Pac-12,receiving,YPR,7.2,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,receiving,LONG,46,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,receiving,REC,10,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,receiving,YDS,179,2026-09-29T20:11:16Z
+2020,4035886,Khalil Herbert,RB,Virginia Tech,ACC,receiving,YPR,17.9,2026-09-29T20:11:16Z
+2020,4036026,Dez Fitzpatrick,WR,Louisville,ACC,receiving,LONG,82,2026-09-29T20:11:16Z
+2020,4036026,Dez Fitzpatrick,WR,Louisville,ACC,receiving,REC,43,2026-09-29T20:11:16Z
+2020,4036026,Dez Fitzpatrick,WR,Louisville,ACC,receiving,TD,3,2026-09-29T20:11:16Z
+2020,4036026,Dez Fitzpatrick,WR,Louisville,ACC,receiving,YDS,833,2026-09-29T20:11:16Z
+2020,4036026,Dez Fitzpatrick,WR,Louisville,ACC,receiving,YPR,19.4,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,receiving,LONG,20,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,receiving,REC,10,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,receiving,YDS,68,2026-09-29T20:11:16Z
+2020,4036224,Jake Funk,RB,Maryland,Big Ten,receiving,YPR,6.8,2026-09-29T20:11:16Z
+2020,4037311,Jalen Camp,WR,Georgia Tech,ACC,receiving,LONG,59,2026-09-29T20:11:16Z
+2020,4037311,Jalen Camp,WR,Georgia Tech,ACC,receiving,REC,25,2026-09-29T20:11:16Z
+2020,4037311,Jalen Camp,WR,Georgia Tech,ACC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4037311,Jalen Camp,WR,Georgia Tech,ACC,receiving,YDS,392,2026-09-29T20:11:16Z
+2020,4037311,Jalen Camp,WR,Georgia Tech,ACC,receiving,YPR,15.7,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,receiving,LONG,60,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,receiving,REC,14,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,receiving,YDS,202,2026-09-29T20:11:16Z
+2020,4037478,Gerrid Doaks,RB,Cincinnati,American Athletic,receiving,YPR,14.4,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,receiving,LONG,42,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,receiving,REC,35,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,receiving,TD,5,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,receiving,YDS,536,2026-09-29T20:11:16Z
+2020,4039160,Kylen Granson,TE,SMU,American Athletic,receiving,YPR,15.3,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,receiving,LONG,51,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,receiving,REC,20,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,receiving,YDS,307,2026-09-29T20:11:16Z
+2020,4039307,Marquez Stevenson,WR,Houston,American Athletic,receiving,YPR,15.4,2026-09-29T20:11:16Z
+2020,4040612,Luke Farrell,TE,Ohio State,Big Ten,receiving,LONG,16,2026-09-29T20:11:16Z
+2020,4040612,Luke Farrell,TE,Ohio State,Big Ten,receiving,REC,5,2026-09-29T20:11:16Z
+2020,4040612,Luke Farrell,TE,Ohio State,Big Ten,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4040612,Luke Farrell,TE,Ohio State,Big Ten,receiving,YDS,37,2026-09-29T20:11:16Z
+2020,4040612,Luke Farrell,TE,Ohio State,Big Ten,receiving,YPR,7.4,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,receiving,LONG,85,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,receiving,REC,33,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,receiving,TD,8,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,receiving,YDS,768,2026-09-29T20:11:16Z
+2020,4043016,D'Wayne Eskridge,WR,Western Michigan,Mid-American,receiving,YPR,23.3,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,receiving,LONG,23,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,receiving,REC,9,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,receiving,YDS,87,2026-09-29T20:11:16Z
+2020,4046530,Chris Evans,RB,Michigan,Big Ten,receiving,YPR,9.7,2026-09-29T20:11:16Z
+2020,4047648,Tre Nixon,WR,UCF,American Athletic,receiving,LONG,51,2026-09-29T20:11:16Z
+2020,4047648,Tre Nixon,WR,UCF,American Athletic,receiving,REC,18,2026-09-29T20:11:16Z
+2020,4047648,Tre Nixon,WR,UCF,American Athletic,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4047648,Tre Nixon,WR,UCF,American Athletic,receiving,YDS,258,2026-09-29T20:11:16Z
+2020,4047648,Tre Nixon,WR,UCF,American Athletic,receiving,YPR,14.3,2026-09-29T20:11:16Z
+2020,4047836,Frank Darby,WR,Arizona State,Pac-12,receiving,LONG,15,2026-09-29T20:11:16Z
+2020,4047836,Frank Darby,WR,Arizona State,Pac-12,receiving,REC,6,2026-09-29T20:11:16Z
+2020,4047836,Frank Darby,WR,Arizona State,Pac-12,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4047836,Frank Darby,WR,Arizona State,Pac-12,receiving,YDS,46,2026-09-29T20:11:16Z
+2020,4047836,Frank Darby,WR,Arizona State,Pac-12,receiving,YPR,7.7,2026-09-29T20:11:16Z
+2020,4048228,John Bates,TE,Boise State,Mountain West,receiving,LONG,28,2026-09-29T20:11:16Z
+2020,4048228,John Bates,TE,Boise State,Mountain West,receiving,REC,12,2026-09-29T20:11:16Z
+2020,4048228,John Bates,TE,Boise State,Mountain West,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4048228,John Bates,TE,Boise State,Mountain West,receiving,YDS,117,2026-09-29T20:11:16Z
+2020,4048228,John Bates,TE,Boise State,Mountain West,receiving,YPR,9.8,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,receiving,LONG,80,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,receiving,REC,50,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,receiving,TD,8,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,receiving,YDS,656,2026-09-29T20:11:16Z
+2020,4068152,Kawaan Baker,WR,South Alabama,Sun Belt,receiving,YPR,13.1,2026-09-29T20:11:16Z
+2020,4239944,Hunter Long,TE,Boston College,ACC,receiving,LONG,36,2026-09-29T20:11:16Z
+2020,4239944,Hunter Long,TE,Boston College,ACC,receiving,REC,57,2026-09-29T20:11:16Z
+2020,4239944,Hunter Long,TE,Boston College,ACC,receiving,TD,5,2026-09-29T20:11:16Z
+2020,4239944,Hunter Long,TE,Boston College,ACC,receiving,YDS,685,2026-09-29T20:11:16Z
+2020,4239944,Hunter Long,TE,Boston College,ACC,receiving,YPR,12.0,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,receiving,LONG,83,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,receiving,REC,77,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,receiving,TD,7,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,receiving,YDS,1020,2026-09-29T20:11:16Z
+2020,4239992,Amari Rodgers,WR,Clemson,ACC,receiving,YPR,13.2,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,receiving,LONG,46,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,receiving,REC,48,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,receiving,YDS,588,2026-09-29T20:11:16Z
+2020,4239996,Travis Etienne,RB,Clemson,ACC,receiving,YPR,12.3,2026-09-29T20:11:16Z
+2020,4240023,Tre' McKitty,TE,Georgia,SEC,receiving,LONG,40,2026-09-29T20:11:16Z
+2020,4240023,Tre' McKitty,TE,Georgia,SEC,receiving,REC,6,2026-09-29T20:11:16Z
+2020,4240023,Tre' McKitty,TE,Georgia,SEC,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4240023,Tre' McKitty,TE,Georgia,SEC,receiving,YDS,108,2026-09-29T20:11:16Z
+2020,4240023,Tre' McKitty,TE,Georgia,SEC,receiving,YPR,18.0,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,receiving,LONG,24,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,receiving,REC,28,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,receiving,YDS,278,2026-09-29T20:11:16Z
+2020,4240472,Noah Gray,TE,Duke,ACC,receiving,YPR,9.9,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,receiving,LONG,53,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,receiving,REC,25,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,receiving,YDS,345,2026-09-29T20:11:16Z
+2020,4240573,Ihmir Smith-Marsette,WR,Iowa,Big Ten,receiving,YPR,13.8,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,receiving,LONG,57,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,receiving,REC,70,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,receiving,TD,10,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,receiving,YDS,984,2026-09-29T20:11:16Z
+2020,4240600,Kadarius Toney,WR,Florida,SEC,receiving,YPR,14.1,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,receiving,LONG,46,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,receiving,REC,25,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,receiving,YDS,267,2026-09-29T20:11:16Z
+2020,4240657,Michael Carter,RB,North Carolina,ACC,receiving,YPR,10.7,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,receiving,LONG,75,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,receiving,REC,54,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,receiving,TD,6,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,receiving,YDS,684,2026-09-29T20:11:16Z
+2020,4240661,Dazz Newsome,WR,North Carolina,ACC,receiving,YPR,12.7,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,receiving,LONG,23,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,receiving,REC,15,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,receiving,YDS,100,2026-09-29T20:11:16Z
+2020,4241205,Larry Rountree III,RB,Missouri,SEC,receiving,YPR,6.7,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,receiving,LONG,34,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,receiving,REC,12,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,receiving,YDS,95,2026-09-29T20:11:16Z
+2020,4241401,Trey Sermon,RB,Ohio State,Big Ten,receiving,YPR,7.9,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,receiving,LONG,21,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,receiving,REC,8,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,receiving,YDS,52,2026-09-29T20:11:16Z
+2020,4241416,Chuba Hubbard,RB,Oklahoma State,Big 12,receiving,YPR,6.5,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,receiving,LONG,55,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,receiving,REC,59,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,receiving,TD,6,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,receiving,YDS,917,2026-09-29T20:11:16Z
+2020,4241424,Tylan Wallace,WR,Oklahoma State,Big 12,receiving,YPR,15.5,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,receiving,LONG,26,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,receiving,REC,43,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,receiving,YDS,425,2026-09-29T20:11:16Z
+2020,4241457,Najee Harris,RB,Alabama,SEC,receiving,YPR,9.9,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,receiving,LONG,0,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,receiving,REC,1,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,receiving,YDS,-8,2026-09-29T20:11:16Z
+2020,4241464,Mac Jones,QB,Alabama,SEC,receiving,YPR,-8.0,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,receiving,LONG,66,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,receiving,REC,117,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,receiving,TD,23,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,receiving,YDS,1856,2026-09-29T20:11:16Z
+2020,4241478,DeVonta Smith,WR,Alabama,SEC,receiving,YPR,15.9,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,receiving,LONG,36,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,receiving,REC,16,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,receiving,YDS,153,2026-09-29T20:11:16Z
+2020,4241555,Elijah Mitchell,RB,Louisiana,Sun Belt,receiving,YPR,9.6,2026-09-29T20:11:16Z
+2020,4242231,Racey McMath,WR,LSU,SEC,receiving,LONG,30,2026-09-29T20:11:16Z
+2020,4242231,Racey McMath,WR,LSU,SEC,receiving,REC,14,2026-09-29T20:11:16Z
+2020,4242231,Racey McMath,WR,LSU,SEC,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4242231,Racey McMath,WR,LSU,SEC,receiving,YDS,195,2026-09-29T20:11:16Z
+2020,4242231,Racey McMath,WR,LSU,SEC,receiving,YPR,13.9,2026-09-29T20:11:16Z
+2020,4242433,Josh Palmer,WR,Tennessee,SEC,receiving,LONG,36,2026-09-29T20:11:16Z
+2020,4242433,Josh Palmer,WR,Tennessee,SEC,receiving,REC,33,2026-09-29T20:11:16Z
+2020,4242433,Josh Palmer,WR,Tennessee,SEC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4242433,Josh Palmer,WR,Tennessee,SEC,receiving,YDS,475,2026-09-29T20:11:16Z
+2020,4242433,Josh Palmer,WR,Tennessee,SEC,receiving,YPR,14.4,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,receiving,LONG,75,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,receiving,REC,74,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,receiving,TD,19,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,receiving,YDS,1190,2026-09-29T20:11:16Z
+2020,4243830,Jaelon Darden,WR,North Texas,Conference USA,receiving,YPR,16.1,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,receiving,LONG,15,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,receiving,REC,13,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,receiving,YDS,58,2026-09-29T20:11:16Z
+2020,4245645,Gary Brightwell,RB,Arizona,Pac-12,receiving,YPR,4.5,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,receiving,LONG,36,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,receiving,REC,55,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,receiving,YDS,621,2026-09-29T20:11:16Z
+2020,4259499,Shi Smith,WR,South Carolina,SEC,receiving,YPR,11.3,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,receiving,LONG,75,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,receiving,REC,23,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,receiving,YDS,237,2026-09-29T20:11:16Z
+2020,4259805,Kylin Hill,RB,Mississippi State,SEC,receiving,YPR,10.3,2026-09-29T20:11:16Z
+2020,4360248,Kyle Pitts,TE,Florida,SEC,receiving,LONG,71,2026-09-29T20:11:16Z
+2020,4360248,Kyle Pitts,TE,Florida,SEC,receiving,REC,43,2026-09-29T20:11:16Z
+2020,4360248,Kyle Pitts,TE,Florida,SEC,receiving,TD,12,2026-09-29T20:11:16Z
+2020,4360248,Kyle Pitts,TE,Florida,SEC,receiving,YDS,770,2026-09-29T20:11:16Z
+2020,4360248,Kyle Pitts,TE,Florida,SEC,receiving,YPR,17.9,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,receiving,LONG,8,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,receiving,REC,1,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,receiving,YDS,8,2026-09-29T20:11:16Z
+2020,4360310,Trevor Lawrence,QB,Clemson,ACC,receiving,YPR,8.0,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,receiving,LONG,57,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,receiving,REC,37,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,receiving,TD,3,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,receiving,YDS,584,2026-09-29T20:11:16Z
+2020,4360739,Simi Fehoko,WR,Stanford,Pac-12,receiving,YPR,15.8,2026-09-29T20:11:16Z
+2020,4360939,Rashod Bateman,WR,Minnesota,Big Ten,receiving,LONG,39,2026-09-29T20:11:16Z
+2020,4360939,Rashod Bateman,WR,Minnesota,Big Ten,receiving,REC,36,2026-09-29T20:11:16Z
+2020,4360939,Rashod Bateman,WR,Minnesota,Big Ten,receiving,TD,2,2026-09-29T20:11:16Z
+2020,4360939,Rashod Bateman,WR,Minnesota,Big Ten,receiving,YDS,472,2026-09-29T20:11:16Z
+2020,4360939,Rashod Bateman,WR,Minnesota,Big Ten,receiving,YPR,13.1,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,receiving,LONG,16,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,receiving,REC,2,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,receiving,YDS,32,2026-09-29T20:11:16Z
+2020,4361259,Zach Wilson,QB,BYU,FBS Independents,receiving,YPR,16.0,2026-09-29T20:11:16Z
+2020,4361411,Pat Freiermuth,TE,Penn State,Big Ten,receiving,LONG,74,2026-09-29T20:11:16Z
+2020,4361411,Pat Freiermuth,TE,Penn State,Big Ten,receiving,REC,23,2026-09-29T20:11:16Z
+2020,4361411,Pat Freiermuth,TE,Penn State,Big Ten,receiving,TD,1,2026-09-29T20:11:16Z
+2020,4361411,Pat Freiermuth,TE,Penn State,Big Ten,receiving,YDS,310,2026-09-29T20:11:16Z
+2020,4361411,Pat Freiermuth,TE,Penn State,Big Ten,receiving,YPR,13.5,2026-09-29T20:11:16Z
+2020,4361577,Dyami Brown,WR,North Carolina,ACC,receiving,LONG,87,2026-09-29T20:11:16Z
+2020,4361577,Dyami Brown,WR,North Carolina,ACC,receiving,REC,54,2026-09-29T20:11:16Z
+2020,4361577,Dyami Brown,WR,North Carolina,ACC,receiving,TD,8,2026-09-29T20:11:16Z
+2020,4361577,Dyami Brown,WR,North Carolina,ACC,receiving,YDS,1084,2026-09-29T20:11:16Z
+2020,4361577,Dyami Brown,WR,North Carolina,ACC,receiving,YPR,20.1,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,receiving,LONG,41,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,receiving,REC,25,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,receiving,TD,3,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,receiving,YDS,305,2026-09-29T20:11:16Z
+2020,4361579,Javonte Williams,RB,North Carolina,ACC,receiving,YPR,12.2,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,receiving,LONG,76,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,receiving,REC,38,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,receiving,TD,7,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,receiving,YDS,576,2026-09-29T20:11:16Z
+2020,4362504,Brevin Jordan,TE,Miami,ACC,receiving,YPR,15.2,2026-09-29T20:11:16Z
+2020,4362630,Terrace Marshall Jr.,WR,LSU,SEC,receiving,LONG,75,2026-09-29T20:11:16Z
+2020,4362630,Terrace Marshall Jr.,WR,LSU,SEC,receiving,REC,48,2026-09-29T20:11:16Z
+2020,4362630,Terrace Marshall Jr.,WR,LSU,SEC,receiving,TD,10,2026-09-29T20:11:16Z
+2020,4362630,Terrace Marshall Jr.,WR,LSU,SEC,receiving,YDS,731,2026-09-29T20:11:16Z
+2020,4362630,Terrace Marshall Jr.,WR,LSU,SEC,receiving,YPR,15.2,2026-09-29T20:11:16Z
+2020,4371974,Seth Williams,WR,Auburn,SEC,receiving,LONG,44,2026-09-29T20:11:16Z
+2020,4371974,Seth Williams,WR,Auburn,SEC,receiving,REC,47,2026-09-29T20:11:16Z
+2020,4371974,Seth Williams,WR,Auburn,SEC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4371974,Seth Williams,WR,Auburn,SEC,receiving,YDS,744,2026-09-29T20:11:16Z
+2020,4371974,Seth Williams,WR,Auburn,SEC,receiving,YPR,15.8,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,receiving,LONG,91,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,receiving,REC,54,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,receiving,TD,3,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,receiving,YDS,652,2026-09-29T20:11:16Z
+2020,4371986,Anthony Schwartz,WR,Auburn,SEC,receiving,YPR,12.1,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,receiving,LONG,90,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,receiving,REC,28,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,receiving,TD,4,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,receiving,YDS,591,2026-09-29T20:11:16Z
+2020,4372016,Jaylen Waddle,WR,Alabama,SEC,receiving,YPR,21.1,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,receiving,LONG,91,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,receiving,REC,86,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,receiving,TD,8,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,receiving,YDS,1193,2026-09-29T20:11:16Z
+2020,4372414,Elijah Moore,WR,Ole Miss,SEC,receiving,YPR,13.9,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,receiving,LONG,33,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,receiving,REC,35,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,receiving,YDS,270,2026-09-29T20:11:16Z
+2020,4372485,Rondale Moore,WR,Purdue,Big Ten,receiving,YPR,7.7,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,receiving,LONG,30,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,receiving,REC,19,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,receiving,YDS,217,2026-09-29T20:11:16Z
+2020,4372780,Tommy Tremble,TE,Notre Dame,ACC,receiving,YPR,11.4,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,receiving,LONG,78,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,receiving,REC,70,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,receiving,TD,8,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,receiving,YDS,1189,2026-09-29T20:11:16Z
+2020,4373642,Dax Milne,WR,BYU,FBS Independents,receiving,YPR,17.0,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,receiving,LONG,20,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,receiving,REC,9,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,receiving,YDS,67,2026-09-29T20:11:16Z
+2020,4374033,Jermar Jefferson,RB,Oregon State,Pac-12,receiving,YPR,7.4,2026-09-29T20:11:16Z
+2020,4374302,Amon-Ra St. Brown,WR,USC,Pac-12,receiving,LONG,48,2026-09-29T20:11:16Z
+2020,4374302,Amon-Ra St. Brown,WR,USC,Pac-12,receiving,REC,41,2026-09-29T20:11:16Z
+2020,4374302,Amon-Ra St. Brown,WR,USC,Pac-12,receiving,TD,7,2026-09-29T20:11:16Z
+2020,4374302,Amon-Ra St. Brown,WR,USC,Pac-12,receiving,YDS,478,2026-09-29T20:11:16Z
+2020,4374302,Amon-Ra St. Brown,WR,USC,Pac-12,receiving,YPR,11.7,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,receiving,LONG,45,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,receiving,REC,18,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,receiving,TD,0,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,receiving,YDS,211,2026-09-29T20:11:16Z
+2020,4569173,Rhamondre Stevenson,RB,Oklahoma,Big 12,receiving,YPR,11.7,2026-09-29T20:11:16Z

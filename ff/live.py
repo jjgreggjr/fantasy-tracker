@@ -32,7 +32,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from . import sources
+from . import modelcols, sources
 from .build import norm_id
 
 
@@ -115,6 +115,7 @@ def _snapshot_view(slug: str, meta: dict, d: Path) -> dict:
             if (d / "roster.csv").exists() else pd.DataFrame())
     avail = (pd.read_csv(d / "available.csv", low_memory=False)
              if (d / "available.csv").exists() else pd.DataFrame())
+    snap, avail = modelcols.attach(snap, slug, d.parent.parent), modelcols.attach(avail, slug, d.parent.parent)
     for col in ("is_starter", "is_ir", "is_taxi"):
         if not snap.empty and col not in snap.columns:
             snap[col] = 0
@@ -183,6 +184,7 @@ def live_league(slug: str, root: Path) -> dict:
     pool = _pool(d)
     if pool.empty:
         raise SystemExit(f"{slug} has no scored players yet — run the pipeline first")
+    pool = modelcols.attach(pool, slug, root)          # display only: E_pts_model / p10 / p90 beside E_pts
 
     # --- live ownership and lineup flags for every player in the league ----
     owner_of: dict[str, tuple[str, object]] = {}
@@ -271,7 +273,7 @@ def _with_volume(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-VOL_COLS = ("name", "position", "team", "injury_status", "E_pts", "E_opps",
+VOL_COLS = ("name", "position", "team", "injury_status", "E_pts", *modelcols.MODEL_COLS, "E_opps",
             "snap%", "share", "conf", "opponent")
 
 
@@ -311,6 +313,8 @@ def render(res: dict, top_adds: int = 8) -> str:
     a("columns: E_pts = expected points · E_opps = expected touches/targets · "
       "snap% = recent snap share · share = % of team targets (WR/TE) or "
       "carries (RB), pass att (QB)")
+    if "E_pts_model" in m.columns:
+        a(modelcols.NOTE)
     if m.empty:
         a("\n(no scored players on this roster)")
         return "\n".join(L)

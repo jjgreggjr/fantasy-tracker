@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 4
 
 redraft · 20 roster slots  
-Generated 2026-09-30 19:05 UTC · baselines: 2026 only · lineup as of 2026-09-30T19:05:35Z
+Generated 2026-09-30 19:22 UTC · baselines: 2026 only · lineup as of 2026-09-30T19:22:22Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -87,8 +87,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dallas Goedert | TE | PHI | LA | 5.3 | 1.8 |  | 1 | 28 | Low |  |
 | Mack Hollins | WR | NE | BUF | 9.8 | 5.4 | 18% | 3 | 5 | Med |  |
 | Roman Wilson | WR | PIT | CLE | 8.1 | 5.0 | 12% | 3 | 10 | Low | 🔥 |
-| Cooper Kupp | WR | SEA | LAC | 7.5 | 3.4 | 11% | 3 | 14 | Med |  |
 | Pat Bryant | WR | DEN | SF | 7.5 | 3.8 | 14% | 3 | 23 | Med | 🔥 |
+| Cooper Kupp | WR | SEA | LAC | 7.5 | 3.4 | 11% | 3 | 14 | Med |  |
 | Kalif Raymond | WR | CHI | NYJ | 12.8 | 6.1 | 16% | 3 | 22 | Med | 🔥 |
 | Keenan Allen | WR | IND | WAS | 10.4 | 6.0 | 18% | 2 | 1 | Med | 🔥 |
 
@@ -102,7 +102,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +14%/wk; team passes #5; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +8%/wk; team passes #9; age 27 |
 | Brashard Smith | RB | KC | 23.5 | 1 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
-| Darnell Washington | TE | PIT | 25.1 | 3 | 1 (was 2) | 64% | TE1 on depth chart; up from 2; snap share trending +6%/wk; team passes #6; age 25 |
 | Will Shipley | RB | PHI | 24.1 | 2 | 3 (was 3) | 32% | RB3 on depth chart; age 24 |
 | LeQuint Allen Jr. | RB | JAX | 22.2 | 1 | 3 (was 3) | 16% | RB3 on depth chart; age 22 |
 | Seth McGowan | RB | IND | 24.9 | 0 | 2 (was 2) | 11% | RB2 on depth chart; age 25 |
@@ -112,6 +111,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Corey Kiner | RB | NE | 24.7 | 1 | 3 (was 3) | 10% | RB3 on depth chart; age 25 |
 | Sione Vaki | RB | DET | 25.2 | 2 | 2 (was 2) | 26% | RB2 on depth chart; age 25 |
 | Demond Claiborne | RB | MIN | 23.0 | 0 | 3 (was 3) | 4% | RB3 on depth chart; age 23 |
+| Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 41% | TE3 on depth chart; team passes #6; age 26 |
 
 
 ## Ask me

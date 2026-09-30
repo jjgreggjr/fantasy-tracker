@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 4
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-09-30 19:05 UTC · baselines: 2026 only · lineup as of 2026-09-30T19:05:35Z
+Generated 2026-09-30 19:22 UTC · baselines: 2026 only · lineup as of 2026-09-30T19:22:22Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -79,8 +79,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Ty Johnson | RB | BUF | NE | 6.1 | 4.9 | 11% | 2 | 13 | Med |  |
 | Kendre Miller | RB | NO | ATL | 4.9 | 8.5 | 29% | 3 | 29 | Med | 🔥 |
 | Emanuel Wilson | RB | SEA | LAC | 4.5 | 10.4 | 31% | 2 | 16 | High |  |
-| Devin Singletary | RB | NYG | ARI | 4.1 | 4.1 | 3% | 4 | 27 | Low |  |
 | Samaje Perine | RB | CIN | JAX | 4.1 | 6.0 | 19% | 2 | 25 | High |  |
+| Devin Singletary | RB | NYG | ARI | 4.1 | 4.1 | 3% | 4 | 27 | Low |  |
 | Noah Fant | TE | NO | ATL | 8.2 | 3.6 | 9% | 2 | 9 | Med |  |
 | Tyler Higbee | TE | LA | PHI | 7.5 | 5.0 | 11% | 4 | 31 | Low | 🔥 |
 | Matthew Hibner | TE | BAL | TEN | 5.1 | 1.5 |  | 3 | 29 | Low |  |
@@ -105,7 +105,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 33% | TE2 on depth chart; snap share trending +8%/wk; team passes #9; age 27 |
 | Brashard Smith | RB | KC | 23.5 | 1 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
 | Braelon Allen | RB | NYJ | 22.7 | 2 | 2 (was 2) | 41% | RB2 on depth chart; snap share trending +6%/wk; age 23 |
-| Darnell Washington | TE | PIT | 25.1 | 3 | 1 (was 2) | 64% | TE1 on depth chart; up from 2; snap share trending +6%/wk; team passes #6; age 25 |
 | Will Shipley | RB | PHI | 24.1 | 2 | 3 (was 3) | 32% | RB3 on depth chart; age 24 |
 | LeQuint Allen Jr. | RB | JAX | 22.2 | 1 | 3 (was 3) | 16% | RB3 on depth chart; age 22 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
@@ -114,6 +113,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Corey Kiner | RB | NE | 24.7 | 1 | 3 (was 3) | 10% | RB3 on depth chart; age 25 |
 | Sione Vaki | RB | DET | 25.2 | 2 | 2 (was 2) | 26% | RB2 on depth chart; age 25 |
 | Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 41% | TE3 on depth chart; team passes #6; age 26 |
+| Sean Tucker | RB | TB | 24.9 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 25 |
 
 
 ## Ask me

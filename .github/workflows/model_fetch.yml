@@ -32,12 +32,16 @@ jobs:
 
       - run: pip install -r model/requirements.txt
 
+      # Every fetch step is continue-on-error: the ADP CSVs one step writes must still reach the commit step when a later step
+      # raises (an uncaught error in the CFBD fetch once would have killed the job before it).
       - name: Fetch FFC ADP (never fails the job; the log records what happened)
+        continue-on-error: true
         run: python -m model.fetch_adp --seasons 2021-2026 --formats ppr,standard
 
       # The key is exposed to this one step only, through the environment. It is never echoed, never a
       # workflow input (public repo), and fetch_cfbd never writes it anywhere (see its docstring).
       - name: Fetch CFBD college stat lines (skips itself when the secret is unset)
+        continue-on-error: true
         env:
           CFBD_KEY: ${{ secrets.CFBD_KEY }}
         run: python -m model.fetch_cfbd --seasons 2020-2025
@@ -51,6 +55,7 @@ jobs:
           } 2>&1 | tee model/data/probe_report_actions.txt || true
 
       - name: Step summary
+        continue-on-error: true
         run: |
           {
             echo "## ADP fetch log"

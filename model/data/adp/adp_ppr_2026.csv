@@ -1,0 +1,30 @@
+season,format,player_id,name,position,team,adp,adp_formatted,times_drafted,high,low,stdev,bye,meta_type,meta_teams,meta_rounds,meta_total_drafts,meta_start_date,meta_end_date,fetched_at,source_url
+2026,ppr,5672,Jahmyr Gibbs,RB,DET,1.1,1.01,14,1,2,0.3,6,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5670,Bijan Robinson,RB,ATL,2.6,1.03,8,2,3,0.5,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5177,Ja'Marr Chase,WR,CIN,3.9,1.04,8,2,5,0.8,6,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5671,Jaxon Smith-Njigba,WR,SEA,5.0,1.05,5,1,7,2.3,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5182,Amon-Ra St. Brown,WR,DET,6.9,1.07,7,6,8,0.9,6,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,4864,Jonathan Taylor,RB,IND,7.7,1.08,6,4,11,2.5,13,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,2350,Derrick Henry,RB,BAL,13.3,2.01,6,9,16,2.5,13,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5652,James Cook III,RB,BUF,15.6,2.04,7,12,20,2.6,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6500,Ashton Jeanty,RB,LV,17.4,2.05,8,7,24,5.8,13,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5625,Kenneth Walker,RB,KC,20.0,2.08,8,12,27,4.8,5,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6538,Omarion Hampton,RB,LAC,21.1,2.09,7,17,28,4.5,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,2885,Josh Allen,QB,BUF,24.3,2.12,15,1,37,9.0,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6769,Jeremiyah Love,RB,ARI,27.2,3.03,6,21,31,3.6,14,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5656,Trey McBride,TE,ARI,32.3,3.08,12,19,46,6.9,14,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5623,Kyren Williams,RB,LAR,35.6,3.12,5,32,42,4.1,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,4862,D'Andre Swift,RB,CHI,42.0,4.06,5,39,44,2.0,10,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5705,Parker Washington,WR,JAX,50.5,5.02,10,28,69,13.4,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5360,Christian Watson,WR,GB,50.6,5.03,13,35,65,8.3,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,3238,David Montgomery,RB,HOU,52.2,5.04,5,42,64,8.0,8,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5178,Jaylen Waddle,WR,DEN,52.4,5.04,5,48,61,5.1,10,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6776,Jadarian Price,RB,SEA,67.3,6.07,7,60,80,6.2,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,4873,Chuba Hubbard,RB,CAR,69.2,6.09,6,55,81,10.7,5,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6490,TreVeyon Henderson,RB,NE,73.0,7.01,6,41,101,23.7,11,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6175,Brian Thomas Jr.,WR,JAX,81.6,7.10,5,78,92,5.9,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,2316,Stefon Diggs,WR,WAS,86.9,8.03,7,80,91,4.8,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6302,Jalen Coker,WR,CAR,90.9,8.07,8,60,124,29.8,5,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5602,Tyler Shough,QB,NO,115.3,10.07,6,77,133,21.0,8,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,6162,Brandon Aubrey,PK,DAL,121.1,11.01,9,100,150,15.0,14,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all
+2026,ppr,5688,Dalton Kincaid,TE,BUF,123.1,11.03,8,102,139,15.6,7,PPR,12,15,109,2026-09-18,2026-09-25,2026-09-29T20:10:59Z,https://fantasyfootballcalculator.com/api/v1/adp/ppr?teams=12&year=2026&position=all

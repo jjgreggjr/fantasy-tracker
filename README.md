@@ -182,7 +182,7 @@ recorded run.
 | `data/trending.csv` | Most added/dropped across Sleeper in the last 24h |
 | `data/status.csv` | Availability, practice reports, and the blocker chain for every player |
 | `logs/runs.csv` | One row per run: when, week, pass/fail, and what failed |
-| `leagues/<slug>/roster.csv` | Your team in that league, scored |
+| `leagues/<slug>/roster.csv` | Your team in that league, scored; plus `E_pts_model`, `p10`, `p90` from the model (blank when the model has no row) |
 | `leagues/<slug>/available.csv` | That league's waiver wire, scored |
 | `leagues/<slug>/all_rosters.csv` | Every owner's team, scored (trade prep) |
 | `leagues/<slug>/player_points.csv` | Every player's points in that league's scoring, all weeks |
@@ -193,8 +193,21 @@ recorded run.
 | `data/lineups_played.csv` | What each team actually started in each completed week: one row per player per team, with slot, started 0/1 and the platform's points. The only valid source for "who played" |
 | `data/matchup_results.csv` | One row per team per completed week: opponent, points for/against, won/tie (and `median_won` in leagues that score against the league median) |
 | `reports/latest.md` | The newest report; also saved as `reports/2026_wkNN.md` |
+| `data/model_pts.csv` | The model's prediction for every player in the upcoming week, frozen at the last run before each game's kickoff: PPR point estimate, components, points in each league's scoring, p10/p50/p90, and Sleeper's projection and `E_pts` as they stood. Written by `python -m model.serve`; completed weeks are never rewritten |
+| `data/model_eval.csv` | The live scoreboard's rows: per completed week, league, position and comparator, pick accuracy and Spearman against the platform's actual points |
+| `model/reports/live_scoreboard.md` | The scoreboard summary and the adoption gate (see `POLICY.md`, "Model column") |
 | `raw/` | Cached downloads. Safe to delete; they re-download. |
 | `logs/` | One log per run, including any player that failed to match an ID |
+
+### Model columns
+
+`E_pts_model`, `p10` and `p90` are display-only: `E_pts` stays authoritative while the model is on probation. Points are
+composed from fourteen component models under each league's own scoring, **linear terms only**. Not scored, in any league:
+yardage bonuses (100/200-yard rushing and receiving, 300/400-yard passing), 40+ and 50+ yard touchdown bonuses, first downs,
+per-distance reception bins, and anything a kicker, team defence or IDP player earns. In this repo's leagues that is the
+dynasty league's yardage and long-TD bonuses; the IDP league is scored half-PPR on skill positions only. A player who is Out,
+IR, PUP, suspended or cut has no row (availability is the status layer's). `python -m model.serve --columns` documents every
+column of `data/model_pts.csv`.
 
 ## Tests
 
@@ -203,6 +216,9 @@ python -m unittest discover -s tests -t .
 ```
 
 They need no network and touch none of the data files.
+
+The model has its own suite (Python 3.12, `pip install -r model/requirements.txt`, real nflverse data cached under
+`model/cache/`): `python3.12 -m unittest discover -s model/tests -t .`
 
 ## Reading the report
 

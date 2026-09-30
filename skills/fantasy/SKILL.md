@@ -135,6 +135,7 @@ If a question doesn't name a league and the answer would differ, ask which.
 - **DvP rank 1 = the softest matchup**, the opposite of how defensive rankings usually read. Say so whenever you cite it.
 - **NO BASELINE** — no history at all (rookie), not the same as injured.
 - **vor** — points above the best free agent at that position. A negative number means the waiver wire replaces him for free.
+- **E_pts_model, p10, p90** — the boosted-tree model's points in that league's scoring, and its floor and ceiling (beside `E_pts` in `roster.csv`, `ff.ask live` and `lineup`; all columns in `data/model_pts.csv`). **On probation: `E_pts` stays the number a recommendation rests on.** Quote the model columns when they add something, never instead of `E_pts`. Blank means the model has no row for him (players who are Out, IR, PUP, suspended or cut get none; the status layer owns availability). It may rank above `E_pts` only after the gate in POLICY.md is met: it beats Sleeper's projection on pick accuracy over at least 6 completed 2026 weeks (`model/reports/live_scoreboard.md`).
 
 ## Answer format
 

@@ -140,6 +140,34 @@ their position's age cliff: RB 26+, WR 28+, TE 29+, QB 33+. That is the window
 the aging research points to — selling at 27 for a running back means selling
 after the market already knows.
 
+## Model column — `E_pts_model`, beside `E_pts`, on probation
+
+Since Phase 3 the weekly run also serves a boosted-tree model (LightGBM, XGBoost and CatBoost on the
+same pre-kickoff features; `PLAN_MODEL.md` has the evidence) and writes it next to `E_pts`:
+
+- **`E_pts_model`** is that model's points for the week **in that league's own scoring**: fourteen component
+  models (receptions, yards, touchdowns, carries, passing lines, ...) composed with the league's `league.json`
+  weights. Linear terms only. Yardage bonuses (100/200-yard rushing and receiving, 300/400-yard passing),
+  40+ and 50+ yard touchdown bonuses, first downs and per-distance reception bins are not scored, and kicking,
+  team defence and IDP never are (skill positions only, like everything else here).
+  **`p10` / `p90`** are its floor and ceiling: quantile models recalibrated from trailing residuals, fit on PPR
+  points for a league that scores PPR and on that league's own points for the dynasty and IDP leagues (a mean does
+  not compose into a quantile, and moving the PPR band by the change in the mean misses badly for a TE premium).
+  They are in `roster.csv`, `ff.ask live` and `ff.ask lineup`, and in full
+  (PPR point estimate, components, per-league points, the frozen Sleeper projection and `E_pts`) in
+  `data/model_pts.csv`. `python -m model.serve --columns` documents every column.
+- **It does not know who is playing.** The model predicts points *if he plays*; availability belongs to the status
+  layer above. A player who is Out, IR, PUP, suspended, cut or reserve (Sleeper status or the nflverse report) has
+  **no row**, and the column is blank. Doubtful and Questionable players keep a row: read their status next to it.
+- **Probation: `E_pts` stays authoritative.** Every recipe, sort, lineup, cut, trade and report still runs on
+  `E_pts` and nothing reads the model columns. They are there to be compared, never to decide.
+- **Adoption gate, written down at Phase 3:** the model earns recipe preference only when it beats Sleeper's
+  projection on pick accuracy over at least 6 completed 2026 weeks. Every game's prediction, Sleeper's projection
+  and `E_pts` are frozen at the last run before kickoff; after each completed week `python -m model.scoreboard`
+  scores them on identical rows against the platform's own points (`data/model_eval.csv`,
+  `model/reports/live_scoreboard.md`). Frozen weeks start with week 4, so the gate cannot be met before week 9
+  completes. Until a human reads that report and says so, nothing changes.
+
 ## What this policy deliberately does not do
 
 It does not price draft picks, it does not value future rookie drafts, and it

@@ -1,0 +1,847 @@
+season,playerId,player,position,team,conference,category,statType,stat,fetched_at
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,COMPLETIONS,0,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,ATT,592,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,TD,29,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,PCT,0.660,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,INT,4,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,PCT,0.735,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,YDS,0,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,TD,31,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,TD,16,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,PCT,0.667,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,YDS,4010,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,COMPLETIONS,204,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,ATT,2,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,PCT,1.000,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,YPA,7.1,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,PCT,0.729,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,YPA,8.4,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,ATT,320,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,ATT,3,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,YPA,7.8,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,INT,5,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,COMPLETIONS,391,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,PCT,0.500,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,YPA,8.2,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,TD,34,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,YDS,3042,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,YPA,0.0,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,YDS,2783,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,YPA,8.1,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,YPA,0.0,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,INT,0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,INT,0,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,YDS,3252,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,INT,0,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,ATT,94,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,YDS,0,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,INT,6,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,PCT,0.627,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,YDS,30,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,YDS,4279,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,YDS,4134,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,INT,10,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,TD,0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,COMPLETIONS,0,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,ATT,4,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,PCT,1.000,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,COMPLETIONS,3,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,TD,6,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,ATT,351,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,YPA,5.8,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,YPA,0.0,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,TD,31,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,TD,1,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,COMPLETIONS,3,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,PCT,0.658,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,ATT,2,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,COMPLETIONS,72,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,TD,1,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,PCT,0.667,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,COMPLETIONS,276,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,YDS,6,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,YDS,35,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,PCT,1.000,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,TD,0,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,COMPLETIONS,269,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,YPA,7.0,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,COMPLETIONS,2,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,YDS,0,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,TD,35,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,YDS,7,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,PCT,0.678,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,INT,10,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,INT,8,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,YDS,38,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,YPA,8.6,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,PCT,0.766,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,INT,0,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,YPA,15.0,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,COMPLETIONS,293,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,TD,0,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,YPA,0.0,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,ATT,2,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,INT,0,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,YPA,7.3,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,TD,0,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,YPA,4.5,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,COMPLETIONS,205,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,YDS,4779,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,YPA,18.0,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,PCT,0.000,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,ATT,3,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,TD,30,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,TD,1,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,YDS,27,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,ATT,319,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,TD,0,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,PCT,1.000,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,YPA,9.5,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,COMPLETIONS,0,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,TD,0,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,YPA,8.9,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,passing,YPA,12.7,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,TD,37,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,PCT,0.000,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,INT,6,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,YPA,27.0,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,TD,1,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,YDS,22,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,PCT,0.000,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,YPA,9.3,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,YDS,0,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,TD,0,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,YPA,9.5,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,ATT,2,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,TD,0,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,ATT,398,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,YDS,3195,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,INT,0,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,TD,0,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,PCT,0.643,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,PCT,0.500,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,COMPLETIONS,1,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,TD,21,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,YDS,2861,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,TD,33,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,COMPLETIONS,244,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,YDS,0,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,INT,6,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,passing,ATT,403,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,COMPLETIONS,353,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,PCT,0.740,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,COMPLETIONS,222,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,YDS,791,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,YDS,2844,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,COMPLETIONS,326,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,YPA,10.8,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,YPA,9.2,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,passing,INT,12,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,ATT,389,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,YPA,8.7,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,ATT,445,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,passing,YDS,14,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,YDS,3472,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,YPA,6.0,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,YPA,0.0,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,passing,INT,12,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,passing,COMPLETIONS,258,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,TD,0,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,PCT,0.500,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,passing,YPA,7.0,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,ATT,301,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,COMPLETIONS,309,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,TD,0,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,PCT,0.000,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,passing,ATT,6,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,YDS,18,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,COMPLETIONS,0,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,passing,INT,0,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,INT,0,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,passing,INT,11,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,passing,COMPLETIONS,0,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,TD,29,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,passing,PCT,0.000,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,passing,INT,0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,passing,PCT,1.000,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,passing,ATT,477,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,passing,INT,2,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,passing,YDS,9,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,passing,ATT,1,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,ATT,423,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,ATT,447,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,passing,PCT,0.694,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,passing,PCT,0.693,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,passing,TD,23,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,passing,PCT,0.730,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,passing,INT,2,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,passing,INT,1,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,passing,PCT,0.500,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,passing,YDS,3857,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,rushing,YDS,-2,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,rushing,LONG,76,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,rushing,CAR,26,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,rushing,TD,16,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,rushing,TD,10,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,rushing,YDS,1343,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,rushing,CAR,122,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,rushing,LONG,0,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,rushing,TD,12,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,rushing,YDS,22,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,rushing,TD,8,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,rushing,YPC,-1.4,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,rushing,CAR,9,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,rushing,LONG,46,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,rushing,TD,15,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,rushing,LONG,48,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,rushing,TD,1,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,rushing,YPC,6.7,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,rushing,YDS,1060,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,rushing,YPC,5.4,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,rushing,TD,20,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,rushing,TD,15,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,rushing,CAR,234,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,rushing,CAR,134,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,rushing,YPC,7.2,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,rushing,YDS,-1,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,rushing,LONG,66,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,rushing,CAR,9,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,rushing,TD,2,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,rushing,LONG,19,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,rushing,TD,29,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,rushing,YDS,7,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,rushing,YPC,5.5,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,rushing,YPC,4.2,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,rushing,YDS,1,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,rushing,YPC,0.0,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,rushing,YPC,4.3,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,rushing,YPC,4.0,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,rushing,CAR,281,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,rushing,YPC,-0.5,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,rushing,YDS,1505,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,rushing,LONG,75,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,rushing,LONG,86,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,rushing,LONG,22,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,rushing,LONG,61,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,rushing,YPC,2.2,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,rushing,YDS,-82,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,rushing,CAR,3,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,rushing,CAR,9,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,rushing,YPC,6.3,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,rushing,YDS,65,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,rushing,YPC,12.5,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,rushing,LONG,22,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,rushing,YPC,4.1,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,rushing,YDS,125,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,rushing,CAR,286,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,rushing,TD,3,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,rushing,LONG,0,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,rushing,YDS,33,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,rushing,YPC,4.9,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,rushing,LONG,1,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,rushing,YPC,5.0,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,rushing,CAR,184,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,rushing,CAR,168,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,rushing,YDS,730,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,rushing,YPC,2.0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,rushing,YDS,116,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,rushing,YDS,-35,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,rushing,YDS,631,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,rushing,CAR,145,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,rushing,LONG,54,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,rushing,TD,2,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,rushing,YDS,1201,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,rushing,YPC,5.9,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,rushing,LONG,12,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,rushing,YDS,218,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,rushing,YPC,-2.0,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,rushing,CAR,57,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,rushing,TD,0,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,rushing,CAR,258,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,rushing,YDS,495,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,rushing,YDS,38,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,rushing,CAR,42,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,rushing,LONG,83,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,rushing,CAR,5,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,rushing,TD,13,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,rushing,YDS,1021,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,rushing,YDS,2,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,rushing,YPC,5.3,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,rushing,YDS,54,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,rushing,YPC,5.7,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,rushing,YDS,20,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,rushing,YPC,5.0,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,rushing,TD,3,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,rushing,TD,15,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,rushing,CAR,10,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,rushing,TD,7,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,rushing,LONG,35,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,rushing,YDS,1660,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,rushing,TD,8,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,rushing,YDS,2,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,rushing,YDS,1267,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,rushing,LONG,5,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,rushing,LONG,26,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,rushing,TD,1,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,rushing,YDS,12,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,rushing,LONG,35,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,rushing,LONG,66,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,rushing,YDS,1002,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,rushing,CAR,144,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,rushing,CAR,75,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,rushing,YPC,10.8,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,rushing,CAR,67,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,rushing,YPC,6.4,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,rushing,YPC,5.8,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,rushing,TD,17,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,rushing,LONG,72,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,rushing,CAR,51,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,rushing,YPC,8.6,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,rushing,TD,22,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,rushing,CAR,205,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,rushing,YPC,-1.0,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,rushing,LONG,16,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,rushing,YPC,0,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,rushing,YPC,4.4,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,rushing,LONG,12,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,rushing,YPC,3.0,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,rushing,CAR,124,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,rushing,CAR,233,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,rushing,TD,4,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,rushing,TD,17,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,rushing,YDS,149,2026-09-29T20:12:39Z
+2024,4689114,Jaxson Dart,QB,Ole Miss,SEC,rushing,YPC,4.0,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,rushing,CAR,256,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,rushing,LONG,30,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,rushing,CAR,185,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,rushing,TD,14,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,rushing,LONG,13,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,rushing,TD,14,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,rushing,LONG,29,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,rushing,LONG,75,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,rushing,YPC,12.0,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,rushing,CAR,46,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,rushing,YPC,5.4,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,rushing,YPC,2.0,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,rushing,LONG,3,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,rushing,YPC,4.5,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,rushing,CAR,159,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,rushing,CAR,374,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,rushing,YPC,8.4,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,rushing,LONG,24,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,rushing,YDS,0,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,rushing,YDS,226,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,rushing,YPC,-1.0,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,rushing,LONG,64,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,rushing,YDS,5,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,rushing,CAR,18,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,rushing,YDS,1158,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,rushing,CAR,216,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,rushing,YDS,1115,2026-09-29T20:12:39Z
+2024,4432734,Jalen Milroe,QB,Alabama,SEC,rushing,YDS,726,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,rushing,YPC,7.1,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,rushing,YDS,23,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,rushing,YDS,1491,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,rushing,LONG,48,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,rushing,YDS,56,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,rushing,LONG,31,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,rushing,TD,4,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,rushing,YPC,5.2,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,rushing,YPC,5.8,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,rushing,TD,8,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,rushing,TD,22,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,rushing,LONG,40,2026-09-29T20:12:39Z
+2024,4433971,Kyle McCord,QB,Syracuse,ACC,rushing,YDS,-65,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,rushing,LONG,2,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,rushing,CAR,0,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,rushing,TD,7,2026-09-29T20:12:39Z
+2024,4693331,Cam Miller,QB,North Dakota State,MVFC,rushing,TD,12,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,rushing,LONG,77,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,rushing,YDS,3,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,rushing,LONG,50,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,rushing,YDS,858,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,rushing,LONG,75,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,rushing,CAR,194,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,rushing,YPC,6.3,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,rushing,CAR,105,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,rushing,LONG,63,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,rushing,TD,7,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,rushing,YPC,11.5,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,rushing,YPC,2.0,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,rushing,LONG,41,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,rushing,YDS,40,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,rushing,CAR,10,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,rushing,YDS,906,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,rushing,TD,1,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,rushing,YPC,6.6,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,rushing,LONG,7,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,rushing,CAR,183,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,rushing,CAR,187,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,rushing,CAR,18,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,rushing,TD,10,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,rushing,LONG,56,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,rushing,YDS,-50,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,rushing,YPC,5.1,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,rushing,CAR,8,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,rushing,TD,21,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,rushing,LONG,14,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,rushing,CAR,189,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,rushing,YDS,3,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,rushing,CAR,121,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,rushing,LONG,50,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,rushing,TD,1,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,rushing,YDS,1279,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,rushing,LONG,83,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,rushing,LONG,2,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,rushing,YDS,948,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,rushing,CAR,228,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,rushing,YPC,2.5,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,rushing,YDS,19,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,rushing,YDS,1016,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,rushing,LONG,17,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,rushing,TD,15,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,rushing,YDS,1577,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,rushing,YPC,6.8,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,rushing,LONG,71,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,rushing,YPC,22.0,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,rushing,LONG,0,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,rushing,YPC,6.4,2026-09-29T20:12:39Z
+2024,4427238,Dillon Gabriel,QB,Oregon,Big Ten,rushing,LONG,54,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4360689,Tyler Shough,QB,Louisville,ACC,rushing,YPC,0.5,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,rushing,YPC,6.3,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,rushing,LONG,68,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,rushing,LONG,0,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,rushing,TD,0,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,rushing,TD,9,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,rushing,TD,16,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,rushing,TD,2,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,rushing,LONG,77,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,rushing,LONG,30,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4430431,Kurtis Rourke,QB,Indiana,Big Ten,rushing,YPC,-0.8,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,rushing,YDS,609,2026-09-29T20:12:39Z
+2024,4775196,Tommy Mellott,QB,Montana State,Big Sky,rushing,YDS,1037,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,rushing,YPC,3.0,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,rushing,CAR,240,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,rushing,CAR,2,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4432762,Shedeur Sanders,QB,Colorado,Big 12,rushing,CAR,100,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,rushing,LONG,12,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,rushing,LONG,19,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,rushing,YDS,57,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,rushing,CAR,219,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,rushing,CAR,2,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,rushing,YDS,1537,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,rushing,LONG,62,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,rushing,YPC,6.4,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,rushing,YDS,-1,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,rushing,YDS,322,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,rushing,TD,6,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,rushing,YDS,1266,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,rushing,YPC,6.3,2026-09-29T20:12:39Z
+2024,4426335,Graham Mertz,QB,Florida,SEC,rushing,YPC,3.1,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,rushing,LONG,80,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,rushing,YPC,1.0,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,rushing,YDS,2601,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,rushing,CAR,1,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,rushing,YPC,-1.0,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,rushing,CAR,232,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,rushing,YPC,7.0,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,rushing,YPC,4.5,2026-09-29T20:12:39Z
+2024,4889929,Quinn Ewers,QB,Texas,SEC,rushing,TD,2,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,rushing,LONG,19,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,rushing,TD,12,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,rushing,LONG,3,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,rushing,TD,0,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,rushing,YDS,1330,2026-09-29T20:12:39Z
+2024,4570037,Terrance Ferguson,TE,Oregon,Big Ten,receiving,TD,3,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,receiving,LONG,0,2026-09-29T20:12:39Z
+2024,4570037,Terrance Ferguson,TE,Oregon,Big Ten,receiving,YPR,13.7,2026-09-29T20:12:39Z
+2024,4432338,Luke Lachey,TE,Iowa,Big Ten,receiving,YPR,8.3,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,receiving,REC,48,2026-09-29T20:12:39Z
+2024,4691688,Robbie Ouzts,TE,Alabama,SEC,receiving,YDS,108,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,receiving,LONG,14,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,receiving,YDS,898,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,receiving,YPR,12.6,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,receiving,REC,39,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,receiving,YDS,834,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,receiving,YDS,1550,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,receiving,TD,10,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,receiving,TD,9,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,receiving,LONG,12,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,receiving,TD,8,2026-09-29T20:12:39Z
+2024,4590292,Thomas Fidone Jr.,TE,Nebraska,Big Ten,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,receiving,REC,6,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,receiving,LONG,74,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,receiving,YPR,8.8,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,receiving,YDS,258,2026-09-29T20:12:39Z
+2024,4808766,Mason Taylor,TE,LSU,SEC,receiving,REC,55,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,receiving,REC,117,2026-09-29T20:12:39Z
+2024,4570037,Terrance Ferguson,TE,Oregon,Big Ten,receiving,REC,43,2026-09-29T20:12:39Z
+2024,4686612,Tre Harris,WR,Ole Miss,SEC,receiving,REC,61,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,receiving,YPR,16.7,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,receiving,YDS,368,2026-09-29T20:12:39Z
+2024,4883647,Elic Ayomanor,WR,Stanford,ACC,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,receiving,LONG,0,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,receiving,YPR,16.9,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,receiving,YDS,1194,2026-09-29T20:12:39Z
+2024,4573699,Jackson Hawes,TE,Georgia Tech,ACC,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,receiving,YDS,1193,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,receiving,YDS,79,2026-09-29T20:12:39Z
+2024,4683243,Mitchell Evans,TE,Notre Dame,FBS Independents,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,receiving,YPR,11.1,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,receiving,TD,9,2026-09-29T20:12:39Z
+2024,4877706,Jayden Higgins,WR,Iowa State,Big 12,receiving,YDS,1183,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,receiving,YPR,9.8,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,receiving,TD,10,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,receiving,YPR,17.0,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4710855,Konata Mumpfield,WR,Pittsburgh,ACC,receiving,YDS,813,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,receiving,REC,1,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,receiving,LONG,68,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,receiving,YDS,204,2026-09-29T20:12:39Z
+2024,4877706,Jayden Higgins,WR,Iowa State,Big 12,receiving,LONG,39,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,receiving,YPR,13.1,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,receiving,YDS,155,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,receiving,YDS,542,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,receiving,YPR,13.2,2026-09-29T20:12:39Z
+2024,4686612,Tre Harris,WR,Ole Miss,SEC,receiving,TD,7,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,receiving,LONG,44,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,5123663,Isaac Teslaa,WR,Arkansas,SEC,receiving,TD,3,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,receiving,YPR,13.2,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,receiving,YDS,-8,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,receiving,YDS,188,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,receiving,REC,38,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,receiving,REC,96,2026-09-29T20:12:39Z
+2024,4883647,Elic Ayomanor,WR,Stanford,ACC,receiving,LONG,60,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,receiving,YPR,8.5,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,receiving,REC,38,2026-09-29T20:12:39Z
+2024,4883647,Elic Ayomanor,WR,Stanford,ACC,receiving,YPR,13.2,2026-09-29T20:12:39Z
+2024,4432208,Caleb Lohner,TE,Utah,Big 12,receiving,YDS,54,2026-09-29T20:12:39Z
+2024,4691688,Robbie Ouzts,TE,Alabama,SEC,receiving,LONG,44,2026-09-29T20:12:39Z
+2024,4431268,Chimere Dike,WR,Florida,SEC,receiving,YDS,783,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,receiving,REC,30,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,receiving,TD,15,2026-09-29T20:12:39Z
+2024,4432208,Caleb Lohner,TE,Utah,Big 12,receiving,YPR,13.5,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,receiving,YDS,611,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,receiving,YDS,529,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,receiving,REC,26,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,receiving,LONG,22,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,receiving,YDS,75,2026-09-29T20:12:39Z
+2024,4710855,Konata Mumpfield,WR,Pittsburgh,ACC,receiving,REC,52,2026-09-29T20:12:39Z
+2024,4683243,Mitchell Evans,TE,Notre Dame,FBS Independents,receiving,REC,43,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,receiving,YPR,11.1,2026-09-29T20:12:39Z
+2024,4573699,Jackson Hawes,TE,Georgia Tech,ACC,receiving,YDS,195,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,receiving,YPR,8.4,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,receiving,LONG,52,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,receiving,REC,23,2026-09-29T20:12:39Z
+2024,4432731,Moliki Matavao,TE,UCLA,Big Ten,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,receiving,LONG,21,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,receiving,TD,5,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,receiving,YPR,17.0,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4686728,Gunnar Helm,TE,Texas,SEC,receiving,YDS,786,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,receiving,LONG,55,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,receiving,LONG,36,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,receiving,YDS,1319,2026-09-29T20:12:39Z
+2024,4432338,Luke Lachey,TE,Iowa,Big Ten,receiving,REC,28,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,receiving,YPR,12.0,2026-09-29T20:12:39Z
+2024,4691688,Robbie Ouzts,TE,Alabama,SEC,receiving,REC,8,2026-09-29T20:12:39Z
+2024,4573699,Jackson Hawes,TE,Georgia Tech,ACC,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,4432338,Luke Lachey,TE,Iowa,Big Ten,receiving,YDS,231,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,receiving,YDS,1011,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,receiving,YPR,12.3,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,receiving,YPR,12.8,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,receiving,REC,27,2026-09-29T20:12:39Z
+2024,4570037,Terrance Ferguson,TE,Oregon,Big Ten,receiving,LONG,62,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,receiving,YPR,5.8,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,receiving,TD,8,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,receiving,REC,35,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,receiving,REC,49,2026-09-29T20:12:39Z
+2024,4683243,Mitchell Evans,TE,Notre Dame,FBS Independents,receiving,YDS,421,2026-09-29T20:12:39Z
+2024,4686728,Gunnar Helm,TE,Texas,SEC,receiving,LONG,49,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4431268,Chimere Dike,WR,Florida,SEC,receiving,LONG,44,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,receiving,REC,21,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,receiving,LONG,52,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,receiving,YPR,4.9,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,receiving,REC,22,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,receiving,YDS,1034,2026-09-29T20:12:39Z
+2024,4432731,Moliki Matavao,TE,UCLA,Big Ten,receiving,YPR,12.3,2026-09-29T20:12:39Z
+2024,4590292,Thomas Fidone Jr.,TE,Nebraska,Big Ten,receiving,YPR,10.4,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,receiving,YDS,590,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,receiving,TD,0,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,receiving,REC,20,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,receiving,YDS,1233,2026-09-29T20:12:39Z
+2024,4596439,Dominic Lovett,WR,Georgia,SEC,receiving,YPR,10.3,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,receiving,TD,10,2026-09-29T20:12:39Z
+2024,4686612,Tre Harris,WR,Ole Miss,SEC,receiving,YPR,17.4,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,receiving,YPR,-8.0,2026-09-29T20:12:39Z
+2024,4432775,Dont'E Thornton,WR,Tennessee,SEC,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4432775,Dont'E Thornton,WR,Tennessee,SEC,receiving,REC,26,2026-09-29T20:12:39Z
+2024,4590292,Thomas Fidone Jr.,TE,Nebraska,Big Ten,receiving,YDS,373,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,receiving,YPR,5.0,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,receiving,REC,1,2026-09-29T20:12:39Z
+2024,4432208,Caleb Lohner,TE,Utah,Big 12,receiving,LONG,20,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,receiving,LONG,38,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,receiving,YPR,11.3,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,receiving,LONG,78,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,receiving,LONG,53,2026-09-29T20:12:39Z
+2024,5123663,Isaac Teslaa,WR,Arkansas,SEC,receiving,REC,28,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,receiving,YDS,817,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,receiving,YPR,12.3,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4683243,Mitchell Evans,TE,Notre Dame,FBS Independents,receiving,TD,3,2026-09-29T20:12:39Z
+2024,4431268,Chimere Dike,WR,Florida,SEC,receiving,YPR,18.6,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,receiving,REC,60,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,receiving,YPR,7.3,2026-09-29T20:12:39Z
+2024,4678006,Elijah Arroyo,TE,Miami,ACC,receiving,TD,7,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,receiving,TD,14,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,receiving,REC,14,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,receiving,REC,83,2026-09-29T20:12:39Z
+2024,4432208,Caleb Lohner,TE,Utah,Big 12,receiving,REC,4,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4570037,Terrance Ferguson,TE,Oregon,Big Ten,receiving,YDS,591,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,receiving,REC,60,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,receiving,REC,24,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,receiving,REC,56,2026-09-29T20:12:39Z
+2024,4710855,Konata Mumpfield,WR,Pittsburgh,ACC,receiving,TD,5,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4710855,Konata Mumpfield,WR,Pittsburgh,ACC,receiving,YPR,15.6,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,receiving,LONG,69,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,receiving,YDS,922,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,receiving,YDS,194,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,receiving,YDS,201,2026-09-29T20:12:39Z
+2024,4432338,Luke Lachey,TE,Iowa,Big Ten,receiving,LONG,28,2026-09-29T20:12:39Z
+2024,4877706,Jayden Higgins,WR,Iowa State,Big 12,receiving,REC,87,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,receiving,YDS,103,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,receiving,YDS,1041,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,receiving,REC,79,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,receiving,REC,38,2026-09-29T20:12:39Z
+2024,4686612,Tre Harris,WR,Ole Miss,SEC,receiving,YDS,1063,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,receiving,YDS,582,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,receiving,YDS,373,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,receiving,YDS,143,2026-09-29T20:12:39Z
+2024,4431268,Chimere Dike,WR,Florida,SEC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,receiving,LONG,30,2026-09-29T20:12:39Z
+2024,4432338,Luke Lachey,TE,Iowa,Big Ten,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,receiving,TD,8,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,receiving,YPR,14.7,2026-09-29T20:12:39Z
+2024,4590292,Thomas Fidone Jr.,TE,Nebraska,Big Ten,receiving,REC,36,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,receiving,REC,64,2026-09-29T20:12:39Z
+2024,4429121,Kalel Mullings,RB,Michigan,Big Ten,receiving,YDS,35,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,receiving,YDS,5,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,receiving,YPR,6.0,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,4596439,Dominic Lovett,WR,Georgia,SEC,receiving,REC,59,2026-09-29T20:12:39Z
+2024,4686728,Gunnar Helm,TE,Texas,SEC,receiving,YPR,13.1,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4432731,Moliki Matavao,TE,UCLA,Big Ten,receiving,YDS,506,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,receiving,LONG,45,2026-09-29T20:12:39Z
+2024,4711533,Ollie Gordon,RB,Oklahoma State,Big 12,receiving,YPR,6.7,2026-09-29T20:12:39Z
+2024,4686728,Gunnar Helm,TE,Texas,SEC,receiving,TD,7,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,receiving,REC,20,2026-09-29T20:12:39Z
+2024,4573699,Jackson Hawes,TE,Georgia Tech,ACC,receiving,REC,16,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,receiving,REC,58,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,receiving,YDS,209,2026-09-29T20:12:39Z
+2024,4883647,Elic Ayomanor,WR,Stanford,ACC,receiving,YDS,831,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,receiving,TD,9,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,receiving,YDS,327,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,receiving,REC,21,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,receiving,YPR,3.6,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,receiving,LONG,72,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4686612,Tre Harris,WR,Ole Miss,SEC,receiving,LONG,70,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,receiving,YPR,7.2,2026-09-29T20:12:39Z
+2024,5123663,Isaac Teslaa,WR,Arkansas,SEC,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,receiving,YPR,10.6,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,receiving,YPR,10.5,2026-09-29T20:12:39Z
+2024,4431479,Ricky White,WR,UNLV,Mountain West,receiving,TD,11,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,receiving,REC,70,2026-09-29T20:12:39Z
+2024,4874509,DJ Giddens,RB,Kansas State,Big 12,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,receiving,LONG,54,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,receiving,YDS,185,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,receiving,LONG,58,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4596602,Brashard Smith,RB,SMU,ACC,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,receiving,REC,72,2026-09-29T20:12:39Z
+2024,4613202,Kyle Williams,WR,Washington State,Pac-12,receiving,LONG,66,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,receiving,LONG,52,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,receiving,LONG,14,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,receiving,LONG,39,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,receiving,YDS,329,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,receiving,LONG,18,2026-09-29T20:12:39Z
+2024,4882093,Bhayshul Tuten,RB,Virginia Tech,ACC,receiving,LONG,22,2026-09-29T20:12:39Z
+2024,5123663,Isaac Teslaa,WR,Arkansas,SEC,receiving,YDS,545,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,receiving,YPR,17.0,2026-09-29T20:12:39Z
+2024,4432208,Caleb Lohner,TE,Utah,Big 12,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4710855,Konata Mumpfield,WR,Pittsburgh,ACC,receiving,LONG,46,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,receiving,YPR,13.4,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,receiving,REC,17,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,receiving,YDS,284,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,receiving,REC,22,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4429299,Tahj Brooks,RB,Texas Tech,Big 12,receiving,YPR,6.9,2026-09-29T20:12:39Z
+2024,4808766,Mason Taylor,TE,LSU,SEC,receiving,YPR,9.9,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,receiving,LONG,66,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,receiving,REC,25,2026-09-29T20:12:39Z
+2024,4808766,Mason Taylor,TE,LSU,SEC,receiving,YDS,546,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,receiving,YDS,267,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,receiving,YDS,0,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,receiving,YPR,8.0,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,receiving,REC,96,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,receiving,REC,81,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,receiving,REC,1,2026-09-29T20:12:39Z
+2024,4808766,Mason Taylor,TE,LSU,SEC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4595342,Oronde Gadsden II,TE,Syracuse,ACC,receiving,TD,7,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,receiving,REC,48,2026-09-29T20:12:39Z
+2024,4432775,Dont'E Thornton,WR,Tennessee,SEC,receiving,YPR,25.4,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,receiving,LONG,69,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,receiving,YPR,11.9,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,receiving,TD,3,2026-09-29T20:12:39Z
+2024,4431268,Chimere Dike,WR,Florida,SEC,receiving,REC,42,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,receiving,LONG,18,2026-09-29T20:12:39Z
+2024,4808766,Mason Taylor,TE,LSU,SEC,receiving,LONG,33,2026-09-29T20:12:39Z
+2024,4691688,Robbie Ouzts,TE,Alabama,SEC,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,receiving,TD,2,2026-09-29T20:12:39Z
+2024,4568490,RJ Harvey,RB,UCF,Big 12,receiving,TD,3,2026-09-29T20:12:39Z
+2024,4596439,Dominic Lovett,WR,Georgia,SEC,receiving,LONG,38,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,receiving,REC,81,2026-09-29T20:12:39Z
+2024,4685415,Travis Hunter,WR,Colorado,Big 12,receiving,YDS,1258,2026-09-29T20:12:39Z
+2024,4686728,Gunnar Helm,TE,Texas,SEC,receiving,REC,60,2026-09-29T20:12:39Z
+2024,4685279,Jaydon Blue,RB,Texas,SEC,receiving,REC,42,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,receiving,YDS,254,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,receiving,TD,9,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,receiving,YPR,18.5,2026-09-29T20:12:39Z
+2024,4432775,Dont'E Thornton,WR,Tennessee,SEC,receiving,LONG,86,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,receiving,REC,74,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,receiving,YPR,10.2,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,receiving,YPR,10.4,2026-09-29T20:12:39Z
+2024,4431487,Savion Williams,WR,TCU,Big 12,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,receiving,LONG,67,2026-09-29T20:12:39Z
+2024,4429105,Arian Smith,WR,Georgia,SEC,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,receiving,YPR,6.1,2026-09-29T20:12:39Z
+2024,4567750,Emeka Egbuka,WR,Ohio State,Big Ten,receiving,YPR,12.5,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,receiving,LONG,65,2026-09-29T20:12:39Z
+2024,4586312,Jaylin Noel,WR,Iowa State,Big 12,receiving,LONG,75,2026-09-29T20:12:39Z
+2024,4701936,Matthew Golden,WR,Texas,SEC,receiving,YDS,987,2026-09-29T20:12:39Z
+2024,4685397,Jordan James,RB,Oregon,Big Ten,receiving,LONG,26,2026-09-29T20:12:39Z
+2024,5081397,Dylan Sampson,RB,Tennessee,SEC,receiving,LONG,21,2026-09-29T20:12:39Z
+2024,4691688,Robbie Ouzts,TE,Alabama,SEC,receiving,YPR,13.5,2026-09-29T20:12:39Z
+2024,4603186,Jack Bech,WR,TCU,Big 12,receiving,REC,62,2026-09-29T20:12:39Z
+2024,4432710,TreVeyon Henderson,RB,Ohio State,Big Ten,receiving,REC,27,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,receiving,REC,104,2026-09-29T20:12:39Z
+2024,4683243,Mitchell Evans,TE,Notre Dame,FBS Independents,receiving,YPR,9.8,2026-09-29T20:12:39Z
+2024,4819231,Kaleb Johnson,RB,Iowa,Big Ten,receiving,REC,22,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,receiving,TD,4,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,receiving,YDS,161,2026-09-29T20:12:39Z
+2024,4887918,Junior Bergen,WR,Montana,Big Sky,receiving,LONG,55,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,receiving,YPR,15.2,2026-09-29T20:12:39Z
+2024,4429955,Will Howard,QB,Ohio State,Big Ten,receiving,YPR,0.0,2026-09-29T20:12:39Z
+2024,5083076,Harold Fannin,TE,Bowling Green,Mid-American,receiving,YPR,13.2,2026-09-29T20:12:39Z
+2024,4685382,Omarion Hampton,RB,North Carolina,ACC,receiving,LONG,49,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,receiving,LONG,22,2026-09-29T20:12:39Z
+2024,4596439,Dominic Lovett,WR,Georgia,SEC,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4596439,Dominic Lovett,WR,Georgia,SEC,receiving,YDS,607,2026-09-29T20:12:39Z
+2024,4431466,Jordan Watkins,WR,Ole Miss,SEC,receiving,YDS,906,2026-09-29T20:12:39Z
+2024,4573699,Jackson Hawes,TE,Georgia Tech,ACC,receiving,YPR,12.2,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,receiving,REC,84,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,receiving,YPR,10.8,2026-09-29T20:12:39Z
+2024,4685702,Quinshon Judkins,RB,Ohio State,Big Ten,receiving,LONG,21,2026-09-29T20:12:39Z
+2024,4911851,Lequint Allen,RB,Syracuse,ACC,receiving,YPR,8.3,2026-09-29T20:12:39Z
+2024,4877706,Jayden Higgins,WR,Iowa State,Big 12,receiving,TD,9,2026-09-29T20:12:39Z
+2024,4808830,Damien Martinez,RB,Miami,ACC,receiving,LONG,36,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,receiving,YPR,11.7,2026-09-29T20:12:39Z
+2024,4685472,Tetairoa Mcmillan,WR,Arizona,Big 12,receiving,YPR,15.7,2026-09-29T20:12:39Z
+2024,4877706,Jayden Higgins,WR,Iowa State,Big 12,receiving,YPR,13.6,2026-09-29T20:12:39Z
+2024,4608686,Kyle Monangai,RB,Rutgers,Big Ten,receiving,YPR,5.4,2026-09-29T20:12:39Z
+2024,4682652,Devin Neal,RB,Kansas,Big 12,receiving,LONG,51,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,receiving,TD,6,2026-09-29T20:12:39Z
+2024,4432731,Moliki Matavao,TE,UCLA,Big Ten,receiving,LONG,35,2026-09-29T20:12:39Z
+2024,4565185,Tai Felton,WR,Maryland,Big Ten,receiving,YDS,1124,2026-09-29T20:12:39Z
+2024,4431509,Kaden Prather,WR,Maryland,Big Ten,receiving,YDS,624,2026-09-29T20:12:39Z
+2024,4590292,Thomas Fidone Jr.,TE,Nebraska,Big Ten,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4432731,Moliki Matavao,TE,UCLA,Big Ten,receiving,REC,41,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,receiving,YDS,441,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,receiving,REC,32,2026-09-29T20:12:39Z
+2024,4690143,LaJohntay Wester,WR,Colorado,Big 12,receiving,YDS,931,2026-09-29T20:12:39Z
+2024,4602667,Jaylin Lane,WR,Virginia Tech,ACC,receiving,YDS,466,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,receiving,REC,37,2026-09-29T20:12:39Z
+2024,4431459,Tyler Warren,TE,Penn State,Big Ten,receiving,YPR,11.9,2026-09-29T20:12:39Z
+2024,4890973,Ashton Jeanty,RB,Boise State,Mountain West,receiving,YDS,138,2026-09-29T20:12:39Z
+2024,5123663,Isaac Teslaa,WR,Arkansas,SEC,receiving,YPR,19.5,2026-09-29T20:12:39Z
+2024,4432775,Dont'E Thornton,WR,Tennessee,SEC,receiving,YDS,661,2026-09-29T20:12:39Z
+2024,4685350,Trevor Etienne,RB,Georgia,SEC,receiving,TD,0,2026-09-29T20:12:39Z
+2024,4723086,Colston Loveland,TE,Michigan,Big Ten,receiving,REC,56,2026-09-29T20:12:39Z
+2024,4883647,Elic Ayomanor,WR,Stanford,ACC,receiving,REC,63,2026-09-29T20:12:39Z
+2024,4597703,Tory Horton,WR,Colorado State,Mountain West,receiving,YDS,331,2026-09-29T20:12:39Z
+2024,5077107,Kyle Williams,RB,Morgan State,MEAC,receiving,LONG,39,2026-09-29T20:12:39Z
+2024,4708486,Jimmy Horn Jr.,WR,Colorado,Big 12,receiving,TD,1,2026-09-29T20:12:39Z
+2024,4708049,Gavin Bartholomew,TE,Pittsburgh,ACC,receiving,YPR,8.7,2026-09-29T20:12:39Z
+2024,4710341,Jarquez Hunter,RB,Auburn,SEC,receiving,YPR,7.4,2026-09-29T20:12:39Z
+2024,4431562,Phil Mafah,RB,Clemson,ACC,receiving,REC,21,2026-09-29T20:12:39Z
+2024,4683423,Riley Leonard,QB,Notre Dame,FBS Independents,receiving,TD,0,2026-09-29T20:12:39Z
+2024,5082630,Jalen Royals,WR,Utah State,Mountain West,receiving,REC,55,2026-09-29T20:12:39Z
+2024,4685278,Luther Burden III,WR,Missouri,SEC,receiving,YDS,666,2026-09-29T20:12:39Z
+2024,4608810,Tez Johnson,WR,Oregon,Big Ten,receiving,TD,10,2026-09-29T20:12:39Z
