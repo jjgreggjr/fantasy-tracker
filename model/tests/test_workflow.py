@@ -51,6 +51,26 @@ class Workflow(unittest.TestCase):
         self.assertIn("continue-on-error: true", run)
         self.assertIn("steps.pipeline.outcome == 'failure'", self.step("Fail the job if integrity checks failed"))
 
+    def test_the_model_cache_is_keyed_on_content_and_week_not_on_the_run(self):
+        """A run-id key misses every run and uploads a fresh multi-hundred-MB entry, evicting the pip caches from the 10 GB quota."""
+        cache = self.step("path: model/cache")
+        key = cache[cache.index("key:"):cache.index("restore-keys")]
+        self.assertNotIn("run_id", key)
+        self.assertIn("hashFiles('model/requirements.txt'", key)
+        self.assertIn("model/features.py", key)
+        self.assertIn("steps.modelweek.outputs.week", key)
+        self.assertIn("model-cache-\n", cache[cache.index("restore-keys"):] + "\n")          # the prefix fallback is kept
+        self.assertIn("date -u +%G-W%V", self.step("id: modelweek"))
+        self.assertIn("continue-on-error: true", self.step("id: modelweek"))
+
+    def test_the_manual_fetch_workflow_cannot_lose_the_adp_csvs_to_a_later_step(self):
+        text = (REPO / ".github" / "workflows" / "model_fetch.yml").read_text(encoding="utf-8")
+        steps = text.split("\n      - ")
+        for needle in ("model.fetch_adp", "model.fetch_cfbd", "name: Step summary"):
+            hit = [s for s in steps if needle in s]
+            self.assertEqual(len(hit), 1, needle)
+            self.assertIn("continue-on-error: true", hit[0], needle)
+
     def test_the_commit_step_also_adds_the_scoreboard_report(self):
         self.assertIn("model/reports/live_scoreboard.md", self.step("name: Commit results"))
 

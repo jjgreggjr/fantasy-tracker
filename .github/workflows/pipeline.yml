@@ -86,12 +86,23 @@ jobs:
         run: pip install -r model/requirements.txt
 
       # model/cache holds the nflverse files and the feature-matrix cache (keyed on a hash of
-      # the feature code inside serve). The files that change in season are re-downloaded every run.
+      # the feature code inside serve). The files that change in season are re-downloaded every
+      # run, so the Actions key only has to stop the cache growing: it is keyed on the model
+      # dependencies, the feature code and the ISO week, so it is saved once per week per code
+      # change (not once per run, which would churn the 10 GB quota and evict the pip caches)
+      # and every other run is an exact hit. The restore-keys fall back to the newest older one.
+      - name: Cache key for the model (ISO week)
+        id: modelweek
+        continue-on-error: true
+        run: echo "week=$(date -u +%G-W%V)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/cache@v4
         with:
           path: model/cache
-          key: model-cache-${{ github.run_id }}
-          restore-keys: model-cache-
+          key: model-cache-${{ hashFiles('model/requirements.txt', 'model/features.py', 'model/point_in_time.py', 'model/labels.py', 'model/build_features.py') }}-${{ steps.modelweek.outputs.week }}
+          restore-keys: |
+            model-cache-${{ hashFiles('model/requirements.txt', 'model/features.py', 'model/point_in_time.py', 'model/labels.py', 'model/build_features.py') }}-
+            model-cache-
 
       - name: Model side by side with E_pts, then the live scoreboard
         id: model
