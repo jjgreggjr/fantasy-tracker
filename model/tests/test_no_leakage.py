@@ -92,7 +92,8 @@ class LoaderContracts(unittest.TestCase):
                                            "snap_counts", "xfp", "injuries", "depth_charts",
                                            "players_static", "draft_picks", "combine",
                                            "career_pre_cutoff",        # Phase 1: pre-2020 career games
-                                           "adp", "college"})          # fetched CSVs (ADP since Phase 1's fetch, college: Phase 2)
+                                           "adp", "college",           # fetched CSVs (ADP since Phase 1's fetch, college: Phase 2)
+                                           "pbp_usage", "pbp_team", "pbp_part"})   # Phase 2.5: play-by-play (+ participation)
         for name in store().names():
             t = store()._tables[name]
             self.assertTrue(t.known_at_rule, name)

@@ -30,7 +30,7 @@ from model import point_in_time as pit
 
 CACHE = pit.CACHE_DIR
 DEFAULT_OUT = CACHE / "features.parquet"
-LABELS = ["y_played", "y_has_stats_row", "y_offense_snaps", "y_points_ppr"]
+LABELS = ["y_played", "y_has_stats_row", "y_offense_snaps", "y_points_ppr", *labels.COMPONENTS]
 BASELINES = ["base_xfp_sameweek", "base_trail3_ppr"]
 SPINE_FLAGS = ["spine_usage", "spine_injury", "spine_depth", "spine_draft", "spine_depth_only"]
 

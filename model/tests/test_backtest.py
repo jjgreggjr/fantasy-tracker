@@ -350,7 +350,7 @@ class TheRealMatrix(unittest.TestCase):
         X, fam = T.encode(d, T.feature_columns(d, T.PRIMARY, dead))
         self.assertFalse([c for c in X.columns if c.startswith(("wx_", "y_", "base_", "spine_"))])
         self.assertNotIn("season", X.columns)
-        self.assertEqual(set(fam.values()) - {"position"}, set(F.FAMILIES) - {"weather"})
+        self.assertEqual(set(fam.values()) - {"position"}, set(F.FAMILIES) - {"weather"} - set(T.OPT_IN_FAMILIES))
 
 
 if __name__ == "__main__":

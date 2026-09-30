@@ -64,6 +64,14 @@ CAREER_FIRST_SEASON = 1999
 
 SKILL_POSITIONS = ("QB", "RB", "WR", "TE")
 # draft_picks uses Pro-Football-Reference team codes; the schedule (and every other table) uses nflverse's.
+# Phase 2.5: play-by-play tables. Red zone = 20 yards or less to the end zone, inside-10 = 10 or less (nflfastR `yardline_100`).
+RED_ZONE_YARDS = 20
+INSIDE_TEN_YARDS = 10
+# nflverse `pbp_participation` (who was on the field, per play) is a post-season asset: the 2025 file was last modified
+# 2026-02-10 and no 2026 file exists as of 2026-09-30. Stamping its rows at the game's kickoff is therefore a BACKTEST
+# proxy (the same declared-proxy treatment as observed weather), not something a weekly in-season run could read.
+PARTICIPATION_PROXY = ("game kickoff, but nflverse publishes pbp_participation after the season (2025 file last modified "
+                       "2026-02-10, no 2026 file in-season): NOT servable in a weekly run")
 PFR_TEAM_TO_NFLVERSE = {"GNB": "GB", "KAN": "KC", "LAR": "LA", "LVR": "LV", "NOR": "NO", "NWE": "NE",
                         "SFO": "SF", "TAM": "TB", "OAK": "LV", "SDG": "LAC", "STL": "LA"}
 # Offense labels shared by both depth-chart formats (drops defense, KR/PR, specialists).
@@ -435,10 +443,17 @@ def load_player_games(seasons: Iterable[int]) -> RawTable:
             "passing_tds", "passing_interceptions", "carries", "rushing_yards", "rushing_tds",
             "targets", "receptions", "receiving_yards", "receiving_tds", "target_share",
             "air_yards_share", "wopr", "fantasy_points", "fantasy_points_ppr"]
-    frames = [_nflverse("stats_player", f"stats_player_week_{y}.parquet")[keep] for y in seasons]
+    # Scoring components that the Phase 2.5 component models need as TARGETS (labels.py reads them; no feature does).
+    extra = ["sack_fumbles_lost", "rushing_fumbles_lost", "receiving_fumbles_lost", "passing_2pt_conversions",
+             "rushing_2pt_conversions", "receiving_2pt_conversions", "special_teams_tds"]
+    frames = [_nflverse("stats_player", f"stats_player_week_{y}.parquet")[keep + extra] for y in seasons]
     df = pd.concat(frames, ignore_index=True)
     n0 = len(df)
     df = df[df["position"].isin(SKILL_POSITIONS)].copy()
+    df["fumbles_lost"] = df[["sack_fumbles_lost", "rushing_fumbles_lost", "receiving_fumbles_lost"]].sum(axis=1)
+    df["two_pt_conversions"] = df[["passing_2pt_conversions", "rushing_2pt_conversions", "receiving_2pt_conversions"]].sum(axis=1)
+    df = df.drop(columns=["sack_fumbles_lost", "rushing_fumbles_lost", "receiving_fumbles_lost", "passing_2pt_conversions",
+                          "rushing_2pt_conversions", "receiving_2pt_conversions"])
     # carry share: a function of the same game's rows only, so it is known when the game is
     # (nflverse publishes target_share but no carry share). QB scrambles count as team carries.
     team_carries = df.groupby(["game_id", "team"])["carries"].transform("sum")
@@ -630,14 +645,164 @@ def load_static_tables() -> list[RawTable]:
             RawTable("combine", cb.reset_index(drop=True), rule, dropped={"pfr_id_not_mapped": n_cb})]
 
 
-def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True) -> RawStore:
+# --------------------------------------------------------------------------- play-by-play (Phase 2.5)
+PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "defteam", "play_type", "pass_attempt",
+            "rush_attempt", "qb_dropback", "two_point_attempt", "yardline_100", "air_yards", "receiver_player_id",
+            "rusher_player_id", "wp", "down", "qtr", "half_seconds_remaining"]
+PBP_USAGE_COLS = ["tgt", "rz_tgt", "i10_tgt", "ay", "ay_n", "car", "rz_car", "i10_car"]
+PBP_TEAM_COUNTS = ["plays", "dropbacks", "neutral_plays", "neutral_dropbacks", "tgt", "rz_tgt", "i10_tgt", "ay", "car",
+                   "rz_car", "i10_car", "part_dropbacks", "part_rush", "part_rz", "part_i10"]
+PBP_PART_COLS = ["pass_on", "run_on", "rz_on", "i10_on"]
+
+
+def _fetch_optional(url: str, dest: Path) -> Path | None:
+    """`_fetch` for an asset that may not exist yet (a release that publishes after the season). A 404 is remembered
+    with an empty `.absent` marker (delete model/cache/ to look again) and returns None; anything else is an error."""
+    marker = dest.with_suffix(dest.suffix + ".absent")
+    if dest.exists() and dest.stat().st_size > 0:
+        return dest
+    if marker.exists():
+        return None
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    r = requests.get(url, timeout=120)
+    if r.status_code == 404:
+        marker.write_bytes(b"")
+        return None
+    r.raise_for_status()
+    tmp = dest.with_suffix(dest.suffix + ".part")
+    tmp.write_bytes(r.content)
+    tmp.replace(dest)
+    return dest
+
+
+def _pbp_season(y: int, skill_ids: set) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame | None]:
+    """(usage, team, part) frames for one season, WITHOUT known_at. Definitions match nflverse's own player stats
+    (targets and receiving air yards match the weekly stats file exactly, carries to 99.98%: they include QB kneels and
+    scrambles) so a share here is the same share the existing lags use. Two-point tries are excluded everywhere."""
+    p = pd.read_parquet(_fetch(f"{NFLVERSE}/pbp/play_by_play_{y}.parquet", CACHE_DIR / "nflverse" / f"play_by_play_{y}.parquet"),
+                        columns=PBP_COLS)
+    p = p[p["posteam"].notna() & p["game_id"].notna() & p["season_type"].isin(["REG", "POST"])
+          & p["play_type"].isin(["pass", "run", "qb_kneel"]) & (p["two_point_attempt"].fillna(0) != 1)].copy()
+    p["game_type"] = np.where(p["season_type"] == "REG", "REG", "POST")
+    yl = p["yardline_100"]
+    p["rz"] = yl <= RED_ZONE_YARDS
+    p["i10"] = yl <= INSIDE_TEN_YARDS
+    scrim = p["play_type"].isin(["pass", "run"])                          # kneels are carries but not plays
+    p["scrim"] = scrim
+    p["dropback"] = scrim & (p["qb_dropback"].fillna(0) == 1)
+    p["neutral"] = (scrim & p["wp"].between(0.2, 0.8) & p["down"].isin([1, 2]) & p["qtr"].isin([1, 2, 3])
+                    & (p["half_seconds_remaining"] > 120))
+    is_tgt = (p["play_type"] == "pass") & (p["pass_attempt"] == 1) & p["receiver_player_id"].notna()
+    is_car = (p["rush_attempt"] == 1) & p["rusher_player_id"].notna()
+    key = ["game_id", "posteam"]
+
+    t = p[is_tgt].assign(player_id=lambda d: d["receiver_player_id"], tgt=1.0,
+                         rz_tgt=lambda d: d["rz"].astype(float), i10_tgt=lambda d: d["i10"].astype(float),
+                         ay=lambda d: d["air_yards"].fillna(0.0), ay_n=lambda d: d["air_yards"].notna().astype(float))
+    c = p[is_car].assign(player_id=lambda d: d["rusher_player_id"], car=1.0,
+                         rz_car=lambda d: d["rz"].astype(float), i10_car=lambda d: d["i10"].astype(float))
+    ut = t.groupby(key + ["player_id"])[["tgt", "rz_tgt", "i10_tgt", "ay", "ay_n"]].sum()
+    uc = c.groupby(key + ["player_id"])[["car", "rz_car", "i10_car"]].sum()
+    usage = ut.join(uc, how="outer").fillna(0.0).reset_index()
+    usage = usage[usage["player_id"].isin(skill_ids)]
+    meta = p.groupby(key).agg(season=("season", "first"), week=("week", "first"), game_type=("game_type", "first"),
+                              opponent=("defteam", "first")).reset_index()
+    usage = usage.merge(meta[key + ["season", "week", "game_type"]], on=key, how="left").rename(columns={"posteam": "team"})
+    usage = usage[["player_id", "season", "week", "game_type", "game_id", "team", *PBP_USAGE_COLS]]
+
+    tm = p.groupby(key).agg(plays=("scrim", "sum"), dropbacks=("dropback", "sum"), neutral_plays=("neutral", "sum")).astype(float)
+    tm["neutral_dropbacks"] = p[p["neutral"] & p["dropback"]].groupby(key).size().reindex(tm.index).fillna(0.0)
+    tm["tgt"] = t.groupby(key).size().reindex(tm.index).fillna(0.0)
+    tm["rz_tgt"] = t.groupby(key)["rz_tgt"].sum().reindex(tm.index).fillna(0.0)
+    tm["i10_tgt"] = t.groupby(key)["i10_tgt"].sum().reindex(tm.index).fillna(0.0)
+    tm["ay"] = t.groupby(key)["ay"].sum().reindex(tm.index).fillna(0.0)
+    tm["car"] = c.groupby(key).size().reindex(tm.index).fillna(0.0)
+    tm["rz_car"] = c.groupby(key)["rz_car"].sum().reindex(tm.index).fillna(0.0)
+    tm["i10_car"] = c.groupby(key)["i10_car"].sum().reindex(tm.index).fillna(0.0)
+    for col in ("part_dropbacks", "part_rush", "part_rz", "part_i10"):
+        tm[col] = 0.0
+
+    part = None
+    pp = _fetch_optional(f"{NFLVERSE}/pbp_participation/pbp_participation_{y}.parquet",
+                         CACHE_DIR / "nflverse" / f"pbp_participation_{y}.parquet")
+    if pp is not None:
+        d = pd.read_parquet(pp, columns=["nflverse_game_id", "play_id", "offense_players"])
+        d = d[d["offense_players"].fillna("").str.len() > 0]
+        sc = p[p["scrim"]][["game_id", "play_id", "posteam", "dropback", "rz", "i10"]]
+        m = sc.merge(d, left_on=["game_id", "play_id"], right_on=["nflverse_game_id", "play_id"], how="inner")
+        m["pass_on"] = m["dropback"].astype(float)
+        m["run_on"] = (~m["dropback"]).astype(float)
+        m["rz_on"] = m["rz"].astype(float)
+        m["i10_on"] = m["i10"].astype(float)
+        tp = m.groupby(key).agg(part_dropbacks=("pass_on", "sum"), part_rush=("run_on", "sum"), part_rz=("rz_on", "sum"),
+                                part_i10=("i10_on", "sum"))
+        tm.loc[tp.index, ["part_dropbacks", "part_rush", "part_rz", "part_i10"]] = tp.to_numpy()
+        m["player_id"] = m["offense_players"].str.split(";")
+        m = m.explode("player_id")
+        m = m[m["player_id"].isin(skill_ids)]
+        part = m.groupby(key + ["player_id"])[PBP_PART_COLS].sum().reset_index()
+        part = part.merge(meta[key + ["season", "week", "game_type"]], on=key, how="left").rename(columns={"posteam": "team"})
+        part = part[["player_id", "season", "week", "game_type", "game_id", "team", *PBP_PART_COLS]]
+    team = tm.reset_index().merge(meta, on=key, how="left").rename(columns={"posteam": "team"})
+    team[PBP_TEAM_COUNTS] = team[PBP_TEAM_COUNTS].astype("float64")
+    team = team[["team", "opponent", "season", "week", "game_type", "game_id", *PBP_TEAM_COUNTS]]
+    return usage, team, part
+
+
+def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_counts: pd.DataFrame) -> list[RawTable]:
+    """Three raw tables from nflverse play-by-play (and the participation feed), every row stamped with its source
+    game's kickoff like the other game-result tables; features read them at kickoff - RESULT_LAG.
+
+      pbp_usage  (player, game): targets, red-zone and inside-10 targets, air yards (and how many targets carry an air-yards
+                 value), carries, red-zone and inside-10 carries. Only players who had at least one target or carry.
+      pbp_team   (team, game): the same totals for the whole team (the denominators of every share) plus play counts,
+                 dropbacks, neutral-situation plays, and how many plays the participation feed covers.
+      pbp_part   (player, game): plays on the field for dropbacks / non-dropback runs / red-zone / inside-10 plays, from the
+                 participation feed. Backtest-only (`PARTICIPATION_PROXY`): the asset is not published in-season.
+
+    The skill-player filter (ids seen at QB/RB/WR/TE in the stats or snap tables) only decides which rows are kept; it reads no
+    value. Games with no play-by-play are simply absent, and a game with no participation has `part_*` = 0 in pbp_team."""
+    seasons = sorted(set(seasons))
+    skill_ids = set(player_games["player_id"]) | set(snap_counts.loc[snap_counts["position"].isin(SKILL_POSITIONS), "player_id"])
+    ko = _kickoffs()
+    usage, team, part = [], [], []
+    for y in seasons:
+        u, t, pa = _pbp_season(y, skill_ids)
+        usage.append(u)
+        team.append(t)
+        if pa is not None:
+            part.append(pa)
+    out = []
+    for name, frames, rule, proxy in (
+            ("pbp_usage", usage, "game kickoff (plan: game rows)", None),
+            ("pbp_team", team, "game kickoff (plan: game rows)", None),
+            ("pbp_part", part, "game kickoff (backtest proxy: the participation asset is published after the season)",
+             PARTICIPATION_PROXY)):
+        if not frames:
+            continue
+        df = pd.concat(frames, ignore_index=True)
+        df["season"] = df["season"].astype(int)
+        df["week"] = df["week"].astype(int)
+        df[KNOWN_AT] = _ns_utc(df["game_id"].map(ko))
+        n_bad = int(df[KNOWN_AT].isna().sum())
+        df = df[df[KNOWN_AT].notna()].reset_index(drop=True)
+        out.append(RawTable(name, df, rule, proxy=proxy, dropped={"game_not_in_schedule": n_bad}))
+    return out
+
+
+
+def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
-    adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/)."""
+    adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
+    tables (Phase 2.5)."""
     seasons = list(seasons)
-    tables = [*load_schedule_tables(seasons), load_player_games(seasons), load_snap_counts(seasons),
+    pg, sn = load_player_games(seasons), load_snap_counts(seasons)
+    tables = [*load_schedule_tables(seasons), pg, sn,
               load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
               *load_static_tables(), load_career_pre_cutoff()]
+    if pbp:
+        tables += load_pbp_tables(seasons, pg.df, sn.df)
     if adp:
         from model.adp import load_adp_table       # local import: adp.py needs this module's helpers
         t = load_adp_table()

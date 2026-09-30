@@ -26,6 +26,15 @@ from model.point_in_time import KNOWN_AT, RawStore, TargetRow, make_target
 
 Builder = Callable[[RawStore, TargetRow], dict]
 MONSTER = 987654.0
+# Phase 2.5 canary rows for the play-by-play tables: distinctive counts (the shares they imply are .4 / .3 / .2 ... not
+# what any real game produces) so a row that leaks into a feature moves it.
+PBP_CANARY_USAGE = {"tgt": 40.0, "rz_tgt": 12.0, "i10_tgt": 8.0, "ay": 800.0, "ay_n": 40.0, "car": 30.0, "rz_car": 15.0,
+                    "i10_car": 9.0}
+PBP_CANARY_TEAM = {"plays": 999.0, "dropbacks": 900.0, "neutral_plays": 500.0, "neutral_dropbacks": 450.0, "tgt": 100.0,
+                   "rz_tgt": 40.0, "i10_tgt": 20.0, "ay": 1600.0, "car": 100.0, "rz_car": 50.0, "i10_car": 30.0,
+                   "part_dropbacks": 100.0, "part_rush": 100.0, "part_rz": 50.0, "part_i10": 25.0}
+PBP_CANARY_PART = {"pass_on": 90.0, "run_on": 80.0, "rz_on": 40.0, "i10_on": 20.0}
+PBP_TABLES = ("pbp_usage", "pbp_team", "pbp_part")
 COLLEGE_MONSTER = {"college_rec_market_share": 0.987, "college_rec_td_share": 0.987, "college_rec_pg": 98.7,
                    "college_ypr": 98.7, "college_rush_share": 0.987, "college_car_pg": 98.7, "college_ypc": 98.7,
                    "college_dominator": 0.987, "college_pass_att_pg": 98.7, "college_pass_ypa": 98.7,
@@ -153,6 +162,17 @@ def inject_canaries(store: RawStore, t: TargetRow, stamps: Iterable[pd.Timestamp
         if "college" in tabs:              # a rookie-season college line (the feature is shown only in the draft season)
             add["college"].append(_template(tabs["college"], player_id=t.player_id, draft_season=t.season,
                                             **COLLEGE_MONSTER, **{KNOWN_AT: ts}))
+        if "pbp_usage" in tabs:            # Phase 2.5: the same fake game in the play-by-play tables (result-table stamp)
+            common = dict(season=t.season, week=wk, game_type="REG", game_id=gid, **{KNOWN_AT: rts})
+            add["pbp_usage"].append(_template(tabs["pbp_usage"], player_id=t.player_id, team=t.team,
+                                              **PBP_CANARY_USAGE, **common))
+            add["pbp_team"].append(_template(tabs["pbp_team"], team=t.team, opponent=t.opponent,
+                                             **PBP_CANARY_TEAM, **common))
+            add["pbp_team"].append(_template(tabs["pbp_team"], team="ZZZ", opponent=t.opponent,   # faced by the opponent's defense
+                                             **{**PBP_CANARY_TEAM, "plays": 888.0, "dropbacks": 222.0}, **common))
+            if "pbp_part" in tabs:
+                add["pbp_part"].append(_template(tabs["pbp_part"], player_id=t.player_id, team=t.team,
+                                                 **PBP_CANARY_PART, **common))
     out = store
     for name, frames in add.items():
         if frames:
@@ -164,7 +184,7 @@ def perturb_own_game(store: RawStore, t: TargetRow) -> RawStore:
     """Replace every numeric value in the target game's own rows (known_at == kickoff) with
     absurd numbers. Features must not notice: the game being predicted is not an input."""
     out = store
-    for name in ("player_games", "snap_counts", "xfp", "game_results"):
+    for name in ("player_games", "snap_counts", "xfp", "game_results", *[n for n in PBP_TABLES if store.has(n)]):
         df = store._tables[name].df.copy()
         m = df["game_id"] == t.game_id
         for c in df.columns[df.dtypes.map(pd.api.types.is_float_dtype)]:
@@ -276,7 +296,7 @@ def drop_own_game(store: RawStore, t: TargetRow) -> RawStore:
     everyone had been a DNP). The row universe and every feature must not notice: eligibility is not
     'has a stats row that week'."""
     out = store
-    for name in ("player_games", "snap_counts", "xfp", "game_results"):
+    for name in ("player_games", "snap_counts", "xfp", "game_results", *[n for n in PBP_TABLES if store.has(n)]):
         df = store._tables[name].df
         out = out.with_frame(name, df[df["game_id"] != t.game_id].copy())
     return out

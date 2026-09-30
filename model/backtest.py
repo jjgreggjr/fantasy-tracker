@@ -48,14 +48,15 @@ QUANTILES = (0.1, 0.5, 0.9)
 
 
 # --------------------------------------------------------------------------- the walk-forward rule
-def train_mask(df: pd.DataFrame, season: int, week: int, spec: Spec = T.PRIMARY) -> np.ndarray:
-    """Rows that may train when predicting (season, week): strictly earlier, played, from the first matrix season."""
+def train_mask(df: pd.DataFrame, season: int, week: int, spec: Spec = T.PRIMARY, target: str = TARGET) -> np.ndarray:
+    """Rows that may train when predicting (season, week): strictly earlier, played, from `spec.min_season` (the first
+    matrix season unless a spec says otherwise) and labelled on `target`."""
     earlier = (df["season"] < season) | ((df["season"] == season) & (df["week"] < week))
-    m = earlier & (df["season"] >= T.FIRST_SEASON)
+    m = earlier & (df["season"] >= spec.min_season)
     m &= (df["y_has_stats_row"] == 1) if spec.label_rows == "stats_row" else (df["y_played"] == 1)
     if spec.exclude_depth_only:
         m &= df["spine_depth_only"] == 0
-    m &= df[TARGET].notna()
+    m &= df[target].notna()
     return m.to_numpy()
 
 
@@ -86,7 +87,7 @@ def _fit_predict(lib, params, Xtr, ytr, Xte, quantile=None):
 
 def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm", params: dict | None = None, *,
                  season: int = TEST_SEASON, weeks=WEEKS, quantile: float | None = None, hook=None,
-                 log=None, refit_every: int = 1) -> pd.DataFrame:
+                 log=None, refit_every: int = 1, target: str = TARGET) -> pd.DataFrame:
     """Predictions for every spine row of each target week (played or not), refitting each week on strictly
     earlier rows. `hook(week, model, X_test, test_index)` is called after each fit (SHAP uses it).
     `refit_every=k` refits only every k-th week (weeks 1, 1+k, ...) and predicts the weeks in between with the last
@@ -95,7 +96,7 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
     dead = T.dead_columns(df)
     cols = T.feature_columns(df, spec, dead)
     X, _ = T.encode(df, cols)
-    y = df[TARGET].to_numpy()
+    y = df[target].to_numpy()
     pos = df["position"].to_numpy()
     out = []
     t0 = time.time()
@@ -106,7 +107,7 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
             continue
         if fitted_at is None or (wk - weeks[0]) % refit_every == 0:
             fitted_at = wk
-        tr = train_mask(df, season, fitted_at, spec)           # strictly earlier than the fit week, hence than `wk`
+        tr = train_mask(df, season, fitted_at, spec, target)   # strictly earlier than the fit week, hence than `wk`
         assert_walk_forward(df, tr, te, season, wk)
         pred = np.full(int(te.sum()), np.nan)
         if fitted_at != wk and not spec.per_position and stale is not None:
@@ -122,7 +123,7 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
             model, pred = _fit_predict(lib, params, X[tr], y[tr], X[te], quantile)
             stale = (model, fitted_at)
         part = df.loc[te, [c for c in KEEP if c in df.columns]].copy()
-        part["y"] = df.loc[te, TARGET].to_numpy()
+        part["y"] = df.loc[te, target].to_numpy()
         part["pred"] = pred
         part["n_train"] = int(tr.sum())
         part["fit_week"] = fitted_at

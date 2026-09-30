@@ -51,6 +51,10 @@ TRAIN_SEASONS_FOR_TUNING = (2021, 2022, 2023)
 VALID_SEASON = 2024
 FOLLOW_UP_TREE_FACTOR = 1.1
 
+# Phase 2.5 families exist in the matrix but are inputs only when a Spec asks for them (`add_families`), so the Phase 2
+# primary keeps exactly its Phase 2 inputs and its results reproduce.
+OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff")
+
 REPORT_ORD = {"Questionable": 1.0, "Doubtful": 2.0, "Out": 2.0}          # 'Note' and anything unknown -> 0 (no designation)
 PRACTICE_ORD = {"Full Participation in Practice": 1.0, "Limited Participation in Practice": 2.0,
                 "Did Not Participate In Practice": 3.0}
@@ -72,10 +76,14 @@ class Spec:
     weather_cols: tuple = ()                   # ...or just these wx_* columns (roof structure is knowable, temp/wind are not)
     season: bool = False                       # `season` as a feature: ablation only
     drop_families: tuple = ()
+    add_families: tuple = ()                   # opt-in families (OPT_IN_FAMILIES) added to the inputs
     drop_cols: tuple = ()
     label_rows: str = "played"                 # 'played' (y_played == 1) | 'stats_row' (y_has_stats_row == 1)
     exclude_depth_only: bool = False           # drop spine_depth_only rows from TRAINING
     per_position: bool = False                 # one model per position instead of one with position as a feature
+    only_cols: tuple = ()                      # if set, bypass the registry: exactly these matrix columns (+ position one-hots)
+    extra_cols: tuple = ()                     # matrix columns outside the registry (e.g. stage-one predictions), appended
+    min_season: int = FIRST_SEASON             # first season whose rows may train
     extra: dict = field(default_factory=dict, compare=False, hash=False)
 
 
@@ -85,8 +93,12 @@ PRIMARY = Spec("primary")
 def feature_columns(df: pd.DataFrame, spec: Spec = PRIMARY, dead: tuple = ()) -> list[str]:
     """Registry columns that enter the model for `spec` (categoricals still raw; `encode` expands them)."""
     cols: list[str] = []
-    for fam, cs in F.FAMILIES.items():
+    if spec.only_cols:
+        cols = [c for c in spec.only_cols if c in df.columns and c not in dead]
+    for fam, cs in ([] if spec.only_cols else F.FAMILIES.items()):
         if fam == "weather" and not (spec.weather or spec.weather_cols):
+            continue
+        if fam in OPT_IN_FAMILIES and fam not in spec.add_families:
             continue
         if fam in spec.drop_families:
             continue
@@ -98,6 +110,7 @@ def feature_columns(df: pd.DataFrame, spec: Spec = PRIMARY, dead: tuple = ()) ->
             if c in spec.drop_cols or c in dead or c not in df.columns or c in cols:
                 continue
             cols.append(c)
+    cols += [c for c in spec.extra_cols if c in df.columns and c not in cols]
     bad = [c for c in cols if c.startswith(NOT_INPUTS) or c in F.IDENTITY and c not in ("season", "week")]
     if bad:
         raise ValueError(f"not inputs: {bad}")
