@@ -26,7 +26,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30               # was 20: the model step below has its own 10-minute cap and must never cost the commit
     steps:
       - uses: actions/checkout@v4
 
@@ -66,6 +66,39 @@ jobs:
         continue-on-error: true          # always reach the commit step
         run: python -m ff.run_weekly --strict
 
+      # ---- Phase 3: the boosted-tree model, side by side with E_pts --------------------
+      # Everything between here and the commit is failure-isolated. `python -m model.serve`
+      # and `python -m model.scoreboard` catch every exception themselves (a missing library,
+      # a dead host, bad data), write a WARN row to logs/runs.csv and exit 0 without touching
+      # an output; the continue-on-error / timeout-minutes below cover the rest (a failed
+      # install, a hang). Nothing the existing pipeline wrote is ever changed by a failure,
+      # and the model step never decides whether the job is green: only the pipeline step does.
+      # Model dependencies and their pip cache are kept apart from the pipeline's.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: model/requirements.txt
+
+      - name: Install model dependencies
+        continue-on-error: true
+        timeout-minutes: 5
+        run: pip install -r model/requirements.txt
+
+      # model/cache holds the nflverse files and the feature-matrix cache (keyed on a hash of
+      # the feature code inside serve). The files that change in season are re-downloaded every run.
+      - uses: actions/cache@v4
+        with:
+          path: model/cache
+          key: model-cache-${{ github.run_id }}
+          restore-keys: model-cache-
+
+      - name: Model side by side with E_pts, then the live scoreboard
+        id: model
+        continue-on-error: true
+        timeout-minutes: 10
+        run: python -m model.serve && python -m model.scoreboard
+
       - name: Commit results
         run: |
           git config user.name  "fantasy-bot"
@@ -74,6 +107,7 @@ jobs:
           # crash must still commit whatever did get written.
           git add data leagues reports config.json
           if [ -f logs/runs.csv ]; then git add logs/runs.csv; fi
+          if [ -f model/reports/live_scoreboard.md ]; then git add model/reports/live_scoreboard.md; fi
           if git diff --cached --quiet; then
             echo "no changes to commit"
             exit 0
