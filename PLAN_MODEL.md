@@ -641,3 +641,55 @@ of the ceiling. What linear composition cannot do: threshold bonuses (this leagu
 * **Expectation.** Accuracy at the Phase 2 level: pooled RMSE about 5.70 (from 5.71), Spearman about .66, pick accuracy about .775; per-position QB is still the weak spot (Spearman .48). Volume and touchdowns are at
   their ceiling for pre-game information, so the next gains are not in richer usage features; look at availability and news (injury timing, inactive lists), which the model treats as a separate layer.
 * **Cadence and judging** are as in Phase 2 (weekly refit, preseason retune, Tuesday feature refresh); score the average, the components and Sleeper on the same 2026 weeks with `backtest.score` before any recipe prefers them.
+
+## Phase 3 — ship (work order, 2026-09-30)
+
+Ship the Phase 2.5 recommendation into the weekly pipeline, side by side with
+`E_pts`, judged live before any recipe prefers it. `ff/` and `pipeline.yml` may
+now change; everything else in the ground rules still holds (gate, seeds, no
+committed binaries or matrices, no secrets).
+
+1. **Serving path** (`python -m model.serve`): build prediction rows for the
+   UPCOMING week — the spine from current pre-kickoff information and the
+   schedule's kickoffs, features through the same `as_of_join` gate (serving
+   must reuse the training feature code, not re-implement it), then refit and
+   predict: the 3-library average (PPR point estimate), the 14 component
+   models composed under each configured league's linear scoring
+   (`leagues/*/league.json`; threshold bonuses ignored and documented), and
+   p10/p50/p90 with `underage_only` recalibration. Tests: serving rows carry
+   the training schema, contain nothing stamped at or after their kickoff, and
+   a serve for a COMPLETED week reproduces backtest predictions for that week.
+2. **Committed output**: `data/model_pts.csv`, appended per week via
+   `build.replace_partition` on (season, week) — one row per predicted player:
+   ids, name, position, team, `pts_model` (PPR average), `pts_model_components`,
+   per-league composed points (one column per league slug), p10/p50/p90, and
+   `sleeper_proj` captured at prediction time (the side-by-side needs it frozen).
+   History accumulates; nothing is overwritten after its week completes.
+3. **Pipeline step**: a step in `pipeline.yml` after the existing run — install
+   `model/requirements.txt` (pip cache), `python -m model.serve`, commit. It
+   must NEVER break the pipeline: any model failure is a logged WARN
+   (`model.serve` check in the run log) and the pipeline's own outputs are
+   untouched. Budget: a few minutes is fine; cache pip.
+4. **Surfacing**: `roster.csv` (all leagues) gains `E_pts_model`, `p10`, `p90`
+   joined from `data/model_pts.csv` — that league's composed scoring, not raw
+   PPR, for the non-PPR leagues; `ff.ask live` and `lineup` print them beside
+   `E_pts`. `E_pts` stays authoritative for every recipe and report during the
+   probation period.
+5. **Live scoreboard** (`python -m model.scoreboard`, run in the same step):
+   after each completed week, score `pts_model`, the components, the 50/50
+   blend of the two, frozen `sleeper_proj`, and `E_pts` (from the committed
+   roster history) against actual points from `data/lineups_played.csv` —
+   Spearman within position-week and pick accuracy, appended to
+   `data/model_eval.csv` and summarized in `model/reports/live_scoreboard.md`.
+   Adoption gate, written down now: the model earns recipe preference only
+   when it beats Sleeper's projection on pick accuracy over at least 6
+   completed 2026 weeks.
+6. **Docs**: POLICY.md gets a short "Model column" section (what
+   `E_pts_model` is, probation rule, the adoption gate); `skills/fantasy/SKILL.md`
+   mentions the columns and the rule in a few lines, everything else verbatim;
+   README's data-file list updated. This file stays until the adoption gate
+   resolves; "delete at the end" now means then.
+
+## Phase 3 findings
+
+(appended by the Phase 3 session)
