@@ -692,4 +692,103 @@ committed binaries or matrices, no secrets).
 
 ## Phase 3 findings
 
-(appended by the Phase 3 session)
+Done 2026-09-30 (branch `claude/eager-goldberg-zmevs9`, not merged). Shipped: `model/serve.py` (`python -m model.serve`), `model/serving_config.json`
+(the frozen design: the 39 pruned columns, the 14 component tree counts, the recalibration mode), `model/leaguescore.py`, `model/scoreboard.py`
+(`python -m model.scoreboard`), `model/phase3.py` (validation of the shipped design), `model/retro.py` (a replay of weeks 1-3), `ff/modelcols.py`
+(the display join), changes to `model/build_features.py` (rows and frames for any list of games, forked workers), `ff/ask.py` and `ff/live.py`
+(print only), `.github/workflows/pipeline.yml`, `POLICY.md`, `skills/fantasy/SKILL.md`, `README.md`, and tests: 61 new model tests (233 in all, all
+green under `-W error::DeprecationWarning`) and 16 new pipeline tests (36 in all). The pipeline's own code path (`ff/run_weekly.py`, `build`, `leagues`, `verify`, ...)
+is untouched, so with the model step removed its outputs are what they were; `git diff 91eb9e8 -- ff` is `ask.py`, `live.py` and the new `modelcols.py` only.
+
+### What ships, per work-order item
+
+1. **Serving path.** `serve` builds the upcoming week's rows with `build_features.build_games` (the matrix builder's own `spine_for` and `build_features`
+   through `as_of_join`, each game at its real kickoff), then calls `backtest.walk_forward(weeks=(W,))`, the function the backtest uses, for every model,
+   and `ensemble.recalibrate` for the bands. Nothing is re-implemented for serving. The tests that prove it, on real data: serving rows for completed weeks
+   (2026 wk3, 2025 wk9, 2024 wk14) equal the Phase 2.5 matrix's rows **bit for bit** on every model input; the serving history builder reproduces the matrix's
+   46,669 rows of 2021-2025 bit for bit and in the same order (the order matters: a bagged fit sees rows in that order); a serve of 2026 week 3 reproduces
+   the backtest's predictions **exactly** (array equality, not closeness) for the three flat libraries and their average, all 14 component models and PPR
+   composed from them, the p10/p50/p90 models and their recalibration, and both non-PPR leagues' own bands; every gate call of sampled upcoming-week rows
+   reads only rows stamped before the row's kickoff, and a truncation audit of upcoming-week rows from a store cut before each kickoff changes nothing.
+2. **`data/model_pts.csv`**, via `ff.build.replace_partition` on (season, week) (a temp copy renamed over the file). One row per predicted player: `gsis_id`, name,
+   position, team, opponent, game and kickoff, `report_status`, `pts_model` (PPR average), `pts_model_components`, `pts_<slug>` per league, `p10/p50/p90`,
+   `p10_<slug>/p90_<slug>` for the two non-PPR leagues, `sleeper_proj` (from `data/projections.csv` already on disk: no new network call), and the comparators
+   the scoreboard needs frozen (`sleeper_proj_<slug>`, `e_pts_<slug>`), plus `served_at`. **Frozen per game**: a run rewrites only games that have not kicked off;
+   rows of a game under way are kept exactly as written, and a week whose games have all kicked off is never touched. So the Wednesday row of a Thursday-night
+   player is the one the scoreboard judges, while Sunday rows are refreshed by the Friday run (final injury reports, lines). `python -m model.serve --columns`
+   documents every column, including the ignored threshold bonuses. ID columns are `gsis_id` only: `replace_partition` re-reads with default dtypes and would turn a
+   gappy `sleeper_id` column into `8183.0`.
+3. **Pipeline step.** After `Run pipeline`: a second `setup-python` (3.12, pip cache keyed on `model/requirements.txt`), install (5 min cap, continue-on-error), `actions/cache`
+   on `model/cache`, then `python -m model.serve && python -m model.scoreboard` (10 min cap, continue-on-error), committed by the usual commit step (which now also
+   adds `model/reports/live_scoreboard.md`). Both commands catch every exception, append a WARN row through the pipeline's own `verify.log_run` (check `model.serve` or
+   `model.scoreboard`, the `week` of the run they belong to) and exit 0 having written nothing: all roster texts are rendered before `model_pts.csv` is replaced, and every file is
+   replaced atomically. Tested: a raised error, a missing library, bad data inside `run`, and a log that cannot be written all end in exit 0, one WARN row, byte-identical
+   files. The job timeout went from 20 to 30 minutes so the model's caps can never cost the commit. `model/requirements.txt` pins lightgbm 4.7.0, xgboost 3.4.1, catboost 1.2.10
+   exactly (the versions every number here came from).
+4. **Surfacing.** `roster.csv` of all four leagues gains `E_pts_model`, `p10`, `p90` appended by the model step with every existing byte of every existing column unchanged (tested on the real
+   files; the csv module keeps each field's text, pandas would rewrite `1` as `1.0`). `ff.ask live` and `lineup` print them beside `E_pts`, joined from `data/model_pts.csv` for the frame's own
+   week, with one header line that E_pts stays authoritative; with no model file they print what they always printed. The lineup picks the same players in the same slots when the model disagrees about
+   every one of them (tested). `E_pts_model` is the **league-composed components** (the work order's "that league's composed scoring"); the flat 3-library average is `pts_model`, scored beside it.
+5. **Scoreboard.** Per completed week and league, on the identical rows of played rostered QB/RB/WR/TE, against the platform's own points: `model_components` (E_pts_model), `model_flat` (the
+   average moved to the league's scoring by the components' scoring difference: identical to `pts_model` in a PPR league), `model_blend` (their 50/50), `sleeper` and `e_pts`, in that league's
+   scoring; Spearman within position-week-league and pick accuracy, into `data/model_eval.csv` (`replace_partition`, additive `credit`/`pairs`) and `model/reports/live_scoreboard.md`, which carries the gate
+   sentence verbatim. The gate is evaluated on `model_components`, the number the recipes show; flat and blend are reported beside it. **E_pts history: frozen going forward, not mined from git.** The
+   depth-1 checkout the workflow uses has no history, `roster.csv` alone holds 15-31 players, and Sleeper's league-scoring projection is overwritten every run, so `serve` freezes `e_pts_<slug>` and
+   `sleeper_proj_<slug>` next to the prediction (from the league files the pipeline step just wrote). Which weeks have which comparators: **weeks 4 onward** have the model (all variants), Sleeper (PPR and
+   per league) and E_pts, all frozen before each game's kickoff: week 4 is scored by the first run after Monday night (Tue Oct 6), and the gate (6 weeks) cannot be met before week 9 completes.
+   **Weeks 1-3 have no frozen model rows** (it did not exist); `python3.12 -m model.retro` replays them (see below) and is not the gate. Today `live_scoreboard.md` says "not started" and `data/model_eval.csv` does not exist yet.
+6. **Docs.** `POLICY.md` "Model column" section; `skills/fantasy/SKILL.md` one definition bullet, everything else verbatim; `README.md` data-file rows, a "Model columns" note, the model test command.
+
+### Decisions and the evidence behind them
+
+* **The shipped design (71 inputs) measured end to end** (`python3.12 -m model.phase3 shipped`, the Phase 2 head-to-head rows, 6,139 in 2025 / 6,025 in 2024, week-blocked bootstrap). Phase 2.5 had measured the average,
+  the components and the recalibration on the 114-input primary, not on these 71. RMSE / Spearman / pick accuracy, 2025 (2024 in brackets): **3-library average 5.710 / .657 / .774** (5.779 / .663 / .774);
+  its LightGBM alone 5.719 / .655 / .773 (5.792 / .660 / .773); Phase 2 primary LightGBM 5.711 / .655 / .773 (5.771 / .663 / .775); primary average 5.699 / .659 / .774 (5.767 / .663 / .775); components composed to PPR
+  5.733 / .656 / .774 (5.784 / .665 / .774); 50/50 blend 5.711 / .659 / .775 (5.771 / .665 / .774); trailing-3 6.432 / .602 / .748 (6.407 / .612 / .750); same-week xFP oracle 4.073 / .866 / .876. What that says:
+  (a) the **average beats its own LightGBM in both years, both significant** (dRMSE -0.009 [-0.016, -0.001], -0.013 [-0.018, -0.008]) and beats trailing-3 by 0.7 RMSE; (b) **pruning to 71 inputs costs about 0.011 RMSE in the average** against the 114-input
+  average (2025 [-0.024, +0.002], 2024 [-0.024, -0.002]): the price of shipping without ADP, as Phase 2 found for one model; (c) the **components tie the average on ranking** (dSpearman -0.002 [-0.007, +0.004] / +0.002, dPick -0.000 / -0.001,
+  intervals span zero) but are **worse on RMSE in 2025** (+0.023 [+0.006, +0.040]; 2024 +0.005, spans zero), a little more than Phase 2.5's tie against LightGBM alone suggested; this is the cost of `E_pts_model` being the
+  components, paid for the league-scoring path, and is what the scoreboard's `model_flat` column is there to watch; (d) the post-hoc blend is the best ranker in both years by a hair (dSpearman +0.002 [-0.000, +0.005] / +0.003, dPick +0.001 [+0.000, +0.001] / +0.000), still not adopted.
+  QB stays the weak spot (Spearman .48 in 2025, .52 in 2024). 2024 carries the usual mild in-sample edge (tree counts were early-stopped on it).
+* **Bands.** PPR p10-p90 coverage, raw to recalibrated: QB .735 to .780 (2025) and .738 to .796 (2024); all positions .779 to .790 and .766 to .795. `underage_only` also widened TE (2025 .790 to .816, 2024 .741 to .798) and WR in 2024 (.775 to .797),
+  the flagged Phase 2.5 behaviour; RB untouched; band width +0.2 to +0.35 points; interval score flat; p10 <= p50 <= p90 on 100% after recalibration.
+* **A non-PPR league needs its own quantile models, and the shortcut measurably fails.** Moving the PPR band by the change in the mean covered only 68% of the dynasty league's points in 2025 (tight ends 47%; 2024: 69%, TE 44%) and 88% of the
+  half-PPR league's (2024: 88%): the premium is earned on the same catches that make the good games, so the low tail moves less than the mean. `serve` therefore fits p10/p50/p90 LightGBMs on each non-PPR league's composed
+  actual points (`y_pts_<slug>` from the component labels; same tuned shape and tree counts as the PPR quantiles) and recalibrates them the same way: recalibrated coverage of that league's own points .790 / .797 (dynasty 2025 / 2024) and .785 / .804 (IDP/half-PPR),
+  QB .794 / .797 and .789 / .796, TE .793 / .805 and .788 / .809. A PPR league uses the PPR band; a non-PPR league without its own columns would get blanks, never a shifted guess. Composed points rank that league's points as well as the flat average moved to its scoring
+  (dynasty 2025 Spearman .656 / .660, pick .774 / .775; IDP .650 / .651, .769 / .769).
+* **Who gets no row (how Out players are handled).** The model predicts points if he plays; availability belongs to the status layer. A row is withheld when Sleeper's `injury_status` is one of `ff.status.OUT_STATES` (Out, IR, PUP, Sus: Sleeper also
+  uses Out for a coach's-decision inactive), when the nflverse report **for the served week** says Out, or when his nflverse roster status is cut, retired, exempt or reserve. Doubtful and Questionable players keep a row, and `report_status`
+  carries this week's designation (the shipped model does not read its own designation: the two injury status columns are in the pruned 39). The first Actions run taught one rule: the injury feature is "the newest report this season", so on a Wednesday it can
+  be last week's final Out; that withheld Jayden Daniels and showed Puka Nacua as Doubtful while Sleeper, refreshed that morning, said Questionable for both. Only a report issued for the served week withholds now (tested), and `report_status` is blank until the week has one.
+  A withheld player is not scored by the scoreboard either (no row, no comparison), and the scoreboard only scores players who played.
+* **The composition.** `leaguescore` maps each `league.json` scoring dict onto the 14 labels. Four leagues: two are exactly PPR (Gooma's, the ESPN league), the dynasty league is PPR with a -1 interception and +0.5 per TE catch, the IDP league is half PPR. Ignored and named:
+  the dynasty league's yardage bonuses (100/200 rush and rec, 300/400 pass) and 40+/50+ yard TD bonuses (`bonus_*_yd_*`, `*_td_40p`, `*_td_50p`, 12 keys); kicking, defence and IDP never score on skill positions. Cross-checked against `ff.scoring.score_frame` on random stat lines below every threshold (equal to the cent, all four leagues).
+  One approximation: the misc bucket (2-point conversions and special-teams TDs) is one model composed with one weight (the two-point value over 2), so the ESPN league, which has no special-teams TD key, credits those at 6 anyway (about 0.01 points a game).
+* **Serve time is not backtest time in two small ways, both documented and neither fixable here.** Lines are closing lines in training but whatever the schedule shows on Tuesday-Friday at serve time (Phase 0 finding 8: nflverse keeps no opens); and Wednesday's injury table holds only
+  the reports issued so far (the model's injury inputs are few, `inj_weeks_since_report` only, so this matters little). The Friday run, before Sunday, is the best-informed one and is the one frozen for every Sunday and Monday game.
+* **A look-back at weeks 1-3** (`python3.12 -m model.retro`, needs the full git history; a replay, NOT the gate: replayed model rows with the final injury report and closing lines, E_pts and Sleeper's league-scoring projection read per game from the newest commit before its kickoff; the ESPN league has no snapshot before week 2, so it is weeks 2-3 only).
+  Pooled pick accuracy on identical rows (2,005 player-league-weeks, 54,492 pairs): **`model_components` .663, `model_flat` .664, `model_blend` .664, Sleeper .685, E_pts .671**; Spearman .363 / .358 / .366 / .398 / .327. Model minus Sleeper -0.022, week-blocked interval [-0.041, -0.003]; by week .639 / .670 / .679 against Sleeper's
+  .680 / .693 / .683 (the gap closes as in-season form accrues; week 1 is the model without ADP and with no current-season lags, a week the Phase 2 backtest never scored). By position the model trails Sleeper at RB (.730 vs .753), WR (.648 vs .672) and TE (.563 vs .586), and ties at QB (.565 vs .569); it beats E_pts at QB (.565 vs .521) and TE (.563 vs .555) and trails it at RB (.730 vs .737) and WR (.648 vs .666), .008 behind overall. The absolute levels are far below Phase 2's .774 because the
+  scoreboard's population is rostered players who played, whose pairs are harder; on the model's own population (every player with a stats row) the same three weeks give pick accuracy .760 (trailing-3 .714), in line with 2025. So: no sign the replay or the scoreboard is broken, an early sign the model does not yet beat Sleeper on the players James actually owns, and three weeks prove nothing either way.
+* **Runtime.** Cold runner (first run, 4 vCPUs): install 31 s plus 5 min 47 s of serve (raw data 23 s, 2021-2025 history 106 s with 4 forked workers, three quantile histories 50 s each, fits 207 s in all); warm (run 31): install 26 s plus **71 s**. Steady state per run is the 2026 weeks so far plus one set of fits, growing
+  by about 3 s per completed week per quantile target. The two pip caches are ~700 MB each (xgboost pulls `nvidia-nccl-cu13`); harmless under the 10 GB quota.
+
+### Validation, in the order asked
+
+(a) All model tests (233, 9 min 40 s) and the pipeline's (36) pass under python3.12. (b) `python3.12 -m model.serve --dry-run` and the real write path on a copy of the repo data: 59 s warm / 181 s cold locally, idempotent (a second run changes nothing but `served_at`).
+(c) Pushed; `pipeline.yml` dispatched on the branch three times: run **36759198077** (cold caches, success), **36760150982** (warm, success) and **36760474080** (final code, success; the `Fail the job` step skipped). `logs/runs.csv` gained only the expected `status.practice: 0% have practice reports` WARN per run, no FAIL, no `model.*` row.
+(d) One iteration: run 1 exposed the stale-report rule above; fixed in `418862e`, verified in run 3.
+
+**Week-4 serve, final run:** 512 rows (QB 86, RB 113, TE 124, WR 189) for 16 games over 7 kickoffs, 95 withheld (status layer 95; nflverse has no week-4 report yet on a Wednesday). `sleeper_proj` (PPR) on 393 rows, `e_pts_<slug>` and `sleeper_proj_<slug>` on 509.
+Rostered skill players with a row: Gooma's 190 of 209 (18 withheld as unavailable, 1 not in the week's spine), ESPN league 132 of 143 (11, 0), dynasty 214 of 242 (27, 1), IDP 222 of 253 (30, 1); James's own `roster.csv`: 16 of 18, 14 of 15, 28 of 31, 21 of 22 have `E_pts_model`. Spearman of `pts_model` against Sleeper's projection .947, against `pts_model_components` .986; p10 <= p50 <= p90 on every row and `pts_model` inside [p10, p90] on 99%.
+Three spot-checks against raw lines: **A.J. Brown** (NE WR, Sleeper IR, roster status RES), **De'Von Achane** (MIA RB, IR) and **Baker Mayfield** (TB QB, Sleeper Out): no row, status layer; the model would only have said "points if he plays". **Josh Allen** (BUF at NE): last three games 17.5 / 40.8 / 35.7 PPR (raw nflverse lines: 29 / 31 / 26 attempts, 334 / 248 / 204 passing yards), season xFP 25.5 a game, implied team total 27.5,
+model 22.3 (components 23.0, p10-p90 8.8-33.6) against Sleeper 23.1 and E_pts 25.7: the model pulls a 31-point average toward the position mean, as it should. **Marcus Mariota** (WAS QB, his starter out): 8.7 then 20.4 points (31 attempts, all snaps, in week 3), implied total 22.0 as a 3.5-point underdog, model 13.2 (components 13.7, p10-p90 2.8-23.2) against Sleeper 16.7 and E_pts 14.8.
+
+### What is not done, and what to watch
+
+* **No merge.** The first scoreboard row arrives with the Tuesday Oct 6 run (week 4); the gate needs week 9. Nothing in `E_pts`, the recipes, the sorts or the reports reads the model columns.
+* **Retune and refreeze each preseason** (`python -m model.serve --freeze` rewrites the component tree counts; the prune list in `serving_config.json` is from 2024 SHAP and was frozen, not regenerated). An August ADP snapshot for 2027 would let ADP back in; week 1 of this season (the model's weakest replayed week) is where it would have mattered.
+* **Week-4 frozen rows are Wednesday's until the Friday run refreshes Sunday/Monday games**; Thursday's game keeps its Wednesday row (the Friday run starts after its kickoff). `model.serve` warns (WARN row) when last week's stats are not fully published, when no Sleeper projections exist for the week, or when a league's files belong to another week.
+* The recommendation to test the 50/50 blend stays open; the scoreboard reports it beside the two designs. If `model_flat` keeps beating `model_components` on RMSE-like grounds while tying on ranking, switching `E_pts_model` to the flat average (plus the components' scoring difference) is a one-line change in `serve.assemble`/`ff.modelcols` and a documented decision, not a silent one.
+* The scoreboard scores skill positions only. The platform's points for those players include what the composition cannot express (the dynasty league's yardage and long-TD bonuses), which the model cannot predict and which adds noise to that league's comparison equally for every comparator.
