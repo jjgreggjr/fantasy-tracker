@@ -1,6 +1,6 @@
 # Week 4 digest — 2026
 
-Generated 2026-09-30 18:39 UTC  
+Generated 2026-09-30 18:42 UTC  
 Stats through: **Week 3** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 3** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 939
 - Sleeper players cache: 2026-09-30
-- projections: 857 players (Sleeper, 2026-09-30T18:40:04Z)
-- league rosters: 3 leagues, lineups read 2026-09-30T18:40:01Z
-- ESPN rosters: Average Joes (2026-09-30T18:40:08Z)
+- projections: 857 players (Sleeper, 2026-09-30T18:42:43Z)
+- league rosters: 3 leagues, lineups read 2026-09-30T18:42:41Z
+- ESPN rosters: Average Joes (2026-09-30T18:42:47Z)
 - status rows: 581 players; 0 with practice reports
 
 ### Data integrity
