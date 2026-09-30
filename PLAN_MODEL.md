@@ -511,3 +511,43 @@ and ADP columns already carry the rookie prior.
 * **Open design question for James:** league-scoring variants. The model predicts PPR; half-PPR/standard/TE-premium need either component
   models (receptions, yards, TDs) or a per-position linear map. The component route is the honest one and is a Phase 3 sub-task.
 * Drop `week` from the inputs only if a joint test on both years agrees (it flipped sign); everything else in the prune list was tested.
+
+## Phase 2.5 — volume-first experiments (added 2026-09-30, runs before Phase 3)
+
+The oracle gap says the remaining edge is predicting volume, so every experiment
+here points at volume. Baseline to beat is the Phase 2 primary on the same 6,139
+head-to-head rows: RMSE 5.711, Spearman .655, pick accuracy .773. Same
+walk-forward, same seeds, and the Phase 2 discipline holds: a gain that does not
+replicate on the 2024 walk-forward is noise, and every new feature goes through
+the gate with its own truncation and canary coverage.
+
+Experiments, in order of expected payoff:
+
+1. **Usage micro-signals from nflverse play-by-play** (lagged only, `known_at` =
+   the source game's kickoff): red-zone and inside-10 target/carry share, air
+   yards share, aDOT, WOPR, and route participation where a source covers the
+   backtest years (probe FTN charting and the participation feed; document the
+   year coverage and skip what 2021–2025 cannot support consistently — a
+   feature that exists only in test years is a train/serve skew, not a signal).
+2. **Two-stage model:** stage one predicts week-N volume (targets, carries —
+   effectively predicting xFP's inputs), stage two predicts points from
+   predicted volume plus efficiency priors. Judged both as a point model and by
+   whether its stage-one output beats the lagged-xFP features when added to the
+   flat model.
+3. **Component models:** predict receptions, receiving yards, receiving TDs,
+   carries, rushing yards, rushing TDs, passing lines separately; compose
+   points in any league's scoring. Judged on composed PPR against the primary —
+   and adopted for Phase 3 even on an accuracy tie, because it unlocks
+   league-scoring variants (the open design question above).
+4. **Cheap wins:** ensemble of the three tied libraries (simple average, then a
+   weight fit on 2024 only); quantile recalibration from trailing residuals
+   (target: QB p10–p90 coverage from 74% to ~80% without widening RB/WR/TE).
+
+Adoption rule: an experiment ships into the Phase 3 recommendation only if it
+beats the primary on 2025 AND replicates directionally on 2024, or (component
+models only) ties within noise. The findings section below records per-
+experiment deltas with the same bootstrap intervals as Phase 2.
+
+## Phase 2.5 findings
+
+(appended by the Phase 2.5 session)
