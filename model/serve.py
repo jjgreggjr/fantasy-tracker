@@ -310,13 +310,8 @@ def quantile_walk(df, spec, season: int, weeks, params: dict, target: str | None
     own `walk_forward_quantiles`, one LightGBM per alpha with the tuned quantile parameters."""
     from model import backtest as B
     from model import train as T
-    target = target or T.TARGET
-    res = None
-    for a in B.QUANTILES:
-        r = B.walk_forward(df, spec, "lightgbm", params["quantile"][str(a)], season=season, weeks=tuple(weeks), quantile=a,
-                           target=target).rename(columns={"pred": f"q{int(a * 100)}"})
-        res = r if res is None else res.assign(**{f"q{int(a * 100)}": r[f"q{int(a * 100)}"]})
-    return B.sort_quantiles(res)
+    return B.sort_quantiles(B.walk_forward_quantiles(df, spec, params["quantile"], season=season, weeks=tuple(weeks),
+                                                     target=target or T.TARGET))
 
 
 def quantile_history(df, spec, season: int, params: dict, *, target: str | None = None, cache_dir: Path | None = None, log=print):
@@ -368,6 +363,26 @@ def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, 
     return served
 
 
+class ServingSpecMismatch(RuntimeError):
+    """The inputs the live frame would give the models are not the inputs serving_config.json froze (and Phase 3 validated)."""
+
+
+def check_inputs(df, cfg: dict) -> list[str]:
+    """The encoded model inputs `df` yields under the serving spec, which must be exactly the frozen `cfg["inputs"]`. A column that turns
+    dead in the data (all-NA or constant in the training years) is silently dropped by `backtest.walk_forward`, so without this check a
+    data shift would serve a different model from the one that was validated. Raises ServingSpecMismatch naming the difference."""
+    from model import train as T
+    cols = T.feature_columns(df, spec_from(cfg), T.dead_columns(df))
+    X, _ = T.encode(df.head(2), cols)
+    live, frozen = list(X.columns), list(cfg["inputs"])
+    if live != frozen:
+        gone, new = [c for c in frozen if c not in live], [c for c in live if c not in frozen]
+        raise ServingSpecMismatch("the live feature set is not the frozen one, so the model that would be served is not the one validated: "
+                                  + (f"missing {gone}, unexpected {new}" if gone or new else "same columns in a different order")
+                                  + " (python -m model.serve --freeze after a reviewed spec change)")
+    return live
+
+
 def predict_week(df, season: int, week: int, cfg: dict, leagues=(), *, cache_dir: Path | None = None, log=print):
     """Everything the model says about the served rows of (season, week), indexed like `df`: (the PPR frame, the component
     predictions, {slug: band frame} for every league whose scoring is not PPR). `df` carries the league label columns
@@ -376,6 +391,7 @@ def predict_week(df, season: int, week: int, cfg: dict, leagues=(), *, cache_dir
     from model import components as C
     from model import train as T
     spec, params = spec_from(cfg), T.load_params()
+    check_inputs(df, cfg)
     t0 = time.time()
     flat = flat_predictions(df, spec, season, week, params)
     comp = component_predictions(df, spec, season, week, params, cfg)
@@ -531,13 +547,23 @@ def merge_frozen(old, new, season: int, week: int, now):
     return pd.concat([frozen, new[~new["gsis_id"].isin(frozen["gsis_id"])]], ignore_index=True)
 
 
+def read_model_pts(path: Path):
+    import pandas as pd
+    return pd.read_csv(path, low_memory=False, dtype={"gsis_id": str}) if Path(path).exists() else None
+
+
+def merged_week(path: Path, out, season: int, week: int, now):
+    """Everything model_pts.csv will hold for (season, week) after this run: the rows `out` predicts for games still to kick off plus the
+    frozen rows of games already under way. The roster.csv columns and the summary are built from THIS, not from `out`: on a Friday
+    `out` has no Thursday-night player, who still has a frozen row."""
+    return merge_frozen(read_model_pts(path), out, season, week, now)
+
+
 def write_model_pts(path: Path, out, season: int, week: int, now) -> int:
     """Replace the (season, week) partition of model_pts.csv through ff.build.replace_partition, keeping rows of games that have
     kicked off. Writes a copy first and renames, so a crash cannot leave a half-written file."""
-    import pandas as pd
     from ff import build
-    old = pd.read_csv(path, low_memory=False, dtype={"gsis_id": str}) if Path(path).exists() else None
-    merged = merge_frozen(old, out, season, week, now)
+    merged = merged_week(path, out, season, week, now)
     tmp = Path(str(path) + ".tmp")
     if Path(path).exists():
         tmp.write_bytes(Path(path).read_bytes())
@@ -589,10 +615,11 @@ def roster_texts(root: Path, frame, leagues, season: int, week: int, warnings: l
 
 
 def write_outputs(root: Path, out_path: Path, out, leagues, season: int, week: int, now, warnings: list, *, rosters: bool = True):
-    """Everything the serve writes, in the safe order: every roster text is computed first (a bad file raises before anything is
-    touched), then model_pts.csv is replaced atomically, then each roster.csv is replaced atomically.
+    """Everything the serve writes, in the safe order: every roster text is computed first, from the week as model_pts.csv will hold it
+    (frozen rows of games under way included; a bad file raises before anything is touched), then model_pts.csv is replaced
+    atomically, then each roster.csv is replaced atomically.
     Returns (rows now in model_pts.csv for the week, slugs whose roster.csv gained the columns)."""
-    texts = roster_texts(root, out, leagues, season, week, warnings) if rosters else {}
+    texts = roster_texts(root, merged_week(out_path, out, season, week, now), leagues, season, week, warnings) if rosters else {}
     n = write_model_pts(out_path, out, season, week, now)
     for p, text in texts.items():
         tmp = Path(str(p) + ".tmp")
@@ -666,7 +693,7 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     served_df = df.loc[served_index]
     out, reasons = assemble(store, served_df, pred, comp, leagues, root=root, season=season, week=week, served_at=now_utc(),
                             warnings=warnings, league_bands=league_bands)
-    lines = summary_lines(out, reasons, leagues, root, season, week)
+    lines = summary_lines(merged_week(out_path, out, season, week, now), reasons, leagues, root, season, week)
     if args.dry_run:
         return lines + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
     live = out_path == root / "data" / "model_pts.csv"          # a custom --out is a scratch copy: no roster.csv, no run-log row

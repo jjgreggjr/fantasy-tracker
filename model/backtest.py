@@ -139,13 +139,14 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
 
 
 def walk_forward_quantiles(df: pd.DataFrame, spec: Spec = T.PRIMARY, params: dict | None = None, *,
-                           season: int = TEST_SEASON, weeks=WEEKS, log=None) -> pd.DataFrame:
-    """LightGBM p10/p50/p90, one model per alpha, same rows and features as the point model."""
+                           season: int = TEST_SEASON, weeks=WEEKS, log=None, target: str = TARGET) -> pd.DataFrame:
+    """LightGBM p10/p50/p90, one model per alpha, same rows and features as the point model. `target` names another label column
+    (Phase 3: a non-PPR league's own points)."""
     doc = T.load_params()
     qp = params or doc["quantile"] or {str(a): {**doc["point"]["lightgbm"]} for a in QUANTILES}
     res = None
     for a in QUANTILES:
-        r = walk_forward(df, spec, "lightgbm", qp[str(a)], season=season, weeks=weeks, quantile=a, log=log)
+        r = walk_forward(df, spec, "lightgbm", qp[str(a)], season=season, weeks=weeks, quantile=a, log=log, target=target)
         r = r.rename(columns={"pred": f"q{int(a * 100)}"})
         res = r if res is None else res.assign(**{f"q{int(a * 100)}": r[f"q{int(a * 100)}"]})
     return res

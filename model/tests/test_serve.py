@@ -414,6 +414,108 @@ class RosterColumns(unittest.TestCase):
             self.assertEqual(good.read_bytes(), good_before)
 
 
+class FridayServe(unittest.TestCase):
+    """The Friday run: Thursday night's game has kicked off, so the serve predicts only the later games. The roster.csv model columns
+    (and the summary) must still carry the Thursday players, whose frozen rows model_pts.csv keeps."""
+    TNF, SUN = "2026-10-02T00:15:00+00:00", "2026-10-04T17:00:00+00:00"
+    FRIDAY = pd.Timestamp("2026-10-02T22:00:00Z")
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.ls = [x for x in L.load_leagues(REPO) if x.slug == "where-you-at"]
+        (self.root / "leagues" / "where-you-at").mkdir(parents=True)
+        src = REPO / "leagues" / "where-you-at" / "roster.csv"
+        r = pd.read_csv(src, low_memory=False, dtype={"gsis_id": str})
+        r.drop(columns=[c for c in ("E_pts_model", "p10", "p90") if c in r.columns]).to_csv(self.root / "leagues" / "where-you-at" / "roster.csv", index=False)
+        self.week = int(r["week"].iloc[0])
+        self.ids = r["gsis_id"].dropna().tolist()[:3]                          # [0] plays Thursday night, [1] and [2] on Sunday
+        self.out = self.root / "data" / "model_pts.csv"
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def rows(self, ids, kicks, pts):
+        return pd.DataFrame({"season": 2026, "week": self.week, "game_id": "g", "kickoff_utc": kicks, "gsis_id": ids, "pts_model_components": pts,
+                             "pts_where-you-at": pts, "p10": 1.0, "p90": 30.0, "p10_where-you-at": 2.0, "p90_where-you-at": 31.0})
+
+    def roster(self):
+        return pd.read_csv(self.root / "leagues" / "where-you-at" / "roster.csv", dtype={"gsis_id": str}).set_index("gsis_id")
+
+    def test_a_thursday_player_keeps_his_roster_columns_on_the_friday_run(self):
+        a, b, c = self.ids
+        SV.write_outputs(self.root, self.out, self.rows([a, b, c], [self.TNF, self.SUN, self.SUN], [10.0, 11.0, 12.0]), self.ls, 2026, self.week,
+                         pd.Timestamp("2026-09-30T18:00:00Z"), [])               # Wednesday: everyone predicted
+        self.assertEqual(self.roster().loc[[a, b, c], "E_pts_model"].tolist(), [10.0, 11.0, 12.0])
+        # Friday: Thursday's game is under way, so only the Sunday players are predicted (b's number moves, c is now ruled Out: no row)
+        n, done = SV.write_outputs(self.root, self.out, self.rows([b], [self.SUN], [15.0]), self.ls, 2026, self.week, self.FRIDAY, [])
+        self.assertEqual(done, ["where-you-at"])
+        r = self.roster()
+        self.assertEqual(r.loc[a, "E_pts_model"], 10.0)                        # the frozen Thursday row still shows
+        self.assertEqual((r.loc[a, "p10"], r.loc[a, "p90"]), (2.0, 31.0))
+        self.assertEqual(r.loc[b, "E_pts_model"], 15.0)                        # refreshed
+        self.assertTrue(pd.isna(r.loc[c, "E_pts_model"]))                      # no row anywhere: blank
+        mp = pd.read_csv(self.out, dtype={"gsis_id": str}).set_index("gsis_id")
+        self.assertEqual(sorted(mp.index), sorted([a, b]))
+        self.assertEqual(n, 2)
+
+    def test_the_summary_counts_the_frozen_players_too(self):
+        a, b, _ = self.ids
+        SV.write_model_pts(self.out, self.rows([a, b], [self.TNF, self.SUN], [10.0, 11.0]), 2026, self.week, pd.Timestamp("2026-09-30T18:00:00Z"))
+        merged = SV.merged_week(self.out, self.rows([b], [self.SUN], [15.0]), 2026, self.week, self.FRIDAY)
+        self.assertEqual(sorted(merged["gsis_id"]), sorted([a, b]))
+        self.assertEqual(merged.set_index("gsis_id").loc[a, "pts_model_components"], 10.0)
+        self.assertEqual(merged.set_index("gsis_id").loc[b, "pts_model_components"], 15.0)
+
+
+class FrozenInputs(unittest.TestCase):
+    """serving_config.json freezes the 71 inputs Phase 3 validated; a data-dependent change in which columns are dead must not serve a
+    different model."""
+
+    def frame(self, **override) -> pd.DataFrame:
+        cols = [x for x in F.feature_columns() if F.family_of(x) not in T.OPT_IN_FAMILIES + ("weather",)]
+        rows = 40
+        d = {x: np.linspace(0.0, 1.0, rows) + i for i, x in enumerate(cols)}
+        d.update(position=(["QB", "RB", "WR", "TE"] * 10), inj_report_status=[None] * rows, inj_practice_status=[None] * rows,
+                 season=[2021 + i % 4 for i in range(rows)], y_played=[1] * rows)
+        d["college_breakout_age"] = np.nan                                    # the one column that is dead in the real data too
+        d.update(override)
+        return pd.DataFrame(d)
+
+    def test_the_live_inputs_equal_the_frozen_ones(self):
+        self.assertEqual(SV.check_inputs(self.frame(), cfg()), cfg()["inputs"])
+
+    def test_an_input_that_turns_dead_in_the_data_is_refused_not_silently_dropped(self):
+        col = next(c for c in cfg()["inputs"] if c.startswith("dvp_"))
+        with self.assertRaises(SV.ServingSpecMismatch) as cm:
+            SV.check_inputs(self.frame(**{col: np.nan}), cfg())                  # all-NA in the training years: `dead_columns` would drop it
+        self.assertIn(col, str(cm.exception))
+        self.assertIn("missing", str(cm.exception))
+
+    def test_a_changed_frozen_list_is_refused_too(self):
+        c = {**cfg(), "inputs": cfg()["inputs"][:-1]}
+        with self.assertRaises(SV.ServingSpecMismatch) as cm:
+            SV.check_inputs(self.frame(), c)
+        self.assertIn("unexpected", str(cm.exception))
+
+    def test_predict_week_refuses_before_fitting_anything_and_the_step_turns_it_into_a_warn(self):
+        bad = self.frame(**{"team_spread": np.nan})
+        with mock.patch.object(SV, "flat_predictions", side_effect=AssertionError("fitted a model the validation never saw")):
+            with self.assertRaises(SV.ServingSpecMismatch):
+                SV.predict_week(bad, 2026, 4, cfg(), log=lambda *_: None)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "logs").mkdir()
+            (root / "logs" / "runs.csv").write_text("ran_at,season,week,status,fails,warns,detail,note\n2026-09-29T17:05:23Z,2026,4,OK,0,0,,\n")
+            with mock.patch.object(SV, "ROOT", root), mock.patch.object(SV, "run", side_effect=SV.ServingSpecMismatch("the live feature set is not the frozen one")), \
+                    redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(SV.main([]), 0)
+            with open(root / "logs" / "runs.csv", encoding="utf-8") as fh:
+                last = list(csv.DictReader(fh))[-1]
+            self.assertEqual((last["status"], last["warns"]), ("WARN", "1"))
+            self.assertIn("ServingSpecMismatch: the live feature set is not the frozen one", last["detail"])
+
+
 def shutil_copy(a: Path, b: Path) -> None:
     b.write_bytes(a.read_bytes())
 
