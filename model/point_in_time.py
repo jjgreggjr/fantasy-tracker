@@ -25,6 +25,7 @@ is git-ignored and immutable until deleted (a rerun reproduces every number).
 """
 from __future__ import annotations
 
+import os
 import time
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -36,7 +37,7 @@ import pandas as pd
 import requests
 
 KNOWN_AT = "known_at"
-CACHE_DIR = Path(__file__).resolve().parent / "cache"
+CACHE_DIR = Path(os.environ.get("MODEL_CACHE_DIR") or Path(__file__).resolve().parent / "cache")   # env: a scratch copy for a live run
 NFLVERSE = "https://github.com/nflverse/nflverse-data/releases/download"
 FFOPP = "https://github.com/ffverse/ffopportunity/releases/download/latest-data"
 

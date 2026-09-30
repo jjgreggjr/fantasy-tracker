@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import multiprocessing
 import resource
 import sys
 import time
@@ -46,10 +47,78 @@ def parse_seasons(spec: str) -> list[int]:
     return sorted(set(out))
 
 
+_WORK: dict = {}          # the store a forked worker reads: set by the parent just before it forks, never pickled
+
+
+def _rows_for(chunk: list) -> list[dict]:
+    store = _WORK["store"]
+    return [F.build_features(store, t) for tg in chunk for t in F.spine_for(store, tg)]
+
+
+def _chunks(tgs: list) -> list[list]:
+    """Consecutive team-games of one (season, week), so a week's teams share the per-game context caches."""
+    out: list[list] = []
+    for tg in tgs:
+        if out and (out[-1][0].season, out[-1][0].week) == (tg.season, tg.week):
+            out[-1].append(tg)
+        else:
+            out.append([tg])
+    return out
+
+
+def build_rows(store: pit.RawStore, tgs: list, *, verbose: bool = True, jobs: int = 1) -> list[dict]:
+    """One feature row per eligible (player, game) of the team-games `tgs`, in the order of `tgs`. Every row is a pure function
+    of (store, target), so `jobs` only changes how long it takes: forked workers read the same in-memory store (copy on write)
+    and their results are concatenated in order, which a test proves equal to the serial build."""
+    rows: list[dict] = []
+    t0, last = time.time(), None
+    if jobs > 1 and len(tgs) >= 2 * jobs and "fork" in multiprocessing.get_all_start_methods():
+        chunks = _chunks(tgs)
+        _WORK["store"] = store
+        try:
+            with multiprocessing.get_context("fork").Pool(jobs) as pool:
+                for chunk, part in zip(chunks, pool.imap(_rows_for, chunks)):
+                    rows += part
+                    if verbose and chunk[0].season != last:
+                        last = chunk[0].season
+                        print(f"  season {last}: {len(rows):,} rows so far, {time.time() - t0:5.0f}s ({jobs} workers)", flush=True)
+        finally:
+            _WORK.clear()
+        return rows
+    for tg in tgs:
+        for t in F.spine_for(store, tg):
+            rows.append(F.build_features(store, t))
+        if verbose and tg.season != last:
+            last = tg.season
+            print(f"  season {tg.season}: {len(rows):,} rows so far, {time.time() - t0:5.0f}s", flush=True)
+    return rows
+
+
+def frame_from_rows(rows: list[dict], store: pit.RawStore, *, with_labels: bool = True) -> pd.DataFrame:
+    """The matrix frame from feature rows: spine flags, optionally the y_* / base_* columns (which READ the target games' rows, so a
+    frame of upcoming games is built with `with_labels=False`), sorted the way the matrix always is."""
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+    df = df.drop(columns=list(F.EXCLUDED_FROM_MATRIX))
+    src = df["spine_src"].fillna("")
+    for s in ("usage", "injury", "depth", "draft"):
+        df[f"spine_{s}"] = src.str.contains(s).astype("int8")
+    df["spine_depth_only"] = (src == "depth").astype("int8")
+    if with_labels:
+        df = labels.attach_labels(store, df)
+    return df.sort_values(["season", "week", "kickoff_utc", "team", "player_id"], kind="mergesort").reset_index(drop=True)
+
+
+def build_games(store: pit.RawStore, tgs: list, *, verbose: bool = False, jobs: int = 1, with_labels: bool = True) -> pd.DataFrame:
+    """The matrix rows of an explicit list of team-games (`pit.team_games`), upcoming or played."""
+    return frame_from_rows(build_rows(store, tgs, verbose=verbose, jobs=jobs), store, with_labels=with_labels)
+
+
 def build(seasons: list[int], *, store: pit.RawStore | None = None, verbose: bool = True,
-          weeks: Iterable[int] | None = None) -> pd.DataFrame:
+          weeks: Iterable[int] | None = None, jobs: int = 1) -> pd.DataFrame:
     """Feature matrix for `seasons` (REG weeks with a result; only `weeks` if given), with labels and
-    baselines attached."""
+    baselines attached. `jobs` > 1 builds the weeks in forked workers (same rows, same order)."""
     if store is None:
         hist = range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)   # career_games_prior needs every season since the cutoff
         store = pit.load_store(hist)
@@ -57,27 +126,11 @@ def build(seasons: list[int], *, store: pit.RawStore | None = None, verbose: boo
     missing = set(range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)) - have
     if missing:
         raise ValueError(f"store lacks seasons {sorted(missing)}: career_games_prior and prev_season_* would be wrong")
-    rows: list[dict] = []
     tgs = pit.team_games(store, seasons)
     if weeks is not None:
         keep = set(weeks)
         tgs = [g for g in tgs if g.week in keep]
-    t0, last = time.time(), None
-    for i, tg in enumerate(tgs):
-        for t in F.spine_for(store, tg):
-            rows.append(F.build_features(store, t))
-        if verbose and tg.season != last:
-            last = tg.season
-            print(f"  season {tg.season}: {len(rows):,} rows so far, {time.time() - t0:5.0f}s", flush=True)
-    df = pd.DataFrame(rows)
-    df = df.drop(columns=list(F.EXCLUDED_FROM_MATRIX))
-    src = df["spine_src"].fillna("")
-    for s in ("usage", "injury", "depth", "draft"):
-        df[f"spine_{s}"] = src.str.contains(s).astype("int8")
-    df["spine_depth_only"] = (src == "depth").astype("int8")
-    df = labels.attach_labels(store, df)
-    df = df.sort_values(["season", "week", "kickoff_utc", "team", "player_id"], kind="mergesort").reset_index(drop=True)
-    return df
+    return build_games(store, tgs, verbose=verbose, jobs=jobs)
 
 
 def schema(df: pd.DataFrame) -> dict:
