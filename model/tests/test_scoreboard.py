@@ -163,6 +163,22 @@ class Gate(unittest.TestCase):
         self.assertIn("cannot be met before 6 weeks", text)
 
 
+class TwoSeasons(unittest.TestCase):
+    def test_the_same_week_number_in_two_seasons_is_two_rows_never_one(self):
+        ev = pd.concat([S.score_rows(pd.DataFrame({"position": "RB", "actual": [9.0, 5.0, 2.0], **{c: [9.0, 5.0, 2.0] for c in S.COMPARATORS}}),
+                                     season, 4, SLUG) for season in (2026, 2027)], ignore_index=True)
+        ev.loc[ev["season"] == 2027, "credit"] = 0.0                              # 2027 wk4: not one pair right
+        by_week = S._by(ev, "week").splitlines()
+        self.assertEqual([l.split("|")[1].strip() for l in by_week[2:]], ["2026 wk04", "2027 wk04"])
+        self.assertEqual(by_week[2].split("|")[2].strip(), "1.000")
+        self.assertEqual(by_week[3].split("|")[2].strip(), "0.000")
+        cov = pd.DataFrame({"season": [2026, 2027], "week": [4, 4], "league": SLUG, "played": [10, 20], "with_model_row": [9, 19], "scored": [8, 18]})
+        text = S.render(ev, cov, pd.DataFrame(), S.gate_status(ev))
+        self.assertIn("| 2026 | 4 | 10 | 9 | 8 |", text)
+        self.assertIn("| 2027 | 4 | 20 | 19 | 18 |", text)
+        self.assertEqual(S.gate_status(ev)["weeks"], 2)                          # (2026, 4) and (2027, 4) are two weeks
+
+
 class Files(unittest.TestCase):
     def test_rescoring_replaces_a_weeks_rows_and_a_rerun_changes_no_byte(self):
         root = make_root(weeks=2)
@@ -208,7 +224,8 @@ class Files(unittest.TestCase):
                 redirect_stderr(io.StringIO()):
             rc = S.main([])
         self.assertEqual(rc, 0)
-        rows = list(csv.DictReader(open(root / "logs" / "runs.csv")))
+        with open(root / "logs" / "runs.csv") as fh:
+            rows = list(csv.DictReader(fh))
         self.assertEqual(len(rows), 2)
         self.assertEqual((rows[-1]["status"], rows[-1]["fails"], rows[-1]["warns"]), ("WARN", "0", "1"))
         self.assertTrue(rows[-1]["detail"].startswith("model.scoreboard: scoreboard failed"))

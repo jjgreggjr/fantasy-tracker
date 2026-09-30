@@ -143,14 +143,14 @@ def evaluate(root: Path = ROOT):
         season, week = int(season), int(week)
         for slug, (lid, _) in leagues.items():
             act = actuals(lp, pw, lid, season, week)
+            pred = comparators(frozen, slug)
             have = {"season": season, "week": week, "league": slug, "model_rows": len(frozen), "actual_rows": len(act)}
             for c in COMPARATORS:
-                have[c] = int(comparators(frozen, slug)[c].notna().sum())
+                have[c] = int(pred[c].notna().sum())
             avail.append(have)
             if act.empty:
                 continue                                              # the week is not complete for this league yet
             played = act[act["played"]]
-            pred = comparators(frozen, slug)
             both = played.merge(pred, on="gsis_id", how="left")
             e = both.dropna(subset=list(COMPARATORS) + ["actual"])
             cov.append({"season": season, "week": week, "league": slug, "played": len(played),
@@ -251,12 +251,12 @@ def render(ev, cov, avail, gate: dict) -> str:
         L += ["### By week (pick accuracy, pooled over leagues)", "", _by(ev, "week"), "", "### By league (pick accuracy, pooled over weeks)", "",
               _by(ev, "league"), ""]
     if len(cov):
-        c = cov.groupby("week")[["played", "with_model_row", "scored"]].sum()
+        c = cov.groupby(["season", "week"])[["played", "with_model_row", "scored"]].sum()
         L += ["## Coverage", "",
               "Played rostered skill players per week (summed over leagues), how many had a model row, and how many made the identical-rows set "
               "(a player missing the model, Sleeper or E_pts is dropped from every comparator):", "",
-              "| week | played | with a model row | scored |", "|---|---|---|---|"]
-        L += [f"| {int(w)} | {int(r.played)} | {int(r.with_model_row)} | {int(r.scored)} |" for w, r in c.iterrows()]
+              "| season | week | played | with a model row | scored |", "|---|---|---|---|---|"]
+        L += [f"| {int(sn)} | {int(w)} | {int(r.played)} | {int(r.with_model_row)} | {int(r.scored)} |" for (sn, w), r in c.iterrows()]
         L.append("")
     if len(avail):
         L += ["## Which comparators exist", "",
@@ -282,11 +282,18 @@ def _table(p: dict) -> str:
 
 
 def _by(ev, key: str) -> str:
+    """Pick accuracy per comparator for each value of `key`: a league, or a (season, week) (never a bare week number, which would pool
+    2026 week 4 with 2027 week 4)."""
     d = ev[ev["position"] == "ALL"]
-    groups = sorted(d[key].unique())
-    rows = [f"| {key} | " + " | ".join(COMPARATORS) + " |", "|---|" + "---|" * len(COMPARATORS)]
-    for g in groups:
-        s = d[d[key] == g]
+    if key == "week":
+        d = d.assign(_k=d["season"].astype(int).astype(str) + " wk" + d["week"].astype(int).astype(str).str.zfill(2))
+        head = "season / week"
+    else:
+        d = d.assign(_k=d[key])
+        head = key
+    rows = [f"| {head} | " + " | ".join(COMPARATORS) + " |", "|---|" + "---|" * len(COMPARATORS)]
+    for g in sorted(d["_k"].unique()):
+        s = d[d["_k"] == g]
         cells = []
         for c in COMPARATORS:
             x = s[s["comparator"] == c]
