@@ -91,6 +91,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,3,free_agent,drop,8205,Isiah Pacheco,8
 2026,3,free_agent,add,2306,Jameis Winston,6
 2026,3,free_agent,drop,8800,Malik Davis,6
+2026,4,free_agent,add,12185,,8
+2026,4,free_agent,drop,12713,,8
 2026,4,free_agent,add,13324,,8
 2026,4,free_agent,drop,7600,Pat Freiermuth,8
 2026,4,free_agent,add,PIT,,4

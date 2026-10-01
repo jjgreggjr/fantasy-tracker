@@ -33,9 +33,25 @@ season,week,type,action,sleeper_id,name,rosters
 2026,2,free_agent,add,6130,Devin Singletary,1
 2026,2,free_agent,drop,8800,Malik Davis,1
 2026,2,free_agent,drop,8408,Jordan Mason,1
+2026,3,waiver,add,3634,Kalif Raymond,11
+2026,3,waiver,add,2307,Marcus Mariota,1
+2026,3,waiver,drop,4033,David Njoku,1
 2026,3,free_agent,drop,8205,Isiah Pacheco,4
 2026,3,free_agent,drop,12484,Jayden Higgins,4
 2026,3,free_agent,add,NO,,2
 2026,3,free_agent,drop,TB,,2
 2026,3,free_agent,add,9486,Dontayvion Wicks,2
 2026,3,free_agent,drop,6783,Jerry Jeudy,2
+2026,4,free_agent,add,2306,Jameis Winston,8
+2026,4,free_agent,drop,12457,Jaydon Blue,8
+2026,4,free_agent,add,4039,Cooper Kupp,8
+2026,4,free_agent,drop,11618,Jalen McMillan,8
+2026,4,free_agent,add,1737,Case Keenum,2
+2026,4,free_agent,drop,12522,Cam Ward,2
+2026,4,free_agent,add,1479,Keenan Allen,2
+2026,4,free_agent,drop,9486,Dontayvion Wicks,2
+2026,4,free_agent,add,11643,Jaylen Wright,1
+2026,4,free_agent,drop,9226,De'Von Achane,1
+2026,4,free_agent,add,4177,Mack Hollins,2
+2026,4,free_agent,add,12495,Ollie Gordon II,2
+2026,4,free_agent,drop,11370,Chris Brooks,2

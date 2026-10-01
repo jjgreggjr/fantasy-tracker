@@ -123,3 +123,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,3,waiver,add,6900,,5
 2026,3,waiver,drop,12015,,5
 2026,3,waiver,add,11370,Chris Brooks,6
+2026,4,waiver,add,3634,Kalif Raymond,9
+2026,4,waiver,drop,1373,Geno Smith,9
+2026,4,waiver,add,11576,Braelon Allen,9
+2026,4,waiver,drop,7090,Darnell Mooney,9
