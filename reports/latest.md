@@ -1,23 +1,24 @@
 # Week 4 digest — 2026
 
-Generated 2026-10-01 22:45 UTC  
+Generated 2026-10-03 01:11 UTC  
 Stats through: **Week 3** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-10-01T14:25:58Z
-- 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3)]
+- depth chart snapshot: 2026-10-02T13:49:21Z
+- 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4)]
 - 2025 baseline weeks: 18 weeks
-- players in dimension: 942
-- Sleeper players cache: 2026-10-01
-- projections: 859 players (Sleeper, 2026-10-01T22:45:19Z)
-- league rosters: 3 leagues, lineups read 2026-10-01T22:45:15Z
-- ESPN rosters: Average Joes (2026-10-01T22:45:24Z)
-- status rows: 583 players; 0 with practice reports
+- players in dimension: 943
+- Sleeper players cache: 2026-10-03
+- projections: 860 players (Sleeper, 2026-10-03T01:11:37Z)
+- league rosters: 3 leagues, lineups read 2026-10-03T01:11:35Z
+- ESPN rosters: Average Joes (2026-10-03T01:11:42Z)
+- status rows: 585 players; 0 with practice reports
 
 ### Data integrity
 
+- **WARN** player_weeks.volume — suspiciously few rows in week(s) [4]
 - **WARN** status.practice — 0% have practice reports (normal before Wednesday)
 
 
@@ -27,16 +28,16 @@ Stats through: **Week 3** · Baselines: **2026 only**
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | JAX | 16.3 | 3.0 |  | 1 | 30 | High |  |
-| Geno Smith | QB | NYJ | CHI | 15.6 | 4.0 |  | 1 | 17 | High |  |
-| Drake Maye | QB | NE | BUF | 12.1 | 5.3 |  | 1 | 8 | High |  |
-| Aaron Jones | RB | MIN | MIA | 14.1 | 20.1 | 61% | 1 | 3 | High |  |
-| TreVeyon Henderson | RB | NE | BUF | 11.4 | 11.4 | 35% | 2 | 6 | Med |  |
+| Joe Burrow | QB | CIN | JAX | 16.3 | 2.5 |  | 1 | 30 | Med |  |
+| Geno Smith | QB | NYJ | CHI | 15.4 | 3.5 |  | 1 | 17 | High |  |
+| Drake Maye | QB | NE | BUF | 13.1 | 4.9 |  | 1 | 8 | High |  |
+| Aaron Jones | RB | MIN | MIA | 14.7 | 21.7 | 58% | 1 | 3 | High |  |
+| TreVeyon Henderson | RB | NE | BUF | 11.5 | 11.4 | 35% | 2 | 6 | Med |  |
 
 
-**Needs a decision:** Breece Hall (DOUBTFUL), DeVonta Smith (QUESTIONABLE), Jakobi Meyers (QUESTIONABLE), Omar Cooper Jr. (IR), Jordyn Tyson (IR)
+**Needs a decision:** Breece Hall (OUT), Omar Cooper Jr. (IR), Jordyn Tyson (IR), DeVonta Smith (OUT)
 
-**Trending and still free here:** Isaiah Davis (RB, 4.3), Tyler Higbee (TE, 9.2), Roman Wilson (WR, 8.1)
+**Trending and still free here:** Austin Ekeler (RB, 5.5), Justice Hill (RB, 5.3), Isaiah Davis (RB, 4.3)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -48,16 +49,16 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Matthew Stafford | QB | LA | PHI | 20.1 | 2.1 |  | 1 | 6 | Med |  |
-| Bo Nix | QB | DEN | SF | 15.7 | 4.1 |  | 1 | 25 | High |  |
+| Matthew Stafford | QB | LA | PHI | 19.7 | 2.2 |  | 1 | 6 | Med |  |
+| Bo Nix | QB | DEN | SF | 16.0 | 4.4 |  | 1 | 25 | High |  |
 | Carson Beck | QB | ARI | NYG | 0.0 | 0.0 |  | 3 | 16 | Low |  |
-| D'Andre Swift | RB | CHI | NYJ | 19.4 | 19.7 | 51% | 1 | 9 | Med | QUESTIONABLE |
-| Bhayshul Tuten | RB | JAX | CIN | 13.0 | 15.2 | 46% | 1 | 20 | High |  |
+| D'Andre Swift | RB | CHI | NYJ | 18.7 | 19.6 | 49% | 1 | 10 | High |  |
+| Bhayshul Tuten | RB | JAX | CIN | 12.9 | 14.9 | 46% | 1 | 20 | High |  |
 
 
-**Needs a decision:** D'Andre Swift (QUESTIONABLE), Breece Hall (DOUBTFUL), Zach Charbonnet (PUP), Keon Coleman (QUESTIONABLE), Ricky Pearsall (IR), Jayden Reed (IR)
+**Needs a decision:** Breece Hall (OUT), Zach Charbonnet (PUP), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Deshaun Watson (QB, 15.5), Raheim Sanders (RB, 5.7), Isaiah Davis (RB, 4.3)
+**Trending and still free here:** Deshaun Watson (QB, 15.7), Tyson Bagent (QB, 11.6), Austin Ekeler (RB, 5.5)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -69,16 +70,16 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Brock Purdy | QB | SF | DEN | 23.5 | 3.6 |  | 1 | 19 | High |  |
-| Dak Prescott | QB | DAL | HOU | 21.1 | 3.2 |  | 1 | 7 | High |  |
-| Trevor Lawrence | QB | JAX | CIN | 18.4 | 3.3 |  | 1 | 15 | Med |  |
-| Bo Nix | QB | DEN | SF | 15.0 | 4.1 |  | 1 | 25 | High |  |
-| Kenneth Walker III | RB | KC | LV | 20.9 | 25.3 | 65% | 1 | 23 | High |  |
+| Brock Purdy | QB | SF | DEN | 22.8 | 3.3 |  | 1 | 19 | Med |  |
+| Dak Prescott | QB | DAL | HOU | 20.7 | 3.5 |  | 1 | 7 | High |  |
+| Trevor Lawrence | QB | JAX | CIN | 18.6 | 3.7 |  | 1 | 15 | High |  |
+| Bo Nix | QB | DEN | SF | 15.4 | 4.4 |  | 1 | 25 | High |  |
+| Kenneth Walker III | RB | KC | LV | 20.3 | 24.4 | 65% | 1 | 23 | High |  |
 
 
-**Needs a decision:** Jaxson Dart (IR), D'Andre Swift (QUESTIONABLE)
+**Needs a decision:** Jaxson Dart (IR), Terry McLaurin (QUESTIONABLE)
 
-**Trending and still free here:** Kirk Cousins (QB, 15.2), Deshaun Watson (QB, 15.0), Marcus Mariota (QB, 15.0)
+**Trending and still free here:** Deshaun Watson (QB, 15.1), Kirk Cousins (QB, 14.8), Marcus Mariota (QB, 14.7)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -90,16 +91,16 @@ Full report: `leagues/where-you-at/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Bryce Young | QB | CAR | DET | 23.8 | 2.3 |  | 1 | 1 | Low |  |
-| Drake Maye | QB | NE | BUF | 12.1 | 5.3 |  | 1 | 8 | High |  |
-| Aaron Jones | RB | MIN | MIA | 14.1 | 20.1 | 61% | 1 | 3 | High |  |
-| Rhamondre Stevenson | RB | NE | BUF | 10.8 | 13.2 | 37% | 1 | 6 | High |  |
-| Kyle Monangai | RB | CHI | NYJ | 10.5 | 11.8 | 37% | 2 | 9 | High |  |
+| Bryce Young | QB | CAR | DET | 23.2 | 2.4 |  | 1 | 1 | Low |  |
+| Drake Maye | QB | NE | BUF | 13.1 | 4.9 |  | 1 | 8 | High |  |
+| Aaron Jones | RB | MIN | MIA | 14.7 | 21.7 | 58% | 1 | 3 | High |  |
+| Rhamondre Stevenson | RB | NE | BUF | 11.4 | 10.6 | 37% | 1 | 6 | High |  |
+| Kyle Monangai | RB | CHI | NYJ | 9.8 | 11.0 | 32% | 2 | 10 | High |  |
 
 
-**Needs a decision:** Breece Hall (DOUBTFUL), Zach Charbonnet (PUP), Puka Nacua (QUESTIONABLE), Jalen Coker (QUESTIONABLE), Nico Collins (QUESTIONABLE)
+**Needs a decision:** Breece Hall (OUT), Zach Charbonnet (PUP), Jalen Coker (QUESTIONABLE)
 
-**Trending and still free here:** C.J. Stroud (QB, 18.0), Kirk Cousins (QB, 15.2), Deshaun Watson (QB, 15.0)
+**Trending and still free here:** C.J. Stroud (QB, 18.4), Deshaun Watson (QB, 15.1), Kirk Cousins (QB, 14.8)
 
 
 Full report: `leagues/james-gregg-espn/report.md`
@@ -136,8 +137,8 @@ Per-game production **allowed**. Rank 1 = softest.
 | 4 | ARI | 39.0 | 16.3 | 167.7 | 2.00 | 1.0 | 6.0 | 0.00 |
 | 5 | BUF | 38.8 | 20.7 | 192.0 | 1.00 | 0.3 | 2.3 | 0.00 |
 | 6 | ATL | 38.5 | 25.0 | 201.3 | 0.67 | 0.0 | 0.0 | 0.00 |
-| 7 | BAL | 37.0 | 22.0 | 173.3 | 0.33 | 0.3 | 3.0 | 0.33 |
-| 8 | GB | 36.0 | 18.0 | 155.7 | 1.00 | 0.3 | 4.7 | 0.00 |
+| 7 | CLE | 37.3 | 19.2 | 170.0 | 1.50 | 0.8 | 2.8 | 0.00 |
+| 8 | BAL | 37.0 | 22.0 | 173.3 | 0.33 | 0.3 | 3.0 | 0.33 |
 
 
 ### vs TE — 8 softest

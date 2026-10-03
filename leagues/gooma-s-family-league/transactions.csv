@@ -42,6 +42,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,3,free_agent,drop,TB,,2
 2026,3,free_agent,add,9486,Dontayvion Wicks,2
 2026,3,free_agent,drop,6783,Jerry Jeudy,2
+2026,4,free_agent,add,11256,Tyson Bagent,2
+2026,4,free_agent,drop,1737,Case Keenum,2
+2026,4,waiver,add,9486,Dontayvion Wicks,6
+2026,4,waiver,drop,11647,Kimani Vidal,6
 2026,4,free_agent,add,2306,Jameis Winston,8
 2026,4,free_agent,drop,12457,Jaydon Blue,8
 2026,4,free_agent,add,4039,Cooper Kupp,8
