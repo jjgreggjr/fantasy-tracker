@@ -32,6 +32,10 @@ Non-blank frozen values per league-week in `data/model_pts.csv` (the actual-poin
 | 2026 | 4 | james-gregg-espn | 495 | 0 | 495 | 495 | 495 | 492 | 492 |
 | 2026 | 4 | we-can-think-of-something-funny | 495 | 0 | 495 | 495 | 495 | 492 | 492 |
 | 2026 | 4 | where-you-at | 495 | 0 | 495 | 495 | 495 | 492 | 492 |
+| 2026 | 5 | gooma-s-family-league | 457 | 0 | 457 | 457 | 457 | 0 | 0 |
+| 2026 | 5 | james-gregg-espn | 457 | 0 | 457 | 457 | 457 | 0 | 0 |
+| 2026 | 5 | we-can-think-of-something-funny | 457 | 0 | 457 | 457 | 457 | 0 | 0 |
+| 2026 | 5 | where-you-at | 457 | 0 | 457 | 457 | 457 | 0 | 0 |
 
 ## Limits
 
