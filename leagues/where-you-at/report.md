@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 5
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-07 05:42 UTC · baselines: 2026 only · lineup as of 2026-10-07T05:42:14Z
+Generated 2026-10-07 19:52 UTC · baselines: 2026 only · lineup as of 2026-10-07T19:52:46Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -12,7 +12,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 - Terry McLaurin: depth charts disagree (ESPN 1 vs Sleeper 5) — his listed rank may reflect availability, not role
 - Jaxson Dart: IR (Knee - Meniscus) — his depth rank of 3 reflects that, not his role
-- Terry McLaurin: OUT (Hamstring) — his depth rank of 1 reflects that, not his role
 
 
 ## Your roster
@@ -34,13 +33,13 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Brenton Strange | TE | JAX | PHI | 6.6 | 5.0 | 17% | 1 | 28 | High |  |
 | Kyle Pitts | TE | ATL | BAL | 4.3 | 3.2 | 15% | 1 | 21 | Med |  |
 | Gunnar Helm | TE | TEN | HOU | 3.0 | 2.6 | 10% | 1 | 18 | High |  |
-| Jaxon Smith-Njigba | WR | SEA | SF | 21.9 | 10.2 | 33% | 1 | 26 | High |  |
+| Jaxon Smith-Njigba | WR | SEA | SF | 21.8 | 10.2 | 33% | 1 | 26 | High |  |
 | Parker Washington | WR | JAX | PHI | 10.5 | 7.4 | 25% | 1 | 10 | High |  |
-| Deebo Samuel Sr. | WR | SF | SEA | 9.3 | 5.9 | 19% | 2 | 31 | Med |  |
+| Deebo Samuel Sr. | WR | SF | SEA | 9.4 | 5.9 | 19% | 2 | 31 | Med |  |
+| Terry McLaurin | WR | WAS | NYG | 8.5 | 7.6 | 22% | 1 | 16 | Med | QUESTIONABLE |
 | Rashod Bateman | WR | BAL | ATL | 8.5 | 4.4 | 16% | 2 | 5 | Med |  |
 | Chris Godwin Jr. | WR | TB | DAL | 7.0 | 4.9 | 17% | 2 | 11 | High |  |
 | Germie Bernard | WR | PIT | IND | 3.1 | 3.1 | 7% | 4 | 12 | Low |  |
-| Terry McLaurin | WR | WAS | NYG |  | 7.6 | 22% | 1 | 16 | Low | OUT |
 
 
 ### Why each call
@@ -63,8 +62,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - **Jaxon Smith-Njigba** — 10.2 exp opps (proj 10, recent 10) · WR1 · 33% of team targets · vs SF (DvP 26, -7%) · High confidence
 - **Parker Washington** — 7.4 exp opps (proj 8, recent 7) · WR1 · 25% of team targets · vs PHI (DvP 10, +5%) · High confidence
 - **Deebo Samuel Sr.** — 5.9 exp opps (proj 7, recent 5) · WR2 · 19% of team targets · vs SEA (DvP 31, -10%) · Med confidence
+- **Terry McLaurin** — 7.6 exp opps (proj 6, recent 9) · WR1 · 22% of team targets · vs NYG (DvP 16, +1%) · Med confidence · QUESTIONABLE
 - **Rashod Bateman** — 4.4 exp opps (proj 4, recent 5) · WR2 · 16% of team targets · vs ATL (DvP 5, +9%) · Med confidence
-- **Chris Godwin Jr.** — 4.9 exp opps (proj 5, recent 5) · WR2 · 17% of team targets · vs DAL (DvP 11, +4%) · High confidence
 
 
 ## Waiver wire — best available
@@ -76,25 +75,25 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Deshaun Watson | QB | CLE | NYJ | 15.1 | 6.3 |  | 1 | 28 | Low | 🔥 |
 | Jameis Winston | QB | NYG | WAS | 12.3 | 2.1 |  | 1 | 3 | Med |  |
 | Jalon Daniels | QB | TB | DAL | 10.8 | 4.3 |  | 2 | 2 | High |  |
-| Tyler Huntley | QB | BAL | ATL | 10.2 | 4.6 |  | 2 | 11 | Med | 🔥 |
+| Tyler Huntley | QB | BAL | ATL | 10.5 | 5.1 |  | 2 | 11 | Med | 🔥 |
 | Ty Johnson | RB | BUF | LA | 6.1 | 4.2 | 11% | 2 | 30 | Med |  |
 | Kendre Miller | RB | NO | MIN | 5.2 | 9.4 | 32% | 2 | 32 | Med |  |
 | Kimani Vidal | RB | LAC | DEN | 4.8 | 4.6 | 12% | 3 | 7 | Med |  |
-| Will Shipley | RB | PHI | JAX | 4.8 | 10.3 | 70% | 2 | 23 | Low | 🔥 |
-| Austin Ekeler | RB | WAS | NYG | 4.5 | 5.2 | 13% | 4 | 15 | Med | 🔥 |
-| Emanuel Wilson | RB | SEA | SF | 12.6 | 18.4 | 57% | 1 | 8 | High | 🔥 |
+| Will Shipley | RB | PHI | JAX | 4.7 | 10.3 | 52% | 2 | 23 | Low | 🔥 |
+| Austin Ekeler | RB | WAS | NYG | 4.5 | 5.3 | 13% | 4 | 15 | Med | 🔥 |
+| Emanuel Wilson | RB | SEA | SF | 12.5 | 18.4 | 57% | 1 | 8 | High | 🔥 |
 | Tyler Higbee | TE | LA | BUF | 7.9 | 6.6 | 14% | 2 | 17 | Med | 🔥 |
+| Noah Fant | TE | NO | MIN | 6.0 | 2.2 | 7% | 2 | 29 | Med |  |
 | Darnell Washington | TE | PIT | IND | 5.9 | 3.5 | 11% | 1 | 16 | High |  |
-| Matthew Hibner | TE | BAL | ATL | 5.4 | 2.0 |  | 3 | 12 | Low |  |
+| Matthew Hibner | TE | BAL | ATL | 5.4 | 2.0 |  | 2 | 12 | Med |  |
 | Nate Adkins | TE | DEN | LAC | 3.7 | 1.9 | 3% | 3 | 24 | Low |  |
-| Austin Hooper | TE | ATL | BAL | 3.5 | 2.1 | 6% | 3 | 21 | Med |  |
 | Eli Raridon | TE | NE | LV | 3.5 | 1.5 | 5% | 2 | 9 | Med |  |
 | Roman Wilson | WR | PIT | IND | 9.0 | 4.9 | 10% | 3 | 12 | Low | 🔥 |
 | Cody White | WR | LV | NE | 8.3 | 3.2 | 11% | 3 | 13 | Med |  |
-| Isaiah Williams | WR | NYJ | CLE | 7.5 | 4.0 | 14% | 3 | 8 | Med |  |
-| Darius Cooper | WR | PHI | JAX | 7.1 | 3.0 | 10% | 5 | 9 | Med | 🔥 |
+| Isaiah Williams | WR | NYJ | CLE | 7.8 | 4.3 | 19% | 3 | 8 | Med | 🔥 |
+| Darius Cooper | WR | PHI | JAX | 7.1 | 3.0 | 9% | 5 | 9 | Med | 🔥 |
+| Keenan Allen | WR | IND | PIT | 6.8 | 6.1 | 20% | 2 | 22 | Med |  |
 | Kendrick Bourne | WR | ARI | DET | 6.1 | 3.4 | 11% | 3 | 2 | Med |  |
-| Josh Palmer | WR | BUF | LA | 5.6 | 3.4 | 10% | 4 | 18 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
@@ -112,10 +111,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 34% | TE2 on depth chart; snap share trending +5%/wk; team passes #8; age 26 |
 | CJ Donaldson | RB | NO | 22.2 | 0 | 3 (was 3) | 28% | RB3 on depth chart; age 22 |
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 79% | WR3 on depth chart; team passes #1; age 24 |
-| Anthony Tyus III | RB | CAR | 23.6 | 1 | 3 (was 3) | 2% | RB3 on depth chart; age 24 |
 | Isaiah Davis | RB | NYJ | 24.6 | 2 | 3 (was 3) | 2% | RB3 on depth chart; age 25 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
 | Mitchell Evans | TE | CAR | 23.4 | 1 | 3 (was 3) | 49% | TE3 on depth chart; team passes #3; age 23 |
+| Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 39% | TE2 on depth chart; team passes #10; age 27 |
 
 
 ## Ask me
