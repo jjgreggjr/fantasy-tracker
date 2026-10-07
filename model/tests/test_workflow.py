@@ -75,5 +75,61 @@ class Workflow(unittest.TestCase):
         self.assertIn("model/reports/live_scoreboard.md", self.step("name: Commit results"))
 
 
+class Phase4(unittest.TestCase):
+    """The Sunday pre-lock run and the props step: the only two additions to pipeline.yml, both failure-isolated."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = (REPO / ".github" / "workflows" / "pipeline.yml").read_text(encoding="utf-8")
+        cls.steps = cls.text.split("\n      - ")
+
+    def step(self, needle: str) -> str:
+        hits = [s for s in self.steps if needle in s]
+        self.assertEqual(len(hits), 1, needle)
+        return hits[0]
+
+    def crons(self) -> list[str]:
+        return [ln.strip() for ln in self.text.splitlines() if ln.strip().startswith("- cron:")]
+
+    def test_one_sunday_schedule_entry_an_hour_before_the_early_slate_locks_and_the_other_four_unchanged(self):
+        crons = self.crons()
+        self.assertEqual(len(crons), 5)
+        self.assertEqual([c.split("#")[0].strip() for c in crons],
+                         ['- cron: "37 18 * * 2"', '- cron: "41 19 * * 2"', '- cron: "7 14 * * 3"', '- cron: "11 22 * * 5"', '- cron: "52 15 * * 0"'])
+        minute, hour, _, _, dow = crons[-1].split('"')[1].split()
+        self.assertEqual((hour, minute, dow), ("15", "52", "0"))                  # Sunday 15:52 UTC: before 17:00 UTC, off :00 and :30
+        self.assertNotIn(minute, ("0", "30"))
+        self.assertIn("workflow_dispatch:", self.text)
+
+    def test_the_props_step_is_isolated_capped_keyed_by_the_secret_and_sits_between_the_model_and_the_commit(self):
+        props = self.step("run: python -m model.fetch_props")
+        self.assertIn("continue-on-error: true", props)
+        self.assertRegex(props, r"timeout-minutes: \d+")
+        self.assertIn("ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}", props)
+        self.assertEqual(self.text.count("secrets.ODDS_API_KEY"), 1)                # the secret reaches this one step, nowhere else
+        order = [i for i, s in enumerate(self.steps) if "run: python -m model.serve" in s or "run: python -m model.fetch_props" in s
+                 or "name: Commit results" in s]
+        self.assertEqual([("serve" in self.steps[i], "fetch_props" in self.steps[i]) for i in order[:2]], [(True, False), (False, True)])
+        self.assertIn("Commit results", self.steps[order[2]])
+        self.assertNotIn("steps.model", props)                                      # does not wait on, or depend on, the model step
+
+    def test_it_runs_whether_or_not_the_model_install_worked_and_never_decides_the_jobs_colour(self):
+        gate = self.step("Fail the job if integrity checks failed")
+        self.assertIn("steps.pipeline.outcome == 'failure'", gate)
+        self.assertNotIn("props", gate)
+        self.assertNotIn("if:", self.step("run: python -m model.fetch_props"))     # no condition that could skip it for the wrong reason
+
+    def test_the_commit_step_already_adds_the_data_directory_so_props_csv_is_committed_with_no_change_there(self):
+        commit = self.step("name: Commit results")
+        self.assertIn("git add data leagues reports config.json", commit)
+        self.assertNotIn("fetch_props", commit)
+
+    def test_the_props_step_is_the_only_new_step_and_the_old_steps_are_as_they_were(self):
+        self.assertEqual(len(self.steps) - 1, 14)                                    # the 13 steps Phase 3 left, plus the props step
+        self.assertEqual(sum(1 for s in self.steps if "fetch_props" in s), 1)
+        self.assertIn("run: python -m ff.run_weekly --strict", self.step("name: Run pipeline"))
+        self.assertIn("run: python -m model.serve && python -m model.scoreboard", self.step("id: model\n"))
+
+
 if __name__ == "__main__":
     unittest.main()
