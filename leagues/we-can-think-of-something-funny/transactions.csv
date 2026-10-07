@@ -91,6 +91,14 @@ season,week,type,action,sleeper_id,name,rosters
 2026,3,free_agent,drop,8205,Isiah Pacheco,8
 2026,3,free_agent,add,2306,Jameis Winston,6
 2026,3,free_agent,drop,8800,Malik Davis,6
+2026,4,free_agent,add,4018,,2
+2026,4,free_agent,drop,12718,Konata Mumpfield,2
+2026,4,free_agent,add,LV,,7
+2026,4,free_agent,drop,PHI,,7
+2026,4,free_agent,add,3271,Tyler Higbee,7
+2026,4,free_agent,drop,4033,David Njoku,7
+2026,4,free_agent,add,4177,Mack Hollins,6
+2026,4,free_agent,drop,11655,Tyrone Tracy Jr.,6
 2026,4,free_agent,add,12185,,8
 2026,4,free_agent,drop,12713,,8
 2026,4,free_agent,add,13324,,8
