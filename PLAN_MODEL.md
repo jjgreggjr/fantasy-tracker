@@ -850,4 +850,122 @@ run or missing commit).
 
 ## Phase 4 findings
 
-(appended by the Phase 4 session)
+Done 2026-10-07 (branch `claude/eager-goldberg-zmevs9`, not merged). Shipped: `model/fetch_props.py` (`python -m model.fetch_props`),
+`model/tests/test_props.py` (63 tests) with `model/tests/fixtures/odds_event_odds.sample.json`, a Sunday cron entry and a props step in
+`pipeline.yml` (the whole diff to that file is those 15 inserted lines), Phase 4 tests in `test_workflow.py`, `test_serve.py` (`SundayServe`, a real-data
+`WeekSelection` case) and `test_scoreboard.py`, README (schedule, the optional key, the `data/props.csv` row). Nothing under `ff/` changed and
+`model/serve.py` / `model/scoreboard.py` are untouched: item 1 needed no code, only proof. Suites under python3.12 with `-W error::DeprecationWarning`: **317 model tests** (242 + 75 new: 63 props, 5 `SundayServe`, 1 real-data `WeekSelection`, 1 scoreboard, 5 workflow) and the pipeline's 39, all green (356).
+
+### 1. Sunday pre-lock run
+
+The entry, quoted from `pipeline.yml`: `    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, an hour before the 17:00 UTC early slate locks`. Sunday 15:52 UTC is 68 minutes
+before the 17:00 UTC slate (09:52 MDT; 08:52 MST after Nov 1, when the early slate is 18:00 UTC and the run is two hours ahead), off :00/:30. The workflow's
+concurrency group already queues runs, and a Sunday run is idempotent like the Tuesday backstop. A run delayed past 17:00 UTC (the first Friday run was 94
+minutes late) cannot hurt anything: the 1 pm games are then frozen at Friday's numbers, which is the same rule, only staler (tested, `SundayServe`).
+Week detection is Sleeper's `state/nfl` (still week 5 until Tuesday), so `completed_weeks` does not record an in-progress week on Sunday.
+
+**The freeze holds at the new instant. Evidence, three layers.**
+(a) *Synthetic, real week-5 kickoffs* (`SundayServe`, 5 tests): Wednesday 14:07, Friday 22:11 and Sunday 15:52 UTC serves of 15 games x 2 players, each
+re-predicting only games with `kickoff > now` (15, 14, 13 games). Thursday night's rows are byte-identical after all three serves; the 13:30 UTC PHI@JAX game
+keeps Friday's row on Sunday; the 13 games from the 1 pm slate to Monday night carry Sunday's numbers; 30 rows, no duplicate (season, week, gsis_id), week 4
+untouched. A player ruled Out Sunday morning in an unplayed game loses his row; one in a game under way keeps the frozen row. A late Sunday run (17:30 UTC)
+re-predicts 5 games and freezes the 1 pm slate at the 15:52 numbers; a run after Monday night changes no byte. `roster.csv` keeps `E_pts_model`/`p10`/`p90` for
+the frozen Thursday and international players (10.0 / 11.0 / 12.0 for the three freeze points). `real-data WeekSelection`: with the real 2026 schedule
+`pick_week` at Sunday 15:52 UTC is week 5, Thursday night is under way, at least 10 games are still to come.
+(b) *The real serve on real model output*, simulated: `python -m model.serve --now <t> --out <scratch copy of data/model_pts.csv>` three times with
+`--now` 2026-10-07T14:07Z, 2026-10-09T22:11Z, 2026-10-11T15:52Z (the serve really fits 3 libraries, 14 components and the bands; scratch output, nothing under
+`data/` touched; the raw data is the real 2026-10-07 data, so this proves the freezing on real output, not what Sunday information would change). The serve
+predicted 15, 14 and 13 games and the file held 405 rows, 15 games and 0 duplicate keys after each. Per-game row hashes (including `served_at`):
+TB@DAL (Thursday) `1fce46e9` after the Wednesday, Friday and Sunday serves (served_at 04:30:04Z, the Wednesday simulation's stamp: never rewritten);
+PHI@JAX (13:30 UTC Sunday) `0541493e` then `d7603931` then `d7603931` (rewritten Friday, frozen Sunday); the 13 other games re-stamped by the Sunday
+serve (04:33:53Z); week 4 byte-identical to the committed file.
+(c) *Third serve and the scoreboard / run log* (`test_scoreboard.ThirdServe...`, `SundayServe`): three serves of a week in progress, scoreboard run after
+each: `data/model_eval.csv` and `live_scoreboard.md` are byte-identical after the second and third, no duplicate (season, week, league, position,
+comparator), the unfinished week adds no row; when the week completes it is scored once and re-scoring changes nothing. `logs/runs.csv` is append-only
+(`log_run`): a third serve is one more row, never a replacement, each stamped with the week of the newest row.
+Mutation check (isolated copy): freezing 2 days late, or writing the partition by appending instead of `replace_partition`, fails the Sunday tests; an
+append-instead-of-replace `model_eval.csv` fails the scoreboard test.
+
+### 2. Props archive
+
+**Where it lives, and why.** `model/fetch_props.py`, not `ff/`. `ff/` is the strict pipeline (`ff.run_weekly --strict` turns the run red), and this is a new
+network source with a paid-quota failure mode that must never be able to do that; `model/` already holds the failure-isolated fetchers (`fetch_adp`, `fetch_cfbd`)
+and the run-log helper (`model.serve.log_warns`), and the archive exists for a model question. It needs only pandas and requests, so the step runs on the
+pipeline's own install even when the model install fails, and `git diff -- ff` is empty. Placed between the model step and the commit; `git add data` already
+covers `data/props.csv`.
+
+**Probe.** `curl https://api.the-odds-api.com/v4/sports/?apiKey=probe_no_key` from the sandbox: `CONNECT tunnel failed, response 403` (the same egress block as
+FFC, CFBD and Open-Meteo). So the live path is **unobserved**: the fixture is hand-built from the v4 documentation (labelled `_note`, "NOT a recorded
+response", real player names, invented numbers), and the first keyed Actions run proves the host, the response shape and the billing.
+
+**Schema** (`python -m model.fetch_props --columns`): `season, week, game_id, kickoff_utc, gsis_id, player, market, bookmaker, line, over_price,
+under_price, book_updated, fetched_at`. One row per (game, book, market, player, line) with the Over and Under (or the anytime-TD Yes) side by side;
+`game_id` is nflverse's (`2026_05_TB_DAL`, built from `data/schedule.csv`, checked against every id in `model_pts.csv`), `kickoff_utc` the API's `commence_time`
+in model_pts' format, `player` the bookmaker's spelling, `gsis_id` through `data/players.csv` with `ff.build.name_key` (within the game's two teams, else a
+name unique in the table; ambiguous or unknown stays blank, the row is never dropped; `gsis_id` only, because `replace_partition` re-reads with default dtypes
+and would float-ify a gappy `sleeper_id`), `book_updated` the book's own `last_update`. Prices are stored as floats for the same reason. Frozen per game through
+`ff.build.replace_partition` on (season, week): the rows of a game that has kicked off are never rewritten, a game not fetched this run keeps its snapshot, and
+it is written game by game so a run cut off by the timeout keeps what it paid for.
+
+**Credit math (free tier, 500 a month).** Props are served only by the event-level endpoint, billed markets x regions per request, and the events listing is
+free. Six markets (`player_receptions`, `player_rush_yds`, `player_reception_yds`, `player_pass_yds`, `player_pass_tds`, `player_anytime_td`) x one region (`us`)
+= **6 credits a game**, one snapshot a game a week:
+
+| | games | credits / week | credits / 4.33-week month | of 500 |
+|---|---|---|---|---|
+| this week (5) | 15 | 90 | 390 | 78% |
+| full 16-game week | 16 | 96 | 416 | 83% |
+| lightest week (11) | 13 | 78 | 338 | 68% |
+
+Weeks 5-18 (14 slates, 208 games) cost 1,248 credits in all; a month of five full 16-game slates is 480 of 500. So the free tier funds exactly one snapshot per game
+and **no second one** (line movement, open to close, would double it: out of scope as written, and it needs a paid tier or three markets). Headroom is 84 credits
+a month at worst (14 games). The policy that makes it one snapshot (`due_games`): a game is due when it has not kicked off, kicks off within 40 hours, and has no
+snapshot under 30 hours old; replayed over the real week-5 slate and the five weekly run times it fetches each of the 15 games exactly once, at the last run before
+its kickoff: Tuesday's two runs buy nothing (Thursday night is 53.6 h away), **Wednesday 14:07 buys Thursday night (1 game, 6 credits), Friday 22:11 buys the 13:30 UTC
+international game (1, 6), Sunday 15:52 buys the 1 pm slate through Monday night (13, 78)**; total 90, tested. Games go soonest first and the run stops funding
+when `x-requests-remaining` cannot pay for another game. Every paid call logs `x-requests-last/used/remaining`; the free events call is read for them too, so
+the balance is known before anything is spent. A billed cost above 6 per game is a WARN (the budget math would be off). WARN rows (`model.props` in
+`logs/runs.csv`): fewer than 100 credits left after a run that spent some, a due game left unfunded, a quota that is out, a refused request (401/403/422: stops after
+ONE request), two failed requests in a row (stops), no props returned, a gsis match rate under 70%, a file over 40 MB. A manual "Run workflow" spends credits too (one
+per game inside the horizon, none for a game fetched under 30 h ago).
+
+**Unset key.** One line, `model.props: WARN ODDS_API_KEY is not set: player-props archive skipped, ...` (an Actions `::warning::` annotation on the runner), no request,
+no file, exit 0, and no `runs.csv` row: an unconfigured optional archive is not a gap in the pipeline, and a row per run forever is noise. (If James prefers the row, it
+is `log_warns` in `skip_line`'s caller; tested as absent.) The key is read from the environment only, sent only as the `apiKey` query parameter, and scrubbed from every
+message, because it sits in the URL: a connection error quotes the URL, and the run-log WARN is a committed file. Tested with a key that appears in a raised
+`ConnectionError`, in a 500 body and bare: absent from stdout, stderr, `props.csv` and `runs.csv`.
+
+**When the key arrives, no code change.** James signs up at the-odds-api.com (free), adds the repository secret `ODDS_API_KEY` (Settings, Secrets and variables, Actions).
+The next scheduled run picks it up: before Wednesday 08:07 MDT, Wednesday buys Thursday night, Friday the international game, Sunday the rest; added later, the games
+already inside the horizon are bought at the next run and anything already kicked off is simply never archived (no backfill: the historical endpoint is paid). To test at
+once, "Run workflow": it archives whatever is inside the 40-hour horizon (`--dry-run` lists the plan for free). **What to check in the first keyed log**: `events listed ... matched to
+the schedule` (all of the week's games), `credits last=6` per game (anything else is the billing assumption failing), the book count and rows per game, `gsis_id on N%` of the new
+rows, and no `WARN`. **What is not proven**, in order of likelihood to bite: (1) whether the free plan serves player-prop markets at all (a 401/403/422 stops the run after one request with the API's
+own message in the log; nothing is archived and one request is lost); (2) the response shape and the outcome vocabulary (`Over`/`Under`/`Yes`, `description` = player), parsed
+tolerantly, unreadable outcomes counted in the log; (3) billing = markets x regions (guarded by the `x-requests-last` check); (4) the match rate, which depends on how
+books spell names (unmatched names are kept raw, so it can be repaired later without losing a row); (5) row volume: each row is ~159 bytes in the file, and at 400-1,000 rows a game
+(6-10 books) that is 0.9-2.3 MB a week, **16-41 MB over 18 weeks, unobserved**. If the first week shows the high end, `--books draftkings,fanduel,betmgm,williamhill_us` in the step
+trims rows (not credits); the 40 MB WARN is the backstop (GitHub warns at 50 MB). Replace the sample fixture with a recorded response after the first keyed run.
+Playoff games are not on `schedule.csv` and are skipped (named in the log).
+
+### Validation
+
+Pushed `f1fb61b` and dispatched `pipeline.yml` on the branch: run **37577591406** (run 40, 2m42s), **success**; every step green, `Fail the job if integrity checks failed` skipped,
+the model step ran as in Phase 3 (15 games, 405 rows, 82 s warm).
+
+* **The props step logged its clean skip**, with the secret absent (`ODDS_API_KEY:` empty in the step's environment), in under a second, as an Actions annotation:
+  `##[warning]model.props: WARN ODDS_API_KEY is not set: player-props archive skipped, nothing fetched or written (sign up at the-odds-api.com and add the Actions secret ODDS_API_KEY; the next run archives with no code change)`.
+  No request, no `data/props.csv`, no `runs.csv` row, step success.
+* **Normal outputs unchanged against the run before** (run 39, commit `984d947`, the first run after the games.csv.gz fix): the commit of this run (`58cebab`) touches 32 files, every one of them in the
+  previous run's 44 (that run was a catch-up: week-4 backfill, `players`, `schedule`, `model_eval`, the scoreboard report; this one is the regular refresh set). All 21 CSVs it rewrote have identical columns
+  and identical row counts to the previous run's. `model_pts.csv`: week 4 byte-identical, week 5 the same 405 rows and 15 games with predictions identical (max |difference| 0.0 in `pts_model`,
+  `pts_model_components`, `p10`, `p50`, `p90`, `sleeper_proj`; only `served_at` moved, 04:03Z to 05:44Z). `logs/runs.csv` gained exactly one row, with the same WARN detail as the previous run's
+  (`projections.shares ... ['CAR', 'KC']; status.practice ...`) and no `model.props` row.
+* **The new cron, in the workflow at the run's head `f1fb61b`**: `    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, an hour before the 17:00 UTC early slate locks`. It fires from the next Sunday
+  (2026-10-11 15:52 UTC); GitHub registers a schedule from the default branch, so **it only starts once this branch is merged to main** (this run was a manual dispatch, which exercises the same steps but not the
+  schedule trigger). `git diff -- .github/workflows/pipeline.yml` against the work-order commit is 15 insertions, 0 deletions; `git diff -- ff model/serve.py model/scoreboard.py` is empty.
+
+**Local cache note (not a code problem).** The real-serve simulation in item 1 re-downloads the volatile raw files (`serve.refresh_raw`), which left `model/cache` with mixed generations; the first full
+suite afterwards failed 5 tests (`age_years` in the serving-vs-matrix test, 2026 play-by-play targets against the refreshed stats file, the serve-vs-backtest equality). Deleting the stale 2026
+play-by-play and FTN files, rebuilding the matrix (`python3.12 -m model.build_features`, 12 min) and deleting `model/cache/serve` (its history cache is keyed on the feature code, not on the raw data, so
+it keeps the as-of-today `players` bio it was built from) made all 317 pass. If a bit-for-bit serving test ever fails after a refresh, rebuild the matrix and the serve cache from the same raw snapshot first.
