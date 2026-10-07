@@ -817,3 +817,37 @@ and the cost is seconds in a cold build that happens once per code change.
 * **Week-4 frozen rows are Wednesday's until the Friday run refreshes Sunday/Monday games**; Thursday's game keeps its Wednesday row (the Friday run starts after its kickoff). `model.serve` warns (WARN row) when last week's stats are not fully published, when no Sleeper projections exist for the week, or when a league's files belong to another week.
 * The recommendation to test the 50/50 blend stays open; the scoreboard reports it beside the two designs. If `model_flat` keeps beating `model_components` on RMSE-like grounds while tying on ranking, switching `E_pts_model` to the flat average (plus the components' scoring difference) is a one-line change in `serve.assemble`/`ff.modelcols` and a documented decision, not a silent one.
 * The scoreboard scores skill positions only. The platform's points for those players include what the composition cannot express (the dynasty league's yardage and long-TD bonuses), which the model cannot predict and which adds noise to that league's comparison equally for every comparator.
+
+## Phase 4 — pre-lock freshness and a props archive (work order, 2026-10-07)
+
+Two additions James approved, both aimed at the layer the findings said holds
+the remaining edge: availability/news timing, and the market's own per-player
+signal. Keep the just-fixed pipeline safe: minimal diffs, every new step
+failure-isolated exactly like the model step (a failure is a WARN, never a red
+run or missing commit).
+
+1. **Sunday pre-lock run.** Add one schedule entry to pipeline.yml at Sunday
+   15:52 UTC (before the 17:00 UTC early slate locks; off the hour per cron
+   crowding). No new code: the normal pipeline + serve already refreshes
+   Sleeper statuses, Friday's practice/designation data, projections and the
+   model columns, and the serve's frozen-row rule already rewrites only games
+   that have not kicked off (Thursday stays frozen). Verify that behavior
+   holds for a Sunday-morning serve and that runs.csv/scoreboard handle a
+   third weekly serve of the same week.
+2. **Player-props archive (The Odds API).** A fetch step keyed by the Actions
+   secret `ODDS_API_KEY` (skip silently when unset; never log the key): for
+   the upcoming week's games, archive player props — receptions, rushing and
+   receiving yards, passing yards/TDs, anytime TD — into `data/props.csv` via
+   replace_partition, frozen per game at kickoff like model_pts, with
+   fetched_at and the bookmaker. Budget-aware: the free tier is ~500
+   credits/month and player-prop requests bill per event×market×region, so
+   use one region, few markets, log the credit headers each run, and warn
+   when the month's budget nears. ARCHIVE ONLY — not a model feature until
+   enough weeks exist to test honestly (the whole point of starting now).
+3. **Docs/tests**: README data-file row, one plan findings note, fetch parser
+   tested on a fixture, skip-path tested. Line movement (open-to-close) is
+   noted as future work, not built.
+
+## Phase 4 findings
+
+(appended by the Phase 4 session)
