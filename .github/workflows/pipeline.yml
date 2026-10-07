@@ -14,6 +14,7 @@ on:
     - cron: "41 19 * * 2"   # Tue 13:41 MDT — backstop in case the 18:37 slot was dropped
     - cron: "7 14 * * 3"    # Wed 08:07 MDT — snap-count backfill
     - cron: "11 22 * * 5"   # Fri 16:11 MDT — final injury designations
+    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, an hour before the 17:00 UTC early slate locks
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:
@@ -109,6 +110,20 @@ jobs:
         continue-on-error: true
         timeout-minutes: 10
         run: python -m model.serve && python -m model.scoreboard
+
+      # ---- Phase 4: the player-props archive (The Odds API), archive only ---------------
+      # Skips with one WARN line while the ODDS_API_KEY secret does not exist. Same isolation as the
+      # model step: the module catches every exception itself (a WARN row in runs.csv, nothing
+      # written, exit 0), and continue-on-error / the timeout cover the rest. It writes game by game,
+      # so a cut-off run keeps what it already paid for. It needs only pandas and requests from the
+      # pipeline's own install, so it does not depend on the model install. The secret reaches this
+      # one step, and the module scrubs it from everything it prints or logs.
+      - name: Player props archive (skips when ODDS_API_KEY is not set)
+        continue-on-error: true
+        timeout-minutes: 5
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python -m model.fetch_props
 
       - name: Commit results
         run: |

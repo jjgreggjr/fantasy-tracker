@@ -468,6 +468,131 @@ class FridayServe(unittest.TestCase):
         self.assertEqual(merged.set_index("gsis_id").loc[b, "pts_model_components"], 15.0)
 
 
+# The 2026 week-5 slate as scheduled on 2026-10-07 (nflverse): Thursday night, an early international game, eight 1 pm games, the late games,
+# Sunday night and Monday night. Hard-coded: the serve's rule is about kickoff TIMES, and a later flex must not move this test.
+WEEK5_KICKS = {"2026_05_TB_DAL": "2026-10-09T00:15:00+00:00", "2026_05_PHI_JAX": "2026-10-11T13:30:00+00:00",
+               **{f"2026_05_{g}": "2026-10-11T17:00:00+00:00" for g in ("IND_PIT", "CIN_MIA", "CHI_GB", "LV_NE", "CLE_NYJ", "NYG_WAS", "MIN_NO", "HOU_TEN")},
+               "2026_05_DEN_LAC": "2026-10-11T20:05:00+00:00", "2026_05_SF_SEA": "2026-10-11T20:25:00+00:00", "2026_05_DET_ARI": "2026-10-11T20:25:00+00:00",
+               "2026_05_BAL_ATL": "2026-10-12T00:20:00+00:00", "2026_05_BUF_LA": "2026-10-13T00:15:00+00:00"}
+WED, FRI, SUN_RUN = (pd.Timestamp(x) for x in ("2026-10-07T14:07:00Z", "2026-10-09T22:11:00Z", "2026-10-11T15:52:00Z"))     # the workflow's runs
+
+
+class SundayServe(unittest.TestCase):
+    """Phase 4: a third weekly serve, at 15:52 UTC on Sunday, an hour before the 1 pm slate locks. What the serve does at that instant is the
+    same rule as on Wednesday and Friday (rows of a game that has kicked off are frozen, every other game is re-predicted), so the evidence
+    is a three-serve week on the real week-5 kickoffs: Thursday night is frozen from Friday, the 13:30 UTC international game from Sunday, and
+    everything from the 1 pm slate to Monday night is refreshed on Sunday."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.path = Path(self.tmp.name) / "model_pts.csv"
+        self.games = list(WEEK5_KICKS)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def serve(self, now, pts: float, drop=()):
+        """What `serve.run` hands the writer at `now`: two players for every game that has NOT kicked off, all predicting `pts`."""
+        upcoming = [g for g in self.games if pd.Timestamp(WEEK5_KICKS[g]) > now]
+        rows = pd.DataFrame([{"season": 2026, "week": 5, "game_id": g, "kickoff_utc": WEEK5_KICKS[g], "gsis_id": f"{g}:{i}", "pts_model": pts,
+                              "served_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")} for g in upcoming for i in (1, 2)],
+                            columns=["season", "week", "game_id", "kickoff_utc", "gsis_id", "pts_model", "served_at"])
+        rows = rows[~rows["gsis_id"].isin(drop)]
+        SV.write_model_pts(self.path, rows, 2026, 5, now)
+        return len(upcoming)
+
+    def read(self) -> pd.DataFrame:
+        return pd.read_csv(self.path, dtype={"gsis_id": str})
+
+    def lines(self, game_id: str) -> list[str]:
+        return [ln for ln in self.path.read_text().splitlines() if f",{game_id}," in ln]
+
+    def test_thursday_is_frozen_from_friday_the_international_game_from_sunday_and_the_rest_is_refreshed_with_no_duplicates(self):
+        SV.write_model_pts(self.path, mp_rows(["W4"], [9.0], ["2026-10-04T17:00:00+00:00"], week=4), 2026, 4, pd.Timestamp("2026-09-30T18:00:00Z"))
+        self.assertEqual(self.serve(WED, 1.0), 15)
+        wed_tnf = self.lines("2026_05_TB_DAL")
+        self.assertEqual(self.serve(FRI, 2.0), 14)                                          # Thursday night is under way: not re-predicted
+        fri_intl = self.lines("2026_05_PHI_JAX")
+        self.assertEqual(self.lines("2026_05_TB_DAL"), wed_tnf)
+        self.assertEqual(self.serve(SUN_RUN, 3.0), 13)                                      # Sunday 15:52: Thursday night AND the 13:30 game are under way
+        d = self.read()
+        w5 = d[d["week"] == 5]
+        self.assertEqual(len(w5), 30)                                                       # 15 games x 2 players: nothing doubled, nothing lost
+        self.assertFalse(w5.duplicated(["season", "week", "gsis_id"]).any())
+        self.assertEqual(self.lines("2026_05_TB_DAL"), wed_tnf)                             # Thursday: the Wednesday row, byte for byte, after three serves
+        self.assertEqual(self.lines("2026_05_PHI_JAX"), fri_intl)                           # the international game: Friday's row, frozen on Sunday
+        by_game = w5.groupby("game_id")["pts_model"].agg(lambda x: set(x))
+        self.assertEqual(by_game["2026_05_TB_DAL"], {1.0})
+        self.assertEqual(by_game["2026_05_PHI_JAX"], {2.0})
+        refreshed = [g for g in self.games if g not in ("2026_05_TB_DAL", "2026_05_PHI_JAX")]
+        self.assertEqual(len(refreshed), 13)
+        self.assertTrue(all(by_game[g] == {3.0} for g in refreshed))                        # 1 pm slate through Monday night: Sunday's numbers
+        self.assertEqual(d.loc[d["week"] == 4, "pts_model"].tolist(), [9.0])                # another week is never touched
+
+    def test_a_player_ruled_out_sunday_morning_loses_his_unplayed_row_and_a_player_in_a_game_under_way_keeps_his(self):
+        self.serve(WED, 1.0)
+        self.serve(FRI, 2.0)
+        # Sunday morning: one 1 pm player and one Thursday-night player are both missing from the new predictions (ruled Out, or withheld)
+        self.serve(SUN_RUN, 3.0, drop=("2026_05_IND_PIT:1", "2026_05_TB_DAL:1"))
+        ids = set(self.read()["gsis_id"])
+        self.assertNotIn("2026_05_IND_PIT:1", ids)                                          # his game has not kicked off: the refresh removes him
+        self.assertIn("2026_05_IND_PIT:2", ids)
+        self.assertIn("2026_05_TB_DAL:1", ids)                                              # his game has: the frozen row stays, the scoreboard judges it
+
+    def test_a_late_sunday_run_after_the_early_slate_freezes_it_too_and_a_run_after_monday_night_changes_nothing(self):
+        self.serve(WED, 1.0)
+        self.serve(FRI, 2.0)
+        self.serve(SUN_RUN, 3.0)
+        before = self.path.read_bytes()
+        late = pd.Timestamp("2026-10-11T17:30:00Z")                                         # a delayed Sunday run: the 1 pm games are under way
+        self.assertEqual(self.serve(late, 4.0), 5)                                          # 20:05, 2 x 20:25, Sunday night, Monday night
+        d = self.read()
+        by_game = d[d["week"] == 5].groupby("game_id")["pts_model"].agg(lambda x: set(x))
+        self.assertEqual(by_game["2026_05_IND_PIT"], {3.0})                                 # frozen at the 15:52 numbers
+        self.assertEqual(by_game["2026_05_DEN_LAC"], {4.0})
+        end = pd.Timestamp("2026-10-14T18:37:00Z")
+        before = self.path.read_bytes()
+        self.assertEqual(self.serve(end, 5.0), 0)                                           # Tuesday's run: nothing left to predict this week
+        self.assertEqual(self.path.read_bytes(), before)
+
+    def test_the_roster_columns_of_a_player_in_a_frozen_game_persist_through_the_sunday_run(self):
+        root = Path(self.tmp.name)
+        ls = [x for x in L.load_leagues(REPO) if x.slug == "where-you-at"]
+        (root / "leagues" / "where-you-at").mkdir(parents=True)
+        r = pd.read_csv(REPO / "leagues" / "where-you-at" / "roster.csv", low_memory=False, dtype={"gsis_id": str})
+        r.drop(columns=[c for c in ("E_pts_model", "p10", "p90") if c in r.columns]).to_csv(root / "leagues" / "where-you-at" / "roster.csv", index=False)
+        week = int(r["week"].iloc[0])
+        tnf, intl, one_pm = r["gsis_id"].dropna().tolist()[:3]
+        games = {tnf: "2026_05_TB_DAL", intl: "2026_05_PHI_JAX", one_pm: "2026_05_IND_PIT"}
+
+        def rows(now, pts):
+            keep = [i for i in games if pd.Timestamp(WEEK5_KICKS[games[i]]) > now]
+            return pd.DataFrame({"season": 2026, "week": week, "game_id": [games[i] for i in keep], "kickoff_utc": [WEEK5_KICKS[games[i]] for i in keep],
+                                 "gsis_id": keep, "pts_model_components": pts, "pts_where-you-at": pts, "p10": pts - 1, "p90": pts + 9,
+                                 "p10_where-you-at": pts - 2, "p90_where-you-at": pts + 8})
+        out = root / "data" / "model_pts.csv"
+        for now, pts in ((WED, 10.0), (FRI, 11.0), (SUN_RUN, 12.0)):
+            SV.write_outputs(root, out, rows(now, pts), ls, 2026, week, now, [])
+        ro = pd.read_csv(root / "leagues" / "where-you-at" / "roster.csv", dtype={"gsis_id": str}).set_index("gsis_id")
+        self.assertEqual(ro.loc[tnf, "E_pts_model"], 10.0)                                  # Wednesday's number: frozen at Thursday's kickoff
+        self.assertEqual(ro.loc[intl, "E_pts_model"], 11.0)                                 # Friday's: frozen at the 13:30 kickoff
+        self.assertEqual(ro.loc[one_pm, "E_pts_model"], 12.0)                               # Sunday's: refreshed an hour before the lock
+        self.assertEqual((ro.loc[tnf, "p10"], ro.loc[tnf, "p90"]), (8.0, 18.0))              # this league's own band (non-PPR scoring)
+
+    def test_the_run_log_gets_one_more_row_per_serve_and_a_third_serve_of_a_week_replaces_nothing(self):
+        from ff import verify
+        root = Path(self.tmp.name)
+        (root / "logs").mkdir()
+        (root / "logs" / "runs.csv").write_text("ran_at,season,week,status,fails,warns,detail,note\n2026-10-06T22:47:17Z,2026,5,WARN,0,1,status.practice: x,\n")
+        for i in range(3):
+            SV.log_warns(root, [f"serve {i}: no Sleeper projections yet"], check=SV.SERVE_CHECK)
+        rows = list(csv.DictReader(open(root / "logs" / "runs.csv", encoding="utf-8")))
+        self.assertEqual(len(rows), 4)                                                      # appended, never replaced
+        self.assertEqual({(r["season"], r["week"]) for r in rows}, {("2026", "5")})         # each next to the pipeline run it belongs to
+        self.assertEqual([r["detail"].split(":")[1].strip() for r in rows[1:]], ["serve 0", "serve 1", "serve 2"])
+        self.assertIsNotNone(verify.last_run_gap(root / "logs"))
+
+
 class FrozenInputs(unittest.TestCase):
     """serving_config.json freezes the 71 inputs Phase 3 validated; a data-dependent change in which columns are dead must not serve a
     different model."""
@@ -618,6 +743,25 @@ class WeekSelection(unittest.TestCase):
         after = kicks[-1] + pd.Timedelta(minutes=1)
         self.assertEqual(SV.pick_week(store(), 2026, after)[0], 5)
         self.assertEqual(SV.pick_week(store(), 2026, pd.Timestamp("2027-03-01", tz="UTC"))[0], None)
+
+    def test_a_sunday_morning_serve_is_still_week_5_and_only_games_still_to_kick_off_are_predicted(self):
+        """The Phase 4 pre-lock run (Sunday 15:52 UTC): the real 2026 schedule says Thursday night, and any early international game, are
+        under way, and the 1 pm slate is not. Asserted structurally (not on counts) so a later flex of a kickoff cannot break it."""
+        sun = pd.Timestamp("2026-10-11T15:52:00Z")
+        wk, tgs = SV.pick_week(store(), 2026, sun)
+        self.assertEqual(wk, 5)
+        games = {g.game_id: g.kickoff for g in tgs}
+        upcoming = {i for i, k in games.items() if k > sun}
+        under_way = set(games) - upcoming
+        self.assertIn("2026_05_TB_DAL", under_way)                                         # Thursday night: frozen
+        self.assertGreaterEqual(len(upcoming), 10)                                         # the 1 pm slate through Monday night: refreshed
+        self.assertTrue(all(games[i] <= sun for i in under_way))
+        self.assertEqual(len(tgs), 2 * len(games))
+        wed = pd.Timestamp("2026-10-07T14:07:00Z")
+        self.assertEqual(SV.pick_week(store(), 2026, wed)[0], 5)
+        self.assertEqual(len({g.game_id for g in SV.pick_week(store(), 2026, wed)[1] if g.kickoff > wed}), len(games))   # Wednesday: every game
+        tue = pd.Timestamp("2026-10-14T18:37:00Z")                                         # after Monday night: week 6
+        self.assertEqual(SV.pick_week(store(), 2026, tue)[0], 6)
 
     def test_an_explicit_week_is_taken_as_asked(self):
         wk, tgs = SV.pick_week(store(), 2026, NOW, week=3)

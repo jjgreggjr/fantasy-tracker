@@ -206,6 +206,48 @@ class Files(unittest.TestCase):
         self.assertEqual(sorted(kept["week"].unique()), [1, 2])
         self.assertTrue((kept[kept["week"] == 1]["pick_acc"].dropna() == -2.0).all())
 
+    def test_three_serves_of_the_week_in_progress_never_double_the_scoreboards_rows(self):
+        """Phase 4 adds a Sunday run, so a week is now served three times (Wednesday, Friday, Sunday) and the scoreboard runs in the same step
+        every time. The finished week is re-scored on each of them, and the week being served has model rows but no recorded lineups: it
+        must add nothing to data/model_eval.csv, and the finished week's rows must come out byte for byte the same."""
+        from model import serve as SV
+        root = make_root(weeks=1)
+        mp = pd.read_csv(root / "data" / "model_pts.csv")
+        mp = mp.assign(game_id="2026_01_A_B", kickoff_utc="2026-09-13T17:00:00+00:00")
+        mp.to_csv(root / "data" / "model_pts.csv", index=False)
+        kick = {"2026_02_A_B": "2026-09-20T17:00:00+00:00", "2026_02_C_D": "2026-09-21T00:20:00+00:00"}
+        seen = []
+        for when in ("2026-09-16T14:07:00Z", "2026-09-18T22:11:00Z", "2026-09-20T15:52:00Z"):
+            upcoming = {g: k for g, k in kick.items() if pd.Timestamp(k) > pd.Timestamp(when)}
+            new = pd.DataFrame([{"season": 2026, "week": 2, "game_id": g, "kickoff_utc": k, "gsis_id": f"{g}{i}", f"pts_{SLUG}": 5.0 + i,
+                                 "pts_model": 5.0, "pts_model_components": 5.0, f"sleeper_proj_{SLUG}": 4.0, f"e_pts_{SLUG}": 3.0}
+                                for g, k in upcoming.items() for i in range(3)])
+            SV.write_model_pts(root / "data" / "model_pts.csv", new, 2026, 2, pd.Timestamp(when))
+            S.run(root)
+            seen.append(((root / "data" / "model_eval.csv").read_bytes(), (root / "model" / "reports" / "live_scoreboard.md").read_text()))
+        self.assertEqual(seen[0], seen[1])
+        self.assertEqual(seen[1], seen[2])                                                   # nothing moved, nothing doubled
+        ev = pd.read_csv(root / "data" / "model_eval.csv")
+        self.assertFalse(ev.duplicated(S.KEYS).any())
+        self.assertEqual(sorted(ev["week"].unique()), [1])                                   # week 2 has no recorded lineups: not scored, no row
+        mpf = pd.read_csv(root / "data" / "model_pts.csv")
+        self.assertFalse(mpf.duplicated(["season", "week", "gsis_id"]).any())
+        self.assertEqual(len(mpf[mpf["week"] == 2]), 3 * len(kick))                          # the Sunday serve left the frozen game's rows in place
+        # the week completes: it is scored once, by whichever run first sees its lineups, and a later run does not double it
+        lp = pd.read_csv(root / "data" / "lineups_played.csv")
+        pw = pd.read_csv(root / "data" / "player_weeks.csv")
+        week2 = [{"season": 2026, "week": 2, "league_id": 111, "league_name": "League A", "roster_id": 1, "gsis_id": f"{g}{i}",
+                  "position": "RB" if i < 2 else "WR", "points": float(10 - 3 * i), "started": 1} for g in kick for i in range(3)]
+        pd.concat([lp, pd.DataFrame(week2)], ignore_index=True).to_csv(root / "data" / "lineups_played.csv", index=False)
+        pd.concat([pw, pd.DataFrame([{"season": 2026, "week": 2, "gsis_id": r["gsis_id"]} for r in week2])], ignore_index=True).to_csv(root / "data" / "player_weeks.csv", index=False)
+        S.run(root)
+        first = (root / "data" / "model_eval.csv").read_bytes()
+        S.run(root)
+        self.assertEqual((root / "data" / "model_eval.csv").read_bytes(), first)
+        ev = pd.read_csv(root / "data" / "model_eval.csv")
+        self.assertEqual(sorted(ev["week"].unique()), [1, 2])
+        self.assertFalse(ev.duplicated(S.KEYS).any())
+
     def test_nothing_to_score_writes_a_report_but_no_eval_file(self):
         root = make_root()
         (root / "data" / "model_pts.csv").unlink()

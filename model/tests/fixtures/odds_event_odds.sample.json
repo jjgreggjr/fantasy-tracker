@@ -1,0 +1,83 @@
+{
+  "_note": "HAND-BUILT from The Odds API v4 documentation (GET /v4/sports/{sport}/events/{eventId}/odds, regions=us, oddsFormat=american, dateFormat=iso). NOT a recorded response: api.the-odds-api.com is blocked from the development sandbox and no key exists yet. Prices and lines are invented; the player names are real so the crosswalk tests hit data/players.csv. Replace with a recorded response after the first keyed run. The parser must ignore keys it does not know, such as this one.",
+  "id": "0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+  "sport_key": "americanfootball_nfl",
+  "sport_title": "NFL",
+  "commence_time": "2026-10-09T00:15:00Z",
+  "home_team": "Dallas Cowboys",
+  "away_team": "Tampa Bay Buccaneers",
+  "bookmakers": [
+    {
+      "key": "draftkings",
+      "title": "DraftKings",
+      "last_update": "2026-10-08T18:02:11Z",
+      "markets": [
+        {
+          "key": "player_pass_yds",
+          "last_update": "2026-10-08T18:02:11Z",
+          "outcomes": [
+            {"name": "Over", "description": "Dak Prescott", "price": -115, "point": 268.5},
+            {"name": "Under", "description": "Dak Prescott", "price": -105, "point": 268.5},
+            {"name": "Over", "description": "Baker Mayfield", "price": -110, "point": 244.5},
+            {"name": "Under", "description": "Baker Mayfield", "price": -110, "point": 244.5}
+          ]
+        },
+        {
+          "key": "player_reception_yds",
+          "last_update": "2026-10-08T18:01:40Z",
+          "outcomes": [
+            {"name": "Over", "description": "CeeDee Lamb", "price": -120, "point": 84.5},
+            {"name": "Under", "description": "CeeDee Lamb", "price": 100, "point": 84.5},
+            {"name": "Over", "description": "Chris Godwin", "price": -105, "point": 52.5},
+            {"name": "Under", "description": "Chris Godwin", "price": -115, "point": 52.5},
+            {"name": "Over", "description": "Emeka Egbuka", "price": 105, "point": 61.5},
+            {"name": "Under", "description": "Emeka Egbuka", "price": -125, "point": 61.5}
+          ]
+        },
+        {
+          "key": "player_anytime_td",
+          "last_update": "2026-10-08T18:00:55Z",
+          "outcomes": [
+            {"name": "Yes", "description": "CeeDee Lamb", "price": 135},
+            {"name": "Yes", "description": "Javonte Williams", "price": -105},
+            {"name": "Yes", "description": "Bucky Irving", "price": 110},
+            {"name": "Yes", "description": "Mack Hollins Jr. (not a player we track)", "price": 650}
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fanduel",
+      "title": "FanDuel",
+      "last_update": "2026-10-08T18:05:02Z",
+      "markets": [
+        {
+          "key": "player_pass_yds",
+          "last_update": "2026-10-08T18:05:02Z",
+          "outcomes": [
+            {"name": "Over", "description": "Dak Prescott", "price": -112, "point": 270.5},
+            {"name": "Under", "description": "Dak Prescott", "price": -108, "point": 270.5}
+          ]
+        },
+        {
+          "key": "player_receptions",
+          "last_update": "2026-10-08T18:04:30Z",
+          "outcomes": [
+            {"name": "Over", "description": "CeeDee Lamb", "price": -135, "point": 6.5},
+            {"name": "Under", "description": "CeeDee Lamb", "price": 110, "point": 6.5},
+            {"name": "Over", "description": "George Pickens", "price": 120, "point": 4.5}
+          ]
+        },
+        {
+          "key": "player_rush_yds",
+          "last_update": "2026-10-08T18:04:11Z",
+          "outcomes": [
+            {"name": "Over", "description": "Javonte Williams", "price": -110, "point": 58.5},
+            {"name": "Under", "description": "Javonte Williams", "price": -110, "point": 58.5},
+            {"name": "Over", "description": "Broken Row With No Price", "point": 10.5}
+          ]
+        }
+      ]
+    }
+  ]
+}

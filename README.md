@@ -4,13 +4,14 @@ Tracks weekly opportunity — targets, carries, snap share, depth-chart role —
 NFL skill players, derives defense-vs-position from the same data, and writes a
 weekly start/sit + dynasty watchlist report for every Sleeper league you're in.
 
-All data is free and public. No API keys, no logins, no scraping.
+All data is free and public. No logins, no scraping, and no API keys except the one optional
+free key for the player-props archive (below).
 
 ## Where it runs
 
 **GitHub Actions (current).** `.github/workflows/pipeline.yml` runs the pipeline
-on GitHub's machines Tuesday 12:37 (with a 13:41 backstop), Wednesday 08:07
-and Friday 16:11 Mountain,
+on GitHub's machines Tuesday 12:37 (with a 13:41 backstop), Wednesday 08:07,
+Friday 16:11 and Sunday 09:52 Mountain,
 plus a manual "Run workflow" button on the Actions tab. Every run commits
 `data/`, `leagues/`, `reports/` and `logs/runs.csv` back to the repo, so the
 repo *is* the database and every week is a diffable commit. The job is marked
@@ -24,6 +25,13 @@ workflow writes them to `secrets/` at run time and they are never committed.
 ESPN league could not be loaded, refresh that one secret. The league itself is
 configured in `config.json` → `espn_leagues` by league id and **team id**, so
 renaming the team changes nothing.
+
+The player-props archive (`data/props.csv`) is the one optional thing that needs a key:
+sign up for a free key at the-odds-api.com and add it as the Actions secret `ODDS_API_KEY`.
+Until then the step prints one WARN line and skips; once the secret exists the next run
+archives with no code change. The free tier is 500 credits a month and one snapshot of a
+16-game week costs 96 (six markets, one region, six credits a game; the step logs the
+`x-requests-remaining` header every run and warns below 100).
 
 **On your PC (retired).** `setup_schedule.ps1` registered Windows tasks that did
 the same thing locally. Once the workflow is live, remove them so there is only
@@ -71,10 +79,13 @@ python -m ff.run_weekly --season 2026 --week 3
 python -m ff.run_weekly --skip-sleeper     # nflverse only, no league sections
 ```
 
-Three scheduled runs: **Tuesday noon** (main pull), **Wednesday 8am** (snap
-backfill), and **Friday 4pm** (status refresh — final injury designations and
+Four scheduled runs: **Tuesday noon** (main pull), **Wednesday 8am** (snap
+backfill), **Friday 4pm** (status refresh — final injury designations and
 the last practice report land Friday afternoon, so a Tuesday answer about
-availability is always provisional).
+availability is always provisional) and **Sunday 9:52am** (pre-lock refresh,
+an hour before the 1 pm Eastern slate locks: Sleeper statuses, projections and
+the model columns for every game that has not kicked off; games already under
+way keep the numbers they were frozen with).
 
 Run it **Tuesday around noon Mountain**. Stats land Monday night; snap counts
 come from Pro Football Reference and often don't post until Tuesday afternoon.
@@ -196,6 +207,7 @@ recorded run.
 | `data/model_pts.csv` | The model's prediction for every player in the upcoming week, frozen at the last run before each game's kickoff: PPR point estimate, components, points in each league's scoring, p10/p50/p90, and Sleeper's projection and `E_pts` as they stood. Written by `python -m model.serve`; completed weeks are never rewritten |
 | `data/model_eval.csv` | The live scoreboard's rows: per completed week, league, position and comparator, pick accuracy and Spearman against the platform's actual points |
 | `model/reports/live_scoreboard.md` | The scoreboard summary and the adoption gate (see `POLICY.md`, "Model column") |
+| `data/props.csv` | Player-props archive from The Odds API: one row per game, player, market, bookmaker and line, with Over/Under (or anytime-TD Yes) American odds, the bookmaker's own update time and `fetched_at`; `gsis_id` blank when a name did not match. One snapshot per game at the last run before its kickoff, frozen once the game has kicked off. Written by `python -m model.fetch_props` (reads the `ODDS_API_KEY` Actions secret; without it the step skips with one WARN line). **Archive only: no model or report reads it.** `python -m model.fetch_props --columns` documents every column |
 | `raw/` | Cached downloads. Safe to delete; they re-download. |
 | `logs/` | One log per run, including any player that failed to match an ID |
 

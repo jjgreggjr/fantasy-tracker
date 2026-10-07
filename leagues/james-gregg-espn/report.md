@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 5
 
 redraft · 17 roster slots  
-Generated 2026-10-07 04:01 UTC · baselines: 2026 only · lineup as of 2026-10-07T04:01:54Z
+Generated 2026-10-07 05:42 UTC · baselines: 2026 only · lineup as of 2026-10-07T05:42:23Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -91,12 +91,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 4) | 63% | WR3 on depth chart; up from 4; snap share trending +38%/wk; team passes #3; age 27 |
-| Jaylen Wright | RB | MIA | 23.5 | 2 | 2 (was 1) | 18% | RB2 on depth chart; snap share trending +26%/wk; age 24 |
-| Jalen Royals | WR | KC | 23.6 | 1 | 3 (was 4) | 32% | WR3 on depth chart; up from 4; snap share trending +24%/wk; team passes #16; age 24 |
+| Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 63% | WR3 on depth chart; snap share trending +38%/wk; team passes #3; age 27 |
+| Jaylen Wright | RB | MIA | 23.5 | 2 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +26%/wk; age 24 |
+| Jalen Royals | WR | KC | 23.6 | 1 | 3 (was 3) | 32% | WR3 on depth chart; snap share trending +24%/wk; team passes #16; age 24 |
 | Oscar Delp | TE | NO | 23.2 | 0 | 3 (was 3) | 22% | TE3 on depth chart; snap share trending +19%/wk; team passes #1; age 23 |
-| Deion Burks | WR | IND | 23.7 | 0 | 5 (was 6) | 14% | WR5 on depth chart; up from 6; snap share trending +18%/wk; team passes #14; age 24 |
-| MarShawn Lloyd | RB | GB | 25.8 | 2 | 1 (was 2) | 35% | RB1 on depth chart; up from 2; snap share trending +14%/wk; age 26 |
 | Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 23% | RB3 on depth chart; snap share trending +12%/wk; age 25 |
 | Seth McGowan | RB | IND | 25.0 | 0 | 2 (was 2) | 17% | RB2 on depth chart; snap share trending +12%/wk; age 25 |
 | Kaytron Allen | RB | WAS | 23.7 | 0 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
@@ -104,8 +102,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 3 (was 3) | 7% | RB3 on depth chart; snap share trending +8%/wk; age 27 |
 | Brashard Smith | RB | KC | 23.5 | 1 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 24 |
 | Raheim Sanders | RB | CLE | 24.3 | 1 | 2 (was 2) | 32% | RB2 on depth chart; snap share trending +8%/wk; age 24 |
-| Tank Bigsby | RB | PHI | 24.1 | 3 | 3 (was 2) | 29% | RB3 on depth chart; snap share trending +7%/wk; age 24 |
+| Tank Bigsby | RB | PHI | 24.1 | 3 | 3 (was 3) | 29% | RB3 on depth chart; snap share trending +7%/wk; age 24 |
 | Kendre Miller | RB | NO | 24.3 | 3 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +7%/wk; age 24 |
+| Keaton Mitchell | RB | LAC | 24.7 | 3 | 2 (was 2) | 33% | RB2 on depth chart; snap share trending +6%/wk; age 25 |
+| Tyler Goodson | RB | DAL | 25.9 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
 
 
 ## Ask me
