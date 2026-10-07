@@ -77,7 +77,9 @@ def load_nflverse(season: int, raw_dir: Path, with_prior: bool = True) -> dict:
     the season's first games have been played.
     """
     out = {
-        "games": nflverse_csv("schedules", "games.csv", raw_dir),
+        # schedules/games.csv is gone upstream (404 on 2026-10-07, which crashed the
+        # weekly run); games.csv.gz has the same 46 columns and pandas reads it by extension.
+        "games": nflverse_csv("schedules", "games.csv.gz", raw_dir),
         "roster": nflverse_csv("rosters", f"roster_{season}.csv", raw_dir),
         "depth": nflverse_csv("depth_charts", f"depth_charts_{season}.csv", raw_dir),
         "stats": nflverse_csv("stats_player", f"stats_player_week_{season}.csv",

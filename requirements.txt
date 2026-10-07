@@ -1,8 +1,17 @@
+# Pinned EXACTLY (same convention as model/requirements.txt). The weekly workflow installs these on a
+# fresh runner, so a range makes every scheduled run hostage to whatever was released that morning
+# (an unpinned install already pulled numpy 2.5.3 on 2026-10-06). Bump them on purpose, with the tests.
+#
 # pandas is pinned below 3.0 deliberately. pandas 3 stopped silently upcasting
 # when a list containing pd.NA is assigned into a float64 column, which breaks
 # build.build_players()'s name+team fallback (ff/build.py:147) with
 # "TypeError: Invalid value ... for dtype 'float64'". The PC ran pandas 2.x, so
 # this keeps CI on the semantics every result so far was produced under.
 # Making the code pandas-3 clean is a separate, testable change.
-pandas>=2.0,<3
-requests>=2.28
+#
+# numpy is listed (pandas pulls it in anyway) so it matches the version the model step resolves from
+# model/requirements.txt (numpy<2.5: pandas 2.3 + numpy 2.5 emits a generic-timedelta DeprecationWarning on import).
+# Without it the pipeline step ran on 2.5.3 and the model step then uninstalled it for 2.4.6.
+pandas==2.3.3
+numpy==2.4.6
+requests==2.34.2
