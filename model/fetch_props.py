@@ -464,13 +464,14 @@ def run(args, *, root: Path = ROOT, env=None, get=None, sleep=time.sleep) -> lis
         warns.append("data/players.csv is missing: every gsis_id is blank in this run's rows")
     crosswalk = build_crosswalk(players)
 
-    frames, skipped, failures, consecutive, over_plan, written = [], [], 0, 0, False, 0
+    frames, skipped, failures, consecutive, over_plan, written, paid = [], [], 0, 0, False, 0, 0
     stop = ""
     for g in due:
         if remaining is not None and remaining < cost_each:
             skipped.append(g.game_id)
             continue
         rep = event_odds(key, g.event_id, markets, REGION, get=get, sleep=sleep)
+        paid += 1
         credits.update(rep.credits)
         remaining = credits.get("remaining", remaining)
         tag = f"  {g.game_id} (kickoff {g.kickoff:%a %Y-%m-%d %H:%MZ})"
@@ -531,7 +532,7 @@ def run(args, *, root: Path = ROOT, env=None, get=None, sleep=time.sleep) -> lis
     if remaining is not None:
         lines.append(f"  credits: used {credits.get('used', '?')}, remaining {remaining} (x-requests-remaining; the free tier is "
                      f"{MONTHLY_CREDITS} a month)")
-        if remaining < args.warn_below:
+        if remaining < args.warn_below and paid:          # only a run that spent credits nags: a quiet Tuesday does not repeat it
             warns.append(f"credits are low: {remaining} left (warning below {args.warn_below}; one 15-game slate is {15 * cost_each}); "
                          "the free tier resets monthly")
     else:

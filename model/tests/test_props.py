@@ -671,6 +671,8 @@ class Runs(unittest.TestCase):
         self.go(api, "--refresh-hours", "0", now="2026-10-07T14:07:00Z")                   # 104 -> 98 left: near the budget
         self.assertEqual(len(runs_rows(self.root)), 2)
         self.assertIn("credits are low: 98 left", runs_rows(self.root)[-1]["detail"])
+        self.go(api, now="2026-10-06T18:37:00Z")                                           # a Tuesday that buys nothing does not repeat the nag
+        self.assertEqual(len(runs_rows(self.root)), 2)
 
     def test_a_cost_above_the_plan_is_flagged_once(self):
         class Dear(FakeApi):
