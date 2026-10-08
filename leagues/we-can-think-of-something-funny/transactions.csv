@@ -115,3 +115,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,free_agent,drop,5854,Drew Lock,4
 2026,4,free_agent,add,12718,Konata Mumpfield,2
 2026,4,free_agent,drop,12467,Jordan James,2
+2026,5,free_agent,add,11792,,6
+2026,5,free_agent,drop,12711,,6
+2026,5,free_agent,add,11608,Isaiah Williams,6
+2026,5,free_agent,drop,2306,Jameis Winston,6

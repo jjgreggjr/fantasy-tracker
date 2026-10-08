@@ -42,6 +42,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,3,free_agent,drop,TB,,2
 2026,3,free_agent,add,9486,Dontayvion Wicks,2
 2026,3,free_agent,drop,6783,Jerry Jeudy,2
+2026,4,waiver,add,11637,Keon Coleman,3
+2026,4,waiver,drop,8210,Chig Okonkwo,3
+2026,4,waiver,add,11577,Will Shipley,3
+2026,4,waiver,drop,13414,Kaelon Black,3
+2026,4,waiver,add,13425,Jalon Daniels,12
 2026,4,free_agent,drop,12508,Jaxson Dart,2
 2026,4,free_agent,add,6083,,11
 2026,4,free_agent,drop,12713,,11
@@ -62,3 +67,6 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,free_agent,add,4177,Mack Hollins,2
 2026,4,free_agent,add,12495,Ollie Gordon II,2
 2026,4,free_agent,drop,11370,Chris Brooks,2
+2026,5,free_agent,add,12185,,12
+2026,5,free_agent,add,12509,Tre Harris,2
+2026,5,free_agent,drop,11631,Brian Thomas Jr.,2
