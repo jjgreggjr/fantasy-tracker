@@ -129,3 +129,6 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,waiver,drop,1373,Geno Smith,9
 2026,4,waiver,add,11576,Braelon Allen,9
 2026,4,waiver,drop,7090,Darnell Mooney,9
+2026,5,waiver,add,11435,Emanuel Wilson,1
+2026,5,waiver,add,12597,,5
+2026,5,waiver,drop,12469,Dylan Sampson,5
