@@ -65,6 +65,10 @@ COLUMN_DOCS = {
     "report_status": "his own injury-report designation FOR THIS WEEK when served (Questionable / Doubtful); blank if there is no report "
                      "yet this week (last week's designation is not carried over). Players the report or the status layer calls Out "
                      "have no row. The model itself does not read it",
+    "practice_status": "his own practice participation FOR THIS WEEK from the same nflverse report (Did Not Participate / Limited / Full "
+                       "Participation in Practice); blank if he has no practice line yet this week (same rule as report_status: last "
+                       "week's is never carried over). Practice lines exist from Wednesday; game designations mostly arrive with "
+                       "Friday's report. The model itself does not read it",
     "pts_model": "PPR point estimate: the plain average of the LightGBM, XGBoost and CatBoost flat models",
     "pts_model_components": "PPR points from the 14 component models (receptions, yards, TDs, carries, ...), same inputs",
     "pts_<slug>": "points in that league's own scoring: the component models composed with its league.json weights, LINEAR TERMS "
@@ -157,12 +161,14 @@ def log_warns(root: Path, messages: list[str], season: int | None = None, week: 
 
 # --------------------------------------------------------------------------- raw data
 def volatile_files(season: int) -> list[Path]:
-    """Cached raw files that change while the season is on; every serve re-downloads them (historical seasons never change)."""
+    """Cached raw files that change while the season is on; every serve re-downloads them (historical seasons never change).
+    Every encoding of an nflverse table is listed: if upstream renamed one, the copy that served is cached under the new name and
+    would otherwise be read forever."""
     from model import point_in_time as pit
     nv, ff_ = pit.CACHE_DIR / "nflverse", pit.CACHE_DIR / "ffopportunity"
-    return [nv / f"stats_player_week_{season}.parquet", nv / f"snap_counts_{season}.parquet",
-            nv / f"injuries_{season}.parquet", nv / f"depth_charts_{season}.parquet", nv / "games.parquet",
-            nv / "players.parquet", ff_ / f"ep_weekly_{season}.parquet"]
+    names = [f"stats_player_week_{season}.parquet", f"snap_counts_{season}.parquet", f"injuries_{season}.parquet",
+             f"depth_charts_{season}.parquet", "games.parquet", "players.parquet"]
+    return [nv / v for n in names for v in pit.asset_variants(n)] + [ff_ / f"ep_weekly_{season}.parquet"]
 
 
 def refresh_raw(season: int) -> list[str]:
@@ -417,6 +423,22 @@ def current_report(frame):
     return frame["inj_report_status"].astype(object).where(frame["inj_report_status"].notna() & fresh, None)
 
 
+def current_practice(frame):
+    """His practice participation if it is on THIS week's report, else None (the same freshness rule as `current_report`)."""
+    import pandas as pd
+    fresh = pd.to_numeric(frame["inj_weeks_since_report"], errors="coerce").eq(0)
+    return frame["inj_practice_status"].astype(object).where(frame["inj_practice_status"].notna() & fresh, None)
+
+
+def injury_coverage(store, season: int, week: int) -> dict:
+    """What nflverse's injury report holds for (season, week), for the serve summary: rows, practice lines, game designations."""
+    inj = store._tables["injuries"].df
+    wk = inj[(inj["season"] == season) & (inj["week"] == week)]
+    desig = wk["report_status"].dropna()
+    return {"rows": len(wk), "practice": int(wk["practice_status"].notna().sum()), "designations": len(desig),
+            "mix": ", ".join(f"{n} {k}" for k, n in desig.value_counts().items())}
+
+
 def availability(frame, players):
     """(mask of rows to WITHHOLD, reason per row). The status layer owns availability; the model only predicts "if he plays". Three
     signals, any one withholds: the nflverse report for THIS week says Out; Sleeper's `injury_status` is one of the status layer's
@@ -499,7 +521,8 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
     withhold, why = availability(served, players)
     out = pd.DataFrame({"season": season, "week": week, "game_id": served["game_id"], "kickoff_utc": served["kickoff_utc"],
                         "gsis_id": served["player_id"], "position": served["position"], "team": served["team"],
-                        "opponent": served["opponent"], "report_status": current_report(served)}, index=served.index)
+                        "opponent": served["opponent"], "report_status": current_report(served),
+                        "practice_status": current_practice(served)}, index=served.index)
     out.insert(5, "name", display_names(store, players, out["gsis_id"]))
     out["pts_model"] = pred["pts_model"]
     out["pts_model_components"] = pred["pts_model_components"]
@@ -629,6 +652,25 @@ def write_outputs(root: Path, out_path: Path, out, leagues, season: int, week: i
 
 
 # --------------------------------------------------------------------------- the run
+def injury_lines(store, out, upcoming, now, season: int, week: int, warnings: list) -> list[str]:
+    """How much of nflverse's injury report this serve could see. Game designations (Questionable / Doubtful / Out) mostly arrive with
+    Friday's report, while practice lines start on Wednesday, so a blank report_status early in the week is the data, not a fault. It
+    becomes a WARN only when the next kickoff is under 24 h away and the report holds no designation at all."""
+    try:
+        cov = injury_coverage(store, season, week)
+        line = (f"  nflverse injury report, week {week}: {cov['rows']} rows, {cov['practice']} practice lines, {cov['designations']} designations"
+                + (f" ({cov['mix']})" if cov["mix"] else "") + f"; served rows carrying one: {int(out['report_status'].notna().sum())} "
+                f"designation, {int(out['practice_status'].notna().sum())} practice")
+        if cov["designations"] == 0 and upcoming:
+            hours = (min(g.kickoff for g in upcoming) - now).total_seconds() / 3600
+            if hours <= 24:
+                warnings.append(f"nflverse injuries hold no game designation for week {week} and the next kickoff is {hours:.0f} h away: "
+                                "report_status is blank on every row (the report is late, or the file is stale)")
+        return [line]
+    except Exception as e:                                           # a summary line must never fail a serve
+        return [f"  nflverse injury report: coverage unavailable ({type(e).__name__}: {e})"]
+
+
 def summary_lines(out, reasons, leagues, root: Path, season: int, week: int) -> list[str]:
     """What was served, and for every league how much of its rostered skill-position pool has a row and why the rest does not."""
     import pandas as pd
@@ -694,6 +736,7 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     out, reasons = assemble(store, served_df, pred, comp, leagues, root=root, season=season, week=week, served_at=now_utc(),
                             warnings=warnings, league_bands=league_bands)
     lines = summary_lines(merged_week(out_path, out, season, week, now), reasons, leagues, root, season, week)
+    lines += injury_lines(store, out, upcoming, now, season, week, warnings)
     if args.dry_run:
         return lines + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
     live = out_path == root / "data" / "model_pts.csv"          # a custom --out is a scratch copy: no roster.csv, no run-log row

@@ -555,6 +555,30 @@ class SundayServe(unittest.TestCase):
         self.assertEqual(self.serve(end, 5.0), 0)                                           # Tuesday's run: nothing left to predict this week
         self.assertEqual(self.path.read_bytes(), before)
 
+    def test_two_early_sunday_serves_and_a_late_third_leave_one_row_per_player_and_freeze_what_has_kicked_off(self):
+        """The workflow now fires at 13:52 and 15:52 UTC on Sunday, and a cron that runs hours late can make a third look like a different
+        day's serve. Three serves on one Sunday with unchanged inputs must be idempotent: no duplicates, nothing lost, kicked-off games frozen."""
+        sun_early = pd.Timestamp("2026-10-11T13:52:00Z")
+        late = pd.Timestamp("2026-10-11T17:10:00Z")
+        self.serve(WED, 1.0)
+        self.serve(FRI, 2.0)
+        tnf, intl = self.lines("2026_05_TB_DAL"), self.lines("2026_05_PHI_JAX")
+        self.assertEqual(self.serve(sun_early, 3.0), 14 - 1)                                # the 13:30 game is under way at 13:52
+        first = self.read()
+        self.assertEqual(self.serve(SUN_RUN, 3.0), 13)
+        second = self.read()
+        cols = [c for c in first.columns if c != "served_at"]
+        self.assertTrue(first[cols].equals(second[cols]))                                   # same inputs, same file, whichever run lands
+        self.assertEqual(self.serve(late, 3.0), 5)                                          # the 1 pm slate is under way by 17:10
+        d = self.read()
+        w5 = d[d["week"] == 5]
+        self.assertEqual(len(w5), 30)
+        self.assertFalse(w5.duplicated(["season", "week", "gsis_id"]).any())
+        self.assertEqual(self.lines("2026_05_TB_DAL"), tnf)
+        self.assertEqual(self.lines("2026_05_PHI_JAX"), intl)
+        one_pm = w5[w5["game_id"] == "2026_05_IND_PIT"]
+        self.assertEqual(set(one_pm["served_at"]), {SUN_RUN.strftime("%Y-%m-%dT%H:%M:%SZ")})       # frozen at the last serve before it kicked off
+
     def test_the_roster_columns_of_a_player_in_a_frozen_game_persist_through_the_sunday_run(self):
         root = Path(self.tmp.name)
         ls = [x for x in L.load_leagues(REPO) if x.slug == "where-you-at"]
@@ -913,6 +937,191 @@ class NoSkew(unittest.TestCase):
         self.assertEqual(sorted(x for x in out.columns if x.startswith(("p10_", "p90_"))),
                          sorted(f"{p_}_{sl}" for sl in league_bands for p_ in ("p10", "p90")))
         self.assertTrue(set(out["gsis_id"]).isdisjoint(set(why.index)))
+
+
+class InjuryReportsServe(unittest.TestCase):
+    """The injury report reaches the served rows. Built on the REAL week-5 spine with the injuries table replaced by a fixture, so the
+    answer does not depend on what nflverse happens to hold when the suite runs.
+
+    The oct-8 audit saw a blank `report_status` on every served row and suspected the 418862e week filter. It is not: that filter is
+    right on the real week 4 and 5 data (this class pins it), and the blanks are what nflverse held when each serve ran. Practice lines
+    start on Wednesday, game designations mostly arrive with Friday's report, so on a Thursday a week has ~9 of them league-wide."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tgs = [g for g in tgs_of(2026, 5) if g.kickoff > pd.Timestamp("2026-10-07 14:00", tz="UTC")]
+        base = SV.serve_frame(store(), cls.tgs)
+        sun = base[(base["kickoff_utc"] > "2026-10-11") & base["position"].isin(["RB", "WR"])]
+        cls.ids = sun["player_id"].drop_duplicates().tolist()[:6]
+        cls.kick = dict(zip(sun["player_id"], pd.to_datetime(sun["kickoff_utc"], utc=True)))
+
+    def inj_row(self, pid, week, report, practice, kick=None):
+        k = kick if kick is not None else self.kick[pid]
+        return {"player_id": pid, "season": 2026, "week": week, "game_type": "REG", "team": "XX", "position": "RB",
+                "report_status": report, "report_primary_injury": None, "practice_status": practice, "practice_primary_injury": None,
+                pit.KNOWN_AT: (k - pit.INJURY_DERIVED_LEAD).tz_convert("UTC"), "known_at_source": "derived_kickoff_minus_24h"}
+
+    def served(self, rows):
+        """serve_frame on a store whose 2026 week-4/5 injury rows are exactly `rows` (earlier weeks and seasons untouched)."""
+        inj = store()._tables["injuries"].df
+        keep = inj[~((inj["season"] == 2026) & (inj["week"] >= 4))]
+        fixture = pd.DataFrame(rows).astype({"season": inj["season"].dtype, "week": inj["week"].dtype})
+        fixture[pit.KNOWN_AT] = fixture[pit.KNOWN_AT].astype(inj[pit.KNOWN_AT].dtype)
+        st = store().with_frame("injuries", pd.concat([keep, fixture], ignore_index=True))
+        return SV.serve_frame(st, self.tgs).set_index("player_id")
+
+    def test_current_week_reports_reach_the_served_rows(self):
+        a, b, c, d, e, f = self.ids
+        fr = self.served([self.inj_row(a, 5, "Questionable", "Did Not Participate In Practice"),
+                          self.inj_row(b, 5, "Doubtful", "Limited Participation in Practice"),
+                          self.inj_row(c, 5, None, "Full Participation in Practice"),         # Wednesday: a practice line, no designation yet
+                          self.inj_row(d, 5, "Out", "Did Not Participate In Practice")])
+        rep, prac = SV.current_report(fr), SV.current_practice(fr)
+        self.assertEqual((rep[a], prac[a]), ("Questionable", "Did Not Participate In Practice"))
+        self.assertEqual((rep[b], prac[b]), ("Doubtful", "Limited Participation in Practice"))
+        self.assertEqual((rep[c], prac[c]), (None, "Full Participation in Practice"))
+        self.assertEqual(rep[d], "Out")
+        self.assertEqual((rep[e], prac[e]), (None, None))                                       # no report at all: blank
+        # the assembled file row carries both columns, and Out is withheld rather than shown
+        pred = pd.DataFrame({k: 1.0 for k in ("pts_model", "pts_model_components", "p10", "q50", "p90")}, index=fr.reset_index().index)
+        with tempfile.TemporaryDirectory() as tmp:
+            out, why = SV.assemble(store(), fr.reset_index(), pred, None, [], root=Path(tmp), season=2026, week=5, served_at=NOW, warnings=[])
+        out = out.set_index("gsis_id")
+        self.assertEqual(out.loc[a, "report_status"], "Questionable")
+        self.assertEqual(out.loc[a, "practice_status"], "Did Not Participate In Practice")
+        self.assertEqual(out.loc[c, "practice_status"], "Full Participation in Practice")
+        self.assertTrue(pd.isna(out.loc[c, "report_status"]))
+        self.assertNotIn(d, out.index)
+        self.assertEqual(why[d], "nflverse report: Out")
+
+    def test_only_last_weeks_reports_neither_show_nor_withhold(self):
+        """418862e, unchanged: a week-4 Out/Questionable is last week's news on a week-5 serve."""
+        a, b = self.ids[:2]
+        k4 = pd.Timestamp("2026-10-04 17:00", tz="UTC")
+        fr = self.served([self.inj_row(a, 4, "Out", "Did Not Participate In Practice", k4),
+                          self.inj_row(b, 4, "Questionable", "Limited Participation in Practice", k4)])
+        self.assertEqual(fr.loc[a, "inj_weeks_since_report"], 1)
+        self.assertEqual(SV.current_report(fr).loc[[a, b]].tolist(), [None, None])
+        self.assertEqual(SV.current_practice(fr).loc[[a, b]].tolist(), [None, None])
+        self.assertFalse(SV.availability(fr.reset_index(), None)[0].any())
+
+    def test_a_week_5_line_replaces_the_week_4_one(self):
+        a = self.ids[0]
+        k4 = pd.Timestamp("2026-10-04 17:00", tz="UTC")
+        fr = self.served([self.inj_row(a, 4, "Out", "Did Not Participate In Practice", k4),
+                          self.inj_row(a, 5, "Questionable", "Limited Participation in Practice")])
+        self.assertEqual((SV.current_report(fr)[a], SV.current_practice(fr)[a]), ("Questionable", "Limited Participation in Practice"))
+
+    def test_coverage_counts_what_the_report_holds_and_warns_only_close_to_kickoff(self):
+        a, b, c = self.ids[:3]
+        rows = [self.inj_row(a, 5, None, "Full Participation in Practice"), self.inj_row(b, 5, None, "Did Not Participate In Practice")]
+        st = store().with_frame("injuries", pd.concat([store()._tables["injuries"].df.query("season != 2026 or week < 5"),
+                                                       pd.DataFrame(rows).astype(store()._tables["injuries"].df.dtypes.to_dict(), errors="ignore")],
+                                                      ignore_index=True))
+        cov = SV.injury_coverage(st, 2026, 5)
+        self.assertEqual((cov["practice"], cov["designations"]), (2, 0))
+        out = pd.DataFrame({"report_status": [None, None], "practice_status": ["Full", None]})
+        up = self.tgs
+        early, late = up[0].kickoff - pd.Timedelta(hours=40), up[0].kickoff - pd.Timedelta(hours=3)
+        warns: list = []
+        SV.injury_lines(st, out, up, early, 2026, 5, warns)
+        self.assertEqual(warns, [])                                                             # Wednesday: designations are not out yet, normal
+        lines = SV.injury_lines(st, out, up, late, 2026, 5, warns)
+        self.assertEqual(len(warns), 1)                                                         # three hours to kickoff and still none: say so
+        self.assertIn("no game designation", warns[0])
+        self.assertIn("2 practice lines, 0 designations", lines[0])
+        warns.clear()
+        rows.append(self.inj_row(c, 5, "Questionable", "Limited Participation in Practice"))
+        st2 = store().with_frame("injuries", pd.concat([store()._tables["injuries"].df.query("season != 2026 or week < 5"),
+                                                        pd.DataFrame(rows).astype(store()._tables["injuries"].df.dtypes.to_dict(), errors="ignore")],
+                                                       ignore_index=True))
+        SV.injury_lines(st2, out, up, late, 2026, 5, warns)
+        self.assertEqual(warns, [])
+
+    def test_the_real_file_week_filter_matches_what_each_week_holds(self):
+        """The real injuries table's week column is a plain 1-18 integer (it has no date column from 2025) and its designations are the
+        three words the served column documents, so the filter has nothing else to trip on, whatever weeks the cache holds."""
+        inj = store()._tables["injuries"].df
+        y = inj[(inj["season"] == 2026) & inj["report_status"].notna() & inj["position"].isin(["RB", "WR", "TE", "QB"])]
+        self.assertGreater(len(y), 50)
+        self.assertTrue(y["week"].between(1, 18).all())
+        self.assertTrue(set(y["report_status"]) <= {"Out", "Doubtful", "Questionable"})
+
+    def test_an_encoding_of_a_volatile_file_is_refreshed_too(self):
+        names = {p.name for p in SV.volatile_files(2026)}
+        self.assertTrue({"injuries_2026.parquet", "injuries_2026.csv.gz", "injuries_2026.csv", "games.csv.gz"} <= names)
+
+
+class NflverseAssetVariants(unittest.TestCase):
+    """Upstream renames degrade to a log line: the model's loader tries the other encodings of an asset before it fails."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.patch = mock.patch.object(pit, "CACHE_DIR", Path(self.tmp.name))
+        self.patch.start()
+
+    def tearDown(self):
+        self.patch.stop()
+        self.tmp.cleanup()
+
+    @staticmethod
+    def resp(status, body=b""):
+        r = mock.Mock(status_code=status, content=body)
+        r.raise_for_status.side_effect = None if status < 400 else pit.requests.HTTPError(str(status))
+        return r
+
+    def load(self, published: dict):
+        asked: list = []
+
+        def get(url, timeout=None):
+            name = url.rsplit("/", 1)[1]
+            asked.append(name)
+            return self.resp(200, published[name]) if name in published else self.resp(404)
+        err = io.StringIO()
+        with mock.patch.object(pit.requests, "get", get), mock.patch.object(pit.time, "sleep"), redirect_stderr(err):
+            try:
+                df = pit._nflverse("injuries", "injuries_2026.parquet")
+            except RuntimeError as e:
+                df = e
+        return df, asked, err.getvalue()
+
+    def test_variant_order_asks_for_the_parquet_first(self):
+        self.assertEqual(pit.asset_variants("injuries_2026.parquet"), ["injuries_2026.parquet", "injuries_2026.csv.gz", "injuries_2026.csv"])
+        self.assertEqual(pit.asset_variants("games.csv"), ["games.csv", "games.parquet", "games.csv.gz"])
+
+    def test_the_named_asset_is_used_when_it_exists_and_nothing_is_said(self):
+        buf = io.BytesIO()
+        pd.DataFrame({"a": [1]}).to_parquet(buf)
+        df, asked, err = self.load({"injuries_2026.parquet": buf.getvalue()})
+        self.assertEqual(df["a"].tolist(), [1])
+        self.assertEqual(asked, ["injuries_2026.parquet"])
+        self.assertEqual(err, "")
+
+    def test_a_vanished_parquet_is_served_as_csv_gz_with_a_log_line_and_no_retry_storm(self):
+        df, asked, err = self.load({"injuries_2026.csv.gz": __import__("gzip").compress(b"a,b\n1,x\n")})
+        self.assertEqual(df.to_dict("list"), {"a": [1], "b": ["x"]})
+        self.assertEqual(asked, ["injuries_2026.parquet", "injuries_2026.csv.gz"])              # a 404 is not retried
+        self.assertIn("injuries_2026.csv.gz served instead", err)
+        # and it is cached under the name that served, so the next load makes no request
+        df2, asked2, _ = self.load({})
+        self.assertEqual((len(df2), asked2), (1, []))
+
+    def test_every_encoding_missing_is_one_clear_error(self):
+        df, asked, _ = self.load({})
+        self.assertIsInstance(df, RuntimeError)
+        self.assertIn("404 under every encoding", str(df))
+        self.assertEqual(len(asked), 3)
+
+    def test_a_server_error_is_retried_and_does_not_fall_through_to_another_encoding(self):
+        asked: list = []
+
+        def get(url, timeout=None):
+            asked.append(url.rsplit("/", 1)[1])
+            return self.resp(503)
+        with mock.patch.object(pit.requests, "get", get), mock.patch.object(pit.time, "sleep"):
+            with self.assertRaises(RuntimeError):
+                pit._nflverse("injuries", "injuries_2026.parquet")
+        self.assertEqual(set(asked), {"injuries_2026.parquet"})
 
 
 class BuilderJobs(unittest.TestCase):

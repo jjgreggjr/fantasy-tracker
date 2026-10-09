@@ -194,7 +194,44 @@ def resolve_leagues(cfg: dict, season: int, warnings: list) -> list[dict]:
     return out
 
 
+# What the run knew about itself when it died, for the crash row in logs/runs.csv.
+_RUN = {"season": None, "week": None}
+
+
+def _crash_context(cfg_season=None) -> tuple[int, int]:
+    """(season, week) to stamp on a crash row: this run's own if it got that far,
+    else the last recorded run's (the commit step reads the last row's week), else zeros."""
+    season, week = _RUN["season"], _RUN["week"]
+    if season is None or week is None:
+        try:
+            last = pd.read_csv(LOGS / "runs.csv").iloc[-1]
+            season = season if season is not None else int(last.season)
+            week = week if week is not None else int(last.week)
+        except Exception:
+            pass
+    return int(season or cfg_season or 0), int(week or 0)
+
+
 def main(argv=None) -> int:
+    """Run the pipeline. Any unhandled exception is written to logs/runs.csv as a FAIL
+    row (class + first line) before exiting 1, so the committed log can never show a
+    clean week around a crash. SystemExit (bad args, missing config) is left alone."""
+    _RUN.update(season=None, week=None)
+    try:
+        return _main(argv)
+    except Exception as e:
+        log.exception("pipeline crashed")
+        if "--verify-only" not in (argv if argv is not None else sys.argv[1:]):
+            try:
+                season, week = _crash_context()
+                verify_mod.log_crash(LOGS, season, week, e)
+            except Exception as e2:           # the log is best-effort; the exit code is not
+                print(f"could not write the crash row to {LOGS / 'runs.csv'}: {e2}",
+                      file=sys.stderr)
+        return 1
+
+
+def _main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", type=int)
     ap.add_argument("--week", type=int, help="week to preview")
@@ -237,6 +274,7 @@ def main(argv=None) -> int:
     stats_week = preview_week - 1 if preview_week > 1 else None
 
     log.info("season=%s preview_week=%s stats_week=%s", season, preview_week, stats_week)
+    _RUN.update(season=season, week=preview_week)
 
     # ---- raw data -------------------------------------------------------
     nv = sources.load_nflverse(season, RAW / "nflverse", with_prior=True)
@@ -368,7 +406,16 @@ def main(argv=None) -> int:
             trending.to_csv(DATA / "trending.csv", index=False)
 
     # ---- status: availability, and who is ahead of whom ------------------
-    st = status_mod.build(players, depth, proj, preview_week)
+    # Practice participation and the game designation come from nflverse's weekly injury
+    # report (Sleeper's practice field is null for everyone); Sleeper's live injury_status
+    # stays the second signal. Rows for the week only: last week's report is not this week's.
+    injuries = nv.get("injuries")
+    inj_rows = (None if injuries is None
+                else len(status_mod.week_reports(injuries, preview_week)))
+    if injuries is None:
+        warnings.append(f"injuries_{season}.csv not published (or unreadable) — "
+                        "practice participation is blank this run.")
+    st = status_mod.build(players, depth, proj, preview_week, injuries)
     if not st.empty:
         st.to_csv(DATA / "status.csv", index=False)
         flagged = st[(st.depth_disagreement >= 2)
@@ -497,7 +544,7 @@ def main(argv=None) -> int:
            "leagues": league_ctx, "dvp": ranks, "trending": trending}
 
     checks = verify_mod.verify(DATA, season, preview_week,
-                               _configured_league_ids(cfg))
+                               _configured_league_ids(cfg), injury_rows=inj_rows)
     for lid in espn_missing:
         checks.append(verify_mod._r(verify_mod.WARN, "espn.league",
                                     f"league {lid} not loaded this run — secrets "

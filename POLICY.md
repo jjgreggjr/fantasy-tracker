@@ -86,7 +86,8 @@ Every run now builds `data/status.csv`, one row per player on a depth chart:
 |---|---|
 | `status_flag` | healthy / questionable / doubtful / out / ir / pup / unknown |
 | `play_prob` | chance he suits up — designation blended with practice participation, which is weighted more heavily because it is the better predictor |
-| `practice` | DNP / Limited / Full, from Sleeper |
+| `practice` | DNP / Limited / Full, from nflverse's injury report for the current week (Sleeper's practice field is null for everyone); blank until the week's first report, Wednesday |
+| `report_status` | the game designation (Questionable / Doubtful / Out) from the same nflverse report, mostly present from Friday; `status_flag` takes the more severe of this and Sleeper's live `injury_status` |
 | `espn_rank` vs `sleeper_rank` | **two independent depth charts.** A disagreement of 2+ places is the signature of a rank driven by availability rather than role |
 | `blocked_by` | every player listed ahead of him, **with their statuses** |
 | `opportunity_ahead` | share of team volume held by players ahead of him who probably will not play |
