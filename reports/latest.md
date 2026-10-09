@@ -1,6 +1,6 @@
 # Week 5 digest — 2026
 
-Generated 2026-10-08 22:01 UTC  
+Generated 2026-10-09 00:58 UTC  
 Stats through: **Week 4** · Baselines: **2026 only**
 
 
@@ -10,16 +10,15 @@ Stats through: **Week 4** · Baselines: **2026 only**
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 946
-- Sleeper players cache: 2026-10-08
-- projections: 864 players (Sleeper, 2026-10-08T22:02:00Z)
-- league rosters: 3 leagues, lineups read 2026-10-08T22:01:57Z
-- ESPN rosters: Average Joes (2026-10-08T22:02:05Z)
-- status rows: 587 players; 0 with practice reports
+- Sleeper players cache: 2026-10-09
+- projections: 864 players (Sleeper, 2026-10-09T00:58:19Z)
+- league rosters: 3 leagues, lineups read 2026-10-09T00:58:15Z
+- ESPN rosters: Average Joes (2026-10-09T00:58:25Z)
+- status rows: 587 players; 65 with practice reports
 
 ### Data integrity
 
-- **WARN** projections.shares — 2 teams with shares off: ['CAR', 'KC']
-- **WARN** status.practice — 0% have practice reports (normal before Wednesday)
+All 18 checks passed.
 
 
 ## Gooma's Family League
@@ -98,7 +97,7 @@ Full report: `leagues/where-you-at/report.md`
 | Breece Hall | RB | NYJ | CLE | 6.5 | 9.2 |  | 1 | 28 | Low | DOUBTFUL |
 
 
-**Needs a decision:** Bryce Young (BYE), Kyle Monangai (QUESTIONABLE), Rhamondre Stevenson (QUESTIONABLE), Breece Hall (DOUBTFUL), Kaelon Black (QUESTIONABLE), Zach Charbonnet (PUP), Jalen Coker (OUT)
+**Needs a decision:** Bryce Young (BYE), Kyle Monangai (QUESTIONABLE), Rhamondre Stevenson (QUESTIONABLE), Breece Hall (DOUBTFUL), Zach Charbonnet (PUP), Jalen Coker (OUT)
 
 **Trending and still free here:** Kirk Cousins (QB, 17.6), C.J. Stroud (QB, 15.2), Deshaun Watson (QB, 15.0)
 

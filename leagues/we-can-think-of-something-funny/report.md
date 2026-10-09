@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 5
 
 dynasty · 31 roster slots  
-Generated 2026-10-08 22:01 UTC · baselines: 2026 only · lineup as of 2026-10-08T22:01:57Z
+Generated 2026-10-09 00:58 UTC · baselines: 2026 only · lineup as of 2026-10-09T00:58:16Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -11,8 +11,9 @@ Generated 2026-10-08 22:01 UTC · baselines: 2026 only · lineup as of 2026-10-0
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
 - Breece Hall: depth charts disagree (ESPN 1 vs Sleeper 3) — his listed rank may reflect availability, not role
-- Ricky Pearsall: depth charts disagree (ESPN 9 vs Sleeper 12) — his listed rank may reflect availability, not role
+- Ricky Pearsall: depth charts disagree (ESPN 9 vs Sleeper 11) — his listed rank may reflect availability, not role
 - Mike Washington Jr.: 18% of the volume ahead of him belongs to players unlikely to play (Ashton Jeanty (questionable))
+- Darnell Mooney: 21% of the volume ahead of him belongs to players unlikely to play (Malik Nabers (questionable, Did Not Participate In Practice); Malachi Fields (healthy))
 - Jayden Reed: IR (Neck) — his depth rank of 7 reflects that, not his role
 - Breece Hall: DOUBTFUL (Quadriceps) — his depth rank of 1 reflects that, not his role
 - Zach Charbonnet: PUP (Knee - ACL) — his depth rank of 5 reflects that, not his role
@@ -30,7 +31,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Bhayshul Tuten | RB | JAX | PHI | 14.0 | 17.0 | 51% | 1 | 12 | High |  |
 | D'Andre Swift | RB | CHI | GB | 13.4 | 18.3 | 41% | 1 | 2 | Med | QUESTIONABLE |
 | Alvin Kamara | RB | NO | MIN | 10.1 | 13.9 | 48% | 1 | 32 | Med | QUESTIONABLE |
-| Tony Pollard | RB | TEN | HOU | 9.9 | 17.2 | 51% | 1 | 25 | High |  |
+| Tony Pollard | RB | TEN | HOU | 9.9 | 17.1 | 51% | 1 | 25 | High |  |
 | TreVeyon Henderson | RB | NE | LV | 8.7 | 13.1 | 36% | 2 | 17 | High |  |
 | Breece Hall | RB | NYJ | CLE | 6.8 | 9.2 |  | 1 | 28 | Low | DOUBTFUL |
 | Mike Washington Jr. | RB | LV | NE | 5.1 | 6.1 | 18% | 2 | 18 | Med |  |
@@ -65,7 +66,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - **Bhayshul Tuten** — 17.0 exp opps (proj 17, recent 17) · RB1 · 51% of team carries · vs PHI (DvP 12, +4%) · High confidence
 - **D'Andre Swift** — 18.3 exp opps (proj 15, recent 20) · RB1 · 41% of team carries · vs GB (DvP 2, +11%) · Med confidence · QUESTIONABLE
 - **Alvin Kamara** — 13.9 exp opps (proj 15, recent 13) · RB1 · 48% of team carries · vs MIN (DvP 32, -11%) · Med confidence · QUESTIONABLE
-- **Tony Pollard** — 17.2 exp opps (proj 15, recent 19) · RB1 · 51% of team carries · vs HOU (DvP 25, -6%) · High confidence
+- **Tony Pollard** — 17.1 exp opps (proj 15, recent 19) · RB1 · 51% of team carries · vs HOU (DvP 25, -6%) · High confidence
 - **TreVeyon Henderson** — 13.1 exp opps (proj 12, recent 14) · RB2 · 36% of team carries · vs LV (DvP 17, +0%) · High confidence
 - **Breece Hall** — 9.2 exp opps (proj 0, recent 18) · RB1 · vs CLE (DvP 28, -8%) · Low confidence · DOUBTFUL
 - **Mike Washington Jr.** — 6.1 exp opps (proj 5, recent 7) · RB2 · 18% of team carries · vs NE (DvP 18, -1%) · Med confidence
@@ -87,12 +88,12 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyson Bagent | QB | CHI | GB | 8.9 | 3.2 |  | 2 | 21 | Low |  |
 | Aaron Rodgers | QB | PIT | IND | 18.6 | 1.3 |  | 1 | 6 | High | 🔥 |
 | Deshaun Watson | QB | CLE | NYJ | 15.3 | 6.3 |  | 1 | 28 | Low | 🔥 |
-| Jameis Winston | QB | NYG | WAS | 13.0 | 2.1 |  | 1 | 3 | Med |  |
+| Jameis Winston | QB | NYG | WAS | 13.2 | 2.1 |  | 1 | 3 | Med |  |
 | Jalon Daniels | QB | TB | DAL | 12.3 | 4.3 |  | 2 | 2 | High |  |
 | Tyler Huntley | QB | BAL | ATL | 11.4 | 5.1 |  | 2 | 11 | Med |  |
 | Ty Johnson | RB | BUF | LA | 7.0 | 4.2 | 11% | 2 | 30 | Med |  |
 | Raheim Sanders | RB | CLE | NYJ | 5.7 | 5.2 | 17% | 2 | 4 | Med |  |
-| Austin Ekeler | RB | WAS | NYG | 5.1 | 5.3 | 14% | 4 | 15 | Med | 🔥 |
+| Austin Ekeler | RB | WAS | NYG | 5.1 | 5.2 | 14% | 4 | 15 | Med | 🔥 |
 | Tyler Badie | RB | DEN | LAC | 4.6 | 3.1 | 4% | 3 | 11 | Med |  |
 | Justice Hill | RB | BAL | ATL | 4.3 | 5.0 | 12% | 2 | 27 | Med |  |
 | Samaje Perine | RB | CIN | MIA | 4.1 | 5.2 | 18% | 2 | 5 | Med |  |
@@ -100,7 +101,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Greg Dulcich | TE | MIA | CIN | 8.5 | 4.4 | 14% | 1 | 6 | High |  |
 | Darnell Washington | TE | PIT | IND | 8.1 | 3.4 | 10% | 1 | 16 | High |  |
 | Mike Gesicki | TE | CIN | MIA | 14.4 | 3.9 | 11% | 1 | 4 | High | 🔥 |
-| Cade Otton | TE | TB | DAL | 10.5 | 5.5 | 16% | 1 | 14 | High |  |
+| Cade Otton | TE | TB | DAL | 10.6 | 5.5 | 16% | 1 | 14 | High |  |
 | Michael Mayer | TE | LV | NE | 10.3 | 5.2 | 14% | 2 | 32 | Med | 🔥 |
 | Cody White | WR | LV | NE | 9.2 | 3.2 | 11% | 3 | 13 | Low |  |
 | Darius Cooper | WR | PHI | JAX | 9.1 | 3.6 | 16% | 5 | 9 | Med | 🔥 |
@@ -122,7 +123,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Raheim Sanders | RB | CLE | 24.3 | 1 | 2 (was 2) | 32% | RB2 on depth chart; snap share trending +8%/wk; age 24 |
 | Tyler Goodson | RB | DAL | 25.9 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 34% | TE2 on depth chart; snap share trending +5%/wk; team passes #8; age 26 |
-| CJ Donaldson | RB | NO | 22.2 | 0 | 3 (was 3) | 28% | RB3 on depth chart; age 22 |
+| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 28% | RB3 on depth chart; age 22 |
 | Isaiah Davis | RB | NYJ | 24.6 | 2 | 3 (was 3) | 2% | RB3 on depth chart; age 25 |
 | Michael Mayer | TE | LV | 25.3 | 3 | 2 (was 2) | 86% | TE2 on depth chart; team passes #11; age 25 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
