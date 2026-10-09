@@ -22,11 +22,29 @@ PRACTICE_WEIGHT = {"DNP": 0.15, "Did Not Participate In Practice": 0.15,
                    "Full": 0.95, "Full Participation in Practice": 0.95}
 
 
+def _severity(s: str) -> int:
+    if s in SOFT:
+        return 1
+    if s in DOUBTFUL:
+        return 2
+    return 3                     # Out / IR / PUP / Sus / anything we do not recognise
+
+
+def designation(row: pd.Series) -> str | None:
+    """The game designation to act on. Two independent signals: the nflverse report
+    for this week (`report_status`, the league's own Wed-Fri report) and Sleeper's live
+    `injury_status` (updated through Sunday morning, so it can know more than the report).
+    Either one can be the only one that has spoken; when both have, the more severe wins,
+    so neither can talk the other out of a warning."""
+    cands = [str(v).strip() for v in (row.get("report_status"), row.get("injury_status"))
+             if pd.notna(v) and str(v).strip()]
+    return max(cands, key=_severity) if cands else None
+
+
 def status_flag(row: pd.Series) -> str:
-    s = row.get("injury_status")
-    if pd.isna(s) or not str(s).strip():
+    s = designation(row)
+    if s is None:
         return "healthy"
-    s = str(s)
     if s in OUT_STATES:
         return s.lower()
     if s in DOUBTFUL:
@@ -65,20 +83,65 @@ def _news_age_hours(v) -> float:
     return round(age.total_seconds() / 3600, 1)
 
 
+def week_reports(injuries: pd.DataFrame | None, week: int | None) -> pd.DataFrame:
+    """nflverse injury-report rows issued FOR `week`, one per player.
+
+    The file carries one row per player-week (practice participation, plus the game
+    designation once the Friday report is out), keyed by the week the report is for. A
+    report for an earlier week is last week's news and is never carried over, so before
+    Wednesday this is simply empty. When a file does carry `date_modified` (seasons up
+    to 2024) the newest report of the week wins; otherwise the last row does.
+    """
+    cols = ["gsis_id", "report_status", "practice_status",
+            "report_primary_injury", "practice_primary_injury"]
+    if injuries is None or injuries.empty or week is None or "week" not in injuries.columns:
+        return pd.DataFrame(columns=cols)
+    r = injuries[(pd.to_numeric(injuries["week"], errors="coerce") == week)
+                 & injuries["gsis_id"].notna()].copy()
+    if "date_modified" in r.columns:
+        r = r.sort_values("date_modified", kind="stable")
+    r = r.drop_duplicates("gsis_id", keep="last")
+    for c in cols[1:]:
+        if c not in r.columns:
+            r[c] = np.nan
+        r[c] = r[c].where(r[c].notna() & (r[c].astype(str).str.strip() != ""), np.nan)
+    return r[cols].reset_index(drop=True)
+
+
+def with_reports(players: pd.DataFrame, reports: pd.DataFrame) -> pd.DataFrame:
+    """`players` plus this week's nflverse report: `report_status` (the designation) and
+    `practice_participation`. Sleeper's own practice field is null for every player all
+    season, so nflverse is the source; Sleeper's value is kept only where nflverse has none.
+    `injury_status` (Sleeper, live) is left alone: it is the second signal."""
+    p = players.drop(columns=["report_status"], errors="ignore")
+    if reports is None or reports.empty:
+        p["report_status"] = np.nan
+        return p
+    r = reports.set_index("gsis_id")
+    p["report_status"] = p["gsis_id"].map(r["report_status"])
+    nfl_practice = p["gsis_id"].map(r["practice_status"])
+    old = p["practice_participation"] if "practice_participation" in p else np.nan
+    p["practice_participation"] = nfl_practice.where(nfl_practice.notna(), old)
+    return p
+
+
 def build(players: pd.DataFrame, depth: pd.DataFrame,
-          proj: pd.DataFrame | None = None, week: int | None = None
-          ) -> pd.DataFrame:
-    """One status row per player on a depth chart, including the blocker chain."""
+          proj: pd.DataFrame | None = None, week: int | None = None,
+          injuries: pd.DataFrame | None = None) -> pd.DataFrame:
+    """One status row per player on a depth chart, including the blocker chain.
+
+    `injuries` is nflverse's injuries_{season} table; its rows for `week` supply the
+    practice participation and the game designation (see `week_reports`)."""
     if depth is None or depth.empty:
         return pd.DataFrame()
 
-    p = players.copy()
+    p = with_reports(players, week_reports(injuries, week))
     p["status_flag"] = p.apply(status_flag, axis=1)
     p["play_prob"] = p.apply(play_probability, axis=1)
     p["news_age_hours"] = p.get("news_updated", pd.Series(index=p.index)).map(_news_age_hours)
 
     d = depth.merge(
-        p[["gsis_id", "status_flag", "play_prob", "news_age_hours",
+        p[["gsis_id", "status_flag", "report_status", "play_prob", "news_age_hours",
            "injury_body_part", "practice_participation", "sleeper_depth_order"]],
         on="gsis_id", how="left")
     # A player on a depth chart with no match in players.csv has unknown
@@ -121,7 +184,8 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                 "position": pos, "espn_rank": r["rank"],
                 "sleeper_rank": r.sleeper_depth_order,
                 "depth_disagreement": r.depth_disagreement,
-                "status_flag": r.status_flag, "play_prob": r.play_prob,
+                "status_flag": r.status_flag, "report_status": r.report_status,
+                "play_prob": r.play_prob,
                 "injury_body_part": r.injury_body_part,
                 "practice": r.practice_participation,
                 "news_age_hours": r.news_age_hours,

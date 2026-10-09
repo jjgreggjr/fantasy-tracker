@@ -26,6 +26,7 @@ is git-ignored and immutable until deleted (a rerun reproduces every number).
 from __future__ import annotations
 
 import os
+import sys
 import time
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -338,6 +339,10 @@ def team_games(store: RawStore, seasons: Iterable[int], *, completed_only: bool 
 
 
 # --------------------------------------------------------------------------- loaders
+class NotPublished(RuntimeError):
+    """The asset answered 404: it is not there (yet, or any more). Not worth retrying."""
+
+
 def _fetch(url: str, dest: Path, retries: int = 4) -> Path:
     """Download once, keep forever (delete model/cache/ to refresh)."""
     if dest.exists() and dest.stat().st_size > 0:
@@ -347,19 +352,56 @@ def _fetch(url: str, dest: Path, retries: int = 4) -> Path:
     for attempt in range(retries):
         try:
             r = requests.get(url, timeout=120)
+            if r.status_code == 404:
+                raise NotPublished(f"could not fetch {url}: 404")
             r.raise_for_status()
             tmp = dest.with_suffix(dest.suffix + ".part")
             tmp.write_bytes(r.content)
             tmp.replace(dest)
             return dest
+        except NotPublished:
+            raise
         except requests.RequestException as e:
             last = e
             time.sleep(2 ** attempt)
     raise RuntimeError(f"could not fetch {url}: {last}")
 
 
+# nflverse has renamed and re-encoded release assets before (schedules/games.csv vanished overnight and killed a
+# weekly run). Every table is published in several encodings, so an asset that 404s is tried under the others
+# before the load fails, and the variant that served is printed. The first encoding is the one we ask for.
+ASSET_SUFFIXES = (".parquet", ".csv.gz", ".csv")
+
+
+def asset_variants(name: str) -> list[str]:
+    for suf in sorted(ASSET_SUFFIXES, key=len, reverse=True):          # ".csv.gz" before ".csv"
+        if name.endswith(suf):
+            stem = name[: -len(suf)]
+            return [name] + [stem + s for s in ASSET_SUFFIXES if stem + s != name]
+    return [name]
+
+
+def _read_asset(path: Path) -> pd.DataFrame:
+    return pd.read_parquet(path) if path.suffix == ".parquet" else pd.read_csv(path, low_memory=False)
+
+
 def _nflverse(tag: str, name: str) -> pd.DataFrame:
-    return pd.read_parquet(_fetch(f"{NFLVERSE}/{tag}/{name}", CACHE_DIR / "nflverse" / name))
+    """The table, from the cache if any encoding of it is cached, else from the first encoding that downloads."""
+    variants = asset_variants(name)
+    for v in variants:                                                  # a cached copy is immutable until deleted
+        f = CACHE_DIR / "nflverse" / v
+        if f.exists() and f.stat().st_size > 0:
+            return _read_asset(f)
+    for v in variants:
+        try:
+            f = _fetch(f"{NFLVERSE}/{tag}/{v}", CACHE_DIR / "nflverse" / v)
+        except NotPublished:
+            continue
+        if v != name:
+            print(f"point_in_time: nflverse {tag}/{name} is not published; {v} served instead (renamed or re-encoded upstream)",
+                  file=sys.stderr, flush=True)
+        return _read_asset(f)
+    raise RuntimeError(f"could not fetch nflverse {tag}/{name}: 404 under every encoding ({', '.join(variants)})")
 
 
 _GAMES: pd.DataFrame | None = None

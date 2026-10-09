@@ -37,11 +37,17 @@ def completed_weeks(current_week: int) -> list[int]:
     return list(range(1, min(current_week, MAX_WEEK + 1)))
 
 
+UNKNOWN = object()      # "nobody told verify() what nflverse has" (e.g. --verify-only)
+
+
 def verify(data_dir: Path, season: int, week: int,
-           league_ids: list | None = None) -> list[dict]:
+           league_ids: list | None = None,
+           injury_rows=UNKNOWN) -> list[dict]:
     """Structural checks on everything the pipeline just wrote. `league_ids`
     are the configured leagues that must have every completed week recorded
-    in lineups_played.csv and matchup_results.csv."""
+    in lineups_played.csv and matchup_results.csv. `injury_rows` is how many
+    nflverse injury-report rows exist for `week` (None: the file could not be
+    loaded at all); it decides whether an empty practice column is a problem."""
     out = []
     rd = lambda n: (pd.read_csv(data_dir / n, low_memory=False)
                     if (data_dir / n).exists() else None)
@@ -132,7 +138,10 @@ def verify(data_dir: Path, season: int, week: int,
         out.append(_r(OK if len(cur) >= 200 else WARN, "projections.week",
                       f"{len(cur)} players projected for week {week}"))
         if not cur.empty:
-            shares = cur.groupby("team").proj_carry_share.sum()
+            # A team on its bye has no game to share carries in; its projection rows
+            # (if Sleeper ships any) sum to nothing, which is not a data problem.
+            byes = bye_teams(s, season, week)
+            shares = cur[~cur.team.isin(byes)].groupby("team").proj_carry_share.sum()
             bad = shares[(shares < 0.9) | (shares > 1.1)]
             out.append(_r(OK if bad.empty else WARN, "projections.shares",
                           "carry shares sum to ~1 per team" if bad.empty
@@ -144,10 +153,7 @@ def verify(data_dir: Path, season: int, week: int,
         out.append(_r(WARN, "status", "missing — no availability checking"))
     else:
         out.append(_r(OK, "status.rows", f"{len(st)} players"))
-        prac = st.practice.notna().mean() if "practice" in st.columns else 0
-        out.append(_r(OK if prac > 0 else WARN, "status.practice",
-                      f"{prac:.0%} have practice reports"
-                      + (" (normal before Wednesday)" if prac == 0 else "")))
+        out.append(_practice_check(st, week, injury_rows))
 
     # --- played lineups: every completed week, every configured league ------
     done = completed_weeks(week)
@@ -175,6 +181,50 @@ def verify(data_dir: Path, season: int, week: int,
             out.append(_r(OK if age < 48 else WARN, f"freshness.{name}",
                           f"{age:.1f}h old"))
     return out
+
+
+def bye_teams(schedule: pd.DataFrame | None, season: int, week: int) -> set:
+    """Teams with no game in `week`. schedule.csv carries an explicit BYE row for each (build.build_schedule);
+    a team with no row at all that week counts too."""
+    if schedule is None or schedule.empty:
+        return set()
+    sea = schedule[schedule.season == season]
+    wk = sea[sea.week == week]
+    if wk.empty:
+        return set()
+    explicit = set(wk[wk.opponent.astype(str).str.upper() == "BYE"].team)
+    return explicit | (set(sea.team) - set(wk.team))
+
+
+def _practice_check(st: pd.DataFrame, week: int, injury_rows) -> dict:
+    """status.csv practice coverage, judged against what nflverse actually has.
+
+    The practice column comes from nflverse's injury report for the week. An empty
+    column is only a problem when nflverse HAS rows for the week and none of them
+    reached a status row (an id/column/join break). Before Wednesday nflverse has no
+    rows for the week yet, and that is normal."""
+    prac = st.practice.notna().mean() if "practice" in st.columns else 0
+    n = int(st.practice.notna().sum()) if "practice" in st.columns else 0
+    if prac > 0:
+        return _r(OK, "status.practice", f"{prac:.0%} have practice reports ({n} players)")
+    if injury_rows is UNKNOWN:      # caller could not say: keep the old, cautious reading
+        return _r(WARN, "status.practice",
+                  f"{prac:.0%} have practice reports (normal before Wednesday)")
+    if injury_rows is None:
+        # The file is part of the season from week 1 on; missing later means it broke.
+        if week <= 1:
+            return _r(OK, "status.practice",
+                      "0% have practice reports (nflverse injuries not published yet; "
+                      "normal before Wednesday)")
+        return _r(WARN, "status.practice",
+                  "0% have practice reports: nflverse injuries file could not be loaded")
+    if injury_rows == 0:
+        return _r(OK, "status.practice",
+                  f"0% have practice reports (nflverse has none for week {week} yet; "
+                  "normal before Wednesday)")
+    return _r(WARN, "status.practice",
+              f"0% have practice reports but nflverse has {injury_rows} report rows "
+              f"for week {week}: none matched a status row")
 
 
 def missing_weeks(data_dir: Path, season: int, through_week: int) -> list[int]:
@@ -215,26 +265,51 @@ def backfill_depth_charts(raw_depth: pd.DataFrame, season: int, weeks: list[int]
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
+DETAIL_CAP = 500
+
+
+def _append_run(logs_dir: Path, row: dict) -> Path:
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    f = logs_dir / "runs.csv"
+    df = pd.DataFrame([row])
+    if f.exists():
+        df = pd.concat([pd.read_csv(f), df], ignore_index=True)
+    df.to_csv(f, index=False)
+    return f
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def log_run(logs_dir: Path, season: int, week: int, results: list[dict],
             note: str = "") -> Path:
     """Append this run's outcome so gaps are visible after the fact."""
-    logs_dir.mkdir(parents=True, exist_ok=True)
-    f = logs_dir / "runs.csv"
     fails = sum(1 for r in results if r["severity"] == FAIL)
     warns = sum(1 for r in results if r["severity"] == WARN)
-    row = pd.DataFrame([{
-        "ran_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    return _append_run(logs_dir, {
+        "ran_at": _now_iso(),
         "season": season, "week": week,
         "status": "FAIL" if fails else ("WARN" if warns else "OK"),
         "fails": fails, "warns": warns,
         "detail": "; ".join(f"{r['check']}: {r['detail']}" for r in results
-                            if r["severity"] != OK)[:500],
+                            if r["severity"] != OK)[:DETAIL_CAP],
         "note": note,
-    }])
-    if f.exists():
-        row = pd.concat([pd.read_csv(f), row], ignore_index=True)
-    row.to_csv(f, index=False)
-    return f
+    })
+
+
+def log_crash(logs_dir: Path, season: int, week: int, exc: BaseException) -> Path:
+    """A run that died before it could call log_run still leaves a row: FAIL, with the
+    exception's class and first line. Without it the committed log shows a clean week
+    around a crash and only the Actions UI knows."""
+    first = (str(exc).strip().splitlines() or [""])[0]
+    return _append_run(logs_dir, {
+        "ran_at": _now_iso(),
+        "season": season, "week": week,
+        "status": "FAIL", "fails": 1, "warns": 0,
+        "detail": f"{type(exc).__name__}: {first}"[:DETAIL_CAP],
+        "note": "crash",
+    })
 
 
 def last_run_gap(logs_dir: Path) -> float | None:

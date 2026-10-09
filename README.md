@@ -11,7 +11,7 @@ free key for the player-props archive (below).
 
 **GitHub Actions (current).** `.github/workflows/pipeline.yml` runs the pipeline
 on GitHub's machines Tuesday 12:37 (with a 13:41 backstop), Wednesday 08:07,
-Friday 16:11 and Sunday 09:52 Mountain,
+Friday 16:11 and Sunday 07:52 and 09:52 Mountain,
 plus a manual "Run workflow" button on the Actions tab. Every run commits
 `data/`, `leagues/`, `reports/` and `logs/runs.csv` back to the repo, so the
 repo *is* the database and every week is a diffable commit. The job is marked
@@ -79,13 +79,15 @@ python -m ff.run_weekly --season 2026 --week 3
 python -m ff.run_weekly --skip-sleeper     # nflverse only, no league sections
 ```
 
-Four scheduled runs: **Tuesday noon** (main pull), **Wednesday 8am** (snap
+Five scheduled slots: **Tuesday noon** (main pull), **Wednesday 8am** (snap
 backfill), **Friday 4pm** (status refresh — final injury designations and
 the last practice report land Friday afternoon, so a Tuesday answer about
-availability is always provisional) and **Sunday 9:52am** (pre-lock refresh,
-an hour before the 1 pm Eastern slate locks: Sleeper statuses, projections and
-the model columns for every game that has not kicked off; games already under
-way keep the numbers they were frozen with).
+availability is always provisional) and **Sunday 7:52am and 9:52am** (pre-lock refresh before
+the 1 pm Eastern slate locks: Sleeper statuses, projections and the model columns
+for every game that has not kicked off; games already under way keep the numbers
+they were frozen with). There are two Sunday slots because GitHub's cron has run
+1.4 to 5.75 hours late all season: the earlier one still lands before the lock when
+it is three hours late. Running both is harmless.
 
 Run it **Tuesday around noon Mountain**. Stats land Monday night; snap counts
 come from Pro Football Reference and often don't post until Tuesday afternoon.
@@ -191,7 +193,7 @@ recorded run.
 | `data/schedule.csv` | Every team's opponent, spread and total, by week (BYE rows included) |
 | `data/projections.csv` | Weekly projected stat lines per player, with derived committee shares |
 | `data/trending.csv` | Most added/dropped across Sleeper in the last 24h |
-| `data/status.csv` | Availability, practice reports, and the blocker chain for every player |
+| `data/status.csv` | Availability, practice reports (`practice`) and the game designation (`report_status`), both from nflverse's weekly injury report for the current week and blank before Wednesday, plus the blocker chain for every player. Sleeper's live `injury_status` is the second signal for `status_flag` and `play_prob`; the more severe of the two wins |
 | `logs/runs.csv` | One row per run: when, week, pass/fail, and what failed |
 | `leagues/<slug>/roster.csv` | Your team in that league, scored; plus `E_pts_model`, `p10`, `p90` from the model (blank when the model has no row) |
 | `leagues/<slug>/available.csv` | That league's waiver wire, scored |

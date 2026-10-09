@@ -14,7 +14,19 @@ on:
     - cron: "41 19 * * 2"   # Tue 13:41 MDT — backstop in case the 18:37 slot was dropped
     - cron: "7 14 * * 3"    # Wed 08:07 MDT — snap-count backfill
     - cron: "11 22 * * 5"   # Fri 16:11 MDT — final injury designations
-    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, an hour before the 17:00 UTC early slate locks
+    # Sunday gets two pre-lock slots because one is not enough. Every scheduled run this season
+    # arrived 1.4-5.75 h after its cron time (GitHub queues cron under load), so a lone 15:52 run
+    # usually lands after the 17:00 UTC early-slate lock and refreshes nothing that matters. The
+    # 13:52 slot is the one meant to land before the lock even when it is 3 h late; 15:52 stays as
+    # its backstop and as the on-time case. Both are safe to run together: the serve re-predicts
+    # only games that have not kicked off and freezes the rest, so two or three serves in a day
+    # leave one row per player (tests: SundayServe), and the props archive will not re-buy a game
+    # snapshotted in the last 30 h. The earlier run also matters for the props fetcher: its window
+    # is 40 h, so Friday's run reaches only games kicking off before Sunday 14:11 UTC, while a
+    # Sunday run puts every Sunday game and Monday night inside the window, and the 13:52 slot
+    # snapshots the 1 pm slate before it kicks off even when the cron is hours late.
+    - cron: "52 13 * * 0"   # Sun 07:52 MDT — pre-lock refresh, the early one (lands before 17:00 UTC even when 3 h late)
+    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, backstop
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:
@@ -26,7 +38,11 @@ permissions:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: GitHub moves `latest` to Ubuntu 26 starting Oct 19, which swaps the
+    # OS under a pipeline that runs unattended. Upgrade on purpose, with a test run on the branch.
+    # Revisit once GitHub's Oct 19 migration has settled (the runner image and toolcache churn
+    # also forked the ~685 MB pip caches when Python went 3.12.14 -> 3.12.15).
+    runs-on: ubuntu-24.04
     timeout-minutes: 30               # was 20: the model step below has its own 10-minute cap and must never cost the commit
     steps:
       - uses: actions/checkout@v4

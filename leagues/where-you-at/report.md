@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 5
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-08 22:01 UTC · baselines: 2026 only · lineup as of 2026-10-08T22:01:57Z
+Generated 2026-10-09 00:58 UTC · baselines: 2026 only · lineup as of 2026-10-09T00:58:16Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -35,9 +35,9 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jaxon Smith-Njigba | WR | SEA | SF | 21.9 | 10.2 | 33% | 1 | 26 | High |  |
 | Parker Washington | WR | JAX | PHI | 10.5 | 7.4 | 25% | 1 | 10 | High |  |
 | Deebo Samuel Sr. | WR | SF | SEA | 9.3 | 5.9 | 19% | 2 | 31 | Med |  |
+| Terry McLaurin | WR | WAS | NYG | 8.6 | 7.6 | 22% | 1 | 16 | Med | QUESTIONABLE |
 | Rashod Bateman | WR | BAL | ATL | 8.5 | 4.4 | 16% | 2 | 5 | Med |  |
-| Terry McLaurin | WR | WAS | NYG | 8.4 | 7.5 | 22% | 1 | 16 | Med | QUESTIONABLE |
-| Chris Godwin Jr. | WR | TB | DAL | 7.0 | 4.9 | 17% | 2 | 11 | High |  |
+| Chris Godwin Jr. | WR | TB | DAL | 7.1 | 4.9 | 17% | 2 | 11 | High |  |
 | Germie Bernard | WR | PIT | IND | 4.4 | 4.0 | 14% | 4 | 12 | Med |  |
 
 
@@ -61,8 +61,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - **Jaxon Smith-Njigba** — 10.2 exp opps (proj 10, recent 10) · WR1 · 33% of team targets · vs SF (DvP 26, -7%) · High confidence
 - **Parker Washington** — 7.4 exp opps (proj 8, recent 7) · WR1 · 25% of team targets · vs PHI (DvP 10, +5%) · High confidence
 - **Deebo Samuel Sr.** — 5.9 exp opps (proj 7, recent 5) · WR2 · 19% of team targets · vs SEA (DvP 31, -10%) · Med confidence
+- **Terry McLaurin** — 7.6 exp opps (proj 6, recent 9) · WR1 · 22% of team targets · vs NYG (DvP 16, +1%) · Med confidence · QUESTIONABLE
 - **Rashod Bateman** — 4.4 exp opps (proj 4, recent 5) · WR2 · 16% of team targets · vs ATL (DvP 5, +9%) · Med confidence
-- **Terry McLaurin** — 7.5 exp opps (proj 6, recent 9) · WR1 · 22% of team targets · vs NYG (DvP 16, +1%) · Med confidence · QUESTIONABLE
 
 
 ## Waiver wire — best available
@@ -72,13 +72,13 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Kirk Cousins | QB | LV | NE | 17.6 | 2.2 |  | 1 | 26 | High | 🔥 |
 | Geno Smith | QB | NYJ | CLE | 16.5 | 2.8 |  | 1 | 9 | Med |  |
 | Deshaun Watson | QB | CLE | NYJ | 15.0 | 6.3 |  | 1 | 28 | Low | 🔥 |
-| Jameis Winston | QB | NYG | WAS | 12.0 | 2.1 |  | 1 | 3 | Med |  |
+| Jameis Winston | QB | NYG | WAS | 12.2 | 2.1 |  | 1 | 3 | Med |  |
 | Jalon Daniels | QB | TB | DAL | 10.8 | 4.3 |  | 2 | 2 | High |  |
 | Tyler Huntley | QB | BAL | ATL | 10.6 | 5.1 |  | 2 | 11 | Med |  |
 | Ty Johnson | RB | BUF | LA | 6.1 | 4.2 | 11% | 2 | 30 | Med |  |
 | Will Shipley | RB | PHI | JAX | 5.0 | 10.6 | 52% | 2 | 23 | Low | 🔥 |
 | Kimani Vidal | RB | LAC | DEN | 4.8 | 4.6 | 12% | 3 | 7 | Med |  |
-| Austin Ekeler | RB | WAS | NYG | 4.5 | 5.3 | 14% | 4 | 15 | Med | 🔥 |
+| Austin Ekeler | RB | WAS | NYG | 4.5 | 5.2 | 14% | 4 | 15 | Med | 🔥 |
 | Kendre Miller | RB | NO | MIN | 4.3 | 8.0 | 25% | 2 | 32 | High |  |
 | Emanuel Wilson | RB | SEA | SF | 12.6 | 18.4 | 57% | 1 | 8 | High | 🔥 |
 | Tyler Higbee | TE | LA | BUF | 7.9 | 6.6 | 14% | 2 | 17 | Med | 🔥 |
@@ -86,7 +86,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Darnell Washington | TE | PIT | IND | 5.8 | 3.4 | 10% | 1 | 16 | High |  |
 | Matthew Hibner | TE | BAL | ATL | 5.4 | 2.0 |  | 2 | 12 | Med |  |
 | Nate Adkins | TE | DEN | LAC | 3.7 | 1.9 | 3% | 3 | 24 | Low |  |
-| Elijah Higgins | TE | ARI | DET | 3.5 | 1.4 | 3% | 2 | 1 | Med |  |
+| Eli Raridon | TE | NE | LV | 3.5 | 1.5 | 5% | 2 | 9 | High |  |
 | Cody White | WR | LV | NE | 8.3 | 3.2 | 11% | 3 | 13 | Low |  |
 | Darius Cooper | WR | PHI | JAX | 8.0 | 3.6 | 16% | 5 | 9 | Med | 🔥 |
 | Isaiah Williams | WR | NYJ | CLE | 7.9 | 4.3 | 17% | 3 | 8 | Med | 🔥 |
@@ -108,7 +108,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Kendre Miller | RB | NO | 24.3 | 3 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +7%/wk; age 24 |
 | Tyler Goodson | RB | DAL | 25.9 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
 | Elijah Higgins | TE | ARI | 25.9 | 3 | 2 (was 2) | 34% | TE2 on depth chart; snap share trending +5%/wk; team passes #8; age 26 |
-| CJ Donaldson | RB | NO | 22.2 | 0 | 3 (was 3) | 28% | RB3 on depth chart; age 22 |
+| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 28% | RB3 on depth chart; age 22 |
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 79% | WR3 on depth chart; team passes #1; age 24 |
 | Isaiah Davis | RB | NYJ | 24.6 | 2 | 3 (was 3) | 2% | RB3 on depth chart; age 25 |
 | DJ Giddens | RB | IND | 23.1 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
