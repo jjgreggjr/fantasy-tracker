@@ -1,6 +1,6 @@
 # Week 5 digest — 2026
 
-Generated 2026-10-09 15:28 UTC  
+Generated 2026-10-10 01:45 UTC  
 Stats through: **Week 4** · Baselines: **2026 only**
 
 
@@ -10,10 +10,10 @@ Stats through: **Week 4** · Baselines: **2026 only**
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 946
-- Sleeper players cache: 2026-10-09
-- projections: 864 players (Sleeper, 2026-10-09T15:28:32Z)
-- league rosters: 3 leagues, lineups read 2026-10-09T15:28:28Z
-- ESPN rosters: Average Joes (2026-10-09T15:28:37Z)
+- Sleeper players cache: 2026-10-10
+- projections: 864 players (Sleeper, 2026-10-10T01:45:18Z)
+- league rosters: 3 leagues, lineups read 2026-10-10T01:45:15Z
+- ESPN rosters: Average Joes (2026-10-10T01:45:21Z)
 - status rows: 588 players; 103 with practice reports
 
 ### Data integrity
@@ -27,16 +27,16 @@ Stats through: **Week 4** · Baselines: **2026 only**
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | MIA | 21.0 | 2.9 |  | 1 | 9 | High |  |
-| Drake Maye | QB | NE | LV | 16.0 | 6.2 |  | 1 | 15 | High |  |
+| Joe Burrow | QB | CIN | MIA | 21.3 | 2.9 |  | 1 | 9 | High |  |
+| Drake Maye | QB | NE | LV | 15.8 | 6.2 |  | 1 | 15 | High |  |
 | Geno Smith | QB | NYJ | CLE | 15.3 | 2.2 |  | 1 | 16 | Low |  |
-| Aaron Jones | RB | MIN | NO | 15.5 | 23.4 | 61% | 1 | 2 | High |  |
-| Quinshon Judkins | RB | CLE | NYJ | 14.2 | 20.3 | 60% | 1 | 1 | High |  |
+| Aaron Jones | RB | MIN | NO | 15.5 | 23.5 | 61% | 1 | 2 | High |  |
+| Quinshon Judkins | RB | CLE | NYJ | 14.2 | 20.2 | 59% | 1 | 1 | High |  |
 
 
-**Needs a decision:** Breece Hall (OUT), Dontayvion Wicks (QUESTIONABLE), DeVonta Smith (QUESTIONABLE), Omar Cooper Jr. (IR), Jordyn Tyson (IR)
+**Needs a decision:** Breece Hall (OUT), Omar Cooper Jr. (IR), Jordyn Tyson (IR), DeVonta Smith (OUT)
 
-**Trending and still free here:** Austin Ekeler (RB, 5.0), Najee Harris (RB, 4.6), Dameon Pierce (RB, 3.6)
+**Trending and still free here:** Roschon Johnson (RB, 6.2), Austin Ekeler (RB, 6.0), Najee Harris (RB, 4.6)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -51,13 +51,13 @@ Full report: `leagues/gooma-s-family-league/report.md`
 | Matthew Stafford | QB | LA | BUF | 22.9 | 2.0 |  | 1 | 3 | Med |  |
 | Bo Nix | QB | DEN | LAC | 18.3 | 3.8 |  | 1 | 13 | Med |  |
 | Carson Beck | QB | ARI | DET | 0.0 | 0.0 |  | 3 | 1 | Low |  |
+| D'Andre Swift | RB | CHI | GB | 15.6 | 20.0 | 57% | 1 | 3 | High |  |
 | Bhayshul Tuten | RB | JAX | PHI | 14.4 | 17.5 | 51% | 1 | 7 | High |  |
-| Quinshon Judkins | RB | CLE | NYJ | 14.2 | 20.3 | 60% | 1 | 1 | High |  |
 
 
-**Needs a decision:** D'Andre Swift (QUESTIONABLE), Alvin Kamara (QUESTIONABLE), Breece Hall (OUT), Zach Charbonnet (PUP), Chris Olave (QUESTIONABLE), Carnell Tate (QUESTIONABLE), Xavier Worthy (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
+**Needs a decision:** Alvin Kamara (QUESTIONABLE), Breece Hall (OUT), Zach Charbonnet (PUP), Carnell Tate (QUESTIONABLE), Xavier Worthy (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Aaron Rodgers (QB, 18.4), Deshaun Watson (QB, 15.3), Austin Ekeler (RB, 5.0)
+**Trending and still free here:** Aaron Rodgers (QB, 18.3), Deshaun Watson (QB, 15.3), Roschon Johnson (RB, 6.2)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -71,14 +71,14 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 |---|---|---|---|---|---|---|---|---|---|---|
 | Dak Prescott | QB | DAL | TB | 20.1 | 2.4 |  | 1 | 26 | Med |  |
 | Brock Purdy | QB | SF | SEA | 19.3 | 4.9 |  | 1 | 30 | Med |  |
-| Bo Nix | QB | DEN | LAC | 17.4 | 3.8 |  | 1 | 13 | Med |  |
+| Bo Nix | QB | DEN | LAC | 17.5 | 3.8 |  | 1 | 13 | Med |  |
 | Trevor Lawrence | QB | JAX | PHI | 16.1 | 4.3 |  | 1 | 10 | Med |  |
-| Aaron Jones | RB | MIN | NO | 14.0 | 23.4 | 61% | 1 | 2 | High |  |
+| D'Andre Swift | RB | CHI | GB | 14.2 | 20.0 | 57% | 1 | 3 | High |  |
 
 
-**Needs a decision:** Jaxson Dart (IR), D'Andre Swift (QUESTIONABLE), Emmett Johnson (BYE), Kenneth Walker III (BYE), Gunnar Helm (QUESTIONABLE), Terry McLaurin (QUESTIONABLE)
+**Needs a decision:** Jaxson Dart (IR), Emmett Johnson (BYE), Kenneth Walker III (BYE), Terry McLaurin (QUESTIONABLE)
 
-**Trending and still free here:** Kirk Cousins (QB, 17.3), Deshaun Watson (QB, 15.0), Will Shipley (RB, 5.8)
+**Trending and still free here:** Kirk Cousins (QB, 17.2), Deshaun Watson (QB, 15.0), Will Shipley (RB, 5.6)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -90,16 +90,16 @@ Full report: `leagues/where-you-at/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Drake Maye | QB | NE | LV | 16.0 | 6.2 |  | 1 | 15 | High |  |
-| Aaron Jones | RB | MIN | NO | 15.5 | 23.4 | 61% | 1 | 2 | High |  |
-| Kyle Monangai | RB | CHI | GB | 12.5 | 16.3 | 35% | 2 | 3 | Low | QUESTIONABLE |
-| Rhamondre Stevenson | RB | NE | LV | 12.4 | 13.9 | 37% | 1 | 6 | Med | QUESTIONABLE |
+| Drake Maye | QB | NE | LV | 15.8 | 6.2 |  | 1 | 15 | High |  |
+| Aaron Jones | RB | MIN | NO | 15.5 | 23.5 | 61% | 1 | 2 | High |  |
+| Rhamondre Stevenson | RB | NE | LV | 12.3 | 13.9 | 37% | 1 | 6 | Med | QUESTIONABLE |
 | Kaelon Black | RB | SF | SEA | 2.4 | 5.3 | 17% | 2 | 13 | High |  |
+| Sam LaPorta | TE | DET | ARI | 15.4 | 7.5 | 19% | 1 | 7 | High |  |
 
 
-**Needs a decision:** Bryce Young (BYE), Kyle Monangai (QUESTIONABLE), Rhamondre Stevenson (QUESTIONABLE), Breece Hall (OUT), Zach Charbonnet (PUP), Jalen Coker (OUT)
+**Needs a decision:** Bryce Young (BYE), Rhamondre Stevenson (QUESTIONABLE), Breece Hall (OUT), Kyle Monangai (OUT), Zach Charbonnet (PUP), Jalen Coker (OUT)
 
-**Trending and still free here:** Kirk Cousins (QB, 17.3), C.J. Stroud (QB, 16.0), Deshaun Watson (QB, 15.0)
+**Trending and still free here:** Kirk Cousins (QB, 17.2), C.J. Stroud (QB, 16.0), Deshaun Watson (QB, 15.0)
 
 
 Full report: `leagues/james-gregg-espn/report.md`

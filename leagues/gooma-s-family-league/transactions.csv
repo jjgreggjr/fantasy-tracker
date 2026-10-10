@@ -67,6 +67,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,free_agent,add,4177,Mack Hollins,2
 2026,4,free_agent,add,12495,Ollie Gordon II,2
 2026,4,free_agent,drop,11370,Chris Brooks,2
+2026,5,free_agent,add,3271,Tyler Higbee,3
+2026,5,free_agent,drop,5854,Drew Lock,3
 2026,5,free_agent,add,11630,Roman Wilson,12
 2026,5,free_agent,drop,12524,Shedeur Sanders,12
 2026,5,free_agent,add,12185,,12
