@@ -1,12 +1,12 @@
 # We can think of something funny — rebuild plan
 
 James is MrMasculinity. 8-team dynasty superflex, full PPR, TE +0.5 per catch.
-Last updated 2026-10-01 (live Sleeper rosters, transactions, traded picks and standings read 2026-10-01 22:53Z; week 4 kicks off tonight).
+Last updated 2026-10-11 (week-4 result recorded from data/matchup_results.csv; live Sleeper roster read 2026-10-11 13:35Z showed no lineup changes and no trades executed).
 
 ## Where he stands
-- 2-4 through 3 weeks (league counts a vs-median game each week: 0-2, 0-2, then
-  2-0 in week 3 — trending up). PF 6th of 8 (582.2). Dynasty value 2nd of 8: rebuilding
-  toward a 2027 window. Unchanged as of 10/1 — week 4 not yet scored.
+- 2-6 through 4 weeks (league counts a vs-median game each week: 0-2, 0-2, 2-0,
+  then 0-2 in week 4 — 179.94 vs ohsobenji's 225.58, scoring rank 7 of 8).
+  Season PF 762.1. Dynasty value 2nd of 8: rebuilding toward a 2027 window.
 - Weak: QB (8th now and future), WR (7th now).
 - Strong: TE (2nd now, 1st future); young RB core (Hall 25, Henderson 24, Judkins 23, Tuten 24).
 - Don't trade: own 2027 1st (likely top 3), Tuten, Henderson, Judkins, Fannin, Bo Nix.
