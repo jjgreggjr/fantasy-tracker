@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 5
 
 redraft · 17 roster slots  
-Generated 2026-10-11 18:29 UTC · baselines: 2026 only · lineup as of 2026-10-11T18:29:43Z
+Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-11T19:46:00Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -102,7 +102,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 3 (was 3) | 10% | RB3 on depth chart; snap share trending +16%/wk; age 27 |
 | Seth McGowan | RB | IND | 25.0 | 0 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +14%/wk; age 25 |
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +13%/wk; team passes #1; age 24 |
-| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 4) | 34% | WR3 on depth chart; up from 4; snap share trending +13%/wk; team passes #6; age 23 |
+| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +13%/wk; team passes #6; age 23 |
 | Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 42% | TE3 on depth chart; snap share trending +12%/wk; team passes #2; age 26 |
 | Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 86% | WR3 on depth chart; snap share trending +11%/wk; team passes #3; age 27 |
 | Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 30% | RB3 on depth chart; snap share trending +10%/wk; age 25 |

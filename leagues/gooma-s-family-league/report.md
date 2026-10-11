@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 5
 
 redraft · 20 roster slots  
-Generated 2026-10-11 18:29 UTC · baselines: 2026 only · lineup as of 2026-10-11T18:29:36Z
+Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-11T19:45:52Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -107,7 +107,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 27% | RB3 on depth chart; snap share trending +22%/wk; age 22 |
 | Seth McGowan | RB | IND | 25.0 | 0 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +14%/wk; age 25 |
 | Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +13%/wk; team passes #1; age 24 |
-| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 4) | 34% | WR3 on depth chart; up from 4; snap share trending +13%/wk; team passes #6; age 23 |
+| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +13%/wk; team passes #6; age 23 |
 | Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 42% | TE3 on depth chart; snap share trending +12%/wk; team passes #2; age 26 |
 | Kaelon Black | RB | SF | 25.0 | 0 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +11%/wk; age 25 |
 | Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 86% | WR3 on depth chart; snap share trending +11%/wk; team passes #3; age 27 |
