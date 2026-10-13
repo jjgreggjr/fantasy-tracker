@@ -1,7 +1,7 @@
-# Gooma's Family League — 2026 Week 5
+# Gooma's Family League — 2026 Week 6
 
 redraft · 20 roster slots  
-Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-11T19:45:52Z
+Generated 2026-10-13 23:05 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:05:15Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -10,12 +10,14 @@ Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-1
 
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
-- Jordyn Tyson: depth charts disagree (ESPN 6 vs Sleeper 10) — his listed rank may reflect availability, not role
-- Breece Hall: depth charts disagree (ESPN 1 vs Sleeper 5) — his listed rank may reflect availability, not role
-- Omar Cooper Jr.: depth charts disagree (ESPN 6 vs Sleeper 9) — his listed rank may reflect availability, not role
-- DeVonta Smith: depth charts disagree (ESPN 1 vs Sleeper 7) — his listed rank may reflect availability, not role
+- TreVeyon Henderson: depth charts disagree (ESPN 2 vs Sleeper 4) — his listed rank may reflect availability, not role
+- Jordyn Tyson: depth charts disagree (ESPN 5 vs Sleeper 10) — his listed rank may reflect availability, not role
+- Omar Cooper Jr.: depth charts disagree (ESPN 6 vs Sleeper 8) — his listed rank may reflect availability, not role
+- Omar Cooper Jr.: 17% of the volume ahead of him belongs to players unlikely to play (Garrett Wilson (healthy); Adonai Mitchell (out); Tim Patrick (healthy); Isaiah Williams (healthy); Malik McClain (healthy))
+- Dontayvion Wicks: 24% of the volume ahead of him belongs to players unlikely to play (DeVonta Smith (out))
 - T.J. Hockenson: OUT (Concussion) — his depth rank of 1 reflects that, not his role
-- Jordyn Tyson: IR (Hamstring) — his depth rank of 6 reflects that, not his role
+- TreVeyon Henderson: OUT (Ankle) — his depth rank of 2 reflects that, not his role
+- Jordyn Tyson: IR (Hamstring) — his depth rank of 5 reflects that, not his role
 - Breece Hall: OUT (Quadriceps) — his depth rank of 1 reflects that, not his role
 - Omar Cooper Jr.: IR (Ankle) — his depth rank of 6 reflects that, not his role
 - DeVonta Smith: OUT (Hamstring) — his depth rank of 1 reflects that, not his role
@@ -25,97 +27,97 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | MIA | 21.4 | 2.9 |  | 1 | 9 | High |  |
-| Drake Maye | QB | NE | LV | 15.9 | 6.2 |  | 1 | 15 | High |  |
-| Geno Smith | QB | NYJ | CLE | 15.2 | 2.3 |  | 1 | 16 | Low |  |
-| Aaron Jones | RB | MIN | NO | 16.0 | 24.1 | 64% | 1 | 2 | Med | QUESTIONABLE |
-| Quinshon Judkins | RB | CLE | NYJ | 14.2 | 20.4 | 59% | 1 | 1 | High |  |
-| Tony Pollard | RB | TEN | HOU | 10.4 | 18.0 | 55% | 1 | 19 | High |  |
-| TreVeyon Henderson | RB | NE | LV | 9.8 | 12.4 | 36% | 2 | 6 | Med | QUESTIONABLE |
-| Kenny Gainwell | RB | TB | DAL | 7.8 | 7.4 | 18% | 2 | 5 | High |  |
-| Breece Hall | RB | NYJ | CLE |  | 4.0 |  | 1 | 27 | Low | OUT |
-| Brock Bowers | TE | LV | NE | 16.8 | 10.4 | 27% | 1 | 28 | High |  |
-| T.J. Hockenson | TE | MIN | NO |  | 7.2 | 22% | 1 | 6 | Low | OUT |
-| Romeo Doubs | WR | NE | LV | 13.1 | 6.7 | 23% | 1 | 24 | High |  |
-| Parker Washington | WR | JAX | PHI | 12.9 | 6.2 | 25% | 1 | 10 | Med |  |
-| Jakobi Meyers | WR | JAX | PHI | 9.8 | 5.6 | 16% | 2 | 10 | High |  |
-| Dontayvion Wicks | WR | PHI | JAX | 8.9 | 5.2 | 20% | 2 | 7 | High |  |
-| Omar Cooper Jr. | WR | NYJ | CLE |  | 0.0 |  | 6 | 18 | Low | IR |
-| Jordyn Tyson | WR | NO | MIN |  | 0.0 |  | 6 | 31 | Low | IR |
-| DeVonta Smith | WR | PHI | JAX |  | 2.0 |  | 1 | 7 | Low | OUT |
+| Drake Maye | QB | NE | NYJ | 20.7 | 6.4 |  | 1 | 26 | High |  |
+| Geno Smith | QB | NYJ | NE | 13.8 | 2.5 |  | 1 | 20 | High |  |
+| Joe Burrow | QB | CIN | BYE |  | 1.8 |  | 1 |  | Low | BYE |
+| Tony Pollard | RB | TEN | IND | 11.3 | 16.6 | 51% | 1 | 8 | High |  |
+| Quinshon Judkins | RB | CLE | BAL | 10.9 | 19.2 | 58% | 1 | 28 | Med | QUESTIONABLE |
+| Aaron Jones | RB | MIN | BYE | 9.9 | 15.8 |  | 1 |  | Low | QUESTIONABLE |
+| Kenny Gainwell | RB | TB | PIT | 7.1 | 8.2 | 23% | 2 | 21 | Med |  |
+| TreVeyon Henderson | RB | NE | NYJ |  | 6.0 |  | 2 | 3 | Low | OUT |
+| Breece Hall | RB | NYJ | NE |  | 16.0 | 51% | 1 | 10 | Low | OUT |
+| Brock Bowers | TE | LV | BUF | 21.0 | 10.4 | 27% | 1 | 17 | High |  |
+| T.J. Hockenson | TE | MIN | BYE |  | 3.6 |  | 1 |  | Low | OUT |
+| Parker Washington | WR | JAX | HOU | 16.6 | 6.8 | 25% | 1 | 4 | High |  |
+| Jakobi Meyers | WR | JAX | HOU | 10.8 | 5.0 | 15% | 2 | 4 | High |  |
+| Romeo Doubs | WR | NE | NYJ | 10.5 | 5.3 | 19% | 1 | 23 | High |  |
+| Dontayvion Wicks | WR | PHI | CAR | 6.1 | 5.1 | 14% | 2 | 28 | Med |  |
+| Omar Cooper Jr. | WR | NYJ | NE |  | 0.0 |  | 6 | 18 | Low | IR |
+| Jordyn Tyson | WR | NO | NYG |  | 0.0 |  | 5 | 16 | Low | IR |
+| DeVonta Smith | WR | PHI | CAR |  | 7.2 | 25% | 1 | 28 | Low | OUT |
 
 
 ### Why each call
 
-- **Joe Burrow** — 2.9 exp opps (proj 3, recent 2) · QB1 · vs MIA (DvP 9, +6%) · High confidence
-- **Drake Maye** — 6.2 exp opps (proj 6, recent 6) · QB1 · vs LV (DvP 15, +1%) · High confidence
-- **Geno Smith** — 2.3 exp opps (proj 4, recent 1) · QB1 · vs CLE (DvP 16, +1%) · Low confidence
-- **Aaron Jones** — 24.1 exp opps (proj 23, recent 26) · RB1 · 64% of team carries · vs NO (DvP 2, +11%) · Med confidence · QUESTIONABLE
-- **Quinshon Judkins** — 20.4 exp opps (proj 19, recent 22) · RB1 · 59% of team carries · vs NYJ (DvP 1, +12%) · High confidence
-- **Tony Pollard** — 18.0 exp opps (proj 15, recent 20) · RB1 · 55% of team carries · vs HOU (DvP 19, -2%) · High confidence
-- **TreVeyon Henderson** — 12.4 exp opps (proj 12, recent 12) · RB2 · 36% of team carries · vs LV (DvP 6, +8%) · Med confidence · QUESTIONABLE
-- **Kenny Gainwell** — 7.4 exp opps (proj 8, recent 7) · RB2 · 18% of team carries · vs DAL (DvP 5, +9%) · High confidence
-- **Breece Hall** — 4.0 exp opps (proj 0, recent 16) · RB1 · vs CLE (DvP 27, -7%) · Low confidence · OUT
-- **Brock Bowers** — 10.4 exp opps (proj 9, recent 12) · TE1 · 27% of team targets · vs NE (DvP 28, -8%) · High confidence
-- **T.J. Hockenson** — 7.2 exp opps (proj 6, recent 8) · TE1 · 22% of team targets · vs NO (DvP 6, +8%) · Low confidence · OUT
-- **Romeo Doubs** — 6.7 exp opps (proj 7, recent 6) · WR1 · 23% of team targets · vs LV (DvP 24, -5%) · High confidence
-- **Parker Washington** — 6.2 exp opps (proj 8, recent 4) · WR1 · 25% of team targets · vs PHI (DvP 10, +5%) · Med confidence
-- **Jakobi Meyers** — 5.6 exp opps (proj 5, recent 6) · WR2 · 16% of team targets · vs PHI (DvP 10, +5%) · High confidence
-- **Dontayvion Wicks** — 5.2 exp opps (proj 5, recent 5) · WR2 · 20% of team targets · vs JAX (DvP 7, +7%) · High confidence
-- **Omar Cooper Jr.** — 0.0 exp opps (proj 0) · WR6 · vs CLE (DvP 18, -1%) · Low confidence · IR
-- **Jordyn Tyson** — 0.0 exp opps (proj 0) · WR6 · vs MIN (DvP 31, -10%) · Low confidence · IR
-- **DeVonta Smith** — 2.0 exp opps (proj 0, recent 8) · WR1 · vs JAX (DvP 7, +7%) · Low confidence · OUT
+- **Drake Maye** — 6.4 exp opps (proj 6, recent 6) · QB1 · vs NYJ (DvP 26, -7%) · High confidence
+- **Geno Smith** — 2.5 exp opps (proj 3, recent 2) · QB1 · vs NE (DvP 20, -2%) · High confidence
+- **Joe Burrow** — 1.8 exp opps (proj 0, recent 3) · QB1 · Low confidence · BYE
+- **Tony Pollard** — 16.6 exp opps (proj 14, recent 19) · RB1 · 51% of team carries · vs IND (DvP 8, +7%) · High confidence
+- **Quinshon Judkins** — 19.2 exp opps (proj 17, recent 21) · RB1 · 58% of team carries · vs BAL (DvP 28, -8%) · Med confidence · QUESTIONABLE
+- **Aaron Jones** — 15.8 exp opps (proj 0, recent 26) · RB1 · Low confidence · QUESTIONABLE
+- **Kenny Gainwell** — 8.2 exp opps (proj 10, recent 7) · RB2 · 23% of team carries · vs PIT (DvP 21, -3%) · Med confidence
+- **TreVeyon Henderson** — 6.0 exp opps (proj 0, recent 10) · RB2 · vs NYJ (DvP 3, +10%) · Low confidence · OUT
+- **Breece Hall** — 16.0 exp opps (proj 16, recent 16) · RB1 · 51% of team carries · vs NE (DvP 10, +5%) · Low confidence · OUT
+- **Brock Bowers** — 10.4 exp opps (proj 9, recent 11) · TE1 · 27% of team targets · vs BUF (DvP 17, +0%) · High confidence
+- **T.J. Hockenson** — 3.6 exp opps (proj 0, recent 6) · TE1 · Low confidence · OUT
+- **Parker Washington** — 6.8 exp opps (proj 8, recent 6) · WR1 · 25% of team targets · vs HOU (DvP 4, +10%) · High confidence
+- **Jakobi Meyers** — 5.0 exp opps (proj 5, recent 5) · WR2 · 15% of team targets · vs HOU (DvP 4, +10%) · High confidence
+- **Romeo Doubs** — 5.3 exp opps (proj 5, recent 5) · WR1 · 19% of team targets · vs NYJ (DvP 23, -5%) · High confidence
+- **Dontayvion Wicks** — 5.1 exp opps (proj 4, recent 6) · WR2 · 14% of team targets · vs CAR (DvP 28, -8%) · Med confidence
+- **Omar Cooper Jr.** — 0.0 exp opps (proj 0) · WR6 · vs NE (DvP 18, -1%) · Low confidence · IR
+- **Jordyn Tyson** — 0.0 exp opps (proj 0) · WR5 · vs NYG (DvP 16, +1%) · Low confidence · IR
+- **DeVonta Smith** — 7.2 exp opps (proj 7, recent 8) · WR1 · 25% of team targets · vs CAR (DvP 28, -8%) · Low confidence · OUT
 
 
 ## Waiver wire — best available
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Case Keenum | QB | CHI | GB | 5.7 | 1.0 |  | 3 | 27 | Low |  |
-| Athan Kaliakmanis | QB | WAS | NYG | 2.8 | 0.8 |  | 3 | 17 | Low |  |
-| Cam Ward | QB | TEN | HOU | 13.1 | 3.3 |  | 1 | 24 | Med |  |
-| Tyler Huntley | QB | BAL | ATL | 11.1 | 5.1 |  | 2 | 6 | Med |  |
-| Shedeur Sanders | QB | CLE | NYJ | 1.1 | 0.0 |  | 2 | 25 | High |  |
-| Tommy DeVito | QB | NE | LV | 0.4 | 0.2 |  | 2 | 15 | Low |  |
-| Ty Johnson | RB | BUF | LA | 7.0 | 4.2 | 11% | 2 | 31 | Med |  |
-| Austin Ekeler | RB | WAS | NYG | 6.0 | 6.4 | 17% | 3 | 17 | Med | 🔥 |
-| Roschon Johnson | RB | CHI | GB | 5.7 | 7.5 | 24% | 3 | 3 | Low | 🔥 |
-| Kimani Vidal | RB | LAC | DEN | 5.5 | 6.0 | 12% | 3 | 16 | Med |  |
-| Samaje Perine | RB | CIN | MIA | 4.6 | 5.9 | 19% | 2 | 9 | Med |  |
-| Najee Harris | RB | NYG | WAS | 4.6 | 9.4 | 31% | 2 | 25 | High |  |
-| Dallas Goedert | TE | PHI | JAX | 9.5 | 4.2 | 16% | 1 | 17 | High |  |
-| Michael Mayer | TE | LV | NE | 8.5 | 5.6 | 15% | 2 | 28 | Med | 🔥 |
-| Darnell Washington | TE | PIT | IND | 6.8 | 3.8 | 10% | 1 | 14 | Med |  |
-| Chig Okonkwo | TE | WAS | NYG | 6.5 | 4.3 | 16% | 1 | 10 | High |  |
-| Matthew Hibner | TE | BAL | ATL | 6.2 | 2.0 |  | 2 | 13 | Med |  |
-| Noah Fant | TE | NO | MIN | 5.3 | 2.7 | 7% | 2 | 32 | Med |  |
-| Cody White | WR | LV | NE | 9.4 | 3.7 | 13% | 3 | 12 | Med | 🔥 |
-| Darius Cooper | WR | PHI | JAX | 9.1 | 3.9 | 16% | 5 | 7 | Med | 🔥 |
-| Isaiah Williams | WR | NYJ | CLE | 8.6 | 3.6 | 17% | 3 | 18 | Low | 🔥 |
-| Isaac TeSlaa | WR | DET | ARI | 8.4 | 4.4 | 10% | 3 | 5 | Low | 🔥 |
-| Tory Horton | WR | SEA | SF | 7.6 | 2.0 | 7% | 4 | 22 | Med |  |
-| Ryan Flournoy | WR | DAL | TB | 7.2 | 5.3 | 14% | 3 | 17 | Med |  |
+| Tyler Huntley | QB | BAL | CLE | 6.9 | 2.5 |  | 2 | 21 | Low |  |
+| Case Keenum | QB | CHI | ATL | 6.8 | 1.2 |  | 3 | 6 | Low |  |
+| Athan Kaliakmanis | QB | WAS | SF | 2.8 | 0.8 |  | 3 | 17 | Low |  |
+| Cam Ward | QB | TEN | IND | 12.6 | 2.6 |  | 1 | 10 | Med |  |
+| Tyrod Taylor | QB | GB | DAL | 1.7 | 0.5 |  | 2 | 7 | Low |  |
+| J.J. McCarthy | QB | NYG | NO | 1.4 | 0.5 |  | 2 | 15 | Low |  |
+| Kimani Vidal | RB | LAC | KC | 8.4 | 7.9 | 23% | 3 | 12 | Med | 🔥 |
+| Ty Johnson | RB | BUF | LV | 7.5 | 4.2 | 11% | 2 | 5 | Med | 🔥 |
+| Dameon Pierce | RB | PHI | CAR | 6.3 | 12.7 | 35% | 3 | 19 | Med | 🔥 |
+| Najee Harris | RB | NYG | NO | 5.6 | 8.7 | 31% | 2 | 1 | Med |  |
+| Justice Hill | RB | BAL | CLE | 5.5 | 5.6 | 11% | 2 | 24 | High |  |
+| Pierre Strong | RB | GB | DAL | 5.1 | 5.6 | 13% | 2 | 6 | Med |  |
+| Michael Mayer | TE | LV | BUF | 8.9 | 4.6 | 14% | 2 | 17 | High |  |
+| Darnell Washington | TE | PIT | TB | 7.4 | 3.7 | 13% | 1 | 16 | High |  |
+| Noah Fant | TE | NO | NYG | 6.6 | 2.7 | 9% | 2 | 12 | Med |  |
+| Chig Okonkwo | TE | WAS | SF | 6.1 | 4.8 | 16% | 1 | 25 | High |  |
+| Matthew Hibner | TE | BAL | CLE | 6.1 | 2.0 |  | 2 | 14 | Med |  |
+| Dallas Goedert | TE | PHI | CAR | 11.7 | 6.1 | 19% | 1 | 8 | Med | 🔥 |
+| Jaylin Noel | WR | HOU | JAX | 9.8 | 3.9 | 11% | 5 | 5 | Med |  |
+| Efton Chism III | WR | NE | NYJ | 8.2 | 4.3 | 16% | 3 | 23 | Med | 🔥 |
+| Darius Cooper | WR | PHI | CAR | 8.1 | 3.3 | 11% | 5 | 28 | Med | 🔥 |
+| Germie Bernard | WR | PIT | TB | 7.9 | 4.8 | 21% | 3 | 13 | Med | 🔥 |
+| Ryan Flournoy | WR | DAL | GB | 7.7 | 5.5 | 15% | 3 | 22 | Med | 🔥 |
+| Cody White | WR | LV | BUF | 7.3 | 3.3 | 8% | 3 | 1 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
+| Troy Franklin | WR | DEN | 23.7 | 2 | 3 (was 3) | 40% | WR3 on depth chart; snap share trending +45%/wk; team passes #15; age 24 |
 | Jalen Royals | WR | KC | 23.6 | 1 | 3 (was 3) | 41% | WR3 on depth chart; snap share trending +44%/wk; team passes #16; age 24 |
-| Isaac TeSlaa | WR | DET | 24.6 | 1 | 3 (was 3) | 65% | WR3 on depth chart; snap share trending +34%/wk; team passes #4; age 25 |
 | Mitchell Evans | TE | CAR | 23.4 | 1 | 3 (was 3) | 44% | TE3 on depth chart; snap share trending +34%/wk; team passes #3; age 23 |
-| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 27% | RB3 on depth chart; snap share trending +22%/wk; age 22 |
-| Seth McGowan | RB | IND | 25.0 | 0 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +14%/wk; age 25 |
-| Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +13%/wk; team passes #1; age 24 |
-| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +13%/wk; team passes #6; age 23 |
-| Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 42% | TE3 on depth chart; snap share trending +12%/wk; team passes #2; age 26 |
-| Kaelon Black | RB | SF | 25.0 | 0 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +11%/wk; age 25 |
+| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 53% | WR3 on depth chart; snap share trending +32%/wk; team passes #8; age 23 |
+| Roschon Johnson | RB | CHI | 25.7 | 3 | 3 (was 3) | 25% | RB3 on depth chart; snap share trending +28%/wk; age 26 |
+| Jalen Brooks | WR | ARI | 26.4 | 3 | 3 (was 3) | 21% | WR3 on depth chart; snap share trending +24%/wk; team passes #4; age 26 |
+| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +19%/wk; age 26 |
+| Dylan Laube | RB | LV | 26.8 | 2 | 3 (was 3) | 17% | RB3 on depth chart; snap share trending +16%/wk; age 27 |
+| Theo Johnson | TE | NYG | 25.6 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +15%/wk; team passes #14; age 26 |
+| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 32% | RB3 on depth chart; snap share trending +13%/wk; age 22 |
 | Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 86% | WR3 on depth chart; snap share trending +11%/wk; team passes #3; age 27 |
-| Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 30% | RB3 on depth chart; snap share trending +10%/wk; age 25 |
-| Demond Claiborne | RB | MIN | 23.0 | 0 | 3 (was 3) | 8% | RB3 on depth chart; snap share trending +7%/wk; age 23 |
-| Tyler Goodson | RB | DAL | 25.9 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
-| Isaiah Davis | RB | NYJ | 24.6 | 2 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 25 |
-| Sean Tucker | RB | TB | 25.0 | 3 | 3 (was 3) | 8% | RB3 on depth chart; snap share trending +5%/wk; age 25 |
+| Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 34% | RB3 on depth chart; snap share trending +8%/wk; age 25 |
+| Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 45% | TE3 on depth chart; snap share trending +7%/wk; team passes #1; age 26 |
+| Isaiah Davis | RB | NYJ | 24.6 | 2 | 3 (was 3) | 7% | RB3 on depth chart; snap share trending +7%/wk; age 25 |
+| Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 43% | TE2 on depth chart; snap share trending +6%/wk; team passes #4; age 26 |
 
 
 ## Ask me

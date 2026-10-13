@@ -1,7 +1,7 @@
-# Average Joes — 2026 Week 5
+# Average Joes — 2026 Week 6
 
 redraft · 17 roster slots  
-Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-11T19:46:00Z
+Generated 2026-10-13 23:05 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:05:29Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -10,104 +10,101 @@ Generated 2026-10-11 19:45 UTC · baselines: 2026 only · lineup as of 2026-10-1
 
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
-- Jalen Coker: depth charts disagree (ESPN 2 vs Sleeper 7) — his listed rank may reflect availability, not role
-- Kyle Monangai: depth charts disagree (ESPN 2 vs Sleeper 6) — his listed rank may reflect availability, not role
-- Breece Hall: depth charts disagree (ESPN 1 vs Sleeper 5) — his listed rank may reflect availability, not role
 - Jalen Coker: OUT (Quadriceps) — his depth rank of 2 reflects that, not his role
 - Kyle Monangai: OUT (Toe) — his depth rank of 2 reflects that, not his role
 - Breece Hall: OUT (Quadriceps) — his depth rank of 1 reflects that, not his role
-- Zach Charbonnet: OUT (Knee - ACL) — his depth rank of 5 reflects that, not his role
+- Zach Charbonnet: PUP (Knee - ACL) — his depth rank of 5 reflects that, not his role
 
 
 ## Your roster
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Drake Maye | QB | NE | LV | 15.9 | 6.2 |  | 1 | 15 | High |  |
-| Bryce Young | QB | CAR | BYE |  | 0.8 |  | 1 |  | Low | BYE |
-| Aaron Jones | RB | MIN | NO | 16.0 | 24.1 | 64% | 1 | 2 | Med | QUESTIONABLE |
-| Rhamondre Stevenson | RB | NE | LV | 12.3 | 13.9 | 37% | 1 | 6 | High |  |
-| Kaelon Black | RB | SF | SEA | 2.2 | 4.8 | 13% | 2 | 13 | Med |  |
-| Breece Hall | RB | NYJ | CLE |  | 4.0 |  | 1 | 27 | Low | OUT |
-| Kyle Monangai | RB | CHI | GB |  | 10.2 |  | 2 | 3 | Low | OUT |
-| Zach Charbonnet | RB | SEA | SF |  | 0.0 |  | 5 | 4 | Low | PUP |
-| Sam LaPorta | TE | DET | ARI | 15.4 | 7.5 | 19% | 1 | 7 | High |  |
-| Puka Nacua | WR | LA | BUF | 22.8 | 11.1 | 30% | 1 | 6 | High |  |
-| Nico Collins | WR | HOU | TEN | 19.2 | 8.4 | 29% | 1 | 11 | High |  |
-| Drake London | WR | ATL | BAL | 19.0 | 8.7 | 34% | 1 | 4 | High |  |
-| Malik Washington | WR | MIA | CIN | 10.7 | 8.6 | 24% | 1 | 21 | High |  |
-| Devaughn Vele | WR | NO | MIN | 9.7 | 6.8 | 19% | 2 | 31 | Med |  |
-| Jalen Coker | WR | CAR | BYE |  | 1.0 |  | 2 |  | Low | OUT |
+| Drake Maye | QB | NE | NYJ | 20.7 | 6.4 |  | 1 | 26 | High |  |
+| Bryce Young | QB | CAR | PHI | 18.7 | 3.0 |  | 1 | 11 | Low |  |
+| Rhamondre Stevenson | RB | NE | NYJ | 17.4 | 16.9 | 60% | 1 | 3 | High |  |
+| Aaron Jones | RB | MIN | BYE | 9.9 | 15.8 |  | 1 |  | Low | QUESTIONABLE |
+| Kaelon Black | RB | SF | WAS | 2.8 | 6.8 | 26% | 2 | 29 | Med |  |
+| Breece Hall | RB | NYJ | NE |  | 16.0 | 51% | 1 | 10 | Low | OUT |
+| Kyle Monangai | RB | CHI | ATL |  | 12.9 | 15% | 2 | 16 | Low | OUT |
+| Zach Charbonnet | RB | SEA | DEN |  | 0.0 |  | 5 | 16 | Low | PUP |
+| Sam LaPorta | TE | DET | BYE |  | 4.4 |  | 1 |  | Low | BYE |
+| Puka Nacua | WR | LA | ARI | 26.1 | 14.9 | 32% | 1 | 6 | Med |  |
+| Nico Collins | WR | HOU | JAX | 21.1 | 8.1 | 28% | 1 | 5 | High |  |
+| Drake London | WR | ATL | CHI | 18.7 | 9.1 | 34% | 1 | 24 | High |  |
+| Devaughn Vele | WR | NO | NYG | 10.5 | 6.7 | 19% | 2 | 16 | High |  |
+| Jalen Coker | WR | CAR | PHI |  | 5.9 | 22% | 2 | 9 | Low | OUT |
+| Malik Washington | WR | MIA | BYE |  | 5.6 |  | 1 |  | Low | BYE |
 
 
 ### Why each call
 
-- **Drake Maye** — 6.2 exp opps (proj 6, recent 6) · QB1 · vs LV (DvP 15, +1%) · High confidence
-- **Bryce Young** — 0.8 exp opps (proj 0, recent 2) · QB1 · Low confidence · BYE
-- **Aaron Jones** — 24.1 exp opps (proj 23, recent 26) · RB1 · 64% of team carries · vs NO (DvP 2, +11%) · Med confidence · QUESTIONABLE
-- **Rhamondre Stevenson** — 13.9 exp opps (proj 14, recent 14) · RB1 · 37% of team carries · vs LV (DvP 6, +8%) · High confidence
-- **Kaelon Black** — 4.8 exp opps (proj 4, recent 6) · RB2 · 13% of team carries · vs SEA (DvP 13, +3%) · Med confidence
-- **Breece Hall** — 4.0 exp opps (proj 0, recent 16) · RB1 · vs CLE (DvP 27, -7%) · Low confidence · OUT
-- **Kyle Monangai** — 10.2 exp opps (proj 0, recent 20) · RB2 · vs GB (DvP 3, +10%) · Low confidence · OUT
-- **Zach Charbonnet** — 0.0 exp opps (proj 0, recent 13) · RB5 · vs SF (DvP 4, +10%) · Low confidence · PUP
-- **Sam LaPorta** — 7.5 exp opps (proj 6, recent 8) · TE1 · 19% of team targets · vs ARI (DvP 7, +7%) · High confidence
-- **Puka Nacua** — 11.1 exp opps (proj 10, recent 13) · WR1 · 30% of team targets · vs BUF (DvP 6, +8%) · High confidence
-- **Nico Collins** — 8.4 exp opps (proj 9, recent 8) · WR1 · 29% of team targets · vs TEN (DvP 11, +4%) · High confidence
-- **Drake London** — 8.7 exp opps (proj 9, recent 8) · WR1 · 34% of team targets · vs BAL (DvP 4, +10%) · High confidence
-- **Malik Washington** — 8.6 exp opps (proj 8, recent 10) · WR1 · 24% of team targets · vs CIN (DvP 21, -3%) · High confidence
-- **Devaughn Vele** — 6.8 exp opps (proj 6, recent 8) · WR2 · 19% of team targets · vs MIN (DvP 31, -10%) · Med confidence
-- **Jalen Coker** — 1.0 exp opps (proj 0, recent 4) · WR2 · Low confidence · OUT
+- **Drake Maye** — 6.4 exp opps (proj 6, recent 6) · QB1 · vs NYJ (DvP 26, -7%) · High confidence
+- **Bryce Young** — 3.0 exp opps (proj 5, recent 2) · QB1 · vs PHI (DvP 11, +4%) · Low confidence
+- **Rhamondre Stevenson** — 16.9 exp opps (proj 20, recent 15) · RB1 · 60% of team carries · vs NYJ (DvP 3, +10%) · High confidence
+- **Aaron Jones** — 15.8 exp opps (proj 0, recent 26) · RB1 · Low confidence · QUESTIONABLE
+- **Kaelon Black** — 6.8 exp opps (proj 8, recent 6) · RB2 · 26% of team carries · vs WAS (DvP 29, -9%) · Med confidence
+- **Breece Hall** — 16.0 exp opps (proj 16, recent 16) · RB1 · 51% of team carries · vs NE (DvP 10, +5%) · Low confidence · OUT
+- **Kyle Monangai** — 12.9 exp opps (proj 5, recent 20) · RB2 · 15% of team carries · vs ATL (DvP 16, +1%) · Low confidence · OUT
+- **Zach Charbonnet** — 0.0 exp opps (proj 0, recent 13) · RB5 · vs DEN (DvP 16, +1%) · Low confidence · PUP
+- **Sam LaPorta** — 4.4 exp opps (proj 0, recent 7) · TE1 · Low confidence · BYE
+- **Puka Nacua** — 14.9 exp opps (proj 10, recent 20) · WR1 · 32% of team targets · vs ARI (DvP 6, +8%) · Med confidence
+- **Nico Collins** — 8.1 exp opps (proj 9, recent 8) · WR1 · 28% of team targets · vs JAX (DvP 5, +9%) · High confidence
+- **Drake London** — 9.1 exp opps (proj 9, recent 9) · WR1 · 34% of team targets · vs CHI (DvP 24, -5%) · High confidence
+- **Devaughn Vele** — 6.7 exp opps (proj 6, recent 7) · WR2 · 19% of team targets · vs NYG (DvP 16, +1%) · High confidence
+- **Jalen Coker** — 5.9 exp opps (proj 7, recent 4) · WR2 · 22% of team targets · vs PHI (DvP 9, +6%) · Low confidence · OUT
+- **Malik Washington** — 5.6 exp opps (proj 0, recent 9) · WR1 · Low confidence · BYE
 
 
 ## Waiver wire — best available
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Kirk Cousins | QB | LV | NE | 17.3 | 1.7 |  | 1 | 23 | High | 🔥 |
-| C.J. Stroud | QB | HOU | TEN | 15.9 | 2.6 |  | 1 | 19 | Med | 🔥 |
-| Geno Smith | QB | NYJ | CLE | 15.2 | 2.3 |  | 1 | 16 | Low |  |
-| Deshaun Watson | QB | CLE | NYJ | 14.9 | 6.1 |  | 1 | 25 | Low | 🔥 |
-| Jordan Love | QB | GB | CHI | 14.0 | 2.8 |  | 1 | 31 | High |  |
-| Michael Penix Jr. | QB | ATL | BAL | 13.9 | 2.6 |  | 1 | 8 | Med |  |
-| Tyler Allgeier | RB | ARI | DET | 8.3 | 9.0 | 30% | 2 | 15 | Med |  |
-| Kenny Gainwell | RB | TB | DAL | 7.8 | 7.4 | 18% | 2 | 5 | High |  |
-| MarShawn Lloyd | RB | GB | CHI | 7.7 | 10.4 | 34% | 1 | 32 | High | 🔥 |
-| Mike Washington Jr. | RB | LV | NE | 7.2 | 9.2 | 34% | 2 | 11 | Med |  |
-| Ty Johnson | RB | BUF | LA | 7.0 | 4.2 | 11% | 2 | 31 | Med |  |
-| Keaton Mitchell | RB | LAC | DEN | 10.0 | 12.6 | 33% | 2 | 16 | Med | 🔥 |
-| Tyler Higbee | TE | LA | BUF | 9.9 | 6.6 | 14% | 2 | 19 | Med | 🔥 |
-| Dalton Schultz | TE | HOU | TEN | 9.6 | 3.5 | 16% | 1 | 24 | Med |  |
-| Hunter Henry | TE | NE | LV | 8.8 | 4.2 | 17% | 1 | 3 | High |  |
-| Michael Mayer | TE | LV | NE | 8.5 | 5.6 | 15% | 2 | 28 | Med | 🔥 |
-| Cade Otton | TE | TB | DAL | 8.1 | 5.1 | 16% | 1 | 23 | High |  |
-| Mike Gesicki | TE | CIN | MIA | 12.5 | 3.9 | 12% | 1 | 5 | High | 🔥 |
-| Tre Harris | WR | LAC | DEN | 9.5 | 6.4 | 24% | 3 | 20 | Med | 🔥 |
-| Cody White | WR | LV | NE | 9.4 | 3.7 | 13% | 3 | 12 | Med | 🔥 |
-| Darius Cooper | WR | PHI | JAX | 9.1 | 3.9 | 16% | 5 | 7 | Med | 🔥 |
-| Tre Tucker | WR | LV | NE | 11.5 | 5.9 | 17% | 1 | 12 | High | 🔥 |
-| Roman Wilson | WR | PIT | IND | 11.1 | 5.6 | 18% | 2 | 16 | High | 🔥 |
-| Keon Coleman | WR | BUF | LA | 11.0 | 5.2 | 19% | 3 | 27 | Med | 🔥 |
+| Jordan Love | QB | GB | DAL | 21.4 | 2.4 |  | 1 | 7 | Med | 🔥 |
+| Kirk Cousins | QB | LV | BUF | 20.6 | 1.4 |  | 1 | 3 | Med | 🔥 |
+| C.J. Stroud | QB | HOU | JAX | 16.2 | 3.2 |  | 1 | 23 | High | 🔥 |
+| Jameis Winston | QB | NYG | NO | 15.3 | 2.7 |  | 1 | 15 | High |  |
+| Deshaun Watson | QB | CLE | BAL | 14.7 | 6.1 |  | 1 | 14 | Low |  |
+| Geno Smith | QB | NYJ | NE | 13.8 | 2.5 |  | 1 | 20 | High |  |
+| Keaton Mitchell | RB | LAC | KC | 9.7 | 11.3 | 27% | 2 | 12 | Med |  |
+| Kimani Vidal | RB | LAC | KC | 8.4 | 7.9 | 23% | 3 | 12 | Med | 🔥 |
+| Ty Johnson | RB | BUF | LV | 7.5 | 4.2 | 11% | 2 | 5 | Med | 🔥 |
+| Kenny Gainwell | RB | TB | PIT | 7.1 | 8.2 | 23% | 2 | 21 | Med |  |
+| Tyler Allgeier | RB | ARI | LA | 6.8 | 7.2 | 22% | 2 | 20 | High |  |
+| MarShawn Lloyd | RB | GB | DAL | 11.9 | 11.9 | 48% | 1 | 6 | High | 🔥 |
+| Darren Waller | TE | CAR | PHI | 9.7 | 5.7 | 15% | 2 | 20 | Med | 🔥 |
+| Michael Mayer | TE | LV | BUF | 8.9 | 4.6 | 14% | 2 | 17 | High |  |
+| Colston Loveland | TE | CHI | ATL | 8.8 | 6.1 | 19% | 1 | 15 | High |  |
+| Hunter Henry | TE | NE | NYJ | 8.2 | 3.9 | 16% | 1 | 26 | High |  |
+| Tyler Higbee | TE | LA | ARI | 11.7 | 5.4 | 6% | 2 | 6 | Low | 🔥 |
+| Pat Freiermuth | TE | PIT | TB | 11.1 | 5.3 | 17% | 2 | 16 | Med |  |
+| Jaylin Noel | WR | HOU | JAX | 9.8 | 3.9 | 11% | 5 | 5 | Med |  |
+| Keenan Allen | WR | IND | TEN | 9.6 | 7.0 | 18% | 2 | 10 | Med | 🔥 |
+| Tre Tucker | WR | LV | BUF | 9.5 | 6.1 | 16% | 1 | 1 | High | 🔥 |
+| Kalif Raymond | WR | CHI | ATL | 9.2 | 4.3 | 11% | 3 | 3 | Med |  |
+| DeMario Douglas | WR | NE | NYJ | 8.3 | 4.2 | 14% | 2 | 23 | High |  |
+| Keon Coleman | WR | BUF | LV | 10.6 | 3.8 | 12% | 3 | 12 | Med | 🔥 |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
+| Troy Franklin | WR | DEN | 23.7 | 2 | 3 (was 3) | 40% | WR3 on depth chart; snap share trending +45%/wk; team passes #15; age 24 |
 | Jalen Royals | WR | KC | 23.6 | 1 | 3 (was 3) | 41% | WR3 on depth chart; snap share trending +44%/wk; team passes #16; age 24 |
-| Isaac TeSlaa | WR | DET | 24.6 | 1 | 3 (was 3) | 65% | WR3 on depth chart; snap share trending +34%/wk; team passes #4; age 25 |
 | Mitchell Evans | TE | CAR | 23.4 | 1 | 3 (was 3) | 44% | TE3 on depth chart; snap share trending +34%/wk; team passes #3; age 23 |
-| Antonio Williams | WR | WAS | 22.2 | 0 | 3 (was 3) | 55% | WR3 on depth chart; snap share trending +28%/wk; team passes #12; age 22 |
-| Will Shipley | RB | PHI | 24.1 | 2 | 2 (was 2) | 37% | RB2 on depth chart; snap share trending +22%/wk; age 24 |
-| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 27% | RB3 on depth chart; snap share trending +22%/wk; age 22 |
-| Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 3 (was 3) | 10% | RB3 on depth chart; snap share trending +16%/wk; age 27 |
-| Seth McGowan | RB | IND | 25.0 | 0 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +14%/wk; age 25 |
-| Bryce Lance | WR | NO | 24.1 | 0 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +13%/wk; team passes #1; age 24 |
-| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +13%/wk; team passes #6; age 23 |
-| Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 42% | TE3 on depth chart; snap share trending +12%/wk; team passes #2; age 26 |
+| Germie Bernard | WR | PIT | 22.9 | 0 | 3 (was 3) | 53% | WR3 on depth chart; snap share trending +32%/wk; team passes #8; age 23 |
+| Roschon Johnson | RB | CHI | 25.7 | 3 | 3 (was 3) | 25% | RB3 on depth chart; snap share trending +28%/wk; age 26 |
+| Jalen Brooks | WR | ARI | 26.4 | 3 | 3 (was 3) | 21% | WR3 on depth chart; snap share trending +24%/wk; team passes #4; age 26 |
+| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +19%/wk; age 26 |
+| Dylan Laube | RB | LV | 26.8 | 2 | 3 (was 3) | 17% | RB3 on depth chart; snap share trending +16%/wk; age 27 |
+| Theo Johnson | TE | NYG | 25.6 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +15%/wk; team passes #14; age 26 |
+| Antonio Williams | WR | WAS | 22.2 | 0 | 3 (was 3) | 59% | WR3 on depth chart; snap share trending +14%/wk; team passes #16; age 22 |
+| CJ Donaldson | RB | NO | 22.3 | 0 | 3 (was 3) | 32% | RB3 on depth chart; snap share trending +13%/wk; age 22 |
 | Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 86% | WR3 on depth chart; snap share trending +11%/wk; team passes #3; age 27 |
-| Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 30% | RB3 on depth chart; snap share trending +10%/wk; age 25 |
-| Kendre Miller | RB | NO | 24.3 | 3 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +7%/wk; age 24 |
-| Demond Claiborne | RB | MIN | 23.0 | 0 | 3 (was 3) | 8% | RB3 on depth chart; snap share trending +7%/wk; age 23 |
+| Ray Davis | RB | BUF | 26.9 | 2 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +9%/wk; age 27 |
+| Kimani Vidal | RB | LAC | 25.1 | 2 | 3 (was 3) | 34% | RB3 on depth chart; snap share trending +8%/wk; age 25 |
+| Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 3 (was 3) | 13% | RB3 on depth chart; snap share trending +8%/wk; age 27 |
 
 
 ## Ask me
