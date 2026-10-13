@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 6
 
 redraft · 17 roster slots  
-Generated 2026-10-13 23:05 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:05:29Z
+Generated 2026-10-13 23:25 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:25:58Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 

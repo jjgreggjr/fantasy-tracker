@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 6
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-13 23:05 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:05:16Z
+Generated 2026-10-13 23:25 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:25:47Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -81,10 +81,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Geno Smith | QB | NYJ | NE | 13.8 | 2.5 |  | 1 | 20 | High |  |
 | Kimani Vidal | RB | LAC | KC | 7.7 | 7.9 | 23% | 3 | 12 | Med | 🔥 |
 | Ty Johnson | RB | BUF | LV | 6.0 | 4.2 | 11% | 2 | 5 | Med | 🔥 |
-| Kendre Miller | RB | NO | NYG | 5.9 | 9.6 | 35% | 2 | 18 | Med | 🔥 |
 | Dameon Pierce | RB | PHI | CAR | 5.9 | 12.7 | 35% | 3 | 19 | Med | 🔥 |
-| Jaleel McLaughlin | RB | CLE | BAL | 4.3 | 4.3 | 24% | 3 | 28 | Low | 🔥 |
+| Kendre Miller | RB | NO | NYG | 5.9 | 9.6 | 35% | 2 | 18 | Med | 🔥 |
 | Pierre Strong | RB | GB | DAL | 4.3 | 5.6 | 13% | 2 | 6 | Med |  |
+| Jaleel McLaughlin | RB | CLE | BAL | 4.3 | 4.3 | 24% | 3 | 28 | Low | 🔥 |
 | Tyler Higbee | TE | LA | ARI | 9.4 | 5.4 | 6% | 2 | 6 | Low | 🔥 |
 | Darnell Washington | TE | PIT | TB | 6.1 | 3.7 | 13% | 1 | 16 | High |  |
 | Noah Fant | TE | NO | NYG | 5.6 | 2.7 | 9% | 2 | 12 | Med |  |

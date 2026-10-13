@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 6
 
 dynasty · 31 roster slots  
-Generated 2026-10-13 23:05 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:05:16Z
+Generated 2026-10-13 23:25 UTC · baselines: 2026 only · lineup as of 2026-10-13T23:25:47Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -100,7 +100,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Justice Hill | RB | BAL | CLE | 5.5 | 5.6 | 11% | 2 | 24 | High |  |
 | Pierre Strong | RB | GB | DAL | 5.1 | 5.6 | 13% | 2 | 6 | Med |  |
 | Jaleel McLaughlin | RB | CLE | BAL | 4.6 | 4.3 | 24% | 3 | 28 | Low | 🔥 |
-| Austin Ekeler | RB | WAS | SF | 4.4 | 4.8 | 11% | 3 | 7 | Med |  |
+| Corey Kiner | RB | NE | NYJ | 4.4 | 5.3 | 16% | 3 | 3 | Med | 🔥 |
 | Cade Otton | TE | TB | PIT | 9.3 | 5.0 | 17% | 1 | 11 | High |  |
 | Darnell Washington | TE | PIT | TB | 8.7 | 3.7 | 13% | 1 | 16 | High |  |
 | Noah Fant | TE | NO | NYG | 7.6 | 2.7 | 9% | 2 | 12 | Med |  |
