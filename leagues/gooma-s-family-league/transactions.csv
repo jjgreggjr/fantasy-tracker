@@ -67,6 +67,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,free_agent,add,4177,Mack Hollins,2
 2026,4,free_agent,add,12495,Ollie Gordon II,2
 2026,4,free_agent,drop,11370,Chris Brooks,2
+2026,5,free_agent,drop,11256,Tyson Bagent,2
 2026,5,free_agent,add,4454,Kendrick Bourne,11
 2026,5,free_agent,drop,11625,Adonai Mitchell,11
 2026,5,free_agent,add,3271,Tyler Higbee,3

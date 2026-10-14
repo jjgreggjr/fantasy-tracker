@@ -129,8 +129,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,waiver,drop,1373,Geno Smith,9
 2026,4,waiver,add,11576,Braelon Allen,9
 2026,4,waiver,drop,7090,Darnell Mooney,9
+2026,5,waiver,add,11647,Kimani Vidal,5
+2026,5,waiver,drop,6900,,5
 2026,5,free_agent,drop,9229,Anthony Richardson,8
 2026,5,free_agent,drop,7591,Justin Fields,8
+2026,5,waiver,add,8129,Dameon Pierce,8
 2026,5,free_agent,drop,11651,Isaac Guerendo,8
 2026,5,waiver,add,1166,Kirk Cousins,10
 2026,5,waiver,drop,7635,,10

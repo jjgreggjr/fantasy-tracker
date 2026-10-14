@@ -115,6 +115,16 @@ season,week,type,action,sleeper_id,name,rosters
 2026,4,free_agent,drop,5854,Drew Lock,4
 2026,4,free_agent,add,12718,Konata Mumpfield,2
 2026,4,free_agent,drop,12467,Jordan James,2
+2026,5,waiver,add,13545,,6
+2026,5,waiver,drop,11792,,6
+2026,5,waiver,add,2306,Jameis Winston,4
+2026,5,waiver,drop,9754,Quentin Johnston,4
+2026,5,waiver,add,8129,Dameon Pierce,6
+2026,5,waiver,drop,DEN,,6
+2026,5,waiver,add,KC,,6
+2026,5,waiver,drop,BAL,,6
+2026,5,waiver,add,13274,Germie Bernard,6
+2026,5,waiver,drop,11608,Isaiah Williams,6
 2026,5,free_agent,add,4454,Kendrick Bourne,6
 2026,5,free_agent,drop,2505,Darren Waller,6
 2026,5,free_agent,add,96,Aaron Rodgers,6
@@ -123,3 +133,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,drop,12711,,6
 2026,5,free_agent,add,11608,Isaiah Williams,6
 2026,5,free_agent,drop,2306,Jameis Winston,6
+2026,6,free_agent,add,NYG,,1
+2026,6,free_agent,drop,12524,Shedeur Sanders,1
+2026,6,free_agent,add,12542,Efton Chism III,2
+2026,6,free_agent,drop,13420,Bryce Lance,2
+2026,6,free_agent,add,11439,Jaleel McLaughlin,2
+2026,6,free_agent,drop,5012,Mark Andrews,2
+2026,6,free_agent,add,7600,Pat Freiermuth,2
+2026,6,free_agent,drop,13264,Dohnte Meyers,2
