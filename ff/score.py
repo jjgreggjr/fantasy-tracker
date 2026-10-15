@@ -157,17 +157,29 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     df["conf"] = df.confidence.map(_conf_label)
 
     # ---- flags -----------------------------------------------------------
-    df["flag"] = ""
-    df.loc[df.E_opps.isna(), "flag"] = "NO BASELINE"
-    df.loc[df.opponent.eq("BYE") | df.opponent.isna(), "flag"] = "BYE"
-    for st, lab in [("Questionable", "QUESTIONABLE"), ("Doubtful", "DOUBTFUL"),
-                    ("Out", "OUT"), ("IR", "IR"), ("PUP", "PUP")]:
-        df.loc[df.injury_status.eq(st), "flag"] = lab
-    df.loc[df.flag.isin(["BYE", "OUT", "IR", "PUP", "NO BASELINE"]), "E_pts"] = np.nan
+    df = apply_flags(df)
 
     df["why"] = _why(df)
     return df.sort_values(["position", "E_pts"],
                           ascending=[True, False]).reset_index(drop=True)
+
+
+def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
+    """Set `flag` from baseline, bye and injury status, and blank `E_pts` for
+    anyone who cannot play this week."""
+    df["flag"] = ""
+    df.loc[df.E_opps.isna(), "flag"] = "NO BASELINE"
+    bye = df.opponent.eq("BYE") | df.opponent.isna()
+    df.loc[bye, "flag"] = "BYE"
+    for st, lab in [("Questionable", "QUESTIONABLE"), ("Doubtful", "DOUBTFUL"),
+                    ("Out", "OUT"), ("IR", "IR"), ("PUP", "PUP")]:
+        df.loc[df.injury_status.eq(st), "flag"] = lab
+    # a bye is a bye whatever the injury tag says: a Questionable player on a
+    # bye week once kept his E_pts and the optimizer started him (Aaron Jones,
+    # 2026 week 6). Apply the bye zero on the mask, not on the final label.
+    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "PUP", "NO BASELINE"]),
+           "E_pts"] = np.nan
+    return df
 
 
 def _why(df: pd.DataFrame) -> pd.Series:
