@@ -45,5 +45,19 @@ class ByeBeatsInjuryTag(unittest.TestCase):
         self.assertTrue(np.isnan(df.E_pts.iloc[0]))
 
 
+
+class TrailingWeightIsOff(unittest.TestCase):
+    """trail_cap is 0: E_pts rests on the projection whenever one exists, and falls back to
+    trailing volume only when Sleeper has not projected the player."""
+
+    def test_projection_takes_all_the_weight(self):
+        games = pd.Series([4.0, 4.0, 0.0])
+        has_proj = pd.Series([True, False, True])
+        has_trail = pd.Series([True, True, False])
+        w = (games / score.DEFAULTS["trail_games"]).clip(0, score.DEFAULTS["trail_cap"])
+        w = np.where(~has_proj, 1.0, np.where(~has_trail, 0.0, w))
+        self.assertEqual(list(w), [0.0, 1.0, 0.0])
+
+
 if __name__ == "__main__":
     unittest.main()

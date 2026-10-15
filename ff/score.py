@@ -11,7 +11,12 @@ import pandas as pd
 from . import scoring
 
 DEFAULTS = {
-    "trail_cap": 0.6,       # most weight trailing data can take from projections
+    # Most weight trailing data can take from the projection. Set to 0 on 2026-10-15 (was 0.6):
+    # over 2026 weeks 2-5 (838 rows) pick accuracy fell monotonically as this rose (0.692 at 0,
+    # 0.690 at 0.2, 0.680 at 0.6, 0.648 trailing-only) and when E_pts left Sleeper's number
+    # Sleeper was right 56% of the time. Trailing data still carries a player Sleeper has not
+    # projected (w_trail is forced to 1 when proj_opps is missing). model/candidates.md has the trail.
+    "trail_cap": 0.0,
     "trail_games": 4,       # games needed to reach that cap
     "matchup_swing": 0.24,  # total range of the matchup multiplier (±12%)
 }
