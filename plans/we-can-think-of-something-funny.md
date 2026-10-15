@@ -20,8 +20,8 @@ None executed as of 10/15 22:41Z: no trades all season; James still has Swift, K
 2. **njmoses** (pending): Kamara + Pollard + Pitts for CeeDee Lamb (Questionable) + **their 2028 3rd**. The Simpson version is dead (week-4 taxi deadline passed 10/1). Counter: Kamara + Pitts + a pick for Lamb. They're 2-8 and 7th in PF, so still a plausible seller, but James is last in PF, not them.
 3. **jakelotwin** (weakened, probably drop): Stafford for Jaxson Dart. Dart is IR knee-meniscus (confirmed 10/11). They have since cycled Mariota and Winston off and now roster Rodgers, Daniels, Darnold, Herbert and Dart, so they no longer need a QB.
 4. **mastuhbruce** (idea): Zach Charbonnet (PUP ACL, limited practice 10/15) for Cam Ward. Ward is still benched behind Allen; they also hold Love and Maye.
-6. Waivers (week 6): Michael Mayer TE LV (10.7 on 4.6 opps / 80% snaps, age 25) for Skyler Bell; Deshaun Watson (15.1, superflex streamer above Nix 13.9) for Darnell Mooney if a week-6 QB is needed. Mark Andrews was just dropped by Taylor894.
 5. Roster clutter: cut-level WRs (Mooney, Noel, Lemon, Horton, Bell, Reed) are throw-ins or drops for young waiver fliers.
+6. Waivers (week 6): Michael Mayer TE LV (10.7 on 4.6 opps / 80% snaps, age 25) for Skyler Bell; Deshaun Watson (15.1, superflex streamer above Nix 13.9) for Darnell Mooney if a week-6 QB is needed. Mark Andrews was just dropped by Taylor894.
 
 Pick conflict: James's 2028 2nd appears in both counters. If both teams want it, give it to NegativeSquash and offer njmoses his 2027 3rd.
 
