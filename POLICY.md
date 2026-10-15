@@ -168,6 +168,10 @@ same pre-kickoff features; `PLAN_MODEL.md` has the evidence) and writes it next 
   scores them on identical rows against the platform's own points (`data/model_eval.csv`,
   `model/reports/live_scoreboard.md`). Frozen weeks start with week 4, so the gate cannot be met before week 9
   completes. Until a human reads that report and says so, nothing changes.
+- **The loop that improves it (Phase 5):** each week `model/reports/retrospective.md` classifies the biggest misses
+  (TD variance, role change after a teammate sat, left early, inactive missed) and names the signal that would have
+  carried the learnable ones; `python -m model.trial` tests any candidate under the written adoption rule before a
+  human changes the frozen spec. `model/candidates.md` is the running list.
 
 ## What this policy deliberately does not do
 

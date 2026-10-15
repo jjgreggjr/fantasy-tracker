@@ -127,6 +127,17 @@ jobs:
         timeout-minutes: 10
         run: python -m model.serve && python -m model.scoreboard
 
+      # ---- Phase 5: the weekly retrospective (what we missed, and why) --------------------
+      # Reads the frozen predictions the scoreboard just judged and the box scores, classifies
+      # the biggest misses, and writes data/model_misses.csv and model/reports/retrospective.md.
+      # Same failure contract as the model step: every exception becomes a WARN row, nothing
+      # written, exit 0. It never changes a prediction or a spec; a human reads the report and
+      # tests any candidate it raises with `python -m model.trial`.
+      - name: Weekly retrospective
+        continue-on-error: true
+        timeout-minutes: 5
+        run: python -m model.retrospective
+
       # ---- Phase 4: the player-props archive (The Odds API), archive only ---------------
       # Skips with one WARN line while the ODDS_API_KEY secret does not exist. Same isolation as the
       # model step: the module catches every exception itself (a WARN row in runs.csv, nothing
@@ -150,6 +161,7 @@ jobs:
           git add data leagues reports config.json
           if [ -f logs/runs.csv ]; then git add logs/runs.csv; fi
           if [ -f model/reports/live_scoreboard.md ]; then git add model/reports/live_scoreboard.md; fi
+          if [ -f model/reports/retrospective.md ]; then git add model/reports/retrospective.md; fi
           if git diff --cached --quiet; then
             echo "no changes to commit"
             exit 0

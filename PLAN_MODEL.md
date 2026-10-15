@@ -969,3 +969,37 @@ the model step ran as in Phase 3 (15 games, 405 rows, 82 s warm).
 suite afterwards failed 5 tests (`age_years` in the serving-vs-matrix test, 2026 play-by-play targets against the refreshed stats file, the serve-vs-backtest equality). Deleting the stale 2026
 play-by-play and FTN files, rebuilding the matrix (`python3.12 -m model.build_features`, 12 min) and deleting `model/cache/serve` (its history cache is keyed on the feature code, not on the raw data, so
 it keeps the as-of-today `players` bio it was built from) made all 317 pass. If a bit-for-bit serving test ever fails after a refresh, rebuild the matrix and the serve cache from the same raw snapshot first.
+
+## Phase 5 — the improvement loop (work order, 2026-10-15)
+
+**Why.** Through two scored weeks the model refits itself every run (all games since 2021, through the kickoff gate) but
+nothing else moves: the 71 inputs and the hyper-parameters were frozen on 2026-09-30, and `E_pts` is a hand-set formula
+that cannot learn at all. The scoreboard says which comparator won; it never says *why* a prediction was wrong, so nothing
+feeds a next experiment. Week 4–5 misses were read by hand once (TD variance dominates; the two biggest learnable misses
+were role changes after a teammate sat, McMillan wk4 and E. Wilson wk4; one inactive, Coker wk4, slipped past the status
+layer). This phase makes that reading a weekly, mechanical step, and makes testing what it raises a single command.
+
+**The loop, every week after the scoreboard:**
+
+1. `python -m model.retrospective` (pipeline step, failure-isolated like the model step). On the scoreboard's identical
+   rows it takes each comparator's biggest misses, classifies each from pre-kickoff data against the box score
+   (`td_variance`, `volume_up`/`volume_down`, `teammate_out`, `left_early`, `inactive_missed`, `blowout_script`,
+   `unexplained`) with the evidence kept beside the label, and writes `data/model_misses.csv` plus
+   `model/reports/retrospective.md`: a drift table (pick accuracy by week, cumulative mean, week-to-week spread), the
+   share of misses in each class per comparator, the week's top misses, and which existing or missing feature would
+   have carried each learnable class. Not learnable, and said so: TD variance (regress it, do not chase it) and
+   `inactive_missed` (the status layer's job, not a feature).
+2. A human reads the report and adds any candidate to `model/candidates.md` as a string `model/trial.py` can run.
+3. `python -m model.trial --candidate <string>` runs the frozen primary and the variant through the same walk-forward,
+   on 2025 (test), 2024 (replication) and the completed 2026 weeks, with the week-blocked paired bootstrap, and appends
+   a verdict to `model/reports/trials.md` under the Phase 2.5 adoption rule (beat 2025 AND replicate 2024; components
+   may tie). Candidates: add or drop a feature family or columns, a hyper-parameter, or `recent:<n>` (weight this
+   season's last n weeks more; the direct test of "should it learn faster from 2026").
+4. Only a SHIPS verdict changes `serving_config.json`, by hand, followed by `python -m model.serve --freeze` and a line
+   in this file. `E_pts` has one lever of its own (`trail_cap` in `ff/score.py`), outside `trial.py`; its evidence
+   lives in the same candidates file.
+
+**Ground rules kept.** Everything the retrospective reads was frozen before kickoff or is the platform's own result;
+every trial is a walk-forward with the look-ahead assertions of `backtest.py`; a candidate that only wins on 2026's few
+weeks does not ship. The gate in POLICY.md is unchanged: `E_pts` stays authoritative until the model beats Sleeper over
+six scored weeks and a human says so.
