@@ -53,7 +53,8 @@ FOLLOW_UP_TREE_FACTOR = 1.1
 
 # Phase 2.5 families exist in the matrix but are inputs only when a Spec asks for them (`add_families`), so the Phase 2
 # primary keeps exactly its Phase 2 inputs and its results reproduce.
-OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff")
+OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff",
+                   "streak")                     # Phase 5 candidate (2026-10-15): `--candidate +family:streak`
 
 REPORT_ORD = {"Questionable": 1.0, "Doubtful": 2.0, "Out": 2.0}          # 'Note' and anything unknown -> 0 (no designation)
 PRACTICE_ORD = {"Full Participation in Practice": 1.0, "Limited Participation in Practice": 2.0,

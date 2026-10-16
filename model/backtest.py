@@ -79,19 +79,24 @@ def assert_walk_forward(df: pd.DataFrame, train: np.ndarray, test: np.ndarray, s
         raise AssertionError("a row is in both train and test")
 
 
-def _fit_predict(lib, params, Xtr, ytr, Xte, quantile=None):
+def _fit_predict(lib, params, Xtr, ytr, Xte, quantile=None, w=None):
     m = T.make_model(lib, params, quantile=quantile)
-    m.fit(Xtr, ytr)
+    if w is None:
+        m.fit(Xtr, ytr)
+    else:
+        m.fit(Xtr, ytr, sample_weight=w)          # all three libraries take sklearn-style sample weights
     return m, m.predict(Xte)
 
 
 def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm", params: dict | None = None, *,
                  season: int = TEST_SEASON, weeks=WEEKS, quantile: float | None = None, hook=None,
-                 log=None, refit_every: int = 1, target: str = TARGET) -> pd.DataFrame:
+                 log=None, refit_every: int = 1, target: str = TARGET, weight_fn=None) -> pd.DataFrame:
     """Predictions for every spine row of each target week (played or not), refitting each week on strictly
     earlier rows. `hook(week, model, X_test, test_index)` is called after each fit (SHAP uses it).
     `refit_every=k` refits only every k-th week (weeks 1, 1+k, ...) and predicts the weeks in between with the last
-    fit: a model that is one to k-1 weeks stale, never one that has seen the target week (k=1 is the walk-forward)."""
+    fit: a model that is one to k-1 weeks stale, never one that has seen the target week (k=1 is the walk-forward).
+    `weight_fn(df, train_mask, season, fit_week)` returns one sample weight per matrix row (only the training rows'
+    are used); None (the default, and every shipped model) fits unweighted. model/trial.py's `recent:<n>` uses it."""
     params = params if params is not None else T.load_params()["point"][lib]
     dead = T.dead_columns(df)
     cols = T.feature_columns(df, spec, dead)
@@ -110,6 +115,9 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
         tr = train_mask(df, season, fitted_at, spec, target)   # strictly earlier than the fit week, hence than `wk`
         assert_walk_forward(df, tr, te, season, wk)
         pred = np.full(int(te.sum()), np.nan)
+        w = None if weight_fn is None else np.asarray(weight_fn(df, tr, season, fitted_at), dtype="float64")
+        if w is not None and len(w) != len(df):
+            raise ValueError(f"weight_fn must return one weight per matrix row ({len(df)}), got {len(w)}")
         if fitted_at != wk and not spec.per_position and stale is not None:
             model, pred = stale[0], stale[0].predict(X[te])
         elif spec.per_position:
@@ -117,10 +125,10 @@ def walk_forward(df: pd.DataFrame, spec: Spec = T.PRIMARY, lib: str = "lightgbm"
             for p in POSITIONS:
                 a, b = tr & (pos == p), te_pos == p
                 if b.any():
-                    _, pred[b] = _fit_predict(lib, params, X[a], y[a], X[te][b], quantile)
+                    _, pred[b] = _fit_predict(lib, params, X[a], y[a], X[te][b], quantile, None if w is None else w[a])
             model = None
         else:
-            model, pred = _fit_predict(lib, params, X[tr], y[tr], X[te], quantile)
+            model, pred = _fit_predict(lib, params, X[tr], y[tr], X[te], quantile, None if w is None else w[tr])
             stale = (model, fitted_at)
         part = df.loc[te, [c for c in KEEP if c in df.columns]].copy()
         part["y"] = df.loc[te, target].to_numpy()

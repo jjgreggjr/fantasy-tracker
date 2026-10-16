@@ -203,11 +203,13 @@ def start_sit(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     # a player with no prior volume (rookie, or never played) has no baseline;
     # scoring him against zero volume would look precise and be meaningless
     df.loc[df.avg_opps.isna(), "flag"] = "NO BASELINE"
-    df.loc[df.opponent.eq("BYE") | df.opponent.isna(), "flag"] = "BYE"
+    bye = df.opponent.eq("BYE") | df.opponent.isna()
+    df.loc[bye, "flag"] = "BYE"
     for st, lab in [("Out", "OUT"), ("IR", "IR"), ("Doubtful", "DOUBTFUL"),
                     ("Questionable", "QUESTIONABLE")]:
         df.loc[df.injury_status.eq(st), "flag"] = lab
-    df.loc[df.flag.isin(["BYE", "OUT", "IR", "NO BASELINE"]), "start_score"] = np.nan
+    # the injury label may overwrite "BYE"; the bye zero must not depend on it
+    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "NO BASELINE"]), "start_score"] = np.nan
     return df.sort_values(["position", "start_score"],
                           ascending=[True, False]).reset_index(drop=True)
 

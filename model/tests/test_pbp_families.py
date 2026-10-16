@@ -523,7 +523,7 @@ class NewFamilyCanaries(unittest.TestCase):
 class Registry(unittest.TestCase):
     def test_new_families_are_registered_and_opt_in_for_the_models(self):
         self.assertEqual(set(features.FAMILIES) & set(NEW_FAMILIES), set(NEW_FAMILIES))
-        self.assertEqual(set(T.OPT_IN_FAMILIES), set(NEW_FAMILIES))
+        self.assertLessEqual(set(NEW_FAMILIES), set(T.OPT_IN_FAMILIES))       # later opt-in families (streak) join them
         self.assertEqual(len(NEW_COLS), len(set(NEW_COLS)))
         self.assertEqual((len(features.FAMILIES["pbp_usage"]), len(features.FAMILIES["pbp_team"]), len(features.FAMILIES["pbp_part"]),
                           len(features.FAMILIES["eff"])), (32, 10, 10, 18))
@@ -539,7 +539,8 @@ class Registry(unittest.TestCase):
         for c in NEW_COLS:
             self.assertFalse(c.startswith(("y_", "base_", "spine_")), c)
         self.assertEqual([c for c in features.feature_columns() if "xfp" in c and c not in
-                          ("xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg")], [])
+                          ("xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg")
+                          and c not in features.FAMILIES["streak"]], [])
 
     def test_features_module_still_imports_only_the_gate(self):
         import ast

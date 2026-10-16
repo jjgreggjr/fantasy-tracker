@@ -46,6 +46,11 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               feed; the closest free proxy for route participation). BACKTEST-ONLY: the feed is published after the season
   eff         shrunken career-to-date and season-to-date efficiency: catch rate, yards and TDs per target, yards and TDs
               per carry, yards / completion / TD / INT per attempt (fixed priors from 2015-2019, see EFF_PRIORS)
+  streak      (Phase 5 candidate, 2026-10-15) has he beaten or missed expectation several games running? Expectation is his
+              own lagged xFP (no historical Sleeper projection exists) and his trailing-3 volume: signed residuals of the last
+              1/2/3 games, their 4-game sum, run lengths of consecutive over/under games (capped +-6), the volume analogue, and
+              the last two games against last season's per-game mean. Last season's REG games precede this season's so the
+              first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -141,7 +146,11 @@ FAMILIES: dict[str, list[str]] = {
     "pbp_team": PBP_TEAM_COLUMNS,
     "pbp_part": [f"part_{n}_{w}" for w in PBP_WINDOWS for n in PART_STATS] + ["part_prev_pass_snap_share"],
     "eff": [f"eff_{n}_{w}" for w in EFF_WINDOWS for n in EFF_K],
+    # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
+    "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
+               "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
 }
+STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
 # Produced, but never a model input.
 IDENTITY = ["player_id", "season", "week", "team", "opponent", "position", "game_id", "kickoff_utc"]
 META = ["lag1_week", "lag2_week", "lag3_week", "dvp_l2_games", "dvp_l4_games", "dvp_l2_last_week",
@@ -340,6 +349,46 @@ def _lag_and_history_features(h: Hist, t: TargetRow) -> dict[str, Any]:
     out["td_luck_total_std"] = _ns(np.nansum(cur[:, [TDR, TDC, TDP]], axis=1)[~np.isnan(cur[:, [TDR, TDC, TDP]]).all(axis=1)]) if have else NAN
     out["td_luck_total_prev"] = (_ns(np.nansum(prev[:, [TDR, TDC, TDP]], axis=1)[~np.isnan(prev[:, [TDR, TDC, TDP]]).all(axis=1)])
                                  if len(prev) else NAN)
+    return out
+
+
+def _run_length(x: np.ndarray, cap: int = STREAK_CAP) -> float:
+    """Signed length of the run of same-sign values at the END of `x`: +n for n consecutive positives, -n for negatives,
+    0 when there is no history or the newest value is NaN or exactly 0. A NaN or a 0 inside the run ends it. Capped at +-cap."""
+    if not len(x) or math.isnan(x[-1]) or x[-1] == 0:
+        return 0.0
+    sign = 1.0 if x[-1] > 0 else -1.0
+    n = 0
+    for v in x[::-1]:
+        if math.isnan(v) or v == 0 or (v > 0) != (sign > 0):
+            break
+        n += 1
+        if n == cap:
+            break
+    return sign * n
+
+
+def _streak_features(h: Hist, t: TargetRow) -> dict[str, float]:
+    """The `streak` family. The window is last season's REG appearances followed by this season's (both strictly before
+    kickoff, `_cur_prev`), so a week-1 row sees last season's final games and a week-3 row's four-game sum reaches back.
+    Residuals: actual PPR minus the game's xFP (NaN when the game has no xFP), and opps minus the trailing-3 mean of opps
+    entering that game (NaN for the first game in the window)."""
+    cur, prev = _cur_prev(h, t.season)
+    seq = np.vstack([prev, cur]) if len(prev) and len(cur) else (cur if len(cur) else prev)
+    n = len(seq)
+    out: dict[str, float] = {}
+    resid = seq[:, PTS] - seq[:, XFP] if n else np.empty(0)
+    for k in (1, 2, 3):
+        out[f"resid_xfp_l{k}"] = float(resid[-k]) if n >= k else NAN
+    out["over_xfp_streak"] = _run_length(resid)
+    out["resid_xfp_sum_l4"] = _ns(resid[-4:]) if n else NAN
+    opps = seq[:, OPPS] if n else np.empty(0)
+    vol = np.full(n, NAN)
+    for i in range(1, n):
+        vol[i] = opps[i] - _nm(opps[max(0, i - 3):i])
+    out["over_trail_streak"] = _run_length(vol)
+    out["resid_opps_l1"] = float(vol[-1]) if n else NAN
+    out["pts_vs_prev_season_l2"] = _nm(seq[-2:, PTS]) - _nm(prev[:, PTS]) if n and len(prev) else NAN
     return out
 
 
@@ -656,6 +705,7 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
 
     # ---- lags, season-to-date, prior season, TD luck ---------------------------------
     out.update(_lag_and_history_features(h, t))
+    out.update(_streak_features(h, t))                # opt-in family; same history, nothing new read
 
     # ---- role + teammate-injury context ----------------------------------------------
     out.update(_role_features(ctx, h, t))

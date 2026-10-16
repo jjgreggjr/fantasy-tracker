@@ -137,9 +137,12 @@ class Phase4(unittest.TestCase):
         self.assertIn("git add data leagues reports config.json", commit)
         self.assertNotIn("fetch_props", commit)
 
-    def test_the_props_step_is_the_only_new_step_and_the_old_steps_are_as_they_were(self):
-        self.assertEqual(len(self.steps) - 1, 14)                                    # the 13 steps Phase 3 left, plus the props step
+    def test_the_props_and_retrospective_steps_are_the_only_new_steps_and_the_old_steps_are_as_they_were(self):
+        self.assertEqual(len(self.steps) - 1, 15)                                    # the 13 steps Phase 3 left, plus props (Phase 4) and the retrospective (Phase 5)
         self.assertEqual(sum(1 for s in self.steps if "fetch_props" in s), 1)
+        retro = self.step("name: Weekly retrospective")
+        self.assertIn("run: python -m model.retrospective", retro)
+        self.assertIn("continue-on-error: true", retro)
         self.assertIn("run: python -m ff.run_weekly --strict", self.step("name: Run pipeline"))
         self.assertIn("run: python -m model.serve && python -m model.scoreboard", self.step("id: model\n"))
 

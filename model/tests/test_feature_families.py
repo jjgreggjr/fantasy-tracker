@@ -174,7 +174,9 @@ class Registry(unittest.TestCase):
 
     def test_same_week_xfp_and_depth_rank_are_not_features(self):
         xfp = [c for c in features.feature_columns() if "xfp" in c]
-        self.assertEqual(sorted(xfp), sorted(["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg"]))
+        self.assertEqual(sorted(xfp), sorted(["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg",
+                                              # the opt-in `streak` family: lagged (actual - xFP) residuals, never same-week
+                                              "resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4"]))
         self.assertEqual([c for c in features.feature_columns() if "depth" in c], [])
 
     def test_the_train_test_skewed_injury_field_is_excluded_not_hidden(self):
