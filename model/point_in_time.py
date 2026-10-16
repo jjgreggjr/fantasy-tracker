@@ -834,11 +834,13 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
 
 
 
-def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True) -> RawStore:
+def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
+               ecr: bool = False) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
-    tables (Phase 2.5)."""
+    tables (Phase 2.5); `ecr=True` adds the weekly FantasyPros ECR table (Phase 5 candidate) only if
+    `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
@@ -854,6 +856,11 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
     if college:
         from model.college import load_college_table   # local import: college.py needs this module's helpers
         t = load_college_table()
+        if t is not None:
+            tables.append(t)
+    if ecr:
+        from model.fetch_ecr import load_ecr_table     # local import: fetch_ecr.py needs this module's helpers
+        t = load_ecr_table()
         if t is not None:
             tables.append(t)
     return RawStore(tables)
