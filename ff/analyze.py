@@ -208,8 +208,11 @@ def start_sit(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     for st, lab in [("Out", "OUT"), ("IR", "IR"), ("Doubtful", "DOUBTFUL"),
                     ("Questionable", "QUESTIONABLE")]:
         df.loc[df.injury_status.eq(st), "flag"] = lab
+    # the gameday inactive list (ff.status.week_inactives) beats any designation
+    if "inactive" in df.columns:
+        df.loc[pd.to_numeric(df["inactive"], errors="coerce").fillna(0).eq(1), "flag"] = "INACTIVE"
     # the injury label may overwrite "BYE"; the bye zero must not depend on it
-    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "NO BASELINE"]), "start_score"] = np.nan
+    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "INACTIVE", "NO BASELINE"]), "start_score"] = np.nan
     return df.sort_values(["position", "start_score"],
                           ascending=[True, False]).reset_index(drop=True)
 

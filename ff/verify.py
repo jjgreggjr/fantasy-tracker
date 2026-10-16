@@ -42,12 +42,15 @@ UNKNOWN = object()      # "nobody told verify() what nflverse has" (e.g. --verif
 
 def verify(data_dir: Path, season: int, week: int,
            league_ids: list | None = None,
-           injury_rows=UNKNOWN) -> list[dict]:
+           injury_rows=UNKNOWN, inactive_rows=UNKNOWN) -> list[dict]:
     """Structural checks on everything the pipeline just wrote. `league_ids`
     are the configured leagues that must have every completed week recorded
     in lineups_played.csv and matchup_results.csv. `injury_rows` is how many
     nflverse injury-report rows exist for `week` (None: the file could not be
-    loaded at all); it decides whether an empty practice column is a problem."""
+    loaded at all); it decides whether an empty practice column is a problem.
+    `inactive_rows` is how many players the gameday inactive list holds for
+    `week` in games not yet started (None: weekly_rosters could not be loaded,
+    a WARN; zero is normal before Thursday's list is posted)."""
     out = []
     rd = lambda n: (pd.read_csv(data_dir / n, low_memory=False)
                     if (data_dir / n).exists() else None)
@@ -154,6 +157,13 @@ def verify(data_dir: Path, season: int, week: int,
     else:
         out.append(_r(OK, "status.rows", f"{len(st)} players"))
         out.append(_practice_check(st, week, injury_rows))
+    if inactive_rows is None:
+        out.append(_r(WARN, "status.inactives",
+                      "nflverse weekly_rosters could not be loaded: no gameday inactive check "
+                      "(an inactive player keeps his E_pts this run)"))
+    elif inactive_rows is not UNKNOWN:
+        out.append(_r(OK, "status.inactives",
+                      f"{inactive_rows} player(s) on the week {week} inactive list in games not yet started"))
 
     # --- played lineups: every completed week, every configured league ------
     done = completed_weeks(week)

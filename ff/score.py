@@ -48,7 +48,8 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
         return pd.DataFrame()
 
     pinfo = players[["gsis_id", "age", "years_exp", "injury_status",
-                     "nfl_status", "draft_number", "rookie_year"]]
+                     "nfl_status", "draft_number", "rookie_year"]
+                    + (["inactive"] if "inactive" in players.columns else [])]
     df = df.merge(pinfo, on="gsis_id", how="left")
     df = df.merge(base, on="gsis_id", how="left")
 
@@ -158,6 +159,8 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     health = df.injury_status.map(
         {"Questionable": 0.7, "Doubtful": 0.3, "Out": 0.0,
          "IR": 0.0, "PUP": 0.0, "Sus": 0.0}).fillna(1.0)
+    if "inactive" in df.columns:
+        health = health.where(~_inactive_mask(df), 0.0)
     df["confidence"] = (agree * role * health).round(2)
     df["conf"] = df.confidence.map(_conf_label)
 
@@ -167,6 +170,13 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     df["why"] = _why(df)
     return df.sort_values(["position", "E_pts"],
                           ascending=[True, False]).reset_index(drop=True)
+
+
+def _inactive_mask(df: pd.DataFrame) -> pd.Series:
+    """Rows on this week's gameday inactive list (`inactive` == 1, set by the run from ff.status.week_inactives)."""
+    if "inactive" not in df.columns:
+        return pd.Series(False, index=df.index)
+    return pd.to_numeric(df["inactive"], errors="coerce").fillna(0).astype(int).eq(1)
 
 
 def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
@@ -179,10 +189,13 @@ def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
     for st, lab in [("Questionable", "QUESTIONABLE"), ("Doubtful", "DOUBTFUL"),
                     ("Out", "OUT"), ("IR", "IR"), ("PUP", "PUP")]:
         df.loc[df.injury_status.eq(st), "flag"] = lab
+    # the gameday inactive list beats any designation: Jalen Coker (2026 week 4) was
+    # Questionable until he was inactive and still made the E_pts-optimal lineup.
+    df.loc[_inactive_mask(df), "flag"] = "INACTIVE"
     # a bye is a bye whatever the injury tag says: a Questionable player on a
     # bye week once kept his E_pts and the optimizer started him (Aaron Jones,
     # 2026 week 6). Apply the bye zero on the mask, not on the final label.
-    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "PUP", "NO BASELINE"]),
+    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "PUP", "INACTIVE", "NO BASELINE"]),
            "E_pts"] = np.nan
     return df
 

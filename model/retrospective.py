@@ -20,6 +20,10 @@ What it computes, per completed league-week:
                 with the evidence columns kept so a human can check each call:
                   inactive_missed   predicted > 5 and did not play (no stats row / zero snaps and zero points). A STATUS-LAYER miss,
                                     not a model miss: these rows are outside the scoreboard's identical rows and are counted apart.
+                                    Evidence `on_inactive_list`: 1 if he was on that week's gameday inactive list (data/inactives.csv,
+                                    nflverse weekly_rosters status INA, archived by the pipeline; joined on gsis_id and week), i.e. the
+                                    list posted ~90 min before kickoff would have caught him on a pre-lock run; 0 if not (dressed and
+                                    did not play, or never listed); blank when no list is archived for that week.
                   left_early        snap share far below his trailing snap share (in-game injury or benching), on an over-prediction.
                   teammate_out      volume up and a same-team same-position player at or above him on that week's depth chart did not
                                     play (no stats row that week although he had one earlier this season, zero snaps, or a rostered
@@ -81,7 +85,8 @@ NOISE = ("td_variance", "left_early", "unexplained")
 STATUS = ("inactive_missed",)
 
 KEYS = ["season", "week", "comparator", "gsis_id"]
-EVIDENCE = ["exp_vol", "act_vol", "exp_td", "act_td", "trail_snap_pct", "snap_pct", "margin", "teammate_out_name", "played"]
+EVIDENCE = ["exp_vol", "act_vol", "exp_td", "act_td", "trail_snap_pct", "snap_pct", "margin", "teammate_out_name", "played",
+            "on_inactive_list"]
 MISS_COLS = ["season", "week", "gsis_id", "name", "position", "team", "league", "comparator", "predicted", "actual", "error",
              "reason", "secondary_reason"] + EVIDENCE
 
@@ -108,7 +113,7 @@ def load_inputs(root: Path) -> dict:
     return {"mp": S.read_csv(root / "data" / "model_pts.csv"), "lp": S.read_csv(root / "data" / "lineups_played.csv"),
             "pw": S.read_csv(root / "data" / "player_weeks.csv"), "dc": S.read_csv(root / "data" / "depth_charts.csv"),
             "dvp": S.read_csv(root / "data" / "defense_vs_pos.csv"), "ev": S.read_csv(root / "data" / "model_eval.csv"),
-            "leagues": S.league_index(root)}
+            "ina": S.read_csv(root / "data" / "inactives.csv"), "leagues": S.league_index(root)}
 
 
 def frozen_inputs(path: Path = CONFIG_PATH) -> set[str]:
@@ -253,6 +258,19 @@ def teammate_for(tm: dict, gsis_id: str, team, position) -> str:
     return tm.get((team, position), "")
 
 
+def inactive_list(ina, season: int, week: int, gsis_ids):
+    """Per gsis_id: 1.0 if he is on the (season, week) gameday inactive list, 0.0 if not, NaN when no list is archived for that week."""
+    import numpy as np
+    import pandas as pd
+    ids = pd.Series(list(gsis_ids), dtype=str)
+    if ina is None or ina.empty or not {"season", "week", "gsis_id"} <= set(ina.columns):
+        return pd.Series(np.nan, index=ids.index)
+    w = ina[(_num(ina, "season") == season) & (_num(ina, "week") == week)]
+    if w.empty:
+        return pd.Series(np.nan, index=ids.index)
+    return ids.isin(set(w["gsis_id"].astype(str))).astype("float64")
+
+
 # --------------------------------------------------------------------------- the classifier
 def classify(row: dict) -> tuple[str, str]:
     """(primary, secondary) reason for one big miss. `row` holds error (predicted - actual), position, exp_vol, act_vol, exp_td, act_td,
@@ -353,11 +371,12 @@ def evidence_frame(inp: dict, season: int, week: int, gsis_ids):
     absent, names = absent_players(inp["pw"], inp["lp"], season, week)
     tm = teammates_out(inp["dc"], absent, names, season, week)
     ev["teammate_out_name"] = [teammate_for(tm, g, t, p) for g, t, p in zip(ev["gsis_id"], ev["team"], ev["position"])]
+    ev["on_inactive_list"] = inactive_list(inp.get("ina"), season, week, ev["gsis_id"]).to_numpy()
     for c in ("name", "position"):
         if c not in ev.columns:
             ev[c] = None
     return ev[["gsis_id", "name", "position", "team", "act_vol", "act_td", "snap_pct", "exp_vol", "exp_td", "trail_snap_pct",
-               "margin", "teammate_out_name"]]
+               "margin", "teammate_out_name", "on_inactive_list"]]
 
 
 def big_misses(inp: dict, season: int, week: int):
@@ -496,9 +515,20 @@ def candidate_signals(misses, inputs: set[str], registry: set[str] | None = None
         feats = SIGNAL_FEATURES.get(reason, ())
         L.append(f"| `{reason}` | {_f(100 * share, 0)}% ({k}) | " + (", ".join(f"`{f}`" for f in feats) or "n/a")
                  + f" | {feature_status(feats, inputs, registry)} |")
-    inactive = int((misses[misses["comparator"] == "model_components"]["reason"] == "inactive_missed").sum())
-    L.append(f"| `inactive_missed` | {inactive} rows, counted apart | status layer (`ff.status`, Sleeper `injury_status`, the nflverse report), not a feature | n/a |")
+    ina = misses[(misses["comparator"] == "model_components") & (misses["reason"] == "inactive_missed")]
+    L.append(f"| `inactive_missed` | {len(ina)} rows, counted apart ({inactive_caught(ina)}) | status layer (`ff.status`, Sleeper "
+             "`injury_status`, the nflverse report, the gameday inactive list), not a feature | n/a |")
     return L
+
+
+def inactive_caught(ina) -> str:
+    """'k of n on the gameday inactive list' for inactive_missed rows (rows with no archived list are counted apart)."""
+    import pandas as pd
+    v = (pd.to_numeric(ina["on_inactive_list"], errors="coerce") if "on_inactive_list" in ina.columns
+         else pd.Series(float("nan"), index=ina.index))
+    known = v.dropna()
+    s = f"{int(known.sum())} of {len(known)} on the gameday inactive list"
+    return s + (f", {len(v) - len(known)} with no list archived" if len(known) < len(v) else "")
 
 
 def render(misses, q: dict, inp: dict, inputs: set[str]) -> str:
@@ -572,8 +602,12 @@ def render(misses, q: dict, inp: dict, inputs: set[str]) -> str:
         ina = ina.reindex(ina["predicted"].sort_values(ascending=False).index)
         L += [f"**Did not play, predicted > {INACTIVE_PRED:.0f} (`model_components`, {len(ina)} players; status layer, not scored)**", ""]
         if len(ina):
-            L += ["| player | pos | team | league | predicted |", "|---|---|---|---|---|"]
-            L += [f"| {r.name} | {r.position} | {r.team} | {r.league} | {_f(r.predicted)} |" for r in ina.itertuples()]
+            yn = lambda v: "n/a" if v != v else ("yes" if v else "no")
+            L += [f"Gameday inactive list (nflverse weekly_rosters, posted ~90 min before kickoff; the pre-lock run and serve act on it): "
+                  f"{inactive_caught(ina)}. The rest dressed and did not play, or were never listed.", ""]
+            L += ["| player | pos | team | league | predicted | on inactive list |", "|---|---|---|---|---|---|"]
+            L += [f"| {r.name} | {r.position} | {r.team} | {r.league} | {_f(r.predicted)} | {yn(r.on_inactive_list)} |"
+                  for r in ina.itertuples()]
         else:
             L.append("none")
         L.append("")
