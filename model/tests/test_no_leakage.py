@@ -285,7 +285,9 @@ class ScheduleSanity(unittest.TestCase):
         it is still an exact list, and the own-game-perturbation test proves none reads the target game."""
         t = make_target(store(), "00-0034844", 2024, 10)
         names = [k for k in build_features(store(), t) if "xfp" in k]
-        self.assertEqual(names, ["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg"])
+        self.assertEqual(names, ["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg",
+                                 # the opt-in `streak` family (2026-10-15): lagged residuals against xFP, same history, same gate
+                                 "resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4"])
 
     def test_week_one_has_no_history_and_says_so(self):
         for t in [x for x in targets() if x.week == 1]:
