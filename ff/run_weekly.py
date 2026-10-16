@@ -415,7 +415,34 @@ def _main(argv=None) -> int:
     if injuries is None:
         warnings.append(f"injuries_{season}.csv not published (or unreadable) — "
                         "practice participation is blank this run.")
-    st = status_mod.build(players, depth, proj, preview_week, injuries)
+    # The gameday inactive list (nflverse weekly_rosters, status INA), posted ~90 min before each
+    # kickoff: Friday's run sees Thursday night's, the Sunday pre-lock run sees the early slate's.
+    # Only this week's rows for games not yet started count (status.week_inactives); the whole
+    # season's list is archived in data/inactives.csv for the retrospective. Failure is a WARN.
+    wr = nv.get("weekly_rosters")
+    inactives = pd.DataFrame(columns=status_mod.INACTIVE_COLS)
+    ina_rows = None
+    if wr is None:
+        warnings.append(f"roster_weekly_{season}.csv not published (or unreadable) — "
+                        "no gameday inactive check this run.")
+    else:
+        try:
+            kicks = status_mod.team_kickoffs(nv.get("games"), season)
+            inactives = status_mod.week_inactives(wr, season, preview_week, kicks, now)
+            ina_rows = len(inactives)
+            build.replace_partition(DATA / "inactives.csv",
+                                    status_mod.inactive_archive(wr, season, kicks),
+                                    ["season"], ["season", "week", "gsis_id"])
+            log.info("inactive list: %d player(s) for week %s in games not yet started",
+                     ina_rows, preview_week)
+        except Exception as e:                  # new data must never stop the rest
+            log.warning("inactive list failed to parse: %s", e)
+            warnings.append(f"roster_weekly_{season}.csv could not be parsed ({e}) — "
+                            "no gameday inactive check this run.")
+            inactives, ina_rows = pd.DataFrame(columns=status_mod.INACTIVE_COLS), None
+    players["inactive"] = players.gsis_id.isin(set(inactives.gsis_id)).astype(int)
+
+    st = status_mod.build(players, depth, proj, preview_week, injuries, inactives)
     if not st.empty:
         st.to_csv(DATA / "status.csv", index=False)
         flagged = st[(st.depth_disagreement >= 2)
@@ -536,6 +563,8 @@ def _main(argv=None) -> int:
         "status rows": (f"{len(st)} players; "
                         f"{int((st.practice.notna()).sum())} with practice reports"
                         if not st.empty else "none"),
+        "gameday inactives": (f"{ina_rows} on the week {preview_week} list (games not yet started)"
+                              if ina_rows is not None else "not loaded — see warnings"),
     }
 
     ctx = {"season": season, "preview_week": preview_week, "stats_week": stats_week,
@@ -544,7 +573,8 @@ def _main(argv=None) -> int:
            "leagues": league_ctx, "dvp": ranks, "trending": trending}
 
     checks = verify_mod.verify(DATA, season, preview_week,
-                               _configured_league_ids(cfg), injury_rows=inj_rows)
+                               _configured_league_ids(cfg), injury_rows=inj_rows,
+                               inactive_rows=ina_rows)
     for lid in espn_missing:
         checks.append(verify_mod._r(verify_mod.WARN, "espn.league",
                                     f"league {lid} not loaded this run — secrets "

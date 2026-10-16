@@ -253,6 +253,46 @@ class Availability(unittest.TestCase):
             players = pd.DataFrame({"gsis_id": ["p"], "injury_status": [state], "nfl_status": ["ACT"]})
             self.assertTrue(SV.availability(frame, players)[0].all(), state)
 
+    def test_the_weeks_gameday_inactive_list_withholds_for_games_not_started(self):
+        """Coker, 2026 week 4: Questionable (keeps a row) until he is on the inactive list; then no row. Guards: the row's own season
+        and week only (last week's list never carries over), and a game already under way keeps its frozen row."""
+        sun, thu = "2026-10-04T17:00:00+00:00", "2026-10-02T00:15:00+00:00"
+        frame = pd.DataFrame({"player_id": ["coker", "healthy", "stale", "thursday", "other_season"],
+                              "season": [2026, 2026, 2026, 2026, 2026], "week": [4, 4, 4, 4, 4],
+                              "kickoff_utc": [sun, sun, sun, thu, sun],
+                              "inj_report_status": ["Questionable", None, None, None, None], "inj_weeks_since_report": [0, None, None, None, None]})
+        ina = pd.DataFrame({"season": [2026, 2026, 2026, 2025], "week": [4, 3, 4, 4], "gsis_id": ["coker", "stale", "thursday", "other_season"]})
+        players = pd.DataFrame({"gsis_id": ["coker"], "injury_status": ["Questionable"], "nfl_status": ["ACT"]})
+        sunday = pd.Timestamp("2026-10-04 15:52", tz="UTC")
+        withheld, why = SV.availability(frame, players, ina, sunday)
+        self.assertEqual(dict(zip(frame.player_id, withheld)),
+                         {"coker": True, "healthy": False, "stale": False, "thursday": False, "other_season": False})
+        self.assertEqual(why[frame.player_id == "coker"].iloc[0], "gameday inactive list: INA")
+        # before the Thursday kickoff (the Friday-file case) the Thursday player is withheld too
+        early = SV.availability(frame, players, ina, pd.Timestamp("2026-10-01 22:00", tz="UTC"))[0]
+        self.assertTrue(early[frame.player_id == "thursday"].iloc[0])
+        # no list, or no clock: the old behaviour (Questionable keeps his row)
+        self.assertFalse(SV.availability(frame, players)[0].any())
+        self.assertFalse(SV.availability(frame, players, None, sunday)[0].any())
+
+    def test_assemble_reads_the_pipelines_inactive_archive(self):
+        frame = pd.DataFrame({"player_id": ["coker", "ok"], "season": 2026, "week": 4, "game_id": "g", "position": "WR", "team": "CAR",
+                              "opponent": "NE", "kickoff_utc": "2026-10-04T17:00:00+00:00",
+                              "inj_report_status": [None, None], "inj_weeks_since_report": [None, None],
+                              "inj_practice_status": [None, None]})
+        pred = pd.DataFrame({k: 9.5 for k in ("pts_model", "pts_model_components", "p10", "q50", "p90")}, index=frame.index)
+        fake = mock.Mock()
+        fake._tables = {"players_static": mock.Mock(df=pd.DataFrame({"player_id": ["coker", "ok"], "display_name": ["Jalen Coker", "Ok"]}))}
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "data").mkdir()
+            pd.DataFrame({"season": [2026], "week": [4], "gsis_id": ["coker"], "team": ["CAR"]}).to_csv(Path(tmp) / "data" / "inactives.csv", index=False)
+            pd.DataFrame({"gsis_id": ["coker", "ok"], "name": ["Jalen Coker", "Ok"], "injury_status": ["Questionable", None],
+                          "nfl_status": ["ACT", "ACT"]}).to_csv(Path(tmp) / "data" / "players.csv", index=False)
+            out, why = SV.assemble(fake, frame, pred, None, [], root=Path(tmp), season=2026, week=4,
+                                   served_at=pd.Timestamp("2026-10-04 15:52", tz="UTC"), warnings=[])
+        self.assertEqual(out["gsis_id"].tolist(), ["ok"])
+        self.assertEqual(why.to_dict(), {"coker": "gameday inactive list: INA"})
+
     def test_without_a_players_table_only_this_weeks_nflverse_report_withholds(self):
         frame = pd.DataFrame({"player_id": ["a", "b", "c"], "inj_report_status": ["Out", "Questionable", "Out"],
                               "inj_weeks_since_report": [0, 0, 1]})

@@ -120,6 +120,16 @@ def _fetch_one(release: str, filename: str, raw_dir: Path) -> pd.DataFrame | Non
     return _read_asset(dest)
 
 
+def _optional(release: str, filename: str, raw_dir: Path) -> pd.DataFrame | None:
+    """nflverse_csv(required=False), plus: an unreadable or malformed file is None, not an exception."""
+    try:
+        return nflverse_csv(release, filename, raw_dir, required=False)
+    except Exception as e:
+        log.warning("%s could not be loaded (%s: %s); continuing without it",
+                    filename, type(e).__name__, e)
+        return None
+
+
 def load_nflverse(season: int, raw_dir: Path, with_prior: bool = True) -> dict:
     """Fetch every nflverse file the pipeline needs.
 
@@ -141,6 +151,11 @@ def load_nflverse(season: int, raw_dir: Path, with_prior: bool = True) -> dict:
         # player-week, appearing as the week's reports are issued (Wednesday on).
         "injuries": nflverse_csv("injuries", f"injuries_{season}.csv",
                                  raw_dir, required=False),
+        # Weekly rosters: one row per player-week; `status == "INA"` is the gameday inactive
+        # list, posted ~90 min before each kickoff (Thursday's is in Friday's file). CSV, not
+        # parquet: the pipeline's own install has no pyarrow. Optional and isolated: any
+        # failure is None (a WARN in verify), never a crash.
+        "weekly_rosters": _optional("weekly_rosters", f"roster_weekly_{season}.csv", raw_dir),
     }
     if with_prior:
         p = season - 1

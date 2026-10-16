@@ -23,7 +23,9 @@ What it does, in order (every step reuses training code; nothing is re-implement
      Inputs are Phase 2's 71 columns (`serving_config.json`): no new features.
   5. Who gets no row: a player the model predicts "points if he plays", so availability is the status layer's, not the model's.
      A row is WITHHELD when Sleeper's `injury_status` (data/players.csv, the pipeline's own status layer, `ff.status.OUT_STATES`)
-     says Out / IR / PUP / Sus, when the nflverse report for the week says Out, or when he is cut / retired / reserve.
+     says Out / IR / PUP / Sus, when the nflverse report for the week says Out, when he is on the week's gameday inactive list
+     (data/inactives.csv, written by the pipeline from nflverse weekly_rosters; this week's list only, games not yet kicked off:
+     posted ~90 min before kickoff, so it bites on the Sunday pre-lock serve), or when he is cut / retired / reserve.
      Doubtful and Questionable players DO get a row (the model does not see the designation; `report_status` carries it).
   6. `data/model_pts.csv` via `ff.build.replace_partition` on (season, week), then `E_pts_model`, `p10`, `p90` appended to each
      league's `roster.csv`.
@@ -439,16 +441,46 @@ def injury_coverage(store, season: int, week: int) -> dict:
             "mix": ", ".join(f"{n} {k}" for k, n in desig.value_counts().items())}
 
 
-def availability(frame, players):
-    """(mask of rows to WITHHOLD, reason per row). The status layer owns availability; the model only predicts "if he plays". Three
-    signals, any one withholds: the nflverse report for THIS week says Out; Sleeper's `injury_status` is one of the status layer's
-    OUT_STATES (Out, IR, PUP, Sus: Sleeper also uses 'Out' for a coach's-decision inactive); his nflverse roster status is cut,
-    retired, exempt or reserve. Last week's report does not withhold him: Sleeper's status, which is live, speaks for this week."""
+def read_inactives(root: Path):
+    """data/inactives.csv: the season's gameday inactive lists as the pipeline archived them this run (nflverse weekly_rosters,
+    status INA; `ff.status.inactive_archive`). None when the pipeline could not load the file."""
+    import pandas as pd
+    p = root / "data" / "inactives.csv"
+    if not p.exists():
+        return None
+    return pd.read_csv(p, low_memory=False, dtype={"gsis_id": str})
+
+
+def on_inactive_list(frame, inactives, now):
+    """Mask: the row's player is on the gameday inactive list for the row's OWN season and week (a previous week's list never carries
+    over) and his game has not kicked off at `now` (a game under way keeps its frozen row). The list is posted ~90 min before each
+    kickoff, so this only ever fires on a Sunday pre-lock serve (or Friday, for Thursday night): it is never a Friday feature."""
+    import pandas as pd
+    if (inactives is None or not len(inactives) or not {"season", "week", "gsis_id"} <= set(inactives.columns)
+            or not {"season", "week", "player_id"} <= set(frame.columns)):
+        return pd.Series(False, index=frame.index)
+    keys = set(zip(pd.to_numeric(inactives["season"], errors="coerce"), pd.to_numeric(inactives["week"], errors="coerce"),
+                   inactives["gsis_id"].astype(str)))
+    hit = pd.Series([(s, w, str(g)) in keys for s, w, g in zip(pd.to_numeric(frame["season"], errors="coerce"),
+                                                             pd.to_numeric(frame["week"], errors="coerce"), frame["player_id"])],
+                    index=frame.index)
+    if now is not None and "kickoff_utc" in frame.columns:
+        hit &= pd.to_datetime(frame["kickoff_utc"], utc=True, errors="coerce").gt(pd.Timestamp(now))
+    return hit
+
+
+def availability(frame, players, inactives=None, now=None):
+    """(mask of rows to WITHHOLD, reason per row). The status layer owns availability; the model only predicts "if he plays". Four
+    signals, any one withholds: he is on the week's gameday inactive list (`on_inactive_list`: this week's list, game not started);
+    the nflverse report for THIS week says Out; Sleeper's `injury_status` is one of the status layer's OUT_STATES (Out, IR, PUP, Sus:
+    Sleeper also uses 'Out' for a coach's-decision inactive); his nflverse roster status is cut, retired, exempt or reserve. Last
+    week's report does not withhold him: Sleeper's status, which is live, speaks for this week."""
     import pandas as pd
     from ff.status import OUT_STATES
     why = pd.Series("", index=frame.index, dtype=object)
+    why[on_inactive_list(frame, inactives, now)] = "gameday inactive list: INA"
     rep = current_report(frame).fillna("")
-    why[rep.eq("Out")] = "nflverse report: Out"
+    why[rep.eq("Out") & why.eq("")] = "nflverse report: Out"
     if players is not None and len(players):
         p = players.drop_duplicates("gsis_id").set_index("gsis_id")
         inj = frame["player_id"].map(p["injury_status"]) if "injury_status" in p else pd.Series(index=frame.index, dtype=object)
@@ -509,16 +541,16 @@ def display_names(store, players, ids):
 
 # --------------------------------------------------------------------------- the output frame
 def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, week: int, served_at, warnings: list,
-             league_bands: dict | None = None):
+             league_bands: dict | None = None, now=None):
     """One row per predicted (and not withheld) player: the columns of COLUMN_DOCS. Returns (frame, reason Series keyed by gsis_id
-    for every withheld player)."""
+    for every withheld player). `now` is the serve's clock for the inactive-list guard (default: `served_at`)."""
     import numpy as np
     import pandas as pd
     from model import components as C
     players = read_players(root)
     if players is None:
         warnings.append("data/players.csv is missing: no availability filter and no names from the pipeline's table")
-    withhold, why = availability(served, players)
+    withhold, why = availability(served, players, read_inactives(root), served_at if now is None else now)
     out = pd.DataFrame({"season": season, "week": week, "game_id": served["game_id"], "kickoff_utc": served["kickoff_utc"],
                         "gsis_id": served["player_id"], "position": served["position"], "team": served["team"],
                         "opponent": served["opponent"], "report_status": current_report(served),
@@ -734,7 +766,7 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     pred, comp, league_bands = predict_week(df, season, week, cfg, leagues)
     served_df = df.loc[served_index]
     out, reasons = assemble(store, served_df, pred, comp, leagues, root=root, season=season, week=week, served_at=now_utc(),
-                            warnings=warnings, league_bands=league_bands)
+                            warnings=warnings, league_bands=league_bands, now=now)
     lines = summary_lines(merged_week(out_path, out, season, week, now), reasons, leagues, root, season, week)
     lines += injury_lines(store, out, upcoming, now, season, week, warnings)
     if args.dry_run:
