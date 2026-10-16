@@ -51,6 +51,12 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               1/2/3 games, their 4-game sum, run lengths of consecutive over/under games (capped +-6), the volume analogue, and
               the last two games against last season's per-game mean. Last season's REG games precede this season's so the
               first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
+  ecr         (Phase 5 candidate, 2026-10-16) FantasyPros weekly expert consensus (model/fetch_ecr.py), the newest scrape
+              assigned to THIS week that is known before kickoff: ecr_rank = PPR superflex OVERALL ECR (the archive's only
+              weekly cross-position offense list), ecr_pos_rank = ordinal rank on his weekly PPR position page, ecr_sd / best /
+              worst / spread = expert dispersion on that position page, ecr_owned_pct = FP's average roster %, ecr_delta_l1 =
+              ecr_pos_rank minus last week's (week - 1, same season). NaN when he has no row for this week known before his
+              kickoff: unranked, week 18 and most week 1s (not in the archive), or a Thursday game before that week's scrape.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -149,6 +155,8 @@ FAMILIES: dict[str, list[str]] = {
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
     "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
                "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
+    # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:ecr`)
+    "ecr": ["ecr_rank", "ecr_pos_rank", "ecr_sd", "ecr_best", "ecr_worst", "ecr_spread", "ecr_owned_pct", "ecr_delta_l1"],
 }
 STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
 # Produced, but never a model input.
@@ -763,6 +771,9 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- college production (rookie priors; season-start known_at) ---------------------
     out.update(_college_features(store, t, trace))
 
+    # ---- FantasyPros weekly ECR (opt-in family; NaN unless the table was fetched) ----------
+    out.update(_ecr_features(store, t, trace))
+
     # ---- Phase 2.5: play-by-play usage / team / participation, and shrunken efficiency -----
     out.update(_pbp_features(store, t, h, ctx, trace))
     out.update(_eff_features(h, t))
@@ -780,6 +791,27 @@ def _college_features(store, t: TargetRow, trace) -> dict[str, float]:
         return out
     for col in out:
         out[col] = _f(c[col])
+    return out
+
+
+def _ecr_features(store, t: TargetRow, trace) -> dict[str, float]:
+    """This week's newest pre-kickoff ECR row, and last week's position rank for the delta. Week-matched on purpose: the gate
+    alone would hand a Thursday game last week's ranking (scraped the Friday before), which ranked a different game."""
+    out = {c: NAN for c in FAMILIES["ecr"]}
+    if not store.has("ecr"):
+        return out
+    e = as_of_join(store, "ecr", t.kickoff, player_id=t.player_id, trace=trace)
+    e = e[e["season"] == t.season]
+    cur, prev = _last(e[e["week"] == t.week]), _last(e[e["week"] == t.week - 1])
+    if cur is None:
+        return out
+    out["ecr_rank"] = _f(cur["ecr_sf_rank"])
+    out["ecr_pos_rank"] = _f(cur["ecr_pos_rank"])
+    out["ecr_sd"], out["ecr_best"], out["ecr_worst"] = _f(cur["ecr_sd"]), _f(cur["ecr_best"]), _f(cur["ecr_worst"])
+    out["ecr_spread"] = out["ecr_worst"] - out["ecr_best"]
+    out["ecr_owned_pct"] = _f(cur["ecr_owned_pct"])
+    if prev is not None:
+        out["ecr_delta_l1"] = out["ecr_pos_rank"] - _f(prev["ecr_pos_rank"])
     return out
 
 
