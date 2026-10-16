@@ -27,6 +27,10 @@ on:
     # snapshots the 1 pm slate before it kicks off even when the cron is hours late.
     - cron: "52 13 * * 0"   # Sun 07:52 MDT — pre-lock refresh, the early one (lands before 17:00 UTC even when 3 h late)
     - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, backstop
+    # The gameday inactive list posts ~90 min before each kickoff. The runs above see the early slate's
+    # lists (~15:30 UTC); the late-afternoon games' lists post ~18:55 UTC, so one more run before the
+    # 20:05 UTC locks picks them up (2026 weeks 4-5: 3 of 13 listed inactives were late-slate only).
+    - cron: "17 19 * * 0"   # Sun 13:17 MDT — pre-lock refresh, late-afternoon slate inactives
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:
