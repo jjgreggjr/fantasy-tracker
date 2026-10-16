@@ -133,6 +133,14 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,drop,12711,,6
 2026,5,free_agent,add,11608,Isaiah Williams,6
 2026,5,free_agent,drop,2306,Jameis Winston,6
+2026,6,free_agent,add,9482,Michael Mayer,5
+2026,6,free_agent,drop,13402,Skyler Bell,5
+2026,6,free_agent,add,6083,,7
+2026,6,free_agent,drop,3678,,7
+2026,6,free_agent,add,11786,,6
+2026,6,free_agent,drop,13545,,6
+2026,6,waiver,add,11792,,3
+2026,6,waiver,drop,9504,Kayshon Boutte,3
 2026,6,free_agent,add,NYG,,1
 2026,6,free_agent,drop,12524,Shedeur Sanders,1
 2026,6,free_agent,add,12542,Efton Chism III,2
