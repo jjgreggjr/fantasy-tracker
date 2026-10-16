@@ -91,14 +91,17 @@ class Phase4(unittest.TestCase):
     def crons(self) -> list[str]:
         return [ln.strip() for ln in self.text.splitlines() if ln.strip().startswith("- cron:")]
 
-    def test_two_sunday_pre_lock_entries_and_the_other_four_unchanged(self):
-        """Scheduled runs arrive 1.4-5.75 h late: the 13:52 slot is the one that can still beat the 17:00 UTC lock."""
+    def test_three_sunday_pre_lock_entries_and_the_other_four_unchanged(self):
+        """Scheduled runs arrive 1.4-5.75 h late: the 13:52 slot is the one that can still beat the 17:00 UTC lock.
+        The 19:17 slot (Phase 5) lands before the 20:05 UTC late-afternoon locks, after those games' inactive lists post."""
         crons = self.crons()
-        self.assertEqual(len(crons), 6)
+        self.assertEqual(len(crons), 7)
         self.assertEqual([c.split("#")[0].strip() for c in crons],
                          ['- cron: "37 18 * * 2"', '- cron: "41 19 * * 2"', '- cron: "7 14 * * 3"', '- cron: "11 22 * * 5"',
-                          '- cron: "52 13 * * 0"', '- cron: "52 15 * * 0"'])
-        for c, hour in ((crons[-2], "13"), (crons[-1], "15")):
+                          '- cron: "52 13 * * 0"', '- cron: "52 15 * * 0"', '- cron: "17 19 * * 0"'])
+        minute, h, _, _, dow = crons[-1].split('"')[1].split()
+        self.assertEqual((h, minute, dow), ("19", "17", "0"))
+        for c, hour in ((crons[-3], "13"), (crons[-2], "15")):
             minute, h, _, _, dow = c.split('"')[1].split()
             self.assertEqual((h, minute, dow), (hour, "52", "0"))                 # Sunday, before 17:00 UTC, off :00 and :30
             self.assertNotIn(minute, ("0", "30"))
