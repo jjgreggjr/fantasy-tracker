@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import sys
 import time
@@ -40,7 +41,7 @@ from model import features as F
 from model import point_in_time as pit
 
 SEED = 20260929
-THREADS = 4
+THREADS = int(os.environ.get("MODEL_THREADS", "4"))     # env: 1 on a shared box (parallel trials thrash each other)
 MATRIX = pit.CACHE_DIR / "features.parquet"
 PARAMS_PATH = Path(__file__).resolve().parent / "tuned_params.json"
 TARGET = "y_points_ppr"
@@ -54,7 +55,8 @@ FOLLOW_UP_TREE_FACTOR = 1.1
 # Phase 2.5 families exist in the matrix but are inputs only when a Spec asks for them (`add_families`), so the Phase 2
 # primary keeps exactly its Phase 2 inputs and its results reproduce.
 OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff",
-                   "streak")                     # Phase 5 candidate (2026-10-15): `--candidate +family:streak`
+                   "streak",                     # Phase 5 candidate (2026-10-15): `--candidate +family:streak`
+                   "nfelo", "pepa")              # Phase 5 candidates (2026-10-16): `+family:nfelo`, `+family:pepa`
 
 REPORT_ORD = {"Questionable": 1.0, "Doubtful": 2.0, "Out": 2.0}          # 'Note' and anything unknown -> 0 (no designation)
 PRACTICE_ORD = {"Full Participation in Practice": 1.0, "Limited Participation in Practice": 2.0,

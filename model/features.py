@@ -52,6 +52,13 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               the last two games against last season's per-game mean. Last season's REG games precede this season's so the
               first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
 
+  nfelo       (Phase 5 candidate, 2026-10-16) greerreNFL public CSVs: nfelo unit values (pass/rush off and def) for his team and
+              the opponent and their matchup edges, nfelo elo and QB adjustment, his team's starting QB's 538-style value,
+              season-to-date WEPA net, open-to-last spread / total movement and spread tickets share, film margin over the
+              last 4 games. Team-game level; model/nfelo.py has the known_at rules (coaches.csv is skipped: not point-in-time).
+  pepa        (Phase 5 candidate, 2026-10-16) his own EPA and efficiency from the weekly stats: pass/rush/rec EPA, air yards,
+              YAC, first downs, sacks, CPOE, PACR/RACR over l1 / l3 / std, and per-opportunity EPA / YAC rates over l3.
+
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
 """
@@ -121,6 +128,22 @@ EFF_K = {"catch_rate": 20.0, "rec_ypt": 20.0, "rec_td_rate": 60.0, "rush_ypc": 3
          "pass_ypa": 150.0, "pass_cmp_rate": 150.0, "pass_td_rate": 300.0, "pass_int_rate": 300.0}
 EFF_WINDOWS = ("career", "std")
 
+# `pepa` (Phase 5 candidate, 2026-10-16): per-player EPA and efficiency the matrix lacks. Per-game means over l1 / l3 / std of the
+# counts, ratio-of-sums for the ratios, and per-opportunity rates over the last 3. Not added because already a feature: aDOT
+# (pbp_adot_*), WOPR (pbp_wopr_*), air-yards share (pbp_ay_share_*), and every eff_* yards/TD/catch/completion rate.
+PEPA_WINDOWS = ("l1", "l3", "std")
+PEPA_COUNTS = ("pass_epa", "rush_epa", "rec_epa", "pass_air_yards", "rec_air_yards", "rec_yac", "rec_fd", "rush_fd", "pass_fd",
+               "sacks")
+PEPA_RATIOS = ("cpoe", "pacr", "racr")
+PEPA_RATES = ("epa_per_opp", "pass_epa_per_db", "rec_epa_per_tgt", "rush_epa_per_car", "yac_per_rec")
+# `nfelo` (Phase 5 candidate, 2026-10-16): greerreNFL team ratings, QB values, WEPA, market line movement, film margin
+# (model/nfelo.py has the sources and the known_at rules). All team-game level.
+NFELO_COLUMNS = ["nf_tm_pass_off", "nf_tm_rush_off", "nf_opp_pass_def", "nf_opp_rush_def", "nf_tm_total", "nf_opp_total",
+                 "nf_pass_edge", "nf_rush_edge", "nf_elo", "nf_opp_elo", "nf_elo_dif", "nf_qb_adj", "nf_opp_qb_adj",
+                 "nf_qb_value", "nf_opp_qb_value", "nf_wepa_net", "nf_opp_wepa_net", "nf_spread_move", "nf_total_move",
+                 "nf_tickets_pct", "nf_film_margin_l4"]
+FILM_WINDOW = 4
+
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
             + [f"{n}_std_mean" for n in STD_STATS],
@@ -149,6 +172,9 @@ FAMILIES: dict[str, list[str]] = {
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
     "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
                "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
+    # ---- Phase 5 candidates (2026-10-16; opt-in): `+family:nfelo`, `+family:pepa`
+    "nfelo": NFELO_COLUMNS,
+    "pepa": [f"pepa_{n}_{w}" for w in PEPA_WINDOWS for n in PEPA_COUNTS + PEPA_RATIOS] + [f"pepa_{n}_l3" for n in PEPA_RATES],
 }
 STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
 # Produced, but never a model input.
@@ -238,7 +264,12 @@ def _memo(store, trace, key, fn):
 # value-matrix columns of Hist.v (12 volume/points columns, then the Phase 2.5 component columns)
 PTS, OPPS, CAR, TGT, ATT, TSH, CSH, SNAP, XFP, TDR, TDC, TDP = range(12)
 REC, RECY, RECTD, RUSHY, RUSHTD, PASSY, PASSTD, INT, CMP = range(12, 21)
-N_VALUES = 21
+# `pepa` inputs (nflverse weekly stats; NaN EPA on a stats row means no play of that kind, stored as 0; cpoe stays NaN without
+# attempts). The stats column feeding each, in order, is PEPA_SRC.
+EPA_P, EPA_R, EPA_C, CPOE, PAY, RAY, RYAC, RFD, UFD, PFD, SACK = range(21, 32)
+N_VALUES = 32
+PEPA_SRC = ("passing_epa", "rushing_epa", "receiving_epa", "passing_cpoe", "passing_air_yards", "receiving_air_yards",
+            "receiving_yards_after_catch", "receiving_first_downs", "rushing_first_downs", "passing_first_downs", "sacks_suffered")
 
 
 class Hist:
@@ -273,11 +304,14 @@ def _history(store, player_id: str, t: TargetRow, trace) -> Hist:
                  "rec_touchdown_exp", "pass_touchdown", "pass_touchdown_exp")}
         xfp_by = xcol["total_fantasy_points_exp"]
         rows = []
-        for (gid, season, week, stype, team, ppr, car, tgt, att_, tsh, csh, rec, recy, rectd, rushy, rushtd, passy,
-             passtd, ints, cmp_) in _cols(
+        # pepa inputs: absent from a table that predates them (synthetic test stores) -> NaN
+        pep = [pg[c].tolist() if c in pg.columns else [NAN] * len(pg) for c in PEPA_SRC]
+        pep = list(zip(*pep)) if len(pg) else []
+        for i, (gid, season, week, stype, team, ppr, car, tgt, att_, tsh, csh, rec, recy, rectd, rushy, rushtd, passy,
+                passtd, ints, cmp_) in enumerate(_cols(
                 pg, "game_id", "season", "week", "season_type", "team", "fantasy_points_ppr", "carries", "targets",
                 "attempts", "target_share", "carry_share", "receptions", "receiving_yards", "receiving_tds",
-                "rushing_yards", "rushing_tds", "passing_yards", "passing_tds", "passing_interceptions", "completions"):
+                "rushing_yards", "rushing_tds", "passing_yards", "passing_tds", "passing_interceptions", "completions")):
             carries, targets, att = _f(car), _f(tgt), _f(att_)
             opps = (0.0 if math.isnan(carries) else carries) + (0.0 if math.isnan(targets) else targets)
             no_opp = opps + (0.0 if math.isnan(att) else att) == 0
@@ -289,15 +323,19 @@ def _history(store, player_id: str, t: TargetRow, trace) -> Hist:
                 xfp = _f(xfp_by[gid])
             else:
                 tdr = tdc = tdp = xfp = 0.0 if no_opp else NAN
+            pv = [_f(x) for x in pep[i]]
+            for j in (0, 1, 2):                              # EPA of plays he did not have is 0, not unknown
+                if math.isnan(pv[j]) and "passing_epa" in pg.columns:
+                    pv[j] = 0.0
             rows.append((gid, int(season), int(week), stype == "REG", True, team, _f(ppr), opps, carries, targets, att,
                          _f(tsh), _f(csh), _f(snap.get(gid)), xfp, tdr, tdc, tdp,
-                         _f(rec), _f(recy), _f(rectd), _f(rushy), _f(rushtd), _f(passy), _f(passtd), _f(ints), _f(cmp_)))
+                         _f(rec), _f(recy), _f(rectd), _f(rushy), _f(rushtd), _f(passy), _f(passtd), _f(ints), _f(cmp_), *pv))
         seen = set(pg["game_id"])
         only = sn[(sn["offense_snaps"] > 0) & sn["position"].isin(POSITIONS) & ~sn["game_id"].isin(seen)]
         for gid, season, week, gtype, pct, team in _cols(only, "game_id", "season", "week", "game_type", "offense_pct", "team"):
             xfp = _f(xfp_by[gid]) if gid in xfp_by else 0.0
             rows.append((gid, int(season), int(week), gtype == "REG", False, team, 0.0, 0.0, 0.0, 0.0, 0.0,
-                         0.0, 0.0, _f(pct), xfp, 0.0, 0.0, 0.0, *([0.0] * 9)))
+                         0.0, 0.0, _f(pct), xfp, 0.0, 0.0, 0.0, *([0.0] * 9), 0.0, 0.0, 0.0, NAN, *([0.0] * 7)))
         rows.sort(key=lambda x: x[0])                       # placeholder order; real order is kickoff (below)
         kick = {**dict(zip(pg["game_id"], pg[KNOWN_AT])), **dict(zip(only["game_id"], only[KNOWN_AT]))}
         rows.sort(key=lambda x: kick[x[0]])                 # stable: ties keep game_id order
@@ -389,6 +427,41 @@ def _streak_features(h: Hist, t: TargetRow) -> dict[str, float]:
     out["over_trail_streak"] = _run_length(vol)
     out["resid_opps_l1"] = float(vol[-1]) if n else NAN
     out["pts_vs_prev_season_l2"] = _nm(seq[-2:, PTS]) - _nm(prev[:, PTS]) if n and len(prev) else NAN
+    return out
+
+
+def _pepa_ratios(v: np.ndarray) -> dict[str, float]:
+    """cpoe: attempt-weighted mean over games that have one; pacr / racr: yards over air yards, ratio of sums (NaN with no air yards)."""
+    out = {}
+    w = v[:, ATT]
+    ok = ~np.isnan(v[:, CPOE]) & (w > 0)
+    out["cpoe"] = float((v[ok, CPOE] * w[ok]).sum() / w[ok].sum()) if ok.any() else NAN
+    out["pacr"] = _ratio(float(np.nansum(v[:, PASSY])), float(np.nansum(v[:, PAY])))
+    out["racr"] = _ratio(float(np.nansum(v[:, RECY])), float(np.nansum(v[:, RAY])))
+    return out
+
+
+def _pepa_features(h: Hist, t: TargetRow) -> dict[str, float]:
+    """The `pepa` family over this season's appearances strictly before the row's result cutoff (the `Hist` rows): l1 = his last
+    game, l3 = his last three, std = all. NaN with no appearance this season (week 1), like the lags."""
+    cur = h.v[h.season == t.season]
+    counts = {"pass_epa": EPA_P, "rush_epa": EPA_R, "rec_epa": EPA_C, "pass_air_yards": PAY, "rec_air_yards": RAY,
+              "rec_yac": RYAC, "rec_fd": RFD, "rush_fd": UFD, "pass_fd": PFD, "sacks": SACK}
+    out: dict[str, float] = {}
+    for w, v in (("l1", cur[-1:]), ("l3", cur[-3:]), ("std", cur)):
+        for n, col in counts.items():
+            out[f"pepa_{n}_{w}"] = _nm(v[:, col]) if len(v) else NAN
+        r = _pepa_ratios(v) if len(v) else {n: NAN for n in PEPA_RATIOS}
+        for n in PEPA_RATIOS:
+            out[f"pepa_{n}_{w}"] = r[n]
+    v = cur[-3:]
+    n = (lambda c: _ns(v[:, c])) if len(v) else (lambda c: NAN)                    # noqa: E731  numerators: NaN if unknown
+    s = (lambda c: float(np.nansum(v[:, c]))) if len(v) else (lambda c: 0.0)       # noqa: E731  denominators
+    out["pepa_epa_per_opp_l3"] = _ratio(n(EPA_P) + n(EPA_R) + n(EPA_C), s(ATT) + s(SACK) + s(CAR) + s(TGT))
+    out["pepa_pass_epa_per_db_l3"] = _ratio(n(EPA_P), s(ATT) + s(SACK))
+    out["pepa_rec_epa_per_tgt_l3"] = _ratio(n(EPA_C), s(TGT))
+    out["pepa_rush_epa_per_car_l3"] = _ratio(n(EPA_R), s(CAR))
+    out["pepa_yac_per_rec_l3"] = _ratio(n(RYAC), s(REC))
     return out
 
 
@@ -508,6 +581,7 @@ def _team_context(store, t: TargetRow, trace) -> dict[str, Any]:
             dvp[pos] = d
         ctx["dvp"] = dvp
         ctx["pbp_team"] = _team_pbp_features(store, t, trace)
+        ctx["nfelo"] = _nfelo_features(store, t, trace)
         # teammates: the spine, each with trailing usage and this week's report
         rows, last_gids = _spine(store, t, trace)
         inj = as_of_join(store, "injuries", ko, team=t.team, trace=trace)
@@ -691,6 +765,71 @@ def _eff_features(h: Hist, t: TargetRow) -> dict[str, float]:
     return out
 
 
+def _nfelo_features(store, t: TargetRow, trace) -> dict[str, float]:
+    """The `nfelo` family for one team-game (memoised with the team context). Ratings are this (season, week)'s PRE rows, read
+    at kickoff (they are stamped at the week's first kickoff - 1h); WEPA and film margin are the teams' earlier games, read at
+    the result cutoff; line movement is the newest open/last value scraped strictly before kickoff."""
+    out = {c: NAN for c in NFELO_COLUMNS}
+    ko, rk = t.kickoff, _rk(t.kickoff)
+
+    def weekly(table: str, team: str):
+        return _last(as_of_join(store, table, ko, team=team, season=t.season, week=t.week, trace=trace))
+
+    if store.has("nf_units"):
+        me, op = weekly("nf_units", t.team), weekly("nf_units", t.opponent)
+        if me:
+            out["nf_tm_pass_off"], out["nf_tm_rush_off"] = _f(me["pass_off_value_pre"]), _f(me["rush_off_value_pre"])
+            out["nf_tm_total"] = _f(me["total_value_pre"])
+        if op:
+            out["nf_opp_pass_def"], out["nf_opp_rush_def"] = _f(op["pass_def_value_pre"]), _f(op["rush_def_value_pre"])
+            out["nf_opp_total"] = _f(op["total_value_pre"])
+        out["nf_pass_edge"] = out["nf_tm_pass_off"] - out["nf_opp_pass_def"]
+        out["nf_rush_edge"] = out["nf_tm_rush_off"] - out["nf_opp_rush_def"]
+    if store.has("nf_elo"):
+        me, op = weekly("nf_elo", t.team), weekly("nf_elo", t.opponent)
+        if me:
+            out["nf_elo"], out["nf_qb_adj"] = _f(me["elo"]), _f(me["qb_adj"])
+        if op:
+            out["nf_opp_elo"], out["nf_opp_qb_adj"] = _f(op["elo"]), _f(op["qb_adj"])
+        out["nf_elo_dif"] = out["nf_elo"] - out["nf_opp_elo"]
+    if store.has("nf_qb"):
+        q = as_of_join(store, "nf_qb", ko, game_id=t.game_id, trace=trace)
+        for team, col in ((t.team, "nf_qb_value"), (t.opponent, "nf_opp_qb_value")):
+            r = _last(q[q["team"] == team])
+            if r:
+                out[col] = _f(r["qb_value_pre"])
+    if store.has("nf_wepa"):
+        for team, col in ((t.team, "nf_wepa_net"), (t.opponent, "nf_opp_wepa_net")):
+            w = as_of_join(store, "nf_wepa", rk, team=team, season=t.season, trace=trace)
+            out[col] = _nm(w["wepa_net"].to_numpy("float64")) if len(w) else NAN
+    if store.has("nf_film"):
+        f = as_of_join(store, "nf_film", rk, team=t.team, trace=trace)
+        f = f[f["season"].isin([t.season - 1, t.season])].tail(FILM_WINDOW)
+        # staleness guard: the source lags (no 2026 rows yet). If the team's newest completed REG game is missing from it, the
+        # window would silently be old games, so the value is NaN rather than stale.
+        newest = None
+        if store.has("game_results"):
+            gr = as_of_join(store, "game_results", rk, team=t.team, trace=trace)
+            gr = gr[(gr["game_type"] == "REG") & gr["season"].isin([t.season - 1, t.season])]
+            newest = gr["game_id"].iloc[-1] if len(gr) else None
+        if len(f) and (newest is None or newest in set(f["game_id"])):
+            out["nf_film_margin_l4"] = _nm(f["film_margin_predictive"].to_numpy("float64"))
+    if store.has("nf_lines"):
+        ln = as_of_join(store, "nf_lines", ko, game_id=t.game_id, trace=trace)
+        val = {k: _f(v) for k, v in zip(ln["kind"], ln["value"])}          # oldest known first: the newest of each kind wins
+        sign = 1.0 if t.is_home else -1.0
+        so, sl = val.get("spread_open", NAN), val.get("spread_last", NAN)
+        if not math.isnan(so):
+            # newest admissible line minus the open; a last line scraped at/after kickoff never passed the gate -> the open
+            out["nf_spread_move"] = sign * ((so if math.isnan(sl) else sl) - so)
+        to, tl = val.get("total_open", NAN), val.get("total_last", NAN)
+        if not math.isnan(to):
+            out["nf_total_move"] = (to if math.isnan(tl) else tl) - to
+        tk = val.get("tickets", NAN)
+        out["nf_tickets_pct"] = tk if t.is_home or math.isnan(tk) else 1.0 - tk
+    return out
+
+
 # --------------------------------------------------------------------------- the row
 def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     """Feature row for one target. Deterministic; NaN where history does not exist."""
@@ -766,6 +905,10 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- Phase 2.5: play-by-play usage / team / participation, and shrunken efficiency -----
     out.update(_pbp_features(store, t, h, ctx, trace))
     out.update(_eff_features(h, t))
+
+    # ---- Phase 5 candidates (opt-in): nfelo team-game context, player EPA / efficiency -----
+    out.update(ctx["nfelo"])
+    out.update(_pepa_features(h, t))
     return out
 
 
