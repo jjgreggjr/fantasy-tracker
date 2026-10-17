@@ -124,14 +124,19 @@ class FamilySource:
     refresh      re-download its in-season source at serve time (None: nothing to refresh)
     load         read the table from disk to check it is readable BEFORE the store is built (raises, or returns None if absent)
     week_rows    (store, season, week) -> the table's rows for the served week: 0 means its columns would be empty on every row
-    timing       when the source publishes, for the WARN"""
+    timing       when the source publishes, for the WARN
+    extend       (store, seasons) -> the store with serve-only rows added to its table after `point_in_time.load_store` built it
+                 (None: the table is served as loaded). The market family adds the current week this way: the archive holds
+                 settled weeks only, and the store switch (shared with training) reads the archive alone
 
-    def __init__(self, store_kwarg=None, table=None, refresh=None, load=None, week_rows=None, timing=""):
-        self.store_kwarg, self.table, self.refresh, self.load, self.week_rows, self.timing = \
-            store_kwarg, table, refresh, load, week_rows, timing
+    `refresh` is called as refresh(season=, now=, week=): the serve's season, clock and `--week` (None: the upcoming week)."""
+
+    def __init__(self, store_kwarg=None, table=None, refresh=None, load=None, week_rows=None, timing="", extend=None):
+        self.store_kwarg, self.table, self.refresh, self.load, self.week_rows, self.timing, self.extend = \
+            store_kwarg, table, refresh, load, week_rows, timing, extend
 
 
-def refresh_ecr() -> str:
+def refresh_ecr(**_) -> str:
     """Re-download the DynastyProcess ECR archive and rebuild model/cache/ecr/ecr_weekly.parquet with `fetch_ecr`'s own build.
     Everything lands in a scratch folder first and is moved in only once the whole build succeeded, so a failed download or a bad
     file leaves the previous cached copy exactly as it was."""
@@ -161,6 +166,56 @@ def _load_ecr():
     return FE.load_ecr_table()
 
 
+def upcoming_week(season: int, now) -> int | None:
+    """The first regular-season week of `season` with a game that has not kicked off at `now` (what `pick_week` serves)."""
+    from model import point_in_time as pit
+    g = pit._games()
+    g = g[(g["season"] == season) & (g["game_type"] == "REG") & (g["kickoff"] > now)]
+    return int(g["week"].min()) if len(g) else None
+
+
+def refresh_market(season: int | None = None, now=None, week: int | None = None, **_) -> str:
+    """The market family's two sources at serve time. (1) The archive: the season's settled weeks not cached yet
+    (`fetch_sleeper_proj.fetch` caches a week only once its last game is 4h past kickoff, and skips cached weeks without a call),
+    so the training rows of every completed week come from the archive. (2) The served week: `fetch_sleeper_proj.fetch_current_week`
+    (data/projections.csv, else the endpoint) into current_{season}_{week}.parquet, never the archive. Both are tried; any failure
+    raises after both ran (load_store's WARN), and a current week that could not be read leaves the week without rows (fallback)."""
+    from model import fetch_sleeper_proj as SP
+    now = now_utc() if now is None else now
+    season = season or int(json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["season"])
+    week = week or upcoming_week(season, now)
+    if week is None:
+        return f"market: every {season} regular-season game has kicked off; nothing to fetch"
+    done, errs = [], []
+    try:
+        log = SP.fetch([season], range(1, week))
+        done.append(f"archive {log['fetched']} new settled week(s), {log['cached']} cached")
+    except Exception as e:
+        errs.append(f"archive top-up failed ({type(e).__name__}: {str(e)[:120]})")
+    try:
+        done.append(f"week {week}: {SP.fetch_current_week(season, week)[1]}")      # stamped with the real read time, not --now
+    except Exception as e:
+        errs.append(f"week {week} projection failed ({type(e).__name__}: {str(e)[:120]})")
+    if errs:
+        raise RuntimeError("; ".join(errs) + (f" (done: {'; '.join(done)})" if done else ""))
+    return "market: " + "; ".join(done)
+
+
+def _load_market():
+    from model import fetch_sleeper_proj as SP
+    return SP.load_sleeper_proj_table(SP.SEASONS)
+
+
+def _extend_market(store, seasons):
+    """The store with the current-week frames appended to its `sleeper_proj` table (`fetch_sleeper_proj.with_current`)."""
+    from model import fetch_sleeper_proj as SP
+    from model import point_in_time as pit
+    t = SP.with_current(store._tables.get("sleeper_proj"), seasons)
+    if t is None or t is store._tables.get("sleeper_proj"):
+        return store
+    return pit.RawStore([*(x for n, x in store._tables.items() if n != "sleeper_proj"), t])
+
+
 def table_week_rows(table: str):
     def rows(store, season: int, week: int) -> int:
         if not store.has(table):
@@ -170,13 +225,18 @@ def table_week_rows(table: str):
     return rows
 
 
-# family -> what serving it needs. A future family (market, nfelo, ...) is one entry here plus its `load_store` switch. A family
+# family -> what serving it needs. A future family (nfelo, ...) is one entry here plus its `load_store` switch. A family
 # not listed cannot be served (pbp_* and eff need play-by-play the serve does not refresh; pbp_part is a backtest proxy), so a
 # spec that adds one is refused (a WARN, nothing written) rather than served with empty columns.
 FAMILY_SOURCES = {
     "ecr": FamilySource("ecr", "ecr", refresh=refresh_ecr, load=_load_ecr, week_rows=table_week_rows("ecr"),
                         timing="DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no "
                                "scrape for its week yet"),
+    "market": FamilySource("sleeper_proj", "sleeper_proj", refresh=refresh_market, load=_load_market,
+                           week_rows=table_week_rows("sleeper_proj"), extend=_extend_market,
+                           timing="Sleeper/Rotowire publish the week's projections early in the week and keep them all week, so "
+                                  "no rows means the read failed (data/projections.csv lacks the week and the endpoint failed), "
+                                  "not that it is too early"),
     "streak": FamilySource(),                           # derived from the base tables: nothing to load
 }
 
@@ -279,22 +339,25 @@ def refresh_raw(season: int) -> list[str]:
     return gone
 
 
-def load_store(season: int, *, refresh: bool = True, families=(), warnings: list | None = None):
+def load_store(season: int, *, refresh: bool = True, families=(), warnings: list | None = None, now=None, week: int | None = None):
     """The serving store: the base tables, plus the table of each opt-in family in `families` (FAMILY_SOURCES). With `refresh` a
     family's source is re-downloaded; a failed download keeps the cached copy (WARN), and a cached copy that is missing or unreadable
-    leaves the table out (WARN). `serving_config_for` then sees the gap and serves the fallback."""
+    leaves the table out (WARN). `serving_config_for` then sees the gap and serves the fallback. A family with an `extend` hook then
+    adds its serve-only rows (market: the current week); if that fails the table stays as loaded (WARN) and has no row for the week.
+    `now` / `week` reach the refresh (the serve's clock and `--week`)."""
     from model import point_in_time as pit
     warnings = warnings if warnings is not None else []
     if refresh:
         refresh_raw(season)
     kw = dict(adp=False, college=False, pbp=False)
+    extend = []
     for fam in families:
         src = family_source(fam)
         if src.store_kwarg is None:
             continue
         if refresh and src.refresh is not None:
             try:
-                print(f"  {src.refresh()}", flush=True)
+                print(f"  {src.refresh(season=season, now=now, week=week)}", flush=True)
             except Exception as e:
                 warnings.append(f"{fam}: could not refresh its source ({type(e).__name__}: {str(e)[:160]}); using the cached copy, "
                                 "if there is one")
@@ -304,9 +367,19 @@ def load_store(season: int, *, refresh: bool = True, families=(), warnings: list
             ok, why = False, f"{type(e).__name__}: {str(e)[:160]}"
         if ok:
             kw[src.store_kwarg] = True
+            if src.extend is not None:
+                extend.append((fam, src.extend))
         else:
             warnings.append(f"{fam}: its table cannot be loaded ({why}), so it is left out of the store")
-    return pit.load_store(range(pit.CAREER_CUTOFF_SEASON, season + 1), **kw)
+    seasons = range(pit.CAREER_CUTOFF_SEASON, season + 1)
+    store = pit.load_store(seasons, **kw)
+    for fam, ext in extend:
+        try:
+            store = ext(store, seasons)
+        except Exception as e:
+            warnings.append(f"{fam}: could not add its serve-time rows ({type(e).__name__}: {str(e)[:160]}); the table is "
+                            "served as loaded")
+    return store
 
 
 def serving_config_for(cfg: dict, store, season: int, week: int, warnings: list) -> dict:
@@ -898,7 +971,7 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     warnings: list[str] = []
     t0 = time.time()
     store = load_store(season, refresh=not args.no_refresh, families=tuple(cfg.get("spec", {}).get("add_families", ())),
-                       warnings=warnings)
+                       warnings=warnings, now=now, week=args.week)
     week, tgs = pick_week(store, season, now, args.week)
     if week is None:
         return [f"model.serve: nothing to serve: every {season} regular-season game has kicked off"]
