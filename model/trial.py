@@ -520,6 +520,8 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_config()
     if a.list:
         print(list_families(cfg))
+        print("\nscreen every column outside the inputs at once (rho with the primary's residual, single-fit gain): "
+              "python -m model.screen  -> model/reports/screen.md")
         return 0
     if not a.candidate:
         ap.error("give at least one --candidate, or --list")
