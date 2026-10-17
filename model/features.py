@@ -78,6 +78,18 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               and rush attempts; the player's trailing-3 shares applied to them; head-coach change and tenure (`coaches` table).
               Only what `pbp_team` lacks is a column.
 
+  ngs         (Phase 5 candidate, 2026-10-16) Next Gen Stats over his last published game (l1) and last three (l3): receiving
+              separation, cushion, intended air yards and their team share, catch %, YAC over expected; rushing efficiency, RYOE per
+              attempt, 8+ box share; passing time to throw, aggressiveness, CPOE, air-yards differential. Thresholded by the NFL,
+              so NaN is common (about 70 receivers a week qualify). Weekly release, Friday refresh (`_charting_features`).
+  pfr         (same) PFR weekly advanced stats, l1 and l3: drops, drop %, receiving broken tackles, passer rating when targeted;
+              yards before / after contact per carry, broken tackles, carries per broken tackle; QB pressure %, blitzes, hurries,
+              hits, sacks, drop %, bad-throw %. pfr ids map to GSIS ids through players.parquet. Thursday refresh.
+  ftn         (same) FTN charting joined to play-by-play, l3 ratios: his target share on motion / play-action / RPO / screen
+              plays, catchable and contested target rates, drops per game; light-box (<= 6) share and mean box on his carries;
+              QB blitzed / out-of-pocket / play-action rates, mean pass rushers, interception-worthy rate. FTN starts in 2022: every
+              2021 row is NaN (the 2021 asset is a 404), as is week 1. Wednesday refresh.
+
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
 """
@@ -181,6 +193,28 @@ NFELO_COLUMNS = ["nf_tm_pass_off", "nf_tm_rush_off", "nf_opp_pass_def", "nf_opp_
                  "nf_qb_value", "nf_opp_qb_value", "nf_wepa_net", "nf_opp_wepa_net", "nf_spread_move", "nf_total_move",
                  "nf_tickets_pct", "nf_film_margin_l4"]
 FILM_WINDOW = 4
+# Weekly charting releases (repeated from point_in_time.NGS_STATS / PFR_COLUMNS / FTN_COUNTS; a test pins them equal).
+NGS_STATS = ("avg_separation", "avg_cushion", "avg_intended_air_yards", "percent_share_of_intended_air_yards", "catch_percentage",
+             "avg_yac_above_expectation", "efficiency", "rush_yards_over_expected_per_att", "percent_attempts_gte_eight_defenders",
+             "avg_time_to_throw", "aggressiveness", "completion_percentage_above_expectation", "avg_air_yards_differential")
+PFR_RAW = ("drops", "drop_pct", "rec_brk_tkl", "rat", "rush_att", "rush_ybc", "rush_yac", "brk_tkl", "pressure_pct", "blitz",
+           "hurry", "hits", "sacks", "pass_drop_pct", "bad_throw_pct")
+# Per-carry rushing rates are ratios of the window's sums (`ybc_att` = yards before contact / carries, `att_br` = carries per
+# broken tackle, NaN with none); every other pfr stat is the table's own per-game value, averaged.
+PFR_RATIOS = {"ybc_att": ("rush_ybc", "rush_att"), "yac_att": ("rush_yac", "rush_att"), "att_br": ("rush_att", "brk_tkl")}
+PFR_STATS = ("drops", "drop_pct", "rec_brk_tkl", "rat", "ybc_att", "yac_att", "brk_tkl", "att_br", "pressure_pct", "blitz",
+             "hurry", "hits", "sacks", "pass_drop_pct", "bad_throw_pct")
+FTN_C = ("tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen", "tgt_catchable", "tgt_contested", "drops",
+         "car", "car_box", "car_light", "box_sum", "db", "db_blitz", "db_oop", "db_pa", "db_rush_n", "rushers_sum", "int_worthy")
+FTN_T = ("T_tgt", "T_tgt_motion", "T_tgt_pa", "T_tgt_rpo", "T_tgt_screen")
+# name: (numerator, denominator) over the window's sums; a denominator from the team table is prefixed "T_"; None = per game.
+FTN_SPEC = {"tgt_share_motion": ("tgt_motion", "T_tgt_motion"), "tgt_share_pa": ("tgt_pa", "T_tgt_pa"),
+            "tgt_share_rpo": ("tgt_rpo", "T_tgt_rpo"), "tgt_share_screen": ("tgt_screen", "T_tgt_screen"),
+            "catchable_rate": ("tgt_catchable", "tgt"), "contested_rate": ("tgt_contested", "tgt"), "drops_pg": ("drops", None),
+            "light_box_car_share": ("car_light", "car_box"), "avg_box_car": ("box_sum", "car_box"),
+            "qb_blitz_rate": ("db_blitz", "db"), "qb_oop_rate": ("db_oop", "db"), "qb_pa_rate": ("db_pa", "db"),
+            "qb_avg_rushers": ("rushers_sum", "db_rush_n"), "qb_int_worthy_rate": ("int_worthy", "db")}
+FTN_STATS = tuple(FTN_SPEC)
 
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
@@ -220,6 +254,10 @@ FAMILIES: dict[str, list[str]] = {
                "mkt_pass_yd", "mkt_td_total", "mkt_pos_rank", "mkt_vs_xfp_l3"],
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:script`)
     "script": SCRIPT_TEAM_COLUMNS + SCRIPT_OPP_COLUMNS + SCRIPT_GAME_COLUMNS + SCRIPT_PLAYER_COLUMNS + SCRIPT_COACH_COLUMNS,
+    # ---- Phase 5 candidates, weekly charting releases (opt-in; `--candidate +family:ngs` / `pfr` / `ftn`)
+    "ngs": [f"ngs_{s}_{w}" for s in NGS_STATS for w in ("l1", "l3")],
+    "pfr": [f"pfr_{s}_{w}" for s in PFR_STATS for w in ("l1", "l3")],
+    "ftn": [f"ftn_{s}_l3" for s in FTN_STATS],
 }
 # market column -> sleeper_proj column (a stat Sleeper omits is a projected 0 when the row exists)
 MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets": "rec_tgt", "mkt_carries": "rush_att",
@@ -995,6 +1033,78 @@ def _nfelo_features(store, t: TargetRow, trace) -> dict[str, float]:
     return out
 
 
+# --------------------------------------------------------------------------- weekly charting releases (Phase 5 candidates)
+def _published(store, table: str, t: TargetRow, h: Hist, trace) -> np.ndarray:
+    """Indices into `h` of this season's appearances whose game the release `table` (a coverage table: one row per team-game it
+    has published) shows before kickoff, oldest first. The coverage rows carry the release's own known_at (a weekly refresh
+    after the week ends), so a game that ended but is not yet published is simply not in the window."""
+    cur = np.flatnonzero(h.season == t.season)
+    if not len(cur) or not store.has(table):
+        return cur[:0]
+    seen: set = set()
+    for tm in dict.fromkeys(h.team[i] for i in cur):
+        seen |= _memo(store, trace, (table, tm, t.game_id),
+                      lambda tm=tm: set(as_of_join(store, table, t.kickoff, team=tm, trace=trace)["game_id"]))
+    return np.array([i for i in cur if h.game_id[i] in seen], dtype="int64")
+
+
+def _player_rows(store, table: str, t: TargetRow, cols: tuple, trace) -> dict[str, np.ndarray]:
+    if not store.has(table):
+        return {}
+    d = as_of_join(store, table, t.kickoff, player_id=t.player_id, trace=trace)
+    return {g: np.array(v, dtype="float64") for g, *v in zip(d["game_id"], *[d[c] for c in cols])}
+
+
+def _charting_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:
+    """The `ngs`, `pfr` and `ftn` families. Window = his appearances this season (h, read at kickoff - RESULT_LAG) whose game the
+    release had published before kickoff (`_published`); l1 = the newest such game, l3 = the newest three.
+
+      ngs  NaN in a published game where he did not qualify (NGS is thresholded); l3 = mean of the non-NaN games
+      pfr  NaN in a published game with no PFR line for him; per-game values averaged, per-carry rates as ratios of sums (PFR_RATIOS)
+      ftn  a charted game with no row for him = zero of everything (he was not targeted / did not carry / drop back); rates are
+           ratios of the window's sums (FTN_SPEC). FTN starts in 2022: 2021 rows (and any season FTN never published) are NaN.
+
+    Week 1 has no current-season window, so every column is NaN, like the lags."""
+    out: dict[str, float] = {c: NAN for fam in ("ngs", "pfr", "ftn") for c in FAMILIES[fam]}
+    # ---- NGS
+    idx = _published(store, "ngs_games", t, h, trace)
+    if len(idx):
+        rows = _player_rows(store, "ngs", t, NGS_STATS, trace)
+        V = np.array([rows.get(h.game_id[i], np.full(len(NGS_STATS), np.nan)) for i in idx]).reshape(len(idx), len(NGS_STATS))
+        for j, s in enumerate(NGS_STATS):
+            out[f"ngs_{s}_l1"] = float(V[-1, j])
+            out[f"ngs_{s}_l3"] = _nm(V[-3:, j])
+    # ---- PFR
+    idx = _published(store, "pfr_games", t, h, trace)
+    if len(idx):
+        rows = _player_rows(store, "pfr", t, PFR_RAW, trace)
+        V = np.array([rows.get(h.game_id[i], np.full(len(PFR_RAW), np.nan)) for i in idx]).reshape(len(idx), len(PFR_RAW))
+        col = {c: j for j, c in enumerate(PFR_RAW)}
+        for s in PFR_STATS:
+            for w, sl in (("l1", V[-1:]), ("l3", V[-3:])):
+                if s in PFR_RATIOS:
+                    num, den = PFR_RATIOS[s]
+                    ok = ~np.isnan(sl[:, col[num]]) & ~np.isnan(sl[:, col[den]])
+                    out[f"pfr_{s}_{w}"] = _ratio(float(sl[ok, col[num]].sum()), float(sl[ok, col[den]].sum())) if ok.any() else NAN
+                else:
+                    out[f"pfr_{s}_{w}"] = _nm(sl[:, col[s]])
+    # ---- FTN
+    idx = _published(store, "ftn_team", t, h, trace)
+    if len(idx):
+        rows = _player_rows(store, "ftn", t, FTN_C, trace)
+        last = idx[-3:]
+        mine = np.array([rows.get(h.game_id[i], np.zeros(len(FTN_C))) for i in last]).reshape(len(last), len(FTN_C)).sum(axis=0)
+        team: dict[str, float] = dict.fromkeys(FTN_T, 0.0)
+        for i in last:
+            tm = as_of_join(store, "ftn_team", t.kickoff, team=h.team[i], game_id=h.game_id[i], trace=trace)
+            for c in FTN_T:
+                team[c] += float(tm[c].iloc[-1])
+        have = {c: float(mine[j]) for j, c in enumerate(FTN_C)} | team
+        for s, (num, den) in FTN_SPEC.items():
+            out[f"ftn_{s}_l3"] = have[num] / len(last) if den is None else _ratio(have[num], have[den])
+    return out
+
+
 # --------------------------------------------------------------------------- the row
 def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     """Feature row for one target. Deterministic; NaN where history does not exist."""
@@ -1080,6 +1190,8 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- Phase 5 candidate: game script and coaching context (opt-in `script`) ----------
     out.update({k: v for k, v in ctx["script"].items() if not k.startswith("_")})
     out.update(_script_player(store, t, h, ctx["script"], trace))
+    # ---- Phase 5 candidates: NGS / PFR / FTN weekly charting (opt-in) ----------------
+    out.update(_charting_features(store, t, h, trace))
     # ---- Phase 5 candidate: the market's projection for this game (opt-in) --------------
     out.update(_market_features(store, t, h, trace))
     return out
