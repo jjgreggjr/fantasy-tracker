@@ -79,6 +79,10 @@ PFR_TEAM_TO_NFLVERSE = {"GNB": "GB", "KAN": "KC", "LAR": "LA", "LVR": "LV", "NOR
 # Offense labels shared by both depth-chart formats (drops defense, KR/PR, specialists).
 OFFENSE_DEPTH_POS = ("QB", "RB", "HB", "FB", "F", "WR", "TE", "LT", "LG", "C", "RG", "RT")
 
+PEPA_STATS_COLS = ["passing_epa", "rushing_epa", "receiving_epa", "passing_cpoe", "passing_air_yards", "receiving_air_yards",
+                   "receiving_yards_after_catch", "receiving_first_downs", "rushing_first_downs", "passing_first_downs",
+                   "sacks_suffered"]
+
 # Static tables are whitelisted column-by-column: the raw files carry career
 # outcomes (w_av, car_av, games, ...) and mutable "current" fields (status,
 # latest_team, years_of_experience) that would leak the future into a past row.
@@ -486,6 +490,9 @@ def load_player_games(seasons: Iterable[int]) -> RawTable:
             "passing_tds", "passing_interceptions", "carries", "rushing_yards", "rushing_tds",
             "targets", "receptions", "receiving_yards", "receiving_tds", "target_share",
             "air_yards_share", "wopr", "fantasy_points", "fantasy_points_ppr"]
+    # Efficiency inputs of the opt-in `pepa` family (features.PEPA_*). nflverse's stats_player dropped `dakota` (passing_cpoe stands
+    # in) and renamed sacks to `sacks_suffered`.
+    keep += PEPA_STATS_COLS
     # Scoring components that the Phase 2.5 component models need as TARGETS (labels.py reads them; no feature does).
     extra = ["sack_fumbles_lost", "rushing_fumbles_lost", "receiving_fumbles_lost", "passing_2pt_conversions",
              "rushing_2pt_conversions", "receiving_2pt_conversions", "special_teams_tds"]
@@ -835,12 +842,14 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
 
 
 def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
-               ecr: bool = False) -> RawStore:
+               ecr: bool = False, nfelo: bool = False) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
     tables (Phase 2.5); `ecr=True` adds the weekly FantasyPros ECR table (Phase 5 candidate) only if
-    `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet."""
+    `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the greerreNFL
+    tables (model/nfelo.py: opt-in, network refresh, off by default so the serving store and the Phase 0-2.5 tests
+    never touch the network for it)."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
@@ -863,4 +872,7 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
         t = load_ecr_table()
         if t is not None:
             tables.append(t)
+    if nfelo:
+        from model.nfelo import load_nfelo_tables      # local import: nfelo.py needs this module's helpers
+        tables += load_nfelo_tables(seasons)
     return RawStore(tables)

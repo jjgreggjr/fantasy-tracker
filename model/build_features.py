@@ -121,7 +121,7 @@ def build(seasons: list[int], *, store: pit.RawStore | None = None, verbose: boo
     baselines attached. `jobs` > 1 builds the weeks in forked workers (same rows, same order)."""
     if store is None:
         hist = range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)   # career_games_prior needs every season since the cutoff
-        store = pit.load_store(hist, ecr=True)                     # ecr: the opt-in family's table, if fetched
+        store = pit.load_store(hist, ecr=True, nfelo=True)        # the opt-in families' tables (fetch_ecr.py, nfelo.py)
     have = set(store._tables["player_games"].df["season"])
     missing = set(range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)) - have
     if missing:
