@@ -15,6 +15,13 @@ publishes no publish time: `last_modified` / `updated_at` are null before 2023 a
 pre-game projection that Rotowire revises up to inactives (~90 min before kickoff); kickoff - 1h is the last moment that final
 pre-game version can be assumed to exist, and the row passes the gate for its own game (strict <) and every later one.
 
+The serve's current week (`fetch_current_week`, called by model/serve.py's `market` refresh): the archive never holds a week that
+has not settled, so the serve reads the upcoming week's projection itself and writes it to current_{season}_{week}.parquet
+(overwritten every serve; the archive glob `proj_*` never sees it). Its known_at is the time the number was read (the pipeline's
+own pull in data/projections.csv, same endpoint and stat keys, else a direct call), not kickoff - 1h: at serve time that moment
+is known exactly, and the served rows are frozen per game. Only `load_sleeper_proj_table(current=True)` (the serve) reads these
+files, and only for weeks the archive lacks; training and the backtest read the archive alone.
+
 Use the VALUE, never its PRESENCE. The archive drops players who were scratched late (ruled out after the projection was zeroed
 or pulled), so "has a projection row" is partly a post-hoc P(plays) signal. The family therefore has no has-a-projection flag;
 missing rows are NaN like any other missing value. (A tree model can still split on NaN-ness; the trial scores played rows only,
@@ -36,6 +43,7 @@ import argparse
 import json
 import sys
 import time
+import warnings
 from pathlib import Path
 from typing import Iterable
 
@@ -171,10 +179,13 @@ def fetch(seasons: Iterable[int] = SEASONS, weeks: Iterable[int] = WEEKS, *, for
 
 
 # --------------------------------------------------------------------------- the table
-def attach_known_at(raw: pd.DataFrame, games: pd.DataFrame, id_map: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def attach_known_at(raw: pd.DataFrame, games: pd.DataFrame, id_map: pd.DataFrame | None,
+                    known_at: pd.Timestamp | None = None) -> tuple[pd.DataFrame, dict]:
     """raw rows -> gated rows: gsis `player_id`, nflverse team codes, the game's id and kickoff, known_at = kickoff - 1h,
     pos_rank within (season, week, position). Rows with no gsis id or no REG fixture for (season, week, team) are dropped and
-    counted. `games` is nflverse's schedule with a UTC `kickoff` (point_in_time._games())."""
+    counted. `games` is nflverse's schedule with a UTC `kickoff` (point_in_time._games()).
+    The serve's current-week frame (`fetch_current_week`) passes `known_at` = the moment the projection was read (stamped on every
+    row instead of kickoff - 1h) and, when its rows already carry a gsis `player_id`, `id_map=None`."""
     df = raw.copy()
     n0 = len(df)
     df["team"] = df["team"].replace(SLEEPER_TEAM_TO_NFLVERSE)
@@ -183,8 +194,9 @@ def attach_known_at(raw: pd.DataFrame, games: pd.DataFrame, id_map: pd.DataFrame
     n_pos = n0 - len(df)
     # rank among every projected player of the position that week (before the id/fixture filters: the market's own view)
     df["pos_rank"] = df.groupby(["season", "week", "position"])["pts_ppr"].rank(method="min", ascending=False)
-    ids = id_map.drop_duplicates("sleeper_id").set_index("sleeper_id")["gsis_id"]
-    df["player_id"] = df["sleeper_id"].astype(str).map(ids)
+    if id_map is not None:
+        ids = id_map.drop_duplicates("sleeper_id").set_index("sleeper_id")["gsis_id"]
+        df["player_id"] = df["sleeper_id"].astype(str).map(ids)
     n_noid = int(df["player_id"].isna().sum())
     df = df[df["player_id"].notna()]
     g = games[games["game_type"] == "REG"]
@@ -197,7 +209,8 @@ def attach_known_at(raw: pd.DataFrame, games: pd.DataFrame, id_map: pd.DataFrame
     n_dup = int(df.duplicated(["player_id", "season", "week"]).sum())
     df = df.sort_values(["player_id", "season", "week", "pts_ppr"], ascending=[True, True, True, False]) \
            .drop_duplicates(["player_id", "season", "week"])
-    df[KNOWN_AT] = pd.to_datetime(df["kickoff"] - KNOWN_LEAD, utc=True).astype("datetime64[ns, UTC]")
+    stamp = df["kickoff"] - KNOWN_LEAD if known_at is None else pd.Series(pd.Timestamp(known_at), index=df.index)
+    df[KNOWN_AT] = pd.to_datetime(stamp, utc=True).astype("datetime64[ns, UTC]")
     df = df.sort_values([KNOWN_AT, "player_id"], kind="mergesort").reset_index(drop=True)
     return df, {"not_skill_position": n_pos, "no_gsis_id": n_noid, "no_reg_fixture": n_nofx, "duplicate_after_mapping": n_dup}
 
@@ -206,6 +219,18 @@ def _raw(seasons: Iterable[int]) -> pd.DataFrame:
     frames = [pd.read_parquet(f) for y in seasons for f in sorted(CACHE.glob(f"proj_{y}_*.parquet"))]
     frames = [f for f in frames if len(f)]
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=RAW_COLS)
+
+
+def _current(seasons: Iterable[int], archived: set[tuple[int, int]]) -> pd.DataFrame | None:
+    """The serve's current-week frames (`current_{season}_{week}.parquet`, already gated) for `seasons`, minus any week the archive
+    now holds: once a week settles and is archived, its final version wins."""
+    frames = []
+    for y in seasons:
+        for f in sorted(CACHE.glob(f"current_{y}_*.parquet")):
+            d = pd.read_parquet(f)
+            if len(d) and (int(d["season"].iloc[0]), int(d["week"].iloc[0])) not in archived:
+                frames.append(d)
+    return pd.concat(frames, ignore_index=True) if frames else None
 
 
 def load_sleeper_proj(seasons: Iterable[int], *, with_dropped: bool = False):
@@ -217,13 +242,107 @@ def load_sleeper_proj(seasons: Iterable[int], *, with_dropped: bool = False):
     return (df, dropped) if with_dropped else df
 
 
-def load_sleeper_proj_table(seasons: Iterable[int]) -> RawTable | None:
-    """The RawTable for the store, or None when nothing is cached (the market columns are then NaN)."""
+RULE = "game kickoff - 1h (last pre-game version; Sleeper's stamps are post-game batch writes)"
+CURRENT_RULE = "; the serve's current week (current_*.parquet): the time the projection was read"
+
+
+def load_sleeper_proj_table(seasons: Iterable[int], *, current: bool = False) -> RawTable | None:
+    """The RawTable for the store, or None when nothing is cached (the market columns are then NaN). `current=True` (the serve
+    only; training, the trial and the backtest never pass it) adds the current-week frames, `with_current`."""
+    seasons = list(seasons)
     df, dropped = load_sleeper_proj(seasons, with_dropped=True)
-    if df.empty:
+    t = RawTable("sleeper_proj", df, RULE, proxy=PROXY, dropped=dropped) if len(df) else None
+    return with_current(t, seasons) if current else t
+
+
+def with_current(table: RawTable | None, seasons: Iterable[int]) -> RawTable | None:
+    """`table` (the archive's) plus the current-week frames `fetch_current_week` wrote for `seasons`, stamped when they were read,
+    for weeks the archive does not hold: once a week settles and is archived, its final version wins. Unchanged if there are none."""
+    base = table.df if table is not None else None
+    archived = set() if base is None else set(zip(base["season"].astype(int), base["week"].astype(int)))
+    cur = _current(seasons, archived)
+    if cur is None:
+        return table
+    cur[KNOWN_AT] = pd.to_datetime(cur[KNOWN_AT], utc=True).astype("datetime64[ns, UTC]")
+    if base is not None and len(base):
+        with warnings.catch_warnings():         # all-NA columns on one side (sleeper_id / company on the projections.csv path)
+            warnings.filterwarnings("ignore", message="The behavior of DataFrame concatenation", category=FutureWarning)
+            df = pd.concat([base, cur[[c for c in base.columns if c in cur.columns]]], ignore_index=True)
+    else:
+        df = cur
+    df = df.sort_values([KNOWN_AT, "player_id"], kind="mergesort").reset_index(drop=True)
+    dropped = {**(table.dropped if table is not None else {}), "current_week_rows_added": len(cur)}
+    return RawTable("sleeper_proj", df, RULE + CURRENT_RULE, proxy=PROXY, dropped=dropped)
+
+
+# --------------------------------------------------------------------------- the serve's current week
+# data/projections.csv column (the pipeline's own Sleeper pull, ff/projections.py ALIASES: the same endpoint and stat keys) -> the
+# archive's stat column. Every STAT_COLS entry is covered, so a row read from the file is the row the endpoint would give.
+PROJECTIONS_CSV_STATS = {"pts_ppr": "proj_pts_ppr", "pts_half_ppr": "proj_pts_half", "pts_std": "proj_pts_std",
+                         "pass_att": "proj_pass_att", "pass_yd": "proj_pass_yds", "pass_td": "proj_pass_tds",
+                         "rush_att": "proj_carries", "rush_yd": "proj_rush_yds", "rush_td": "proj_rush_tds",
+                         "rec": "proj_rec", "rec_tgt": "proj_targets", "rec_yd": "proj_rec_yds", "rec_td": "proj_rec_tds"}
+REPO_PROJECTIONS = REPO_PLAYERS.parent / "projections.csv"
+
+
+def current_path(season: int, week: int) -> Path:
+    """Never `proj_*`: the archive's glob cannot see it, so a mid-week snapshot never enters the archive."""
+    return CACHE / f"current_{season}_{week:02d}.parquet"
+
+
+def from_projections_csv(proj: pd.DataFrame | None, season: int, week: int) -> tuple[pd.DataFrame, pd.Timestamp] | None:
+    """data/projections.csv rows (source == 'sleeper') of (season, week) -> (RAW_COLS-shaped rows carrying a gsis `player_id`, the
+    pull time), or None when the file lacks the week or a column. Rows with no proj_pts_ppr are dropped, like `parse_week`."""
+    need = {"season", "week", "gsis_id", "source", "pulled_at", "position", "team", *PROJECTIONS_CSV_STATS.values()}
+    if proj is None or not need <= set(proj.columns):
         return None
-    return RawTable("sleeper_proj", df, "game kickoff - 1h (last pre-game version; Sleeper's stamps are post-game batch writes)",
-                    proxy=PROXY, dropped=dropped)
+    d = proj[(pd.to_numeric(proj["season"], errors="coerce") == season) & (pd.to_numeric(proj["week"], errors="coerce") == week)
+             & (proj["source"] == "sleeper")]
+    d = d[d["gsis_id"].notna() & pd.to_numeric(d["proj_pts_ppr"], errors="coerce").notna()]
+    pulled = pd.to_datetime(d["pulled_at"], utc=True, errors="coerce").max() if len(d) else pd.NaT
+    if d.empty or pd.isna(pulled):
+        return None
+    out = pd.DataFrame({"season": int(season), "week": int(week), "sleeper_id": None, "player_id": d["gsis_id"].astype(str),
+                        "position": d["position"], "team": d["team"], "opponent": None, "company": None,
+                        "last_modified": pd.NaT, "updated_at": pd.NaT}, index=d.index)
+    for c, src in PROJECTIONS_CSV_STATS.items():
+        out[c] = pd.to_numeric(d[src], errors="coerce").astype("float64")
+    return out.reset_index(drop=True), pulled
+
+
+def fetch_current_week(season: int, week: int, *, now: pd.Timestamp | None = None, projections: Path | None = REPO_PROJECTIONS,
+                       session: requests.Session | None = None) -> tuple[pd.DataFrame, str]:
+    """The upcoming week's projection for the serve, written to `current_path` (overwritten every serve; never an archive `proj_*`
+    file, whose weeks are only ever cached once settled). Returns (the gated frame, a line saying where it came from).
+
+    Source: data/projections.csv when it holds the week (the pipeline pulls this same endpoint minutes before the serve, so the
+    serve makes no second call); known_at = that pull's `pulled_at`. Otherwise the endpoint itself; known_at = the read time.
+    Either way known_at is when the number was in hand, not kickoff - 1h: at serve time that moment is known exactly, and every
+    game kicking off after it gets the row through the gate (strict <). Raises when no source has a row for the week."""
+    now = pd.Timestamp.now(tz="UTC") if now is None else pd.Timestamp(now)
+    games = pit._games()
+    got = None
+    if projections is not None and Path(projections).exists():
+        got = from_projections_csv(pd.read_csv(projections, low_memory=False, dtype={"gsis_id": str}), season, week)
+    if got is not None:
+        raw, known = got
+        how = f"data/projections.csv (pulled {known:%Y-%m-%d %H:%M}Z)"
+        df, _ = attach_known_at(raw, games, None, known_at=known)
+    else:
+        s = session or requests.Session()
+        r = s.get(URL.format(season=season, week=week), timeout=60)
+        r.raise_for_status()
+        raw, how = parse_week(r.json(), season, week), f"the Sleeper endpoint (read {now:%Y-%m-%d %H:%M}Z)"
+        idp = CACHE / "id_map.parquet"
+        df, _ = attach_known_at(raw, games, pd.read_parquet(idp) if idp.exists() else fetch_id_map(), known_at=now)
+    if df.empty:
+        raise ValueError(f"no Sleeper projection rows for {season} week {week} from {how}")
+    dest = current_path(season, week)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_suffix(".parquet.part")
+    df.to_parquet(tmp, index=False)
+    tmp.replace(dest)
+    return df, f"{len(df)} rows from {how}"
 
 
 # --------------------------------------------------------------------------- CLI
