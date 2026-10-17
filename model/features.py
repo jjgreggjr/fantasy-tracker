@@ -51,6 +51,11 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               1/2/3 games, their 4-game sum, run lengths of consecutive over/under games (capped +-6), the volume analogue, and
               the last two games against last season's per-game mean. Last season's REG games precede this season's so the
               first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
+  market      (Phase 5 candidate, 2026-10-16) Sleeper's (Rotowire's) archived weekly projection for THIS game: PPR / standard
+              points, targets, carries, pass attempts, yards, total TDs, rank within position that week, and the projection
+              minus his own trailing-3 xFP. Table `sleeper_proj` (model/fetch_sleeper_proj.py), stamped kickoff - 1h, read
+              through the gate at kickoff. The VALUE only: no "has a projection" column (the archive drops late scratches, so
+              presence is partly a post-hoc P(plays)); NaN when there is no row.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -149,7 +154,14 @@ FAMILIES: dict[str, list[str]] = {
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
     "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
                "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
+    # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:market`)
+    "market": ["mkt_pts_ppr", "mkt_pts_std", "mkt_targets", "mkt_carries", "mkt_pass_att", "mkt_rec_yd", "mkt_rush_yd",
+               "mkt_pass_yd", "mkt_td_total", "mkt_pos_rank", "mkt_vs_xfp_l3"],
 }
+# market column -> sleeper_proj column (a stat Sleeper omits is a projected 0 when the row exists)
+MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets": "rec_tgt", "mkt_carries": "rush_att",
+                "mkt_pass_att": "pass_att", "mkt_rec_yd": "rec_yd", "mkt_rush_yd": "rush_yd", "mkt_pass_yd": "pass_yd",
+                "mkt_pos_rank": "pos_rank"}
 STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
 # Produced, but never a model input.
 IDENTITY = ["player_id", "season", "week", "team", "opponent", "position", "game_id", "kickoff_utc"]
@@ -766,6 +778,30 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- Phase 2.5: play-by-play usage / team / participation, and shrunken efficiency -----
     out.update(_pbp_features(store, t, h, ctx, trace))
     out.update(_eff_features(h, t))
+
+    # ---- Phase 5 candidate: the market's projection for this game (opt-in) --------------
+    out.update(_market_features(store, t, h, trace))
+    return out
+
+
+def _market_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:
+    """The `market` family: this game's archived Sleeper/Rotowire projection, through the gate at kickoff (the row is stamped
+    kickoff - 1h, so it is the one table whose own-game row is a legitimate input). NaN when there is no row: the value is used,
+    its presence never becomes a column."""
+    out = {c: NAN for c in FAMILIES["market"]}
+    if not store.has("sleeper_proj"):
+        return out
+    m = as_of_join(store, "sleeper_proj", t.kickoff, player_id=t.player_id, trace=trace)
+    m = m[(m["season"] == t.season) & (m["week"] == t.week)]
+    if not len(m):
+        return out
+    r = _last(m)
+    for col, src in MARKET_STATS.items():
+        v = _f(r[src])
+        out[col] = 0.0 if math.isnan(v) and col != "mkt_pos_rank" else v
+    out["mkt_td_total"] = sum(0.0 if math.isnan(x) else x for x in (_f(r["pass_td"]), _f(r["rush_td"]), _f(r["rec_td"])))
+    cur, prev = _cur_prev(h, t.season)
+    out["mkt_vs_xfp_l3"] = out["mkt_pts_ppr"] - _trailing(cur, prev, XFP, 3)
     return out
 
 
