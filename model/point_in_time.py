@@ -698,11 +698,30 @@ def load_static_tables() -> list[RawTable]:
 # --------------------------------------------------------------------------- play-by-play (Phase 2.5)
 PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "defteam", "play_type", "pass_attempt",
             "rush_attempt", "qb_dropback", "two_point_attempt", "yardline_100", "air_yards", "receiver_player_id",
-            "rusher_player_id", "wp", "down", "qtr", "half_seconds_remaining"]
+            "rusher_player_id", "wp", "down", "qtr", "half_seconds_remaining",
+            # the `script` family's team-game sums (2026-10-16): efficiency, nflfastR's expected pass rate, tempo
+            "epa", "success", "pass_oe", "xpass", "no_huddle", "game_seconds_remaining", "fixed_drive"]
 PBP_USAGE_COLS = ["tgt", "rz_tgt", "i10_tgt", "ay", "ay_n", "car", "rz_car", "i10_car"]
 PBP_TEAM_COUNTS = ["plays", "dropbacks", "neutral_plays", "neutral_dropbacks", "tgt", "rz_tgt", "i10_tgt", "ay", "car",
                    "rz_car", "i10_car", "part_dropbacks", "part_rush", "part_rz", "part_i10"]
 PBP_PART_COLS = ["pass_on", "run_on", "rz_on", "i10_on"]
+# `script` family sums per team-game (extra pbp_team columns, all over scrimmage plays = pass/run, no two-point tries):
+#   sc_epa / sc_succ / sc_epa_n        EPA and success summed over plays with an EPA value, and how many
+#   sc_pass_epa / sc_pass_n            the same over dropbacks; sc_rush_epa / sc_rush_n over the other plays
+#   sc_pass_oe / sc_xpass / sc_xp_n    nflfastR pass-over-expected (percentage points) and expected pass probability, summed
+#   sc_nohuddle                        plays run from no-huddle
+#   sc_secs / sc_secs_n                seconds of game clock between consecutive plays of the same drive (regulation only)
+#   sc_early_plays / sc_early_db       1st/2nd-down plays and dropbacks
+#   sc_wp_plays / sc_wp_db             plays and dropbacks with win probability 20-80% (any down, any quarter)
+#   sc_rz_plays                        plays snapped at the opponent's 20 or closer
+PBP_SCRIPT_COUNTS = ["sc_epa", "sc_succ", "sc_epa_n", "sc_pass_epa", "sc_pass_n", "sc_rush_epa", "sc_rush_n", "sc_pass_oe",
+                     "sc_xpass", "sc_xp_n", "sc_nohuddle", "sc_secs", "sc_secs_n", "sc_early_plays", "sc_early_db",
+                     "sc_wp_plays", "sc_wp_db", "sc_rz_plays"]
+# Head coach per (team, game), from the nflverse schedule's home_coach / away_coach. Who coaches a game is public before
+# it (an interim coach is named days ahead), so a row is known COACH_LEAD before its kickoff. Old team codes are mapped to
+# the current ones so a tenure that spans a relocation is one tenure.
+COACH_LEAD = timedelta(hours=24)
+RELOCATED = {"OAK": "LV", "SD": "LAC", "STL": "LA"}
 
 
 def _fetch_optional(url: str, dest: Path) -> Path | None:
@@ -723,6 +742,34 @@ def _fetch_optional(url: str, dest: Path) -> Path | None:
     tmp.write_bytes(r.content)
     tmp.replace(dest)
     return dest
+
+
+def _script_sums(s: pd.DataFrame, key: list[str]) -> pd.DataFrame:
+    """The `script` family's per team-game sums (PBP_SCRIPT_COUNTS) over scrimmage plays `s`."""
+    has_epa = s["epa"].notna()
+    db = s["dropback"]
+    has_xp = s["pass_oe"].notna() & s["xpass"].notna()
+    early = s["down"].isin([1, 2])
+    mid = s["wp"].between(0.2, 0.8)
+    s = s.assign(sc_epa=s["epa"].where(has_epa, 0.0), sc_succ=s["success"].where(has_epa, 0.0).fillna(0.0),
+                 sc_epa_n=has_epa.astype(float),
+                 sc_pass_epa=s["epa"].where(has_epa & db, 0.0), sc_pass_n=(has_epa & db).astype(float),
+                 sc_rush_epa=s["epa"].where(has_epa & ~db, 0.0), sc_rush_n=(has_epa & ~db).astype(float),
+                 sc_pass_oe=s["pass_oe"].where(has_xp, 0.0), sc_xpass=s["xpass"].where(has_xp, 0.0), sc_xp_n=has_xp.astype(float),
+                 sc_nohuddle=(s["no_huddle"].fillna(0) == 1).astype(float),
+                 sc_early_plays=early.astype(float), sc_early_db=(early & db).astype(float),
+                 sc_wp_plays=mid.astype(float), sc_wp_db=(mid & db).astype(float),
+                 sc_rz_plays=s["rz"].astype(float))
+    # tempo: clock run off between a play and the previous scrimmage play of the same drive, regulation only
+    s = s.sort_values(["game_id", "play_id"], kind="mergesort")
+    reg = s["qtr"] <= 4
+    same = (s["game_id"].eq(s["game_id"].shift()) & s["fixed_drive"].eq(s["fixed_drive"].shift())
+            & s["posteam"].eq(s["posteam"].shift()) & reg & reg.shift(fill_value=False))
+    gap = s["game_seconds_remaining"].shift() - s["game_seconds_remaining"]
+    ok = same & gap.notna() & (gap >= 0)
+    s["sc_secs"] = gap.where(ok, 0.0)
+    s["sc_secs_n"] = ok.astype(float)
+    return s.groupby(key)[PBP_SCRIPT_COUNTS].sum()
 
 
 def _pbp_season(y: int, skill_ids: set) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame | None]:
@@ -771,6 +818,7 @@ def _pbp_season(y: int, skill_ids: set) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     tm["i10_car"] = c.groupby(key)["i10_car"].sum().reindex(tm.index).fillna(0.0)
     for col in ("part_dropbacks", "part_rush", "part_rz", "part_i10"):
         tm[col] = 0.0
+    tm = tm.join(_script_sums(p[p["scrim"]], key))
 
     part = None
     pp = _fetch_optional(f"{NFLVERSE}/pbp_participation/pbp_participation_{y}.parquet",
@@ -795,7 +843,8 @@ def _pbp_season(y: int, skill_ids: set) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         part = part[["player_id", "season", "week", "game_type", "game_id", "team", *PBP_PART_COLS]]
     team = tm.reset_index().merge(meta, on=key, how="left").rename(columns={"posteam": "team"})
     team[PBP_TEAM_COUNTS] = team[PBP_TEAM_COUNTS].astype("float64")
-    team = team[["team", "opponent", "season", "week", "game_type", "game_id", *PBP_TEAM_COUNTS]]
+    team[PBP_SCRIPT_COUNTS] = team[PBP_SCRIPT_COUNTS].fillna(0.0).astype("float64")
+    team = team[["team", "opponent", "season", "week", "game_type", "game_id", *PBP_TEAM_COUNTS, *PBP_SCRIPT_COUNTS]]
     return usage, team, part
 
 
@@ -806,7 +855,8 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
       pbp_usage  (player, game): targets, red-zone and inside-10 targets, air yards (and how many targets carry an air-yards
                  value), carries, red-zone and inside-10 carries. Only players who had at least one target or carry.
       pbp_team   (team, game): the same totals for the whole team (the denominators of every share) plus play counts,
-                 dropbacks, neutral-situation plays, and how many plays the participation feed covers.
+                 dropbacks, neutral-situation plays, and how many plays the participation feed covers; plus the `script`
+                 family's sums (PBP_SCRIPT_COUNTS: EPA, success, pass over expected, tempo, early-down / win-probability splits).
       pbp_part   (player, game): plays on the field for dropbacks / non-dropback runs / red-zone / inside-10 plays, from the
                  participation feed. Backtest-only (`PARTICIPATION_PROXY`): the asset is not published in-season.
 
@@ -840,6 +890,23 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
     return out
 
 
+def load_coaches(seasons: Iterable[int]) -> RawTable:
+    """One row per (game, team): the head coach, for every game from 2000 through the last season of the build (so a tenure
+    that began before the store's first season is counted in full). known_at = kickoff - COACH_LEAD."""
+    g = _games()
+    g = g[g["season"] <= max(seasons)]
+    cols = ["game_id", "season", "week", "game_type", "kickoff"]
+    df = pd.concat([g[cols + ["home_team", "home_coach"]].rename(columns={"home_team": "team", "home_coach": "coach"}),
+                    g[cols + ["away_team", "away_coach"]].rename(columns={"away_team": "team", "away_coach": "coach"})],
+                   ignore_index=True)
+    n0 = len(df)
+    df = df[df["coach"].notna() & (df["coach"].astype(str).str.strip() != "")].copy()
+    df["team"] = df["team"].replace(RELOCATED)
+    df[KNOWN_AT] = _ns_utc(df["kickoff"] - COACH_LEAD)
+    df = df.sort_values([KNOWN_AT, "game_id", "team"], kind="mergesort").reset_index(drop=True)
+    return RawTable("coaches", df, "kickoff - 24h (who coaches a game is announced before it)",
+                    dropped={"no_coach": n0 - len(df)})
+
 
 def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
                ecr: bool = False, nfelo: bool = False, sleeper_proj: bool = False) -> RawStore:
@@ -855,7 +922,7 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
               load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
-              *load_static_tables(), load_career_pre_cutoff()]
+              *load_static_tables(), load_career_pre_cutoff(), load_coaches(seasons)]
     if pbp:
         tables += load_pbp_tables(seasons, pg.df, sn.df)
     if adp:
