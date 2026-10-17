@@ -121,7 +121,7 @@ def build(seasons: list[int], *, store: pit.RawStore | None = None, verbose: boo
     baselines attached. `jobs` > 1 builds the weeks in forked workers (same rows, same order)."""
     if store is None:
         hist = range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)   # career_games_prior needs every season since the cutoff
-        store = pit.load_store(hist, ecr=True, nfelo=True)        # the opt-in families' tables (fetch_ecr.py, nfelo.py)
+        store = pit.load_store(hist, ecr=True, nfelo=True, sleeper_proj=True)   # the opt-in families' tables
     have = set(store._tables["player_games"].df["season"])
     missing = set(range(pit.CAREER_CUTOFF_SEASON, max(seasons) + 1)) - have
     if missing:
@@ -146,6 +146,7 @@ def schema(df: pd.DataFrame) -> dict:
                       "adp": "NA unless model/data/adp/*.csv exist (NA also means undrafted)",
                       "ecr": "FantasyPros weekly ECR (model/fetch_ecr.py); NA unless fetched, for week 18, most week 1s, and players unranked that week",
                       "college": "CFBD final-college-season priors, rookie season only (model/college.py); breakout age is always NA",
+                      "market": "Sleeper/Rotowire archived projection, kickoff - 1h (model/fetch_sleeper_proj.py); NaN if not cached",
                       "spine_depth_only": "rows admitted only by the newest depth chart; ~absent in <=2024 (see PLAN_MODEL.md)"}}
 
 

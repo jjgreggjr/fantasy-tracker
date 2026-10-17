@@ -842,14 +842,15 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
 
 
 def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
-               ecr: bool = False, nfelo: bool = False) -> RawStore:
+               ecr: bool = False, nfelo: bool = False, sleeper_proj: bool = False) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
     tables (Phase 2.5); `ecr=True` adds the weekly FantasyPros ECR table (Phase 5 candidate) only if
     `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the greerreNFL
-    tables (model/nfelo.py: opt-in, network refresh, off by default so the serving store and the Phase 0-2.5 tests
-    never touch the network for it)."""
+    tables (model/nfelo.py: opt-in, network refresh); `sleeper_proj=True` adds Sleeper's archived weekly projections
+    (the opt-in `market` family) only if `python -m model.fetch_sleeper_proj` has cached them. All three are off by
+    default so the serving store and the leakage audit keep exactly their tables; `build_features` turns them on."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
@@ -875,4 +876,9 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
     if nfelo:
         from model.nfelo import load_nfelo_tables      # local import: nfelo.py needs this module's helpers
         tables += load_nfelo_tables(seasons)
+    if sleeper_proj:
+        from model.fetch_sleeper_proj import load_sleeper_proj_table   # local import: it needs this module's helpers
+        t = load_sleeper_proj_table(seasons)
+        if t is not None:
+            tables.append(t)
     return RawStore(tables)

@@ -540,7 +540,7 @@ class Registry(unittest.TestCase):
             self.assertFalse(c.startswith(("y_", "base_", "spine_")), c)
         self.assertEqual([c for c in features.feature_columns() if "xfp" in c and c not in
                           ("xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg")
-                          and c not in features.FAMILIES["streak"]], [])
+                          and c not in features.FAMILIES["streak"] and c != "mkt_vs_xfp_l3"], [])   # both lag xFP via Hist
 
     def test_features_module_still_imports_only_the_gate(self):
         import ast
