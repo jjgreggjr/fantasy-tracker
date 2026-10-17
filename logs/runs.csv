@@ -40,3 +40,4 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-10-13T23:26:01Z,2026,6,OK,0,0,,
 2026-10-14T18:30:01Z,2026,6,OK,0,0,,
 2026-10-16T00:36:15Z,2026,6,OK,0,0,,
+2026-10-17T00:28:18Z,2026,6,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [6],

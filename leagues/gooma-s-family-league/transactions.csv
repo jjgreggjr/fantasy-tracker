@@ -85,6 +85,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,add,12185,,12
 2026,5,free_agent,add,12509,Tre Harris,2
 2026,5,free_agent,drop,11631,Brian Thomas Jr.,2
+2026,6,free_agent,add,11647,Kimani Vidal,1
+2026,6,free_agent,add,11631,Brian Thomas Jr.,1
+2026,6,free_agent,drop,2307,Marcus Mariota,1
+2026,6,free_agent,drop,6130,Devin Singletary,1
 2026,6,free_agent,add,11783,Ryan Flournoy,7
 2026,6,free_agent,add,7528,Najee Harris,7
 2026,6,free_agent,add,8210,Chig Okonkwo,3
