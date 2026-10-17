@@ -187,7 +187,9 @@ class RawStore:
             cuts = np.flatnonzero(np.diff(codes)) + 1
             starts = np.concatenate(([0], cuts))
             ends = np.concatenate((cuts, [len(codes)]))
-            groups = {uniques[codes[s]]: pos[s:e] for s, e in zip(starts, ends)}
+            groups = ({uniques[codes[s]]: pos[s:e] for s, e in zip(starts, ends)} if len(codes)
+                      else {})                                   # an empty (e.g. truncated) table has no keys
+
             self._index[k] = (groups, order)
         return self._index[k][0]
 
@@ -833,12 +835,254 @@ def load_pbp_tables(seasons: Iterable[int], player_games: pd.DataFrame, snap_cou
     return out
 
 
+# --------------------------------------------------------------------------- weekly charting releases (Phase 5 candidates)
+# Three nflverse releases that ARE refreshed in-season, once a week, as whole files: Next Gen Stats (`nextgen_stats`, Friday),
+# Pro-Football-Reference advanced stats (`pfr_advstats`, Thursday) and FTN charting (`ftn_charting`, Wednesday). Observed
+# asset times on 2026-10-14/15/16: FTN Wed 16:30Z, PFR Thu 10:58Z, NGS Fri 12:02Z. None carries a usable first-publication time
+# per row (FTN's `date_pulled` is the time of the LAST pull: 2022-2023 rows say 2024-09-06), so the availability rule is derived:
+#
+#   every row of (season, week) is known at 23:59:59 UTC on the first refresh weekday STRICTLY after the day the week's last
+#   game ended (the week's last kickoff + CHARTING_GAME_END)
+#
+# i.e. a whole week publishes together, after its Monday-night game, at the END of the refresh day (later than every observed
+# refresh). A target game in week N therefore sees weeks <= N-1 at most, and less where the refresh has not happened yet: a
+# Thursday-night game cannot see the previous week's NGS (Friday refresh), a Sunday game can. FTN additionally takes its
+# `date_pulled` when that pull is within CHARTING_PULL_WINDOW of the week (a genuine in-season stamp: 2026 weeks 1-3 were first
+# published 2026-10-05, weeks late), whichever is later. Both choices can only hide a row, never reveal one early.
+CHARTING_REFRESH_WEEKDAY = {"ngs": 4, "pfr": 3, "ftn": 2}          # Monday = 0
+CHARTING_REFRESH_TIME = timedelta(hours=23, minutes=59, seconds=59)
+CHARTING_GAME_END = timedelta(hours=4)
+CHARTING_PULL_WINDOW = timedelta(days=30)
+NGS_TEAM_TO_NFLVERSE = {"LAR": "LA"}
+# Next Gen Stats: per player-week, THRESHOLDED by the NFL (about 70 receivers, 25 rushers, 30 passers a week qualify).
+NGS_STATS = {"receiving": ("avg_separation", "avg_cushion", "avg_intended_air_yards", "percent_share_of_intended_air_yards",
+                           "catch_percentage", "avg_yac_above_expectation"),
+             "rushing": ("efficiency", "rush_yards_over_expected_per_att", "percent_attempts_gte_eight_defenders"),
+             "passing": ("avg_time_to_throw", "aggressiveness", "completion_percentage_above_expectation",
+                         "avg_air_yards_differential")}
+# PFR weekly advanced stats -> our column names. The WEEKLY files carry no targets / receptions / yards-before-catch /
+# yards-after-catch for receivers (only the season files do), so the receiving set is drops, drop rate, broken tackles, rating.
+PFR_COLUMNS = {"rec": {"receiving_drop": "drops", "receiving_drop_pct": "drop_pct", "receiving_broken_tackles": "rec_brk_tkl",
+                       "receiving_rat": "rat"},
+               "rush": {"carries": "rush_att", "rushing_yards_before_contact": "rush_ybc", "rushing_yards_after_contact": "rush_yac",
+                        "rushing_broken_tackles": "brk_tkl"},
+               "pass": {"times_pressured_pct": "pressure_pct", "times_blitzed": "blitz", "times_hurried": "hurry",
+                        "times_hit": "hits", "times_sacked": "sacks", "passing_drop_pct": "pass_drop_pct",
+                        "passing_bad_throw_pct": "bad_throw_pct"}}
+FTN_COUNTS = ("tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen", "tgt_catchable", "tgt_contested", "drops",
+              "car", "car_box", "car_light", "box_sum", "db", "db_blitz", "db_oop", "db_pa", "db_rush_n", "rushers_sum",
+              "int_worthy")
+FTN_TEAM_COUNTS = ("T_tgt", "T_tgt_motion", "T_tgt_pa", "T_tgt_rpo", "T_tgt_screen")
+LIGHT_BOX_MAX = 6
+FTN_PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "play_type", "pass_attempt", "rush_attempt",
+                "qb_dropback", "two_point_attempt", "receiver_player_id", "rusher_player_id", "passer_player_id"]
 
-def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True) -> RawStore:
+
+def _charting_release_stamps(weekday: int) -> pd.Series:
+    """{(season, week): known_at} of a weekly release refreshed on `weekday` (see CHARTING_REFRESH_WEEKDAY)."""
+    g = _games()
+    end = g.groupby(["season", "week"])["kickoff"].max() + CHARTING_GAME_END
+    day = end.dt.floor("D")
+    ahead = ((weekday - day.dt.weekday - 1) % 7) + 1                     # 1..7 days: never the day the week ended
+    return (day + pd.to_timedelta(ahead, unit="D") + CHARTING_REFRESH_TIME).astype("datetime64[ns, UTC]")
+
+
+def _week_games(seasons: Iterable[int]) -> pd.DataFrame:
+    """(game_id, season, week, team, opponent) twice per REG game: the frame every charting key resolves against."""
+    g = _games()
+    g = g[g["season"].isin(list(seasons)) & (g["game_type"] == "REG")]
+    return pd.concat([g[["game_id", "season", "week", "home_team", "away_team"]].rename(columns={"home_team": "team", "away_team": "opponent"}),
+                      g[["game_id", "season", "week", "away_team", "home_team"]].rename(columns={"away_team": "team", "home_team": "opponent"})],
+                     ignore_index=True)
+
+
+def _nflverse_optional(tag: str, name: str) -> pd.DataFrame | None:
+    """A per-season asset that may not exist (FTN 2021 and earlier: 404). None when absent; the 404 is remembered."""
+    f = CACHE_DIR / "nflverse" / name
+    if f.exists() and f.stat().st_size > 0:
+        return _read_asset(f)
+    got = _fetch_optional(f"{NFLVERSE}/{tag}/{name}", f)
+    return None if got is None else _read_asset(got)
+
+
+def _stamp_weeks(df: pd.DataFrame, stamps: pd.Series) -> pd.Series:
+    return _ns_utc(pd.Series(list(zip(df["season"], df["week"])), index=df.index, dtype=object).map(stamps))
+
+
+def load_ngs_tables(seasons: Iterable[int]) -> list[RawTable]:
+    """`ngs` (player, game): the 13 NGS_STATS from the receiving / rushing / passing files merged on (player, season, week);
+    a stat is NaN where he did not qualify in that file. `ngs_games` (team, game): every REG game of a week the file covers
+    (the denominator of 'his last games that NGS has published'; no row = not published). Week 0 rows are season-to-date
+    aggregates, not games, and are dropped; so is the postseason. Team codes map to games through the schedule (LAR -> LA)."""
+    seasons = sorted(set(seasons))
+    wg = _week_games(seasons)
+    key = ["player_id", "season", "week"]
+    merged, dropped = None, {}
+    for kind, stats in NGS_STATS.items():
+        d = _nflverse("nextgen_stats", f"ngs_{kind}.parquet")
+        d = d[d["season"].isin(seasons)]
+        n0 = len(d)
+        d = d[(d["week"] > 0) & (d["season_type"] == "REG") & d["player_gsis_id"].notna()]
+        dropped[f"{kind}_week0_post_or_no_id"] = n0 - len(d)
+        d = d.assign(player_id=d["player_gsis_id"], team=d["team_abbr"].replace(NGS_TEAM_TO_NFLVERSE),
+                     season=d["season"].astype(int), week=d["week"].astype(int))
+        d = d[[*key, "team", *stats]].drop_duplicates(key, keep="last")
+        merged = d if merged is None else merged.merge(d, on=key, how="outer", suffixes=("", "_y"))
+        if "team_y" in merged.columns:
+            merged["team"] = merged["team"].fillna(merged.pop("team_y"))
+    merged = merged.merge(wg[["game_id", "season", "week", "team"]], on=["season", "week", "team"], how="left")
+    dropped["no_schedule_game"] = int(merged["game_id"].isna().sum())
+    merged = merged[merged["game_id"].notna()].copy()
+    stamps = _charting_release_stamps(CHARTING_REFRESH_WEEKDAY["ngs"])
+    merged[KNOWN_AT] = _stamp_weeks(merged, stamps)
+    games = wg[wg["game_id"].isin(set(merged["game_id"]))].copy()   # a game with any qualifier on either side (every
+    # complete week has all of them; a file refreshed mid-week, e.g. after Thursday night, covers only the games it has)
+    games[KNOWN_AT] = _stamp_weeks(games, stamps)
+    rule = "23:59:59Z on the first Friday after the day the week's last game ended (weekly release, CHARTING_REFRESH_WEEKDAY)"
+    return [RawTable("ngs", merged.reset_index(drop=True), rule, dropped=dropped),
+            RawTable("ngs_games", games.reset_index(drop=True), rule)]
+
+
+def load_pfr_tables(seasons: Iterable[int]) -> list[RawTable]:
+    """`pfr` (player, game): PFR weekly advanced receiving / rushing / passing (PFR_COLUMNS) merged on (pfr id, game), mapped to
+    GSIS ids through players.parquet's `pfr_id` (`_pfr_to_gsis`, the map snap_counts and combine use). `pfr_games` (team, game):
+    every game in the files. REG only."""
+    seasons = sorted(set(seasons))
+    p2g = _pfr_to_gsis()
+    merged, dropped, games = None, {}, []
+    for kind, cols in PFR_COLUMNS.items():
+        frames = [f for f in (_nflverse_optional("pfr_advstats", f"advstats_week_{kind}_{y}.parquet") for y in seasons) if f is not None]
+        if not frames:
+            continue
+        d = pd.concat(frames, ignore_index=True)
+        n0 = len(d)
+        d = d[d["game_type"] == "REG"]
+        dropped[f"{kind}_postseason"] = n0 - len(d)
+        games.append(d[["game_id", "team"]])
+        d = d.assign(season=d["season"].astype(int), week=d["week"].astype(int)).rename(columns=cols)
+        d = d[["pfr_player_id", "game_id", "season", "week", "team", *cols.values()]].drop_duplicates(["pfr_player_id", "game_id"], keep="last")
+        merged = d if merged is None else merged.merge(d, on=["pfr_player_id", "game_id", "season", "week", "team"], how="outer")
+    if merged is None:
+        return []
+    merged["player_id"] = merged["pfr_player_id"].map(p2g)
+    dropped["pfr_id_not_in_players_table"] = int(merged["player_id"].isna().sum())
+    merged = merged[merged["player_id"].notna()].copy()
+    stamps = _charting_release_stamps(CHARTING_REFRESH_WEEKDAY["pfr"])
+    merged[KNOWN_AT] = _stamp_weeks(merged, stamps)
+    gids = set(pd.concat(games)["game_id"])
+    wg = _week_games(seasons)
+    cov = wg[wg["game_id"].isin(gids)].copy()
+    cov[KNOWN_AT] = _stamp_weeks(cov, stamps)
+    dropped["game_not_in_schedule"] = int(merged[KNOWN_AT].isna().sum())
+    merged = merged[merged[KNOWN_AT].notna()]
+    rule = "23:59:59Z on the first Thursday after the day the week's last game ended (weekly release, CHARTING_REFRESH_WEEKDAY)"
+    cols = ["player_id", "pfr_player_id", "season", "week", "game_id", "team",
+            *[c for m in PFR_COLUMNS.values() for c in m.values()], KNOWN_AT]
+    return [RawTable("pfr", merged[cols].reset_index(drop=True), rule, dropped=dropped),
+            RawTable("pfr_games", cov.reset_index(drop=True), rule)]
+
+
+def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series] | None:
+    """(player counts, team counts, max date_pulled per week) for one season, or None when the asset does not exist."""
+    f = _nflverse_optional("ftn_charting", f"ftn_charting_{y}.parquet")
+    if f is None:
+        return None
+    pbp = pd.read_parquet(_fetch(f"{NFLVERSE}/pbp/play_by_play_{y}.parquet", CACHE_DIR / "nflverse" / f"play_by_play_{y}.parquet"),
+                          columns=FTN_PBP_COLS)
+    p = pbp[pbp["posteam"].notna() & (pbp["season_type"] == "REG") & pbp["play_type"].isin(["pass", "run", "qb_kneel"])
+            & (pbp["two_point_attempt"].fillna(0) != 1)]
+    m = p.merge(f.drop(columns=["season", "week"]), left_on=["game_id", "play_id"],
+                right_on=["nflverse_game_id", "nflverse_play_id"], how="inner")
+    is_tgt = (m["play_type"] == "pass") & (m["pass_attempt"] == 1) & m["receiver_player_id"].notna()
+    is_car = (m["rush_attempt"] == 1) & m["rusher_player_id"].notna()
+    is_db = (m["qb_dropback"] == 1) & (m["passer_player_id"].notna() | m["rusher_player_id"].notna())
+    key = ["game_id", "posteam"]
+    t = m[is_tgt]
+    tg = pd.DataFrame({"player_id": t["receiver_player_id"], "game_id": t["game_id"], "posteam": t["posteam"], "tgt": 1.0,
+                       "tgt_motion": t["is_motion"].astype(float), "tgt_pa": t["is_play_action"].astype(float),
+                       "tgt_rpo": t["is_rpo"].astype(float), "tgt_screen": t["is_screen_pass"].astype(float),
+                       "tgt_catchable": t["is_catchable_ball"].astype(float),
+                       "tgt_contested": t["is_contested_ball"].astype(float), "drops": t["is_drop"].astype(float)})
+    c = m[is_car]
+    box = c["n_defense_box"].astype(float)
+    cr = pd.DataFrame({"player_id": c["rusher_player_id"], "game_id": c["game_id"], "posteam": c["posteam"], "car": 1.0,
+                       "car_box": (box > 0).astype(float), "car_light": ((box > 0) & (box <= LIGHT_BOX_MAX)).astype(float),
+                       "box_sum": box.where(box > 0, 0.0)})
+    d = m[is_db]
+    rush = d["n_pass_rushers"].astype(float)
+    dbf = pd.DataFrame({"player_id": d["passer_player_id"].fillna(d["rusher_player_id"]), "game_id": d["game_id"],
+                        "posteam": d["posteam"], "db": 1.0, "db_blitz": (d["n_blitzers"] > 0).astype(float),
+                        "db_oop": d["is_qb_out_of_pocket"].astype(float), "db_pa": d["is_play_action"].astype(float),
+                        "db_rush_n": (rush > 0).astype(float), "rushers_sum": rush.where(rush > 0, 0.0),
+                        "int_worthy": d["is_interception_worthy"].astype(float)})
+    players = pd.concat([x.groupby(["player_id", *key]).sum() for x in (tg, cr, dbf)], axis=1).fillna(0.0).reset_index()
+    for col in FTN_COUNTS:
+        if col not in players.columns:
+            players[col] = 0.0
+    team = m.groupby(key).size().rename("plays").to_frame()
+    tt = tg.groupby(key)[["tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen"]].sum()
+    tt.columns = list(FTN_TEAM_COUNTS)
+    team = team.join(tt, how="left").fillna(0.0).drop(columns="plays").reset_index()
+    pulled = f.groupby("week")["date_pulled"].max()
+    return players.rename(columns={"posteam": "team"}), team.rename(columns={"posteam": "team"}), pulled
+
+
+def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
+    """`ftn` (player, game): FTN charting joined to play-by-play on (game_id, play_id), counted per player-game (FTN_COUNTS:
+    targets and those on motion / play-action / RPO / screen plays, catchable / contested targets, drops; carries, charted
+    carries, light-box carries (box <= LIGHT_BOX_MAX), box sum; dropbacks, blitzed / out-of-pocket / play-action dropbacks, pass
+    rushers, interception-worthy throws). `ftn_team` (team, game): the team's targets on those play types, one row per charted
+    game, which is also the coverage list (a charted game with no row for him = he did none of it). Skill players only.
+    FTN publishes 2022 onward: 2021 (and earlier) answers 404, so those seasons have no rows and every ftn column is NaN there."""
+    seasons = sorted(set(seasons))
+    stamps = _charting_release_stamps(CHARTING_REFRESH_WEEKDAY["ftn"])
+    g = _games()
+    week_end = g.groupby(["season", "week"])["kickoff"].max() + CHARTING_GAME_END
+    wg = _week_games(seasons)
+    players, teams, absent = [], [], []
+    for y in seasons:
+        got = _ftn_season(y)
+        if got is None:
+            absent.append(y)
+            continue
+        pl, tm, pulled = got
+        for df in (pl, tm):
+            df["season"] = y
+            df["week"] = df["game_id"].map(wg.drop_duplicates("game_id").set_index("game_id")["week"])
+        known = {}
+        for w in sorted(set(tm["week"].dropna().astype(int))):
+            stamp = stamps[(y, w)]
+            dp = pulled.get(w)
+            if dp is not None and not pd.isna(dp) and pd.Timestamp(dp) - week_end[(y, w)] <= CHARTING_PULL_WINDOW:
+                stamp = max(stamp, pd.Timestamp(dp).tz_convert("UTC"))
+            known[w] = stamp
+        for df in (pl, tm):
+            df[KNOWN_AT] = _ns_utc(df["week"].map(known))
+        players.append(pl[pl["player_id"].isin(skill_ids)])
+        teams.append(tm)
+    if not teams:
+        return []
+    rule = ("23:59:59Z on the first Wednesday after the day the week's last game ended, or the week's FTN `date_pulled` when that "
+            "is later and within 30 days of the week (CHARTING_PULL_WINDOW)")
+    out = []
+    for name, frames, cols in (("ftn", players, ["player_id", "season", "week", "game_id", "team", *FTN_COUNTS]),
+                               ("ftn_team", teams, ["team", "season", "week", "game_id", *FTN_TEAM_COUNTS])):
+        df = pd.concat(frames, ignore_index=True)
+        n_bad = int(df[KNOWN_AT].isna().sum())
+        df = df[df[KNOWN_AT].notna()]
+        df["week"] = df["week"].astype(int)
+        out.append(RawTable(name, df[[*cols, KNOWN_AT]].reset_index(drop=True), rule,
+                            dropped={"game_not_in_schedule": n_bad, **{f"season_{y}_not_published": 1 for y in absent}}))
+    return out
+
+
+def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
+               charting: bool | None = None) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
-    tables (Phase 2.5)."""
+    tables (Phase 2.5); `charting` (default: the value of `pbp`, so the serving path, which passes pbp=False, loads none of it)
+    adds the weekly NGS / PFR / FTN tables (Phase 5 candidates)."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
@@ -846,6 +1090,9 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
               *load_static_tables(), load_career_pre_cutoff()]
     if pbp:
         tables += load_pbp_tables(seasons, pg.df, sn.df)
+    if pbp if charting is None else charting:
+        skill_ids = set(pg.df["player_id"]) | set(sn.df.loc[sn.df["position"].isin(SKILL_POSITIONS), "player_id"])
+        tables += [*load_ngs_tables(seasons), *load_pfr_tables(seasons), *load_ftn_tables(seasons, skill_ids)]
     if adp:
         from model.adp import load_adp_table       # local import: adp.py needs this module's helpers
         t = load_adp_table()
