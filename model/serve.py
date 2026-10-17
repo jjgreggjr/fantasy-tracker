@@ -3,12 +3,16 @@
     python -m model.serve                       # the week that has not kicked off yet (what the weekly workflow runs)
     python -m model.serve --dry-run             # compute and print, write nothing
     python -m model.serve --freeze              # recompute model/serving_config.json (preseason, or after a spec change)
+    python -m model.serve --freeze --dry-run    # ...compute and print what it would freeze (a diff), write nothing
     python -m model.serve --columns             # the column reference for data/model_pts.csv
 
 What it does, in order (every step reuses training code; nothing is re-implemented for serving):
 
   1. Refresh the raw nflverse files that change in season (stats, snaps, injuries, depth charts, xFP, schedule, players) and
-     load the store (`point_in_time.load_store`, no play-by-play / ADP / college: the shipped inputs do not use them).
+     load the store (`point_in_time.load_store`, no play-by-play / ADP / college: the shipped inputs do not use them). An opt-in
+     family the spec adds (`spec.add_families` in serving_config.json) turns on its own store table through FAMILY_SOURCES and
+     re-downloads its source; if that fails, or its data has no row for the served week, a WARN says so and the serve uses the
+     frozen primary without the opt-in families (serving_config.json `fallback`): never a silently half-featured row.
   2. Pick the week: the first regular-season week with a game that has not kicked off. Only games that have NOT kicked off are
      (re)predicted; rows for games already under way stay exactly as an earlier run wrote them (the frozen record the
      scoreboard judges). A completed week is never touched.
@@ -20,7 +24,7 @@ What it does, in order (every step reuses training code; nothing is re-implement
        * 14 LightGBM component models (own frozen tree counts), composed under each league's linear scoring
          (`leaguescore`): `pts_<slug>`; under PPR: `pts_model_components`;
        * LightGBM p10 / p50 / p90 with `underage_only` recalibration from trailing residuals.
-     Inputs are Phase 2's 71 columns (`serving_config.json`): no new features.
+     Inputs are the frozen `serving_config.json` `inputs` (Phase 2's 71 columns until a trial's SHIPS is adopted).
   5. Who gets no row: a player the model predicts "points if he plays", so availability is the status layer's, not the model's.
      A row is WITHHELD when Sleeper's `injury_status` (data/players.csv, the pipeline's own status layer, `ff.status.OUT_STATES`)
      says Out / IR / PUP / Sus, when the nflverse report for the week says Out, when he is on the week's gameday inactive list
@@ -104,9 +108,101 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
 
 
 def spec_from(cfg: dict):
+    """The Spec serving_config.json freezes. `add_families` is optional (absent = none: the Phase 3 design)."""
     from model import train as T
     s = cfg["spec"]
-    return T.Spec(s["name"], drop_cols=tuple(s["drop_cols"]), drop_families=tuple(s["drop_families"]))
+    return T.Spec(s["name"], drop_cols=tuple(s["drop_cols"]), drop_families=tuple(s["drop_families"]),
+                  add_families=tuple(s.get("add_families", ())))
+
+
+# --------------------------------------------------------------------------- opt-in families: what each needs from the store
+class FamilySource:
+    """What serving an opt-in family (train.OPT_IN_FAMILIES) needs beyond the base store.
+
+    store_kwarg  the `point_in_time.load_store` switch that adds its table (None: built from the base tables)
+    table        the RawStore table that switch adds
+    refresh      re-download its in-season source at serve time (None: nothing to refresh)
+    load         read the table from disk to check it is readable BEFORE the store is built (raises, or returns None if absent)
+    week_rows    (store, season, week) -> the table's rows for the served week: 0 means its columns would be empty on every row
+    timing       when the source publishes, for the WARN"""
+
+    def __init__(self, store_kwarg=None, table=None, refresh=None, load=None, week_rows=None, timing=""):
+        self.store_kwarg, self.table, self.refresh, self.load, self.week_rows, self.timing = \
+            store_kwarg, table, refresh, load, week_rows, timing
+
+
+def refresh_ecr() -> str:
+    """Re-download the DynastyProcess ECR archive and rebuild model/cache/ecr/ecr_weekly.parquet with `fetch_ecr`'s own build.
+    Everything lands in a scratch folder first and is moved in only once the whole build succeeded, so a failed download or a bad
+    file leaves the previous cached copy exactly as it was."""
+    import shutil
+    import tempfile
+    import pandas as pd
+    from model import fetch_ecr as FE
+    from model import point_in_time as pit
+    FE.ECR_DIR.mkdir(parents=True, exist_ok=True)
+    d = Path(tempfile.mkdtemp(prefix=".incoming-", dir=FE.ECR_DIR))
+    try:
+        f_ecr, f_ids = FE.download(ecr_dir=d)
+        df, _ = FE.build(pd.read_parquet(f_ecr), pd.read_csv(f_ids, low_memory=False, dtype=str), pit._games())
+        if df.empty:
+            raise ValueError("the rebuilt ECR table is empty")
+        out = d / FE.OUT
+        df.to_parquet(out, index=False)
+        for f in (f_ecr, f_ids, out):
+            os.replace(f, FE.ECR_DIR / f.name)
+        return f"ecr: refreshed, {len(df):,} rows, newest scrape {df['scrape_date'].max()}"
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
+def _load_ecr():
+    from model import fetch_ecr as FE
+    return FE.load_ecr_table()
+
+
+def table_week_rows(table: str):
+    def rows(store, season: int, week: int) -> int:
+        if not store.has(table):
+            return 0
+        df = store._tables[table].df
+        return int(((df["season"] == season) & (df["week"] == week)).sum())
+    return rows
+
+
+# family -> what serving it needs. A future family (market, nfelo, ...) is one entry here plus its `load_store` switch. A family
+# not listed cannot be served (pbp_* and eff need play-by-play the serve does not refresh; pbp_part is a backtest proxy), so a
+# spec that adds one is refused (a WARN, nothing written) rather than served with empty columns.
+FAMILY_SOURCES = {
+    "ecr": FamilySource("ecr", "ecr", refresh=refresh_ecr, load=_load_ecr, week_rows=table_week_rows("ecr"),
+                        timing="DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no "
+                               "scrape for its week yet"),
+    "streak": FamilySource(),                           # derived from the base tables: nothing to load
+}
+
+
+def family_source(fam: str) -> FamilySource:
+    if fam not in FAMILY_SOURCES:
+        raise ValueError(f"serving_config.json adds family {fam!r}, which serve.FAMILY_SOURCES cannot serve "
+                         f"(servable: {sorted(FAMILY_SOURCES)})")
+    return FAMILY_SOURCES[fam]
+
+
+def store_families(store) -> tuple[str, ...]:
+    """The opt-in families whose table is in `store`."""
+    return tuple(f for f in sorted(FAMILY_SOURCES) if FAMILY_SOURCES[f].table and store.has(FAMILY_SOURCES[f].table))
+
+
+def family_key(store, season: int) -> str:
+    """What the cached history matrix depends on beyond the code: each opt-in family table in the store, by name and a hash of its
+    rows from seasons before `season` (the cached seasons; this week's new scrape does not touch it). '' for the base store."""
+    import pandas as pd
+    parts = []
+    for fam in store_families(store):
+        df = store._tables[FAMILY_SOURCES[fam].table].df
+        df = df[df["season"] < season] if "season" in df.columns else df
+        parts.append(f"{fam}:{int(pd.util.hash_pandas_object(df, index=False).sum() % (2 ** 63)):x}")
+    return "|".join(parts)
 
 
 def default_cache() -> Path:
@@ -183,11 +279,59 @@ def refresh_raw(season: int) -> list[str]:
     return gone
 
 
-def load_store(season: int, *, refresh: bool = True):
+def load_store(season: int, *, refresh: bool = True, families=(), warnings: list | None = None):
+    """The serving store: the base tables, plus the table of each opt-in family in `families` (FAMILY_SOURCES). With `refresh` a
+    family's source is re-downloaded; a failed download keeps the cached copy (WARN), and a cached copy that is missing or unreadable
+    leaves the table out (WARN). `serving_config_for` then sees the gap and serves the fallback."""
     from model import point_in_time as pit
+    warnings = warnings if warnings is not None else []
     if refresh:
         refresh_raw(season)
-    return pit.load_store(range(pit.CAREER_CUTOFF_SEASON, season + 1), adp=False, college=False, pbp=False)
+    kw = dict(adp=False, college=False, pbp=False)
+    for fam in families:
+        src = family_source(fam)
+        if src.store_kwarg is None:
+            continue
+        if refresh and src.refresh is not None:
+            try:
+                print(f"  {src.refresh()}", flush=True)
+            except Exception as e:
+                warnings.append(f"{fam}: could not refresh its source ({type(e).__name__}: {str(e)[:160]}); using the cached copy, "
+                                "if there is one")
+        try:
+            ok, why = src.load() is not None, "not fetched"
+        except Exception as e:
+            ok, why = False, f"{type(e).__name__}: {str(e)[:160]}"
+        if ok:
+            kw[src.store_kwarg] = True
+        else:
+            warnings.append(f"{fam}: its table cannot be loaded ({why}), so it is left out of the store")
+    return pit.load_store(range(pit.CAREER_CUTOFF_SEASON, season + 1), **kw)
+
+
+def serving_config_for(cfg: dict, store, season: int, week: int, warnings: list) -> dict:
+    """The config this serve uses: the frozen one when every opt-in family it adds is in the store AND has rows for the served week;
+    otherwise the frozen `fallback` (the same spec without opt-in families, frozen beside it by --freeze), with a WARN saying why.
+    Why not serve NaN when the week has no scrape: in training an empty block meant 'unranked' (or week 1 / 18), so a whole week of
+    NaN is an input distribution the model never validated; the fallback is a validated model. One player missing from a scrape
+    that exists is ordinary (NaN, as in training). Raises (a WARN row, nothing written) when a fallback is needed and none is frozen."""
+    fams = tuple(cfg["spec"].get("add_families", ()))
+    why = []
+    for fam in fams:
+        src = family_source(fam)
+        if src.table and not store.has(src.table):
+            why.append(f"{fam}: no table in the store")
+        elif src.week_rows is not None and src.week_rows(store, season, week) == 0:
+            why.append(f"{fam}: no rows for {season} week {week} yet ({src.timing}), so the {fam} columns would be empty for every "
+                       "row of this serve")
+    if not why:
+        return cfg
+    fb = cfg.get("fallback")
+    if not fb:
+        raise RuntimeError(f"{'; '.join(why)}, and serving_config.json has no frozen 'fallback' (python -m model.serve --freeze writes it)")
+    warnings.append(f"{'; '.join(why)}: serving the frozen fallback WITHOUT {', '.join(fams)} ({len(fb['inputs'])} inputs, its own "
+                    f"frozen tree counts) instead of the {len(cfg['inputs'])}-input spec")
+    return {**cfg, "spec": {**cfg["spec"], "add_families": []}, "components": fb["components"], "inputs": fb["inputs"]}
 
 
 # --------------------------------------------------------------------------- which week, which games
@@ -232,13 +376,21 @@ def prune_cache(cache_dir: Path, prefix: str, keep: Path) -> None:
             old.unlink()
 
 
+def history_file(store, season: int) -> str:
+    """The history cache's file name, keyed on the feature code, the season and the opt-in family tables in the store with their
+    content (`family_key`). The base store keeps the Phase 3 name `hist_<hash>.parquet`; a store with the ecr table writes
+    `hist+ecr_<hash>.parquet`, so a spec change rebuilds exactly the frame it needs and a fallback serve does not evict the other."""
+    fams = store_families(store)
+    return f"hist{''.join('+' + x for x in fams)}_{code_hash(season, family_key(store, season) if fams else '')}.parquet"
+
+
 def training_frame(store, season: int, week: int, *, jobs: int = 1, cache_dir: Path | None = None, rebuild: bool = False, log=print):
     """Matrix rows (labels attached) of every completed game strictly before (season, week): the earlier seasons from a cache
     keyed on the feature code, this season's completed weeks rebuilt fresh every run."""
     import pandas as pd
     from model import build_features as BF
     cache_dir = cache_dir or default_cache()
-    f = cache_dir / f"hist_{code_hash(season)}.parquet"
+    f = cache_dir / history_file(store, season)
     if f.exists() and not rebuild:
         hist = pd.read_parquet(f)
         log(f"  history matrix: cache hit ({len(hist):,} rows)")
@@ -247,7 +399,7 @@ def training_frame(store, season: int, week: int, *, jobs: int = 1, cache_dir: P
         hist = BF.build(list(range(FIRST_SEASON, season)), store=store, verbose=True, jobs=jobs)
         cache_dir.mkdir(parents=True, exist_ok=True)
         hist.to_parquet(f)
-        prune_cache(cache_dir, "hist", f)
+        prune_cache(cache_dir, f.name.rsplit("_", 1)[0], f)          # per family set: the base and +ecr histories coexist
         log(f"  history matrix: built {len(hist):,} rows in {time.time() - t0:,.0f}s")
     cur = BF.build([season], store=store, verbose=False, jobs=jobs)
     cur = cur[cur["week"] < week] if len(cur) else cur
@@ -330,8 +482,14 @@ def quantile_history(df, spec, season: int, params: dict, *, target: str | None 
     target = target or T.TARGET
     cache_dir = cache_dir or default_cache()
     labels = int(pd.util.hash_pandas_object(df.loc[df["season"] == season - 1, target], index=False).sum() % (2 ** 63))
-    key = code_hash(season, json.dumps([params["quantile"], list(spec.drop_cols), list(spec.drop_families), target, labels], sort_keys=True))
-    tag = target.replace("y_", "").replace("_", "-")
+    parts = [params["quantile"], list(spec.drop_cols), list(spec.drop_families), target, labels]
+    if spec.add_families:               # and those families' columns (data, not just code); absent for the base spec, whose key is unchanged
+        from model import features as F
+        fcols = sorted(c for f in spec.add_families for c in F.FAMILIES.get(f, ()) if c in df.columns)
+        parts += [list(spec.add_families),
+                  int(pd.util.hash_pandas_object(df.loc[df["season"] < season, fcols], index=False).sum() % (2 ** 63))]
+    key = code_hash(season, json.dumps(parts, sort_keys=True))
+    tag = target.replace("y_", "").replace("_", "-") + "".join("+" + f for f in spec.add_families)
     f = cache_dir / f"qhist-{tag}_{key}.parquet"
     if f.exists():
         return pd.read_parquet(f)
@@ -734,15 +892,17 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     import pandas as pd
     from model import leaguescore as L
     out_path = Path(args.out) if args.out else root / "data" / "model_pts.csv"
-    cfg = load_config()
+    cfg = load_config(getattr(args, "config", None) or CONFIG_PATH)
     season = args.season or int(json.loads((root / "config.json").read_text(encoding="utf-8"))["season"])
     now = pd.Timestamp(args.now, tz="UTC") if args.now else now_utc()
     warnings: list[str] = []
     t0 = time.time()
-    store = load_store(season, refresh=not args.no_refresh)
+    store = load_store(season, refresh=not args.no_refresh, families=tuple(cfg.get("spec", {}).get("add_families", ())),
+                       warnings=warnings)
     week, tgs = pick_week(store, season, now, args.week)
     if week is None:
         return [f"model.serve: nothing to serve: every {season} regular-season game has kicked off"]
+    cfg = serving_config_for(cfg, store, season, week, warnings)
     upcoming = [g for g in tgs if g.kickoff > now]
     replay = not upcoming
     if replay and not (args.dry_run or args.out):
@@ -770,7 +930,7 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     lines = summary_lines(merged_week(out_path, out, season, week, now), reasons, leagues, root, season, week)
     lines += injury_lines(store, out, upcoming, now, season, week, warnings)
     if args.dry_run:
-        return lines + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
+        return lines + [f"  WARN {w}" for w in warnings] + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
     live = out_path == root / "data" / "model_pts.csv"          # a custom --out is a scratch copy: no roster.csv, no run-log row
     n, done = write_outputs(root, out_path, out, leagues, season, week, now, warnings, rosters=live)
     lines.append(f"  wrote {out_path.name} ({n} rows for week {week}); model columns in roster.csv: {', '.join(done) or 'none'}")
@@ -783,19 +943,10 @@ def run(args, *, root: Path = ROOT) -> list[str]:
 
 
 # --------------------------------------------------------------------------- freezing the serving config
-def freeze(args, *, root: Path = ROOT) -> list[str]:
-    """Write the component tree counts (the Phase 2.5 protocol: early stopping on 2024 after training 2021-2023, x1.1) for the serving
-    spec into serving_config.json. Preseason, or after the spec changes."""
-    import pandas as pd
+def freeze_components(df, spec, dead) -> tuple[dict, list[str]]:
+    """(component tree counts, encoded inputs) of `spec` on `df`, by the Phase 2.5 protocol."""
     from model import components as C
     from model import train as T
-    cfg = load_config()
-    spec = spec_from(cfg)
-    season = args.season or int(json.loads((root / "config.json").read_text(encoding="utf-8"))["season"])
-    store = load_store(season, refresh=False)
-    hist = training_frame(store, season, 1, jobs=args.jobs or min(4, os.cpu_count() or 1))
-    df = C.add_misc(hist)
-    dead = T.dead_columns(df)
     cols = T.feature_columns(df, spec, dead)
     base = {k: v for k, v in T.load_params()["point"]["lightgbm"].items() if k != "n_estimators"}
     played = df[df["y_played"] == 1]
@@ -809,12 +960,78 @@ def freeze(args, *, root: Path = ROOT) -> list[str]:
         counts[t] = {"n_estimators": max(50, int(round(n * T.FOLLOW_UP_TREE_FACTOR))), "best_iteration": int(n),
                      "valid_rmse": round(float(loss), 4)}
     X, _ = T.encode(df.head(2), cols)
-    cfg["components"] = counts
-    cfg["inputs"] = list(X.columns)
+    return counts, list(X.columns)
+
+
+def fallback_block(cfg: dict, df, base_spec, dead, *, refit: bool = False) -> dict:
+    """The `fallback` a family spec freezes beside it: the spec without its families. It is the primary that serves TODAY, carried
+    over unchanged (inputs and tree counts) whenever the config's frozen inputs, or its existing fallback's, are exactly what the
+    spec without families yields on this data: that is the model the trial judged the family against, and a re-fit would move its
+    tree counts with the data and the thread count. Otherwise (or with --refit-fallback) it is frozen afresh."""
+    import pandas as pd
+    from model import train as T
+    X, _ = T.encode(df.head(2), T.feature_columns(df, base_spec, dead))
+    want = list(X.columns)
+    note = ("the spec without its opt-in families: served when a family's data is missing or has no row for the week "
+            "(serve.serving_config_for). Written by --freeze")
+    if not refit:
+        prev = cfg.get("fallback")
+        if prev and prev.get("inputs") == want and prev.get("components"):
+            return {**prev, "note": note + " (kept)"}
+        if not prev and cfg.get("inputs") == want and cfg.get("components"):
+            return {"note": note + " (carried over from the primary that served before)", "components": cfg["components"],
+                    "inputs": want, "frozen_on": cfg.get("frozen_on")}
+    counts, inputs = freeze_components(df, base_spec, dead)
+    return {"note": note, "components": counts, "inputs": inputs, "frozen_on": pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d")}
+
+
+def freeze(args, *, root: Path = ROOT) -> list[str]:
+    """Write the component tree counts (the Phase 2.5 protocol: early stopping on 2024 after training 2021-2023, x1.1) and the encoded
+    inputs of the serving spec into serving_config.json (or `--config`). Preseason, or after the spec changes. A spec that adds opt-in
+    families also freezes its `fallback` (`fallback_block`: the primary that served before, kept; `serving_config_for` serves it when
+    a family's data is missing).
+    The family tables must load from the cache (freezing never downloads), or nothing is frozen. With --dry-run: print, write nothing."""
+    import dataclasses
+    import difflib
+    import pandas as pd
+    from model import components as C
+    from model import train as T
+    path = Path(getattr(args, "config", None) or CONFIG_PATH)
+    dry = bool(getattr(args, "dry_run", False))
+    cfg = load_config(path)
+    old = json.dumps(cfg, indent=1)
+    spec = spec_from(cfg)
+    season = args.season or int(json.loads((root / "config.json").read_text(encoding="utf-8"))["season"])
+    warnings: list[str] = []
+    store = load_store(season, refresh=False, families=spec.add_families, warnings=warnings)
+    gone = [f for f in spec.add_families if family_source(f).table and not store.has(family_source(f).table)]
+    if gone:
+        raise RuntimeError(f"cannot freeze {gone}: {'; '.join(warnings)}")
+    hist = training_frame(store, season, 1, jobs=args.jobs or min(4, os.cpu_count() or 1))
+    df = C.add_misc(hist)
+    dead = T.dead_columns(df)
+    fb = None
+    if spec.add_families:
+        fb = fallback_block(cfg, df, dataclasses.replace(spec, add_families=()), dead, refit=bool(getattr(args, "refit_fallback", False)))
+    counts, inputs = freeze_components(df, spec, dead)
+    cfg["components"], cfg["inputs"] = counts, inputs
+    if fb is not None:
+        cfg["fallback"] = fb
+    else:
+        cfg.pop("fallback", None)
     cfg["frozen_on"] = pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d")
-    Path(CONFIG_PATH).write_text(json.dumps(cfg, indent=1), encoding="utf-8")
-    return [f"wrote {CONFIG_PATH.name}: {len(cfg['inputs'])} inputs, component tree counts "
-            + ", ".join(f"{k} {v['n_estimators']}" for k, v in counts.items())]
+    new = json.dumps(cfg, indent=1)
+    fb = cfg.get("fallback")
+    lines = [f"{'would write' if dry else 'wrote'} {path.name}: {len(inputs)} inputs"
+             + (f" ({len(fb['inputs'])} in the fallback; added: {', '.join(c for c in inputs if c not in fb['inputs'])})" if fb else "")
+             + ", component tree counts " + ", ".join(f"{k} {v['n_estimators']}" for k, v in counts.items())]
+    if fb:
+        lines.append("  fallback component tree counts " + ", ".join(f"{k} {v['n_estimators']}" for k, v in fb["components"].items()))
+    if dry:
+        return lines + ["  (dry run: nothing written) diff:"] + list(
+            difflib.unified_diff(old.splitlines(), new.splitlines(), str(path), "frozen", lineterm="", n=1))
+    path.write_text(new, encoding="utf-8")
+    return lines
 
 
 # --------------------------------------------------------------------------- entry point
@@ -828,7 +1045,9 @@ def main(argv=None) -> int:
     ap.add_argument("--jobs", type=int, default=0, help="workers for the feature build (default: up to 4)")
     ap.add_argument("--rebuild", action="store_true", help="ignore the cached history matrix")
     ap.add_argument("--no-refresh", action="store_true", help="do not re-download the volatile raw files")
-    ap.add_argument("--freeze", action="store_true", help="recompute model/serving_config.json")
+    ap.add_argument("--freeze", action="store_true", help="recompute model/serving_config.json (with --dry-run: print the diff, write nothing)")
+    ap.add_argument("--refit-fallback", action="store_true", help="--freeze: re-fit the no-family fallback instead of keeping the primary's")
+    ap.add_argument("--config", help="read (and with --freeze write) this serving config instead of model/serving_config.json")
     ap.add_argument("--columns", action="store_true", help="print the column reference and exit")
     args = ap.parse_args(argv)
     if args.columns:

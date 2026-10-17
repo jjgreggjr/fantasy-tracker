@@ -85,9 +85,9 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
 
 
 def serving_spec(cfg: dict) -> Spec:
-    """The frozen spec, exactly as `serve.spec_from` builds it."""
-    s = cfg["spec"]
-    return Spec(s["name"], drop_cols=tuple(s["drop_cols"]), drop_families=tuple(s["drop_families"]))
+    """The frozen spec: `serve.spec_from` itself (add_families included), so the trial's primary is the served one."""
+    from model import serve as S
+    return S.spec_from(cfg)
 
 
 def column_status(col: str, fam: str, spec: Spec, inputs: set[str]) -> str:
@@ -393,20 +393,35 @@ def pm(d, metric: str, fmt: str = "{:+.3f}") -> str:
 
 def adoption_steps(variant: Variant, base_cfg: dict, lib: str) -> list[str]:
     """What a human edits to adopt the variant; the harness never edits these files itself."""
+    from model import serve as S
     steps = []
     s = base_cfg["spec"]
-    if variant.spec.drop_cols != tuple(s["drop_cols"]) or variant.spec.drop_families != tuple(s["drop_families"]) or variant.spec.add_families:
-        steps.append(f"edit {_rel(CONFIG_PATH)} 'spec': drop_cols -> {sorted(variant.spec.drop_cols)}; "
-                     f"drop_families -> {list(variant.spec.drop_families)}"
-                     + (f"; add_families {list(variant.spec.add_families)} (serve.spec_from must learn to read add_families: "
-                        f"it builds the Spec from drop_cols/drop_families only)" if variant.spec.add_families else ""))
+    edits = {}
+    if variant.spec.drop_cols != tuple(s["drop_cols"]):
+        edits["drop_cols"] = sorted(variant.spec.drop_cols)
+    if variant.spec.drop_families != tuple(s["drop_families"]):
+        edits["drop_families"] = list(variant.spec.drop_families)
+    if variant.spec.add_families != tuple(s.get("add_families", ())):
+        edits["add_families"] = list(variant.spec.add_families)
+    if edits:
+        steps.append(f"edit {_rel(CONFIG_PATH)} \"spec\", setting exactly (every other key unchanged): "
+                     + ", ".join(f"{json.dumps(k)}: {json.dumps(v)}" for k, v in edits.items()))
+    unservable = [f for f in variant.spec.add_families if f not in S.FAMILY_SOURCES]
+    if unservable:
+        steps.append(f"{unservable} cannot be served yet: add an entry to serve.FAMILY_SOURCES (its load_store switch, source refresh "
+                     "and week coverage) first; until then the serve refuses the spec with a WARN")
+    fetch = [f for f in variant.spec.add_families if f in S.FAMILY_SOURCES and S.FAMILY_SOURCES[f].refresh is not None]
+    if fetch:
+        steps.append(f"{', '.join(fetch)}: its table must be in the cache before freezing ({'python -m model.fetch_ecr' if 'ecr' in fetch else 'its fetcher'}"
+                     "); every serve re-downloads it after that")
     for lb, kv in variant.params.items():
         steps.append(f"edit {_rel(T.PARAMS_PATH)} point.{lb}: {kv} (and its tree count: this trial's is in "
                      f"{_rel(OUT / 'tree_counts.json')})")
     if variant.recent:
         steps.append(f"recent:{variant.recent[0]}x{variant.recent[1]:g} is not a config switch: serve.predict_week must pass "
                      f"backtest.walk_forward(weight_fn=trial.weight_fn_for(variant)); add it, then a serve-equals-backtest test")
-    steps.append("then: python -m model.serve --freeze   (rewrites the frozen inputs and component tree counts; review the diff)")
+    steps.append("then: python -m model.serve --freeze --dry-run   (prints the diff it would write: the inputs, component tree counts"
+                 + (" and the no-family fallback" if variant.spec.add_families else "") + "), then python -m model.serve --freeze")
     steps.append("then: one line in PLAN_MODEL.md 'Phase 5' and the status column of model/candidates.md")
     if lib != "average":
         steps.append(f"judged on {lib} alone (the serving point estimate is the 3-library average: re-run with --lib average before adopting)")

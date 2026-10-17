@@ -996,7 +996,11 @@ layer). This phase makes that reading a weekly, mechanical step, and makes testi
    may tie). Candidates: add or drop a feature family or columns, a hyper-parameter, or `recent:<n>` (weight this
    season's last n weeks more; the direct test of "should it learn faster from 2026").
 4. Only a SHIPS verdict changes `serving_config.json`, by hand, followed by `python -m model.serve --freeze` and a line
-   in this file. `E_pts` has one lever of its own (`trail_cap` in `ff/score.py`), outside `trial.py`; its evidence
+   in this file. An opt-in family is adopted by adding `"add_families": [...]` to its `spec` (the trial prints the exact
+   edit); `--freeze --dry-run` prints the diff first, and `--freeze` also writes a `fallback` (the spec without the
+   families). A serve whose family data failed to download and has no readable cached copy, or has no row for the
+   served week (ECR: DynastyProcess scrapes Fridays 00:03 UTC, so the Tuesday/Wednesday serves), serves that fallback
+   with a WARN, never empty columns (`serve.FAMILY_SOURCES`, `serve.serving_config_for`). `E_pts` has one lever of its own (`trail_cap` in `ff/score.py`), outside `trial.py`; its evidence
    lives in the same candidates file.
 
 **Ground rules kept.** Everything the retrospective reads was frozen before kickoff or is the platform's own result;
