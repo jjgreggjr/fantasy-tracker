@@ -51,6 +51,12 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               1/2/3 games, their 4-game sum, run lengths of consecutive over/under games (capped +-6), the volume analogue, and
               the last two games against last season's per-game mean. Last season's REG games precede this season's so the
               first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
+  script      (Phase 5 candidate, 2026-10-16) game script and coaching context, top-down: the team's last 4 REG games (this
+              season and last) for tempo, no-huddle rate, pass rate over expected, xpass, early-down and win-probability-neutral
+              pass rates, red-zone plays, EPA/play and success; its opponent's defense over its last 4 (EPA allowed, pass / rush
+              split); Vegas x tendency (implied total x pass rate, spread x PROE); expected team plays (SCRIPT_PLAYS_RULE), pass
+              and rush attempts; the player's trailing-3 shares applied to them; head-coach change and tenure (`coaches` table).
+              Only what `pbp_team` lacks is a column.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -120,6 +126,25 @@ EFF_PRIORS = {
 EFF_K = {"catch_rate": 20.0, "rec_ypt": 20.0, "rec_td_rate": 60.0, "rush_ypc": 30.0, "rush_td_rate": 80.0,
          "pass_ypa": 150.0, "pass_cmp_rate": 150.0, "pass_td_rate": 300.0, "pass_int_rate": 300.0}
 EFF_WINDOWS = ("career", "std")
+# `script` (game script and coaching context). Windows: the team's (or its opponent's) last SCRIPT_WINDOW regular-season games
+# of this season and last season (so week 1 reads last season's final games). Only what `pbp_team` lacks is a column: its plays
+# per game and dropback rate (t3/std) are reused internally for the expected-volume chain, not repeated.
+SCRIPT_WINDOW = 4
+SCRIPT_TEAM_COLUMNS = ["scr_sec_per_play_l4", "scr_no_huddle_rate_l4", "scr_proe_l4", "scr_xpass_l4",
+                       "scr_early_down_pass_rate_l4", "scr_wp_neutral_pass_rate_l4", "scr_rz_plays_pg_l4",
+                       "scr_epa_per_play_l4", "scr_success_rate_l4"]
+SCRIPT_OPP_COLUMNS = ["scr_opp_epa_allowed_l4", "scr_opp_pass_epa_allowed_l4", "scr_opp_rush_epa_allowed_l4"]
+SCRIPT_GAME_COLUMNS = ["scr_itt_x_pass_rate", "scr_spread_x_proe", "expected_team_plays", "expected_pass_att",
+                       "expected_rush_att"]
+SCRIPT_PLAYER_COLUMNS = ["exp_player_targets", "exp_player_carries", "exp_player_pass_att"]
+SCRIPT_COACH_COLUMNS = ["hc_changed_this_season", "hc_games_in_charge"]
+# expected_team_plays = a + b * trailing plays/game (l4) + c * |spread| + d * total. OLS on every 2021-2024 regular-season
+# team-game with a trailing window and a line (`python -m model.script_rule` refits and prints them; fixed constants, never
+# refit inside a backtest: 2025 is out of sample, 2024 is in sample like the tuned tree counts).
+# Fit 2026-10-16 on 2,174 team-games: RMSE 8.25 plays against 8.30 for a constant and 9.11 for the trailing mean alone (team plays
+# in one game are mostly noise; the rule shrinks the trailing mean ~86% toward the league). |spread| carries ~nothing; a signed
+# spread would (+0.15 plays per point for the favourite), which `scr_spread_x_proe` and the vegas family already see.
+SCRIPT_PLAYS_RULE = {"intercept": 47.6941, "trail_plays": 0.1366, "abs_spread": -0.0411, "total": 0.1361}
 
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
@@ -149,6 +174,8 @@ FAMILIES: dict[str, list[str]] = {
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
     "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
                "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
+    # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:script`)
+    "script": SCRIPT_TEAM_COLUMNS + SCRIPT_OPP_COLUMNS + SCRIPT_GAME_COLUMNS + SCRIPT_PLAYER_COLUMNS + SCRIPT_COACH_COLUMNS,
 }
 STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
 # Produced, but never a model input.
@@ -508,6 +535,7 @@ def _team_context(store, t: TargetRow, trace) -> dict[str, Any]:
             dvp[pos] = d
         ctx["dvp"] = dvp
         ctx["pbp_team"] = _team_pbp_features(store, t, trace)
+        ctx["script"] = _script_team(store, t, ctx["vegas"], trace)
         # teammates: the spine, each with trailing usage and this week's report
         rows, last_gids = _spine(store, t, trace)
         inj = as_of_join(store, "injuries", ko, team=t.team, trace=trace)
@@ -673,6 +701,121 @@ def _team_pbp_features(store, t: TargetRow, trace) -> dict[str, float]:
     return out
 
 
+def _script_window(store, t: TargetRow, trace, **key) -> pd.DataFrame:
+    """The last SCRIPT_WINDOW regular-season pbp_team rows matching `key` (team=... for an offense, opponent=... for the defense
+    it faced) from this season and last season, of games that ended before the row's result cutoff."""
+    df = as_of_join(store, "pbp_team", _rk(t.kickoff), trace=trace, **key)
+    df = df[(df["game_type"] == "REG") & df["season"].isin([t.season - 1, t.season])]
+    return df.tail(SCRIPT_WINDOW)
+
+
+def _sr(df: pd.DataFrame, num: str, den: str, scale: float = 1.0) -> float:
+    """Ratio of column sums (NaN-ignoring; NaN when the denominator is 0 or the window is empty)."""
+    if not len(df):
+        return NAN
+    return _ratio(scale * float(np.nansum(df[num].to_numpy(dtype="float64"))), float(np.nansum(df[den].to_numpy(dtype="float64"))))
+
+
+def expected_team_plays(trail_plays: float, spread: float, total: float, rule: dict | None = None) -> float:
+    """SCRIPT_PLAYS_RULE applied: NaN if any input is missing."""
+    r = rule or SCRIPT_PLAYS_RULE
+    if any(math.isnan(x) for x in (trail_plays, spread, total)):
+        return NAN
+    return r["intercept"] + r["trail_plays"] * trail_plays + r["abs_spread"] * abs(spread) + r["total"] * total
+
+
+def _coach_features(store, t: TargetRow, trace) -> dict[str, float]:
+    """hc_changed_this_season: this game's head coach differs from the coach of the team's first game this season (for that
+    first game itself: from the coach of the team's last game of the previous season). hc_games_in_charge: games (any type, since
+    2000) this coach coached this team before this one. NaN without a `coaches` table or a row for this game."""
+    out = {c: NAN for c in SCRIPT_COACH_COLUMNS}
+    if not store.has("coaches"):
+        return out
+    co = as_of_join(store, "coaches", t.kickoff, team=t.team, trace=trace)
+    me = co[co["game_id"] == t.game_id]
+    if not len(me):
+        return out
+    coach = me["coach"].iloc[-1]
+    before = co[co["game_id"] != t.game_id]
+    before = before[before[KNOWN_AT] < me[KNOWN_AT].iloc[-1]]          # earlier games only (no later fixture can be known)
+    this = before[before["season"] == t.season]
+    ref = this["coach"].iloc[0] if len(this) else (
+        before.loc[before["season"] == t.season - 1, "coach"].iloc[-1] if (before["season"] == t.season - 1).any() else None)
+    out["hc_changed_this_season"] = NAN if ref is None else float(coach != ref)
+    out["hc_games_in_charge"] = float((before["coach"] == coach).sum())
+    return out
+
+
+def _script_team(store, t: TargetRow, vegas: dict, trace) -> dict[str, float]:
+    """Team-game half of the `script` family (every column but the player's own expected volume), plus `_trail_pass_rate`,
+    `_exp_pass`, `_exp_rush` for the player half. Memoised per (game, team) through `_team_context`."""
+    out: dict[str, float] = {c: NAN for c in SCRIPT_TEAM_COLUMNS + SCRIPT_OPP_COLUMNS + SCRIPT_GAME_COLUMNS}
+    out.update(_coach_features(store, t, trace))
+    out["_trail_plays"] = out["_trail_pass_rate"] = NAN
+    if not store.has("pbp_team"):
+        return out
+    mine = _script_window(store, t, trace, team=t.team)
+    if len(mine):
+        out["scr_sec_per_play_l4"] = _sr(mine, "sc_secs", "sc_secs_n")
+        out["scr_no_huddle_rate_l4"] = _sr(mine, "sc_nohuddle", "plays")
+        out["scr_proe_l4"] = _sr(mine, "sc_pass_oe", "sc_xp_n")
+        out["scr_xpass_l4"] = _sr(mine, "sc_xpass", "sc_xp_n")
+        out["scr_early_down_pass_rate_l4"] = _sr(mine, "sc_early_db", "sc_early_plays")
+        out["scr_wp_neutral_pass_rate_l4"] = _sr(mine, "sc_wp_db", "sc_wp_plays")
+        out["scr_rz_plays_pg_l4"] = _nm(mine["sc_rz_plays"].to_numpy(dtype="float64"))
+        out["scr_epa_per_play_l4"] = _sr(mine, "sc_epa", "sc_epa_n")
+        out["scr_success_rate_l4"] = _sr(mine, "sc_succ", "sc_epa_n")
+        out["_trail_plays"] = _nm(mine["plays"].to_numpy(dtype="float64"))
+        out["_trail_pass_rate"] = _sr(mine, "dropbacks", "plays")
+    faced = _script_window(store, t, trace, opponent=t.opponent)
+    if len(faced):
+        out["scr_opp_epa_allowed_l4"] = _sr(faced, "sc_epa", "sc_epa_n")
+        out["scr_opp_pass_epa_allowed_l4"] = _sr(faced, "sc_pass_epa", "sc_pass_n")
+        out["scr_opp_rush_epa_allowed_l4"] = _sr(faced, "sc_rush_epa", "sc_rush_n")
+    spread, total, itt = vegas["team_spread"], vegas["total_line"], vegas["implied_team_total"]
+    rate = out["_trail_pass_rate"]
+    out["scr_itt_x_pass_rate"] = itt * rate
+    out["scr_spread_x_proe"] = spread * out["scr_proe_l4"]
+    plays = expected_team_plays(out["_trail_plays"], spread, total)
+    out["expected_team_plays"] = plays
+    out["expected_pass_att"] = plays * rate
+    out["expected_rush_att"] = plays * (1.0 - rate)
+    return out
+
+
+def _team_dropbacks(store, team: str, t: TargetRow, trace) -> dict[str, float]:
+    """{game_id: dropbacks} for a team's games known before the row's result cutoff."""
+    def build() -> dict[str, float]:
+        tm = as_of_join(store, "pbp_team", _rk(t.kickoff), team=team, trace=trace)
+        return dict(zip(tm["game_id"], tm["dropbacks"].astype("float64")))
+    return _memo(store, trace, ("pbp_team_db", team, t.game_id), build)
+
+
+def _script_player(store, t: TargetRow, h: Hist, sc: dict, trace) -> dict[str, float]:
+    """The player's trailing-3 share applied to the team's expected volume: target share x expected dropbacks, carry share x
+    expected rushes, (his pass attempts / team dropbacks) x expected dropbacks. Shares are his last three appearances this season
+    (last season's REG appearances when he has none), like the other trailing-3 columns."""
+    cur, prev = _cur_prev(h, t.season)
+    out = {"exp_player_targets": _trailing(cur, prev, TSH) * sc["expected_pass_att"],
+           "exp_player_carries": _trailing(cur, prev, CSH) * sc["expected_rush_att"],
+           "exp_player_pass_att": NAN}
+    if not store.has("pbp_team") or not len(h):
+        return out
+    idx = np.flatnonzero(h.season == t.season)
+    if not len(idx):
+        idx = np.flatnonzero((h.season == t.season - 1) & h.is_reg)
+    idx = idx[-3:]
+    att = db = 0.0
+    for i in idx:
+        d = _team_dropbacks(store, h.team[i], t, trace).get(h.game_id[i])
+        a = h.v[i, ATT]
+        if d is None or math.isnan(d) or math.isnan(a):
+            continue
+        att, db = att + a, db + d
+    out["exp_player_pass_att"] = _ratio(att, db) * sc["expected_pass_att"] if db > 0 else NAN
+    return out
+
+
 def _eff_features(h: Hist, t: TargetRow) -> dict[str, float]:
     """Shrunken efficiency: (sum of numerator + k * prior) / (sum of denominator + k), the prior fixed by position (EFF_PRIORS,
     2015-2019), over his regular-season appearances since 2020 (`career`) or this season's (`std`). NaN when he had no
@@ -766,6 +909,10 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- Phase 2.5: play-by-play usage / team / participation, and shrunken efficiency -----
     out.update(_pbp_features(store, t, h, ctx, trace))
     out.update(_eff_features(h, t))
+
+    # ---- Phase 5 candidate: game script and coaching context (opt-in `script`) ----------
+    out.update({k: v for k, v in ctx["script"].items() if not k.startswith("_")})
+    out.update(_script_player(store, t, h, ctx["script"], trace))
     return out
 
 
