@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 6
 
 redraft · 17 roster slots  
-Generated 2026-10-18 16:47 UTC · baselines: 2026 only · lineup as of 2026-10-18T16:47:17Z
+Generated 2026-10-18 16:58 UTC · baselines: 2026 only · lineup as of 2026-10-18T16:58:23Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -63,8 +63,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | C.J. Stroud | QB | HOU | JAX | 15.7 | 3.4 |  | 1 | 25 | Med | 🔥 |
 | Sam Darnold | QB | SEA | DEN | 14.7 | 2.5 |  | 1 | 22 | Med |  |
-| Geno Smith | QB | NYJ | NE | 14.4 | 2.6 |  | 1 | 12 | High |  |
 | Deshaun Watson | QB | CLE | BAL | 14.4 | 5.4 |  | 1 | 19 | Med |  |
+| Geno Smith | QB | NYJ | NE | 14.4 | 2.6 |  | 1 | 12 | High |  |
 | Michael Penix Jr. | QB | ATL | CHI | 13.1 | 2.5 |  | 1 | 24 | Med |  |
 | Tyler Huntley | QB | BAL | CLE | 12.7 | 5.3 |  | 2 | 23 | High | 🔥 |
 | Keaton Mitchell | RB | LAC | KC | 8.7 | 11.4 | 27% | 2 | 23 | Med | 🔥 |
@@ -91,7 +91,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Germie Bernard | WR | PIT | 22.9 | 0 | 2 (was 3) | 66% | WR2 on depth chart; up from 3; snap share trending +52%/wk; team passes #8; age 23 |
+| Germie Bernard | WR | PIT | 22.9 | 0 | 2 (was 2) | 66% | WR2 on depth chart; snap share trending +52%/wk; team passes #8; age 23 |
 | Jalen Brooks | WR | ARI | 26.4 | 3 | 3 (was 3) | 29% | WR3 on depth chart; snap share trending +48%/wk; team passes #4; age 26 |
 | Dylan Laube | RB | LV | 26.8 | 2 | 3 (was 3) | 23% | RB3 on depth chart; snap share trending +30%/wk; age 27 |
 | Roschon Johnson | RB | CHI | 25.7 | 3 | 3 (was 3) | 25% | RB3 on depth chart; snap share trending +28%/wk; age 26 |
