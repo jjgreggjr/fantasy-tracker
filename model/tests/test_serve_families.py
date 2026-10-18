@@ -594,10 +594,13 @@ class MarketSource(unittest.TestCase):
     # ---------------------------------------------------------------- the failure contract
     def test_a_failed_read_raises_from_the_refresh_after_trying_the_archive(self):
         with mock.patch.object(SP, "fetch", return_value={"fetched": 0, "cached": 5}) as fa, \
+                mock.patch.object(SP, "fetch_id_map", return_value=pd.DataFrame({"sleeper_id": ["1"], "gsis_id": ["00-0000001"]})) as fi, \
                 mock.patch.object(SP, "fetch_current_week", side_effect=RuntimeError("503 Service Unavailable")):
             with self.assertRaises(RuntimeError) as cm:
                 SV.refresh_market(season=2026, now=pd.Timestamp("2026-10-17 12:00", tz="UTC"))
-        self.assertEqual(list(fa.call_args.args[1]), [1, 2, 3, 4, 5])                    # settled weeks before the served one
+        # the whole archive and the id map, never just this season: a fresh runner holds neither (first run after adoption)
+        self.assertEqual((list(fa.call_args.args[0]), list(fa.call_args.args[1])), (list(SP.SEASONS), list(SP.WEEKS)))
+        self.assertTrue(fi.called)
         self.assertIn("week 6 projection failed", str(cm.exception))
         self.assertIn("503", str(cm.exception))
         self.assertFalse(list(self.cache.glob("current_*")))
@@ -610,6 +613,7 @@ class MarketSource(unittest.TestCase):
                              pit.KNOWN_AT: [pd.Timestamp("2026-10-11 16:00", tz="UTC")]})
         store = pit.RawStore([pit.RawTable("sleeper_proj", arch, "test")])
         with mock.patch.object(SP, "fetch", side_effect=RuntimeError("could not fetch: 503")), \
+                mock.patch.object(SP, "fetch_id_map", return_value=pd.DataFrame(columns=["sleeper_id", "gsis_id"])), \
                 mock.patch.object(src, "load", return_value=object()), \
                 mock.patch.object(pit, "load_store", return_value=store), mock.patch.object(SV, "refresh_raw"), \
                 redirect_stdout(io.StringIO()):
