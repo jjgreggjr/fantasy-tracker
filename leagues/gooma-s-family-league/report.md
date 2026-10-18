@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 6
 
 redraft · 20 roster slots  
-Generated 2026-10-18 17:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T17:19:00Z
+Generated 2026-10-18 18:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T18:18:34Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -78,8 +78,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Ty Johnson | RB | BUF | LV | 7.2 | 4.3 | 11% | 2 | 6 | Med | 🔥 |
 | Emmett Johnson | RB | KC | LAC | 6.1 | 5.1 | 15% | 2 | 8 | Low | 🔥 |
 | Justice Hill | RB | BAL | CLE | 5.9 | 6.4 | 15% | 2 | 24 | High | 🔥 |
-| Roschon Johnson | RB | CHI | ATL | 5.8 | 8.8 | 26% | 3 | 12 | Med | 🔥 |
 | Austin Ekeler | RB | WAS | SF | 5.8 | 6.6 | 24% | 3 | 5 | Low | 🔥 |
+| Roschon Johnson | RB | CHI | ATL | 5.8 | 8.8 | 26% | 3 | 12 | Med | 🔥 |
 | Michael Mayer | TE | LV | BUF | 8.4 | 5.0 | 14% | 2 | 20 | Med |  |
 | Darnell Washington | TE | PIT | TB | 7.8 | 4.1 | 14% | 1 | 19 | High | 🔥 |
 | Matthew Hibner | TE | BAL | CLE | 6.3 | 2.0 |  | 2 | 10 | Med |  |

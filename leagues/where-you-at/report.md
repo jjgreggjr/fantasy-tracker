@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 6
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-18 17:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T17:19:00Z
+Generated 2026-10-18 18:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T18:18:35Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -95,8 +95,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyler Higbee | TE | LA | ARI | 10.7 | 5.2 | 14% | 2 | 6 | Med | 🔥 |
 | Keenan Allen | WR | IND | TEN | 7.4 | 6.4 | 20% | 2 | 18 | Med | 🔥 |
 | Darius Cooper | WR | PHI | CAR | 6.7 | 3.9 | 10% | 4 | 22 | Low |  |
-| Cody White | WR | LV | BUF | 6.2 | 3.4 | 8% | 3 | 1 | Med |  |
 | Brandin Cooks | WR | SF | WAS | 6.2 | 2.4 | 12% | 3 | 7 | Low | 🔥 |
+| Cody White | WR | LV | BUF | 6.2 | 3.4 | 8% | 3 | 1 | Med |  |
 | Ryan Flournoy | WR | DAL | GB | 6.1 | 4.8 | 15% | 3 | 25 | Med | 🔥 |
 | Cooper Kupp | WR | SEA | DEN | 5.5 | 4.6 | 13% | 3 | 17 | Med |  |
 

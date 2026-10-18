@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 6
 
 redraft · 17 roster slots  
-Generated 2026-10-18 17:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T17:19:10Z
+Generated 2026-10-18 18:18 UTC · baselines: 2026 only · lineup as of 2026-10-18T18:18:44Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -63,8 +63,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | C.J. Stroud | QB | HOU | JAX | 15.7 | 3.4 |  | 1 | 25 | Med | 🔥 |
 | Sam Darnold | QB | SEA | DEN | 14.7 | 2.5 |  | 1 | 22 | Med |  |
-| Deshaun Watson | QB | CLE | BAL | 14.4 | 5.4 |  | 1 | 19 | Med |  |
 | Geno Smith | QB | NYJ | NE | 14.4 | 2.6 |  | 1 | 12 | High |  |
+| Deshaun Watson | QB | CLE | BAL | 14.4 | 5.4 |  | 1 | 19 | Med |  |
 | Michael Penix Jr. | QB | ATL | CHI | 13.1 | 2.5 |  | 1 | 24 | Med |  |
 | Tyler Huntley | QB | BAL | CLE | 12.7 | 5.3 |  | 2 | 23 | High | 🔥 |
 | Keaton Mitchell | RB | LAC | KC | 8.7 | 11.4 | 27% | 2 | 23 | Med | 🔥 |
