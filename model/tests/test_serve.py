@@ -57,7 +57,9 @@ def matrix() -> pd.DataFrame:
 
 
 def cfg() -> dict:
-    return SV.load_config()
+    """The previous frozen primary (71 inputs, no add_families, 2026-09-30): the serving path these tests exercise is the plain one.
+    The live market+ecr config is pinned in test_serve_families.LiveConfig."""
+    return SV.load_config(Path(__file__).parent / "fixtures" / "serving_config_71.json")
 
 
 def tgs_of(season: int, week: int) -> list:

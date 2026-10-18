@@ -36,13 +36,22 @@ from model import trial as TR
 ECR_COLS = tuple(F.FAMILIES["ecr"])
 
 
+FIXTURE_71 = Path(__file__).parent / "fixtures" / "serving_config_71.json"
+
+
 def base_cfg() -> dict:
+    """The LIVE serving_config.json (now the 90-input market+ecr primary). Only the tests that pin it use this."""
     return SV.load_config()
+
+
+def cfg71() -> dict:
+    """The previous frozen primary (2026-09-30): 71 inputs, no add_families. Tests about 'the frozen primary with no families' use this."""
+    return SV.load_config(FIXTURE_71)
 
 
 def ecr_cfg() -> dict:
     """The frozen config with ecr adopted, as --freeze would leave it: the ecr columns appended and the 71 kept as the fallback."""
-    c = json.loads(json.dumps(base_cfg()))
+    c = json.loads(json.dumps(cfg71()))
     c["spec"]["add_families"] = ["ecr"]
     c["fallback"] = {"components": c["components"], "inputs": list(c["inputs"])}
     c["components"] = {k: {**v, "n_estimators": v["n_estimators"] + 1} for k, v in c["components"].items()}
@@ -74,10 +83,37 @@ def frame(with_ecr=True, rows=40) -> pd.DataFrame:
     return pd.DataFrame(d)
 
 
+# =========================================================================================== the live config
+class LiveConfig(unittest.TestCase):
+    """model/serving_config.json as frozen 2026-10-18: the 71 + ecr + market, with the 71 kept as the fallback."""
+
+    def test_the_live_config_adds_market_and_ecr(self):
+        self.assertEqual(base_cfg()["spec"]["add_families"], ["market", "ecr"])
+        self.assertEqual(SV.spec_from(base_cfg()).add_families, ("market", "ecr"))
+
+    def test_the_live_inputs_are_the_71_then_ecr_then_market(self):
+        live, old = base_cfg(), cfg71()
+        self.assertEqual(len(old["inputs"]), 71)
+        self.assertEqual(live["inputs"], old["inputs"] + list(F.FAMILIES["ecr"]) + list(F.FAMILIES["market"]))
+        self.assertEqual(len(live["inputs"]), 90)
+
+    def test_the_live_fallback_is_the_previous_71_primary(self):
+        live, old = base_cfg(), cfg71()
+        self.assertEqual(live["fallback"]["inputs"], old["inputs"])
+        self.assertEqual(live["fallback"]["components"], old["components"])
+
+    def test_the_live_config_was_frozen_on_or_after_the_adoption(self):
+        self.assertGreaterEqual(base_cfg()["frozen_on"], "2026-10-18")
+
+    def test_both_adopted_families_have_a_serving_source(self):
+        self.assertIn("market", SV.FAMILY_SOURCES)
+        self.assertIn("ecr", SV.FAMILY_SOURCES)
+
+
 # =========================================================================================== the spec
 class SpecFromConfig(unittest.TestCase):
     def test_the_frozen_config_has_no_add_families_and_reads_as_none(self):
-        c = base_cfg()
+        c = cfg71()
         self.assertNotIn("add_families", c["spec"])
         self.assertEqual(SV.spec_from(c).add_families, ())
         self.assertEqual(SV.spec_from(c), T.Spec(c["spec"]["name"], drop_cols=tuple(c["spec"]["drop_cols"]),
@@ -86,15 +122,15 @@ class SpecFromConfig(unittest.TestCase):
     def test_add_families_is_read(self):
         s = SV.spec_from(ecr_cfg())
         self.assertEqual(s.add_families, ("ecr",))
-        self.assertEqual(s.drop_cols, tuple(base_cfg()["spec"]["drop_cols"]))
-        self.assertEqual(SV.spec_from({**base_cfg(), "spec": {**base_cfg()["spec"], "add_families": []}}).add_families, ())
+        self.assertEqual(s.drop_cols, tuple(cfg71()["spec"]["drop_cols"]))
+        self.assertEqual(SV.spec_from({**cfg71(), "spec": {**cfg71()["spec"], "add_families": []}}).add_families, ())
 
     def test_the_trial_primary_is_the_serve_spec(self):
-        for c in (base_cfg(), ecr_cfg()):
+        for c in (cfg71(), ecr_cfg()):
             self.assertEqual(TR.serving_spec(c), SV.spec_from(c))
 
     def test_the_frozen_config_still_serves_exactly_its_71_inputs_even_from_a_frame_that_carries_the_ecr_columns(self):
-        c = base_cfg()
+        c = cfg71()
         self.assertEqual(len(c["inputs"]), 71)
         self.assertEqual(SV.check_inputs(frame(with_ecr=True), c), c["inputs"])
         self.assertEqual(SV.check_inputs(frame(with_ecr=False), c), c["inputs"])
@@ -103,7 +139,7 @@ class SpecFromConfig(unittest.TestCase):
         c = ecr_cfg()
         self.assertEqual(SV.check_inputs(frame(), c), c["inputs"])
         fb = SV.serving_config_for(c, FakeStore(), 2026, 6, [])
-        self.assertEqual(SV.check_inputs(frame(), fb), base_cfg()["inputs"])
+        self.assertEqual(SV.check_inputs(frame(), fb), cfg71()["inputs"])
         with self.assertRaises(SV.ServingSpecMismatch):              # the ecr inputs against a frame without them: refused, not dropped
             SV.check_inputs(frame(with_ecr=False), c)
 
@@ -173,7 +209,7 @@ class Registry(unittest.TestCase):
 # =========================================================================================== the fallback
 class Fallback(unittest.TestCase):
     def test_the_frozen_config_is_served_as_is(self):
-        c, warns = base_cfg(), []
+        c, warns = cfg71(), []
         self.assertIs(SV.serving_config_for(c, FakeStore(), 2026, 6, warns), c)
         self.assertEqual(warns, [])
 
@@ -237,7 +273,7 @@ class Fallback(unittest.TestCase):
                     mock.patch.object(SV, "assemble", return_value=(out, pd.Series(dtype=object))), redirect_stdout(io.StringIO()):
                 lines = SV.run(args, root=root)
         self.assertNotIn("ecr", ls.call_args.kwargs)
-        self.assertEqual(seen["cfg"]["inputs"], base_cfg()["inputs"])
+        self.assertEqual(seen["cfg"]["inputs"], cfg71()["inputs"])
         self.assertEqual(SV.spec_from(seen["cfg"]).add_families, ())
         warn = [l for l in lines if l.startswith("  WARN")]
         self.assertTrue(any("could not refresh" in w and "503" in w for w in warn), warn)
@@ -255,6 +291,27 @@ class Fallback(unittest.TestCase):
                     SV.refresh_ecr()
             self.assertEqual((cache / FE.OUT).read_bytes(), b"the cached copy")
             self.assertEqual(sorted(p.name for p in cache.iterdir()), [FE.OUT])          # no scratch folder left behind
+
+    def test_the_refresh_refuses_a_rebuild_that_lost_seasons(self):
+        """A 2026-only rebuild once replaced the 2021-2026 table and the freeze dropped the whole family as empty."""
+        import pandas as pd
+        from model import fetch_ecr as FE
+        from model import point_in_time as pit
+        with tempfile.TemporaryDirectory() as d:
+            cache = Path(d)
+            full = pd.DataFrame({"season": [2021, 2025, 2026], "scrape_date": ["2021-09-10", "2025-09-12", "2026-09-11"]})
+            full.to_parquet(cache / FE.OUT, index=False)
+            only_now = pd.DataFrame({"season": [2026], "scrape_date": ["2026-10-16"]})
+            with mock.patch.object(FE, "ECR_DIR", cache), \
+                    mock.patch.object(FE, "download", side_effect=lambda ecr_dir: (ecr_dir / "a.parquet", ecr_dir / "b.csv")), \
+                    mock.patch.object(FE, "build", return_value=(only_now, {})), \
+                    mock.patch.object(pit, "_games", return_value=pd.DataFrame()), \
+                    mock.patch("pandas.read_csv", return_value=pd.DataFrame()), \
+                    mock.patch("pandas.read_parquet", side_effect=lambda p, **k: full[["season"]] if Path(p).name == FE.OUT else pd.DataFrame()):
+                with self.assertRaises(ValueError) as cm:
+                    SV.refresh_ecr()
+            self.assertIn("lost seasons [2021, 2025]", str(cm.exception))
+            self.assertEqual(pd.read_parquet(cache / FE.OUT)["season"].tolist(), [2021, 2025, 2026])   # untouched
 
 
 # =========================================================================================== cache keys
@@ -292,7 +349,7 @@ class CacheKeys(unittest.TestCase):
 
     def test_the_quantile_history_key_follows_add_families_and_their_content_and_the_base_key_is_unchanged(self):
         df = frame().assign(season=lambda x: 2024 + x.index % 3, y_points_ppr=1.0)
-        base, ecr = SV.spec_from(base_cfg()), SV.spec_from(ecr_cfg())
+        base, ecr = SV.spec_from(cfg71()), SV.spec_from(ecr_cfg())
         labels = int(pd.util.hash_pandas_object(df.loc[df["season"] == 2025, T.TARGET], index=False).sum() % (2 ** 63))
         old_key = SV.code_hash(2026, json.dumps([{"0.1": {"n_estimators": 5}}, list(base.drop_cols), list(base.drop_families), T.TARGET, labels],
                                                 sort_keys=True))
@@ -312,7 +369,7 @@ class Freeze(unittest.TestCase):
 
         def comps(df, spec, dead):
             self.fitted.append(spec.add_families)
-            return self.COUNTS, list(base_cfg()["inputs"]) + (list(ECR_COLS) if spec.add_families else [])
+            return self.COUNTS, list(cfg71()["inputs"]) + (list(ECR_COLS) if spec.add_families else [])
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "serving_config.json"
             p.write_text(json.dumps(cfg, indent=1))
@@ -328,7 +385,7 @@ class Freeze(unittest.TestCase):
             return lines, before, p.read_bytes(), ls.call_args.kwargs
 
     def test_a_dry_run_writes_nothing_and_prints_the_input_count(self):
-        c = json.loads(json.dumps(base_cfg()))
+        c = json.loads(json.dumps(cfg71()))
         c["spec"]["add_families"] = ["ecr"]
         lines, before, after, kw = self.freeze(c, dry=True)
         self.assertEqual(before, after)
@@ -338,22 +395,22 @@ class Freeze(unittest.TestCase):
         self.assertTrue(any("dry run: nothing written" in l for l in lines))
 
     def test_freezing_an_ecr_spec_keeps_the_primary_that_served_as_its_fallback(self):
-        c = json.loads(json.dumps(base_cfg()))
+        c = json.loads(json.dumps(cfg71()))
         c["spec"]["add_families"] = ["ecr"]
         _, _, after, _ = self.freeze(c, dry=False)
         got = json.loads(after)
-        self.assertEqual(got["inputs"], base_cfg()["inputs"] + list(ECR_COLS))
+        self.assertEqual(got["inputs"], cfg71()["inputs"] + list(ECR_COLS))
         self.assertEqual(got["components"], self.COUNTS)
-        self.assertEqual(got["fallback"]["inputs"], base_cfg()["inputs"])
-        self.assertEqual(got["fallback"]["components"], base_cfg()["components"])     # carried over, not re-fit
-        self.assertEqual(got["fallback"]["frozen_on"], base_cfg()["frozen_on"])
+        self.assertEqual(got["fallback"]["inputs"], cfg71()["inputs"])
+        self.assertEqual(got["fallback"]["components"], cfg71()["components"])     # carried over, not re-fit
+        self.assertEqual(got["fallback"]["frozen_on"], cfg71()["frozen_on"])
         self.assertEqual(self.fitted, [("ecr",)])
         # a second freeze of the adopted config keeps that fallback too
         _, _, again, _ = self.freeze(got, dry=False)
-        self.assertEqual(json.loads(again)["fallback"]["components"], base_cfg()["components"])
+        self.assertEqual(json.loads(again)["fallback"]["components"], cfg71()["components"])
 
     def test_refit_fallback_freezes_it_afresh(self):
-        c = json.loads(json.dumps(base_cfg()))
+        c = json.loads(json.dumps(cfg71()))
         c["spec"]["add_families"] = ["ecr"]
         _, _, after, _ = self.freeze(c, dry=False, refit=True)
         self.assertEqual(json.loads(after)["fallback"]["components"], self.COUNTS)
@@ -366,7 +423,7 @@ class Freeze(unittest.TestCase):
         self.assertNotIn("fallback", json.loads(after))
 
     def test_a_family_whose_table_is_missing_cannot_be_frozen(self):
-        c = json.loads(json.dumps(base_cfg()))
+        c = json.loads(json.dumps(cfg71()))
         c["spec"]["add_families"] = ["ecr"]
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "c.json"
@@ -446,8 +503,10 @@ class MarketSource(unittest.TestCase):
         src, warns = SV.FAMILY_SOURCES["market"], []
         r, ext = mock.Mock(return_value="market: ok"), mock.Mock(return_value="EXTENDED")
         now = pd.Timestamp("2026-10-17 12:00", tz="UTC")
+        ecr = SV.FAMILY_SOURCES["ecr"]           # stubbed too: the real refresh would download and rebuild the real ECR cache
         with mock.patch.object(src, "refresh", r), mock.patch.object(src, "load", return_value=object()), \
                 mock.patch.object(src, "extend", ext), mock.patch.object(pit, "load_store", return_value="STORE") as ls, \
+                mock.patch.object(ecr, "refresh", mock.Mock(return_value="ecr: ok")), mock.patch.object(ecr, "load", return_value=object()), \
                 mock.patch.object(SV, "refresh_raw"), redirect_stdout(io.StringIO()):
             got = SV.load_store(2026, families=("market", "ecr"), warnings=warns, now=now, week=None)
         self.assertEqual(got, "EXTENDED")
@@ -558,12 +617,12 @@ class MarketSource(unittest.TestCase):
                 got = SV.load_store(2026, families=("market",), warnings=warns, now=pd.Timestamp("2026-10-17 12:00", tz="UTC"))
         self.assertEqual(len(warns), 1)
         self.assertIn("market: could not refresh", warns[0])
-        c = json.loads(json.dumps(base_cfg()))
+        c = json.loads(json.dumps(cfg71()))
         c["spec"]["add_families"] = ["market"]
         c["fallback"] = {"components": c["components"], "inputs": list(c["inputs"])}
         c["inputs"] = [*c["inputs"], *F.FAMILIES["market"]]
         cfg = SV.serving_config_for(c, got, 2026, 6, warns)
-        self.assertEqual(cfg["inputs"], base_cfg()["inputs"])
+        self.assertEqual(cfg["inputs"], cfg71()["inputs"])
         self.assertEqual(len(cfg["inputs"]), 71)
         self.assertIn("market: no rows for 2026 week 6", warns[-1])
         self.assertIn("WITHOUT market", warns[-1])
@@ -574,7 +633,7 @@ class MarketSource(unittest.TestCase):
         self.assertEqual(warns2, [])
 
     def test_the_frozen_config_is_untouched_by_the_market_entry(self):
-        c = base_cfg()
+        c = cfg71()
         self.assertEqual(len(c["inputs"]), 71)
         self.assertEqual(SV.spec_from(c).add_families, ())
         self.assertFalse(any(x.startswith("mkt_") for x in c["inputs"]))
@@ -592,7 +651,7 @@ class MarketSource(unittest.TestCase):
 # =========================================================================================== the trial's printed steps
 class AdoptionSteps(unittest.TestCase):
     def test_the_ecr_steps_are_the_json_edit_then_the_freeze(self):
-        cfg = base_cfg()
+        cfg = cfg71()
         steps = TR.adoption_steps(TR.compose(["+family:ecr"], TR.serving_spec(cfg)), cfg, "average")
         self.assertIn('"add_families": ["ecr"]', steps[0])
         self.assertNotIn("drop_cols", steps[0])                                 # nothing else in the spec changes
@@ -600,8 +659,13 @@ class AdoptionSteps(unittest.TestCase):
         self.assertTrue(any(s.endswith("then python -m model.serve --freeze") for s in steps))
         self.assertFalse(any("must learn" in s for s in steps))
 
+    def test_adopting_a_family_the_live_spec_already_has_is_refused(self):
+        with self.assertRaises(ValueError) as cm:
+            TR.compose(["+family:ecr"], TR.serving_spec(base_cfg()))
+        self.assertIn("already added", str(cm.exception))
+
     def test_the_json_edit_the_steps_name_is_one_spec_from_reads_back_as_the_variant(self):
-        cfg = base_cfg()
+        cfg = cfg71()
         v = TR.compose(["+family:ecr"], TR.serving_spec(cfg))
         edited = {**cfg, "spec": {**cfg["spec"], "add_families": ["ecr"]}}
         self.assertEqual(SV.spec_from(edited).add_families, v.spec.add_families)
