@@ -152,6 +152,14 @@ def refresh_ecr(**_) -> str:
         df, _ = FE.build(pd.read_parquet(f_ecr), pd.read_csv(f_ids, low_memory=False, dtype=str), pit._games())
         if df.empty:
             raise ValueError("the rebuilt ECR table is empty")
+        # A rebuild may add seasons, never lose them: an early freeze once cached a 527-row, 2026-only table and the
+        # history matrix read ECR as empty for 2021-2025, so the freeze silently dropped the whole family.
+        prev = FE.ECR_DIR / FE.OUT
+        if prev.exists():
+            have = set(pd.read_parquet(prev, columns=["season"])["season"].unique())
+            lost = have - set(df["season"].unique())
+            if lost:
+                raise ValueError(f"the rebuilt ECR table lost seasons {sorted(int(x) for x in lost)}: kept the previous cached copy")
         out = d / FE.OUT
         df.to_parquet(out, index=False)
         for f in (f_ecr, f_ids, out):

@@ -47,81 +47,85 @@
   "drop_families": [
    "adp"
   ],
-  "source": "the 39 registry columns under 0.15% of out-of-sample 2024 SHAP attribution (shap2024_lightgbm; model/cache/phase2/prune_list.json, git-ignored, frozen here) and the ADP family (no preseason 2026 ADP snapshot exists). Weather, season, college and every Phase 2.5 opt-in family stay out."
+  "source": "the 39 registry columns under 0.15% of out-of-sample 2024 SHAP attribution (shap2024_lightgbm; model/cache/phase2/prune_list.json, git-ignored, frozen here) and the ADP family (no preseason 2026 ADP snapshot exists). Weather, season, college and every Phase 2.5 opt-in family stay out.",
+  "add_families": [
+   "market",
+   "ecr"
+  ]
  },
  "recalibration": {
   "mode": "underage_only"
  },
  "components": {
   "y_tgt": {
-   "n_estimators": 197,
-   "best_iteration": 179,
-   "valid_rmse": 2.0371
+   "n_estimators": 162,
+   "best_iteration": 147,
+   "valid_rmse": 1.9723
   },
   "y_rec": {
-   "n_estimators": 129,
-   "best_iteration": 117,
-   "valid_rmse": 1.5884
+   "n_estimators": 117,
+   "best_iteration": 106,
+   "valid_rmse": 1.5526
   },
   "y_rec_yds": {
-   "n_estimators": 102,
-   "best_iteration": 93,
-   "valid_rmse": 21.1899
+   "n_estimators": 117,
+   "best_iteration": 106,
+   "valid_rmse": 20.7636
   },
   "y_rec_td": {
-   "n_estimators": 90,
-   "best_iteration": 82,
-   "valid_rmse": 0.3459
+   "n_estimators": 85,
+   "best_iteration": 77,
+   "valid_rmse": 0.344
   },
   "y_car": {
-   "n_estimators": 196,
-   "best_iteration": 178,
-   "valid_rmse": 2.3527
+   "n_estimators": 128,
+   "best_iteration": 116,
+   "valid_rmse": 2.193
   },
   "y_rush_yds": {
-   "n_estimators": 211,
-   "best_iteration": 192,
-   "valid_rmse": 14.7435
+   "n_estimators": 116,
+   "best_iteration": 105,
+   "valid_rmse": 14.1693
   },
   "y_rush_td": {
-   "n_estimators": 96,
-   "best_iteration": 87,
-   "valid_rmse": 0.2745
+   "n_estimators": 122,
+   "best_iteration": 111,
+   "valid_rmse": 0.2737
   },
   "y_att": {
-   "n_estimators": 283,
-   "best_iteration": 257,
-   "valid_rmse": 3.2714
+   "n_estimators": 111,
+   "best_iteration": 101,
+   "valid_rmse": 2.7548
   },
   "y_cmp": {
-   "n_estimators": 384,
-   "best_iteration": 349,
-   "valid_rmse": 2.2318
+   "n_estimators": 110,
+   "best_iteration": 100,
+   "valid_rmse": 1.908
   },
   "y_pass_yds": {
-   "n_estimators": 239,
-   "best_iteration": 217,
-   "valid_rmse": 25.632
+   "n_estimators": 116,
+   "best_iteration": 105,
+   "valid_rmse": 22.5663
   },
   "y_pass_td": {
-   "n_estimators": 95,
-   "best_iteration": 86,
-   "valid_rmse": 0.3436
+   "n_estimators": 112,
+   "best_iteration": 102,
+   "valid_rmse": 0.336
   },
   "y_int": {
-   "n_estimators": 76,
-   "best_iteration": 69,
-   "valid_rmse": 0.2558
+   "n_estimators": 87,
+   "best_iteration": 79,
+   "valid_rmse": 0.2515
   },
   "y_fum_lost": {
    "n_estimators": 50,
-   "best_iteration": 35,
-   "valid_rmse": 0.1823
+   "best_iteration": 39,
+   "valid_rmse": 0.1815
   },
   "y_misc_pts": {
    "n_estimators": 50,
-   "best_iteration": 31,
-   "valid_rmse": 0.3424
+   "best_iteration": 25,
+   "valid_rmse": 0.3426
   }
  },
  "inputs": [
@@ -195,7 +199,175 @@
   "weight_lb",
   "combine_bench",
   "combine_vertical",
-  "combine_cone"
+  "combine_cone",
+  "ecr_rank",
+  "ecr_pos_rank",
+  "ecr_sd",
+  "ecr_best",
+  "ecr_worst",
+  "ecr_spread",
+  "ecr_owned_pct",
+  "ecr_delta_l1",
+  "mkt_pts_ppr",
+  "mkt_pts_std",
+  "mkt_targets",
+  "mkt_carries",
+  "mkt_pass_att",
+  "mkt_rec_yd",
+  "mkt_rush_yd",
+  "mkt_pass_yd",
+  "mkt_td_total",
+  "mkt_pos_rank",
+  "mkt_vs_xfp_l3"
  ],
- "frozen_on": "2026-09-30"
+ "frozen_on": "2026-10-18",
+ "fallback": {
+  "note": "the spec without its opt-in families: served when a family's data is missing or has no row for the week (serve.serving_config_for). Written by --freeze (kept)",
+  "components": {
+   "y_tgt": {
+    "n_estimators": 197,
+    "best_iteration": 179,
+    "valid_rmse": 2.0371
+   },
+   "y_rec": {
+    "n_estimators": 129,
+    "best_iteration": 117,
+    "valid_rmse": 1.5884
+   },
+   "y_rec_yds": {
+    "n_estimators": 102,
+    "best_iteration": 93,
+    "valid_rmse": 21.1899
+   },
+   "y_rec_td": {
+    "n_estimators": 90,
+    "best_iteration": 82,
+    "valid_rmse": 0.3459
+   },
+   "y_car": {
+    "n_estimators": 196,
+    "best_iteration": 178,
+    "valid_rmse": 2.3527
+   },
+   "y_rush_yds": {
+    "n_estimators": 211,
+    "best_iteration": 192,
+    "valid_rmse": 14.7435
+   },
+   "y_rush_td": {
+    "n_estimators": 96,
+    "best_iteration": 87,
+    "valid_rmse": 0.2745
+   },
+   "y_att": {
+    "n_estimators": 283,
+    "best_iteration": 257,
+    "valid_rmse": 3.2714
+   },
+   "y_cmp": {
+    "n_estimators": 384,
+    "best_iteration": 349,
+    "valid_rmse": 2.2318
+   },
+   "y_pass_yds": {
+    "n_estimators": 239,
+    "best_iteration": 217,
+    "valid_rmse": 25.632
+   },
+   "y_pass_td": {
+    "n_estimators": 95,
+    "best_iteration": 86,
+    "valid_rmse": 0.3436
+   },
+   "y_int": {
+    "n_estimators": 76,
+    "best_iteration": 69,
+    "valid_rmse": 0.2558
+   },
+   "y_fum_lost": {
+    "n_estimators": 50,
+    "best_iteration": 35,
+    "valid_rmse": 0.1823
+   },
+   "y_misc_pts": {
+    "n_estimators": 50,
+    "best_iteration": 31,
+    "valid_rmse": 0.3424
+   }
+  },
+  "inputs": [
+   "pos_QB",
+   "pos_RB",
+   "pos_WR",
+   "pos_TE",
+   "pts_ppr_l1",
+   "opps_l1",
+   "carries_l1",
+   "pass_att_l1",
+   "target_share_l1",
+   "carry_share_l1",
+   "snap_pct_l1",
+   "xfp_l1",
+   "pts_ppr_l2",
+   "opps_l2",
+   "carries_l2",
+   "target_share_l2",
+   "carry_share_l2",
+   "snap_pct_l2",
+   "xfp_l2",
+   "pts_ppr_l3",
+   "opps_l3",
+   "target_share_l3",
+   "carry_share_l3",
+   "snap_pct_l3",
+   "xfp_l3",
+   "lag1_weeks_ago",
+   "weeks_since_last_game",
+   "pts_ppr_std_mean",
+   "opps_std_mean",
+   "carries_std_mean",
+   "targets_std_mean",
+   "target_share_std_mean",
+   "carry_share_std_mean",
+   "snap_pct_std_mean",
+   "xfp_std_mean",
+   "prev_season_games",
+   "prev_season_ppg",
+   "prev_season_opps_pg",
+   "prev_season_carries_pg",
+   "prev_season_targets_pg",
+   "prev_season_target_share",
+   "prev_season_snap_pct",
+   "prev_season_xfp_pg",
+   "td_luck_rush_std",
+   "td_luck_rec_std",
+   "td_luck_pass_std",
+   "td_luck_total_std",
+   "td_luck_total_prev",
+   "role_score",
+   "role_rank_pos",
+   "tm_group_size",
+   "tm_out_above_n",
+   "tm_out_group_opps",
+   "tm_out_targets_all",
+   "tm_out_carries_all",
+   "inj_weeks_since_report",
+   "dvp_ppr_l2",
+   "dvp_ppr_l4",
+   "dvp_ppr_std",
+   "team_spread",
+   "total_line",
+   "implied_team_total",
+   "is_home",
+   "rest_days",
+   "opp_rest_days",
+   "age_years",
+   "draft_overall",
+   "weight_lb",
+   "combine_bench",
+   "combine_vertical",
+   "combine_cone"
+  ],
+  "frozen_on": "2026-09-30"
+ }
 }
