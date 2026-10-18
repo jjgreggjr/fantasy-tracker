@@ -16,6 +16,12 @@ OUT_STATES = {"Out", "IR", "PUP", "Sus", "NA", "DNR"}
 DOUBTFUL = {"Doubtful"}
 SOFT = {"Questionable"}
 
+# The gameday inactive list (nflverse weekly_rosters, `status == "INA"`) is posted about 90 minutes before each
+# game's kickoff; Thursday night's is already in Friday's file. It is the league's own word that a player will not
+# dress, so it outranks every designation: flag "inactive", play_prob 0, E_pts blanked (flag INACTIVE in score.py).
+INACTIVE_LEAD = pd.Timedelta(minutes=90)
+INACTIVE = "inactive"
+
 # practice participation -> how much it tells you about Sunday
 PRACTICE_WEIGHT = {"DNP": 0.15, "Did Not Participate In Practice": 0.15,
                    "Limited": 0.65, "Limited Participation in Practice": 0.65,
@@ -41,7 +47,14 @@ def designation(row: pd.Series) -> str | None:
     return max(cands, key=_severity) if cands else None
 
 
+def _is_inactive(row: pd.Series) -> bool:
+    v = row.get("inactive")
+    return bool(pd.notna(v) and v not in (0, False, "0", ""))
+
+
 def status_flag(row: pd.Series) -> str:
+    if _is_inactive(row):                  # gameday inactive list: OUT-equivalent, whatever the designation said
+        return INACTIVE
     s = designation(row)
     if s is None:
         return "healthy"
@@ -61,6 +74,8 @@ def play_probability(row: pd.Series) -> float:
     on Friday is a very different bet from one who did not practice at all.
     """
     flag = status_flag(row)
+    if flag == INACTIVE:
+        return 0.0
     base = {"healthy": 0.97, "questionable": 0.72, "doubtful": 0.28}.get(flag, 0.02)
     pr = row.get("practice_participation")
     if pd.notna(pr) and str(pr) in PRACTICE_WEIGHT:
@@ -125,25 +140,127 @@ def with_reports(players: pd.DataFrame, reports: pd.DataFrame) -> pd.DataFrame:
     return p
 
 
+INACTIVE_COLS = ["gsis_id", "team", "kickoff", "inactive_known_at"]
+
+
+def team_kickoffs(games: pd.DataFrame | None, season: int) -> pd.DataFrame:
+    """(season, week, team, kickoff UTC) for every scheduled game of `season`, from nflverse's games table
+    (gameday + gametime are US Eastern). A row whose time cannot be read gets NaT, never an exception."""
+    cols = ["season", "week", "team", "kickoff"]
+    if games is None or games.empty or not {"gameday", "gametime", "home_team", "away_team"} <= set(games.columns):
+        return pd.DataFrame(columns=cols)
+    g = games[pd.to_numeric(games["season"], errors="coerce") == season].copy()
+    local = pd.to_datetime(g["gameday"].astype(str) + " " + g["gametime"].astype(str), errors="coerce")
+    try:
+        g["kickoff"] = (local.dt.tz_localize("America/New_York", ambiguous="NaT", nonexistent="NaT")
+                        .dt.tz_convert("UTC"))
+    except Exception:                      # a malformed schedule must never stop the run: unknown kickoffs
+        g["kickoff"] = pd.NaT
+    out = pd.concat([g[["season", "week", "home_team", "kickoff"]].rename(columns={"home_team": "team"}),
+                     g[["season", "week", "away_team", "kickoff"]].rename(columns={"away_team": "team"})],
+                    ignore_index=True)
+    out["week"] = pd.to_numeric(out["week"], errors="coerce")
+    return out[cols].drop_duplicates(["season", "week", "team"], keep="first").reset_index(drop=True)
+
+
+def _ina_rows(rosters: pd.DataFrame | None, season: int) -> pd.DataFrame:
+    """nflverse weekly_rosters rows with `status == "INA"` for `season`. Note: `status_description_abbr` is NOT
+    the signal (2026 INA rows carry A01, 'active'; I01 is rare before 2024), so only `status` is read."""
+    need = {"status", "week", "gsis_id"}
+    if rosters is None or rosters.empty or not need <= set(rosters.columns):
+        return pd.DataFrame(columns=["season", "week", "team", "gsis_id"])
+    r = rosters[rosters["status"].astype(str).str.strip().str.upper().eq("INA") & rosters["gsis_id"].notna()].copy()
+    if "season" in r.columns:
+        r = r[pd.to_numeric(r["season"], errors="coerce") == season]
+    r["season"] = season
+    r["week"] = pd.to_numeric(r["week"], errors="coerce")
+    if "team" not in r.columns:
+        r["team"] = np.nan
+    return r
+
+
+def _with_kickoff(r: pd.DataFrame, kickoffs: pd.DataFrame | None) -> pd.DataFrame:
+    r = r.copy()
+    if kickoffs is not None and not kickoffs.empty:
+        k = kickoffs.drop_duplicates(["week", "team"]).set_index(["week", "team"])["kickoff"]
+        r["kickoff"] = pd.Series(list(zip(r["week"], r["team"])), index=r.index).map(k)
+    else:
+        r["kickoff"] = pd.NaT
+    r["kickoff"] = pd.to_datetime(r["kickoff"], utc=True, errors="coerce")
+    known = r["kickoff"] - INACTIVE_LEAD
+    r["inactive_known_at"] = known.dt.strftime("%Y-%m-%dT%H:%M:%SZ").where(known.notna(), np.nan)
+    return r
+
+
+def week_inactives(rosters: pd.DataFrame | None, season: int, week: int | None,
+                   kickoffs: pd.DataFrame | None = None, now=None) -> pd.DataFrame:
+    """Players on the gameday inactive list FOR `week` whose game has not kicked off at `now`.
+
+    Two guards. (1) The row's `week` must be the target week: the season file keeps every earlier week's list, and
+    last week's inactive is not this week's (same rule as `week_reports`). (2) The game must not have started: once
+    it has, the lineup is locked and the frozen record is the one that stands, so a game under way is not re-flagged.
+    A row whose kickoff cannot be found (no schedule row) is kept on the week guard alone. `inactive_known_at` is
+    kickoff - 90 min, when nflverse publishes the list (the file carries no per-row timestamp)."""
+    if week is None:
+        return pd.DataFrame(columns=INACTIVE_COLS)
+    r = _ina_rows(rosters, season)
+    r = r[r["week"] == week]
+    if r.empty:
+        return pd.DataFrame(columns=INACTIVE_COLS)
+    r = _with_kickoff(r, kickoffs)
+    now = pd.Timestamp.now(tz="UTC") if now is None else pd.Timestamp(now)
+    now = now.tz_localize("UTC") if now.tzinfo is None else now.tz_convert("UTC")
+    r = r[r["kickoff"].isna() | (r["kickoff"] > now)]
+    return r.drop_duplicates("gsis_id")[INACTIVE_COLS].reset_index(drop=True)
+
+
+def inactive_archive(rosters: pd.DataFrame | None, season: int,
+                     kickoffs: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Every inactive-list row of the season (all weeks), for data/inactives.csv: the committed record the
+    retrospective joins on (gsis_id, week). Not guarded: it is history, not this week's availability."""
+    cols = ["season", "week", "game_type", "team", "gsis_id", "name", "position", "inactive_known_at"]
+    r = _ina_rows(rosters, season)
+    if r.empty:
+        return pd.DataFrame(columns=cols)
+    r = _with_kickoff(r, kickoffs)
+    r["name"] = r["full_name"] if "full_name" in r.columns else np.nan
+    for c in ("game_type", "position"):
+        if c not in r.columns:
+            r[c] = np.nan
+    r["week"] = r["week"].astype("Int64")
+    return r.drop_duplicates(["week", "gsis_id"])[cols].reset_index(drop=True)
+
+
 def build(players: pd.DataFrame, depth: pd.DataFrame,
           proj: pd.DataFrame | None = None, week: int | None = None,
-          injuries: pd.DataFrame | None = None) -> pd.DataFrame:
+          injuries: pd.DataFrame | None = None,
+          inactives: pd.DataFrame | None = None) -> pd.DataFrame:
     """One status row per player on a depth chart, including the blocker chain.
 
     `injuries` is nflverse's injuries_{season} table; its rows for `week` supply the
-    practice participation and the game designation (see `week_reports`)."""
+    practice participation and the game designation (see `week_reports`). `inactives` is
+    `week_inactives(...)`: the week's gameday inactive list, already guarded. A player on it
+    is flagged `inactive` (play_prob 0) whatever his designation; `injury_status` stays as
+    Sleeper reported it."""
     if depth is None or depth.empty:
         return pd.DataFrame()
 
     p = with_reports(players, week_reports(injuries, week))
+    ina = (inactives.drop_duplicates("gsis_id").set_index("gsis_id")
+           if inactives is not None and not inactives.empty else None)
+    p["inactive"] = p["gsis_id"].isin(ina.index).astype(int) if ina is not None else 0
+    p["inactive_known_at"] = (p["gsis_id"].map(ina["inactive_known_at"])
+                              if ina is not None and "inactive_known_at" in ina else np.nan)
     p["status_flag"] = p.apply(status_flag, axis=1)
     p["play_prob"] = p.apply(play_probability, axis=1)
     p["news_age_hours"] = p.get("news_updated", pd.Series(index=p.index)).map(_news_age_hours)
 
     d = depth.merge(
         p[["gsis_id", "status_flag", "report_status", "play_prob", "news_age_hours",
-           "injury_body_part", "practice_participation", "sleeper_depth_order"]],
+           "injury_body_part", "practice_participation", "sleeper_depth_order",
+           "inactive", "inactive_known_at"]],
         on="gsis_id", how="left")
+    d["inactive"] = pd.to_numeric(d["inactive"], errors="coerce").fillna(0).astype(int)
     # A player on a depth chart with no match in players.csv has unknown
     # availability, which is not the same as healthy — say so rather than
     # letting NaN propagate into the blocker chain.
@@ -186,6 +303,8 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                 "depth_disagreement": r.depth_disagreement,
                 "status_flag": r.status_flag, "report_status": r.report_status,
                 "play_prob": r.play_prob,
+                "inactive": int(r.inactive),
+                "inactive_known_at": r.inactive_known_at,
                 "injury_body_part": r.injury_body_part,
                 "practice": r.practice_participation,
                 "news_age_hours": r.news_age_hours,
@@ -225,7 +344,15 @@ def warnings(st: pd.DataFrame, roster_ids: set | None = None) -> list[str]:
         bp = f" ({r.injury_body_part})" if pd.notna(r.injury_body_part) else ""
         out.append(f"{r['name']}: {r.status_flag.upper()}{bp} — his depth rank "
                    f"of {int(r.espn_rank)} reflects that, not his role")
+    for _, r in s[s.status_flag.eq(INACTIVE)].iterrows():
+        out.append(f"{r['name']}: INACTIVE on the gameday list ({_inactive_note(r)}) — "
+                   "he will not dress; E_pts blanked")
     return out
+
+
+def _inactive_note(r) -> str:
+    when = r.get("inactive_known_at")
+    return "posted ~" + str(when) if pd.notna(when) and str(when) else "posted ~90 min before kickoff"
 
 
 def describe(st: pd.DataFrame, name: str) -> str:
@@ -237,6 +364,8 @@ def describe(st: pd.DataFrame, name: str) -> str:
         return ""
     r = hit.iloc[0]
     bits = [f"{r.status_flag}"]
+    if r.get("status_flag") == INACTIVE:
+        bits = [f"INACTIVE (gameday inactive list, {_inactive_note(r)}; will not play)"]
     if pd.notna(r.practice):
         bits.append(f"practice: {r.practice}")
     if pd.notna(r.injury_body_part):

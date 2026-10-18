@@ -200,6 +200,32 @@ class Evaluate(unittest.TestCase):
         self.assertIn("pruned: `tm_out_group_opps`", text)                                      # ...and the registry
         self.assertIn("not built: `opps_trend`", text)
 
+    def test_inactive_missed_says_whether_the_gameday_list_would_have_caught_him(self):
+        """data/inactives.csv (the pipeline's archive of nflverse weekly_rosters INA rows) joined on gsis_id and week: c was on week 4's
+        list; a week-3 row for the healthy b is another week's and must not mark him."""
+        root = make_root()
+        pd.DataFrame([{"season": 2026, "week": 4, "team": "PHI", "gsis_id": "c", "name": "C", "position": "WR",
+                       "inactive_known_at": "2026-10-04T15:30:00Z"},
+                      {"season": 2026, "week": 3, "team": "DAL", "gsis_id": "b", "name": "B", "position": "WR",
+                       "inactive_known_at": "2026-09-27T15:30:00Z"}]).to_csv(root / "data" / "inactives.csv", index=False)
+        misses, q, inp = R.evaluate(root)
+        m = misses[misses["comparator"] == "model_components"].set_index("gsis_id")
+        self.assertEqual(m.loc["c", "on_inactive_list"], 1.0)
+        self.assertEqual(m.loc["b", "on_inactive_list"], 0.0)
+        self.assertIn("on_inactive_list", R.MISS_COLS)
+        text = R.render(misses, q, inp, R.frozen_inputs(root / "model" / "serving_config.json"))
+        self.assertIn("1 of 1 on the gameday inactive list", text)
+        self.assertIn("| C | WR | PHI | gooma-s-family-league | 9.0 | yes |", text)
+
+    def test_no_archived_list_is_blank_not_no(self):
+        root = make_root()                                                              # no data/inactives.csv at all
+        misses, q, inp = R.evaluate(root)
+        c = misses[(misses["comparator"] == "model_components") & (misses["gsis_id"] == "c")]
+        self.assertTrue(c["on_inactive_list"].isna().all())
+        text = R.render(misses, q, inp, R.frozen_inputs(root / "model" / "serving_config.json"))
+        self.assertIn("0 of 0 on the gameday inactive list, 1 with no list archived", text)
+        self.assertIn("| C | WR | PHI | gooma-s-family-league | 9.0 | n/a |", text)
+
     def test_drift_trend_sentence_over_enough_weeks(self):
         ev = pd.DataFrame([{"season": 2026, "week": w, "league": "x", "position": "ALL", "comparator": c, "n": 1, "spearman": 0.1,
                             "credit": a * 100, "pairs": 100, "pick_acc": a}

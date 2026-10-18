@@ -23,6 +23,8 @@ from model.tests.test_backtest import TINY, synth
 TINY_DOC = {"point": {lib: dict(TINY[lib]) for lib in T.LIBS}, "quantile": {}, "meta": {}}
 CFG = TR.load_config()
 BASE = TR.serving_spec(CFG)
+# the previous 71-input primary (no add_families): the family add/drop rules are checked against it, the live spec is pinned below
+BASE71 = TR.serving_spec(TR.load_config(Path(__file__).parent / "fixtures" / "serving_config_71.json"))
 
 
 def d(rmse, lo, hi, pick=0.0, plo=-0.01, phi=0.01) -> pd.Series:
@@ -69,13 +71,13 @@ class Parsing(unittest.TestCase):
         self.assertEqual(v.lib_params("lightgbm")["n_estimators"], T.load_params()["point"]["lightgbm"]["n_estimators"])
 
     def test_families_add_and_drop_against_the_serving_spec(self):
-        v = TR.compose(["+family:pbp_usage"], BASE)                      # opt-in: added
+        v = TR.compose(["+family:pbp_usage"], BASE71)                      # opt-in: added
         self.assertEqual(v.spec.add_families, ("pbp_usage",))
-        v = TR.compose(["+family:adp"], BASE)                            # dropped by the serving spec: un-dropped
+        v = TR.compose(["+family:adp"], BASE71)                            # dropped by the serving spec: un-dropped
         self.assertNotIn("adp", v.spec.drop_families)
-        v = TR.compose(["-family:dvp"], BASE)
+        v = TR.compose(["-family:dvp"], BASE71)
         self.assertIn("dvp", v.spec.drop_families)
-        v = TR.compose(["+family:pbp_usage", "-family:pbp_usage"], BASE)  # added then dropped: gone again
+        v = TR.compose(["+family:pbp_usage", "-family:pbp_usage"], BASE71)  # added then dropped: gone again
         self.assertEqual(v.spec.add_families, ())
         for contradiction in (["+family:role"],            # already in
                               ["+family:weather"],         # unservable
@@ -86,7 +88,15 @@ class Parsing(unittest.TestCase):
                               ["recent:4", "recent:2"], ["param:lightgbm.a=1", "param:lightgbm.a=2"],
                               ["+family:pbp_usage", "+family:pbp_usage"], []):
             with self.assertRaises(ValueError, msg=contradiction):
-                TR.compose(contradiction, BASE)
+                TR.compose(contradiction, BASE71)
+
+    def test_families_against_the_live_spec_which_already_adds_market_and_ecr(self):
+        self.assertEqual(BASE.add_families, ("market", "ecr"))
+        self.assertEqual(TR.compose(["+family:pbp_usage"], BASE).spec.add_families, ("market", "ecr", "pbp_usage"))
+        for fam in ("ecr", "market"):
+            with self.assertRaises(ValueError):
+                TR.compose([f"+family:{fam}"], BASE)
+        self.assertEqual(TR.compose(["-family:ecr"], BASE).spec.add_families, ("market",))
 
     def test_a_recent_only_variant_keeps_the_primary_inputs(self):
         v = TR.compose(["recent:4"], BASE)

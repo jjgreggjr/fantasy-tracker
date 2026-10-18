@@ -37,6 +37,8 @@ Out, IR, PUP or Doubtful **and** whose healthy role beats a current
 starter's, say: his injury, how old the news is, and that he starts over X
 when cleared. That is the weekly "is he back yet?" check. `data/status.csv` has this precomputed (`status_flag`, `play_prob`, `practice`, `blocked_by`, `opportunity_ahead`, and `depth_disagreement`). The recipes print it automatically — read it, don't skip it.
 
+`status_flag` **`inactive`** (`inactive` = 1) means he is on the league's gameday inactive list for a game that has not kicked off: he will not dress, whatever his designation said (`play_prob` 0, flag `INACTIVE`, `E_pts` blank). The list is posted ~90 min before each kickoff (`inactive_known_at`), so only a Sunday run, or Friday's for Thursday night, can see it; on any other day a blank `inactive` is not a clean bill. Say so when a Questionable player's game is close.
+
 A `depth_disagreement` of 2+ means ESPN and Sleeper's depth charts disagree, which is the signature of a rank driven by health rather than role. Always mention it.
 
 ## Lineup freshness — do this first

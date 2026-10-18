@@ -996,10 +996,30 @@ layer). This phase makes that reading a weekly, mechanical step, and makes testi
    may tie). Candidates: add or drop a feature family or columns, a hyper-parameter, or `recent:<n>` (weight this
    season's last n weeks more; the direct test of "should it learn faster from 2026").
 4. Only a SHIPS verdict changes `serving_config.json`, by hand, followed by `python -m model.serve --freeze` and a line
-   in this file. `E_pts` has one lever of its own (`trail_cap` in `ff/score.py`), outside `trial.py`; its evidence
+   in this file. An opt-in family is adopted by adding `"add_families": [...]` to its `spec` (the trial prints the exact
+   edit); `--freeze --dry-run` prints the diff first, and `--freeze` also writes a `fallback` (the spec without the
+   families). A serve whose family data failed to download and has no readable cached copy, or has no row for the
+   served week (ECR: DynastyProcess scrapes Fridays 00:03 UTC, so the Tuesday/Wednesday serves), serves that fallback
+   with a WARN, never empty columns (`serve.FAMILY_SOURCES`, `serve.serving_config_for`). `E_pts` has one lever of its own (`trail_cap` in `ff/score.py`), outside `trial.py`; its evidence
    lives in the same candidates file.
 
 **Ground rules kept.** Everything the retrospective reads was frozen before kickoff or is the platform's own result;
 every trial is a walk-forward with the look-ahead assertions of `backtest.py`; a candidate that only wins on 2026's few
 weeks does not ship. The gate in POLICY.md is unchanged: `E_pts` stays authoritative until the model beats Sleeper over
 six scored weeks and a human says so.
+
+### Phase 5 adoption 1 (2026-10-18): `add_families: ["market", "ecr"]`
+
+Adopted on James's say-so after both families passed the Phase 2.5 rule on LightGBM and on the 3-library serving average,
+alone and together (`model/reports/trials.md`): combined, 2025 dRMSE -0.165 [CI clear of zero], pick accuracy 0.774 -> 0.782;
+2024 -0.149 / +0.008; 2026 weeks 1-5 -0.190 / +0.014; by position QB -0.51, RB -0.19, WR -0.10, TE -0.04. `pepa` on top added
+nothing (-0.164). The screen (`model/reports/screen.md`) over 205 candidate columns put `mkt_vs_xfp_l3` (the market's projection
+minus his own trailing xFP) first by a wide margin: the market prices what the usage lags cannot see.
+
+`python -m model.serve --freeze` wrote 90 inputs (the 71 plus 8 `ecr_*` and 11 `mkt_*`), component tree counts refit, and a
+`fallback` block carrying the 71-input primary with its 2026-09-30 tree counts. The serve uses the fallback, with a WARN, when
+either family's table is missing or has no row for the week: in practice the Tuesday and Wednesday runs (FantasyPros scrapes
+Friday 00:03 UTC) serve the 71-input model and Friday and Sunday serve the 90. The market rows come from the pipeline's own
+Sleeper pull (`data/projections.csv`), so no new network call. Lesson from the first freeze attempt: a serve-time ECR refresh
+had rebuilt the cached table for 2026 only, the history read ECR as empty and the freeze silently dropped the family (82
+inputs); `serve.refresh_ecr` now refuses a rebuild that loses seasons.

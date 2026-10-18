@@ -93,7 +93,9 @@ class LoaderContracts(unittest.TestCase):
                                            "players_static", "draft_picks", "combine",
                                            "career_pre_cutoff",        # Phase 1: pre-2020 career games
                                            "adp", "college",           # fetched CSVs (ADP since Phase 1's fetch, college: Phase 2)
-                                           "pbp_usage", "pbp_team", "pbp_part"})   # Phase 2.5: play-by-play (+ participation)
+                                           "pbp_usage", "pbp_team", "pbp_part",    # Phase 2.5: play-by-play (+ participation)
+                                           "coaches",                                                                        # `script` family: head coach per game
+                                           "ngs", "ngs_games", "pfr", "pfr_games", "ftn", "ftn_team"})   # Phase 5: weekly charting
         for name in store().names():
             t = store()._tables[name]
             self.assertTrue(t.known_at_rule, name)
@@ -287,7 +289,9 @@ class ScheduleSanity(unittest.TestCase):
         names = [k for k in build_features(store(), t) if "xfp" in k]
         self.assertEqual(names, ["xfp_l1", "xfp_l2", "xfp_l3", "xfp_std_mean", "prev_season_xfp_pg",
                                  # the opt-in `streak` family (2026-10-15): lagged residuals against xFP, same history, same gate
-                                 "resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4"])
+                                 "resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
+                                 # the opt-in `market` family (2026-10-16): projection minus the LAGGED trailing-3 xFP (Hist)
+                                 "mkt_vs_xfp_l3"])
 
     def test_week_one_has_no_history_and_says_so(self):
         for t in [x for x in targets() if x.week == 1]:

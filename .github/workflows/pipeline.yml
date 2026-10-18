@@ -27,6 +27,10 @@ on:
     # snapshots the 1 pm slate before it kicks off even when the cron is hours late.
     - cron: "52 13 * * 0"   # Sun 07:52 MDT — pre-lock refresh, the early one (lands before 17:00 UTC even when 3 h late)
     - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, backstop
+    # The gameday inactive list posts ~90 min before each kickoff. The runs above see the early slate's
+    # lists (~15:30 UTC); the late-afternoon games' lists post ~18:55 UTC, so one more run before the
+    # 20:05 UTC locks picks them up (2026 weeks 4-5: 3 of 13 listed inactives were late-slate only).
+    - cron: "17 19 * * 0"   # Sun 13:17 MDT — pre-lock refresh, late-afternoon slate inactives
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:
@@ -43,7 +47,7 @@ jobs:
     # Revisit once GitHub's Oct 19 migration has settled (the runner image and toolcache churn
     # also forked the ~685 MB pip caches when Python went 3.12.14 -> 3.12.15).
     runs-on: ubuntu-24.04
-    timeout-minutes: 30               # was 20: the model step below has its own 10-minute cap and must never cost the commit
+    timeout-minutes: 50               # the model step below has its own 25-minute cap and must never cost the commit
     steps:
       - uses: actions/checkout@v4
 
@@ -124,7 +128,10 @@ jobs:
       - name: Model side by side with E_pts, then the live scoreboard
         id: model
         continue-on-error: true
-        timeout-minutes: 10
+        # 25 (was 10): the 2026-10-18 adoption of the market + ecr families changes the history and quantile cache keys, so the
+        # first run rebuilds them from scratch (about 1,000 small quantile fits); every later run is a cache hit again. A step
+        # that still times out is a WARN and the frozen fallback is served next time, never a broken commit.
+        timeout-minutes: 25
         run: python -m model.serve && python -m model.scoreboard
 
       # ---- Phase 5: the weekly retrospective (what we missed, and why) --------------------
