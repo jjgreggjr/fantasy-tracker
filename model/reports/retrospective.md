@@ -101,21 +101,23 @@ Each comparator's largest played misses that week with the evidence behind the r
 
 **Did not play, predicted > 5 (`model_components`, 9 players; status layer, not scored)**
 
-| player | pos | team | league | predicted |
-|---|---|---|---|---|
-| Caleb Williams | QB | CHI | gooma-s-family-league | 14.8 |
-| Jordan Addison | WR | MIN | gooma-s-family-league | 10.9 |
-| Rico Dowdle | RB | PIT | gooma-s-family-league | 8.4 |
-| DJ Moore | WR | BUF | gooma-s-family-league | 8.0 |
-| Ladd McConkey | WR | LAC | gooma-s-family-league | 7.8 |
-| Ted Hurst III | WR | TB | we-can-think-of-something-funny | 7.0 |
-| Carson Beck | QB | ARI | we-can-think-of-something-funny | 6.4 |
-| Darius Slayton | WR | IND | gooma-s-family-league | 5.7 |
-| Devin Singletary | RB | NYG | gooma-s-family-league | 5.4 |
+Gameday inactive list (nflverse weekly_rosters, posted ~90 min before kickoff; the pre-lock run and serve act on it): 7 of 9 on the gameday inactive list. The rest dressed and did not play, or were never listed.
+
+| player | pos | team | league | predicted | on inactive list |
+|---|---|---|---|---|---|
+| Caleb Williams | QB | CHI | gooma-s-family-league | 14.8 | yes |
+| Jordan Addison | WR | MIN | gooma-s-family-league | 10.9 | yes |
+| Rico Dowdle | RB | PIT | gooma-s-family-league | 8.4 | yes |
+| DJ Moore | WR | BUF | gooma-s-family-league | 8.0 | yes |
+| Ladd McConkey | WR | LAC | gooma-s-family-league | 7.8 | no |
+| Ted Hurst III | WR | TB | we-can-think-of-something-funny | 7.0 | no |
+| Carson Beck | QB | ARI | we-can-think-of-something-funny | 6.4 | yes |
+| Darius Slayton | WR | IND | gooma-s-family-league | 5.7 | yes |
+| Devin Singletary | RB | NYG | gooma-s-family-league | 5.4 | yes |
 
 ## Candidate signals (derived)
 
-For each reason class, the share of the model's played big misses it explains, the features that would carry the signal, and whether each is served (among the 71 frozen `inputs` of `model/serving_config.json`), pruned (built by `model.features`, dropped by the Phase 2 SHAP prune) or not built. A served feature that still misses means the signal is in the inputs but the week's value was not (`tm_out_*` are read from the report as of serve time: a teammate ruled out after the last run is invisible). A reason whose features are all served is not a new-feature candidate; one whose share is high and whose features are pruned or not built is.
+For each reason class, the share of the model's played big misses it explains, the features that would carry the signal, and whether each is served (among the 90 frozen `inputs` of `model/serving_config.json`), pruned (built by `model.features`, dropped by the Phase 2 SHAP prune) or not built. A served feature that still misses means the signal is in the inputs but the week's value was not (`tm_out_*` are read from the report as of serve time: a teammate ruled out after the last run is invisible). A reason whose features are all served is not a new-feature candidate; one whose share is high and whose features are pruned or not built is.
 
 | reason | share of model big misses | features that carry the signal | status in `serving_config.json` inputs |
 |---|---|---|---|
@@ -125,7 +127,7 @@ For each reason class, the share of the model's played big misses it explains, t
 | `blowout_script` | 0% (0) | `team_spread`, `implied_team_total`, `total_line` | served: `team_spread`, `implied_team_total`, `total_line` |
 | `left_early` | 3% (1) | `snap_pct_l1`, `inj_weeks_since_report`, `inj_report_status`, `inj_practice_status` | served: `snap_pct_l1`, `inj_weeks_since_report` ; pruned: `inj_report_status`, `inj_practice_status` |
 | `td_variance` | 21% (7) | `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` | served: `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` |
-| `inactive_missed` | 23 rows, counted apart | status layer (`ff.status`, Sleeper `injury_status`, the nflverse report), not a feature | n/a |
+| `inactive_missed` | 23 rows, counted apart (13 of 23 on the gameday inactive list) | status layer (`ff.status`, Sleeper `injury_status`, the nflverse report, the gameday inactive list), not a feature | n/a |
 
 ## Limits
 

@@ -41,3 +41,5 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-10-14T18:30:01Z,2026,6,OK,0,0,,
 2026-10-16T00:36:15Z,2026,6,OK,0,0,,
 2026-10-17T00:28:18Z,2026,6,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [6],
+2026-10-18T16:47:19Z,2026,6,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [6],
+2026-10-18T16:53:00Z,2026,6,WARN,0,2,"model.serve: market: its table cannot be loaded (not fetched), so it is left out of the store; model.serve: market: no table in the store: serving the frozen fallback WITHOUT market, ecr (71 inputs, its own frozen tree counts) instead of the 90-input spec",model

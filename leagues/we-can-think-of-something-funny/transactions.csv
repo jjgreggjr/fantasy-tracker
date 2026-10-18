@@ -133,6 +133,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,drop,12711,,6
 2026,5,free_agent,add,11608,Isaiah Williams,6
 2026,5,free_agent,drop,2306,Jameis Winston,6
+2026,6,free_agent,add,2197,Brandin Cooks,7
+2026,6,free_agent,drop,6783,Jerry Jeudy,7
 2026,6,free_agent,add,9482,Michael Mayer,5
 2026,6,free_agent,drop,13402,Skyler Bell,5
 2026,6,free_agent,add,6083,,7
