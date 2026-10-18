@@ -196,8 +196,13 @@ def refresh_market(season: int | None = None, now=None, week: int | None = None,
         return f"market: every {season} regular-season game has kicked off; nothing to fetch"
     done, errs = [], []
     try:
-        log = SP.fetch([season], range(1, week))
-        done.append(f"archive {log['fetched']} new settled week(s), {log['cached']} cached")
+        # The whole archive, not just this season: a fresh runner has none of it, and the family's training rows are every
+        # settled week since 2021 (`fetch` skips cached and unsettled weeks without a call, so a warm cache costs nothing).
+        # The sleeper_id -> gsis map is cached once the same way; without it every archived row loses its player_id and the
+        # loader returns no table (the first Actions run after the 2026-10-18 adoption served the fallback for exactly that).
+        ids = SP.fetch_id_map()
+        log = SP.fetch(SP.SEASONS, SP.WEEKS)
+        done.append(f"archive {log['fetched']} new settled week(s), {log['cached']} cached, id map {len(ids):,} ids")
     except Exception as e:
         errs.append(f"archive top-up failed ({type(e).__name__}: {str(e)[:120]})")
     try:
