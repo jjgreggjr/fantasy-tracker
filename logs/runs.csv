@@ -50,3 +50,5 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-10-18T21:32:19Z,2026,6,WARN,0,1,player_weeks.snaps: 90% of week 6 missing snap counts,
 2026-10-20T21:50:05Z,2026,7,OK,0,0,,
 2026-10-20T21:54:04Z,2026,7,WARN,0,1,"model.serve: ecr: no rows for 2026 week 7 yet (DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no scrape for its week yet), so the ecr columns would be empty for every row of this serve: serving the frozen fallback WITHOUT market, ecr (71 inputs, its own frozen tree counts) instead of the 90-input spec",model
+2026-10-20T22:38:08Z,2026,7,OK,0,0,,
+2026-10-20T22:39:34Z,2026,7,WARN,0,1,"model.serve: ecr: no rows for 2026 week 7 yet (DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no scrape for its week yet), so the ecr columns would be empty for every row of this serve: serving the frozen fallback WITHOUT market, ecr (71 inputs, its own frozen tree counts) instead of the 90-input spec",model

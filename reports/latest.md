@@ -1,6 +1,6 @@
 # Week 7 digest — 2026
 
-Generated 2026-10-20 21:49 UTC  
+Generated 2026-10-20 22:37 UTC  
 Stats through: **Week 6** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 6** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 951
 - Sleeper players cache: 2026-10-20
-- projections: 867 players (Sleeper, 2026-10-20T21:49:58Z)
-- league rosters: 3 leagues, lineups read 2026-10-20T21:49:54Z
-- ESPN rosters: Average Joes (2026-10-20T21:50:02Z)
+- projections: 867 players (Sleeper, 2026-10-20T22:38:01Z)
+- league rosters: 3 leagues, lineups read 2026-10-20T22:37:58Z
+- ESPN rosters: Average Joes (2026-10-20T22:38:06Z)
 - status rows: 588 players; 0 with practice reports
 - gameday inactives: 0 on the week 7 list (games not yet started)
 

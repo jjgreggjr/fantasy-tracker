@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 7
 
 dynasty · 31 roster slots  
-Generated 2026-10-20 21:49 UTC · baselines: 2026 only · lineup as of 2026-10-20T21:49:54Z
+Generated 2026-10-20 22:37 UTC · baselines: 2026 only · lineup as of 2026-10-20T22:37:58Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -118,11 +118,11 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|
 | Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +36%/wk; age 26 |
 | Jalen Brooks | WR | ARI | 26.5 | 3 | 3 (was 3) | 37% | WR3 on depth chart; snap share trending +24%/wk; team passes #5; age 26 |
-| Konata Mumpfield | WR | LA | 24.0 | 1 | 3 (was 4) | 37% | WR3 on depth chart; up from 4; snap share trending +20%/wk; team passes #1; age 24 |
+| Konata Mumpfield | WR | LA | 24.0 | 1 | 3 (was 3) | 37% | WR3 on depth chart; snap share trending +20%/wk; team passes #1; age 24 |
 | Sione Vaki | RB | DET | 25.2 | 2 | 2 (was 2) | 26% | RB2 on depth chart; snap share trending +18%/wk; age 25 |
 | Theo Johnson | TE | NYG | 25.6 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +15%/wk; team passes #13; age 26 |
 | Roschon Johnson | RB | CHI | 25.7 | 3 | 3 (was 3) | 30% | RB3 on depth chart; snap share trending +14%/wk; age 26 |
-| Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 2 (was 3) | 25% | RB2 on depth chart; up from 3; snap share trending +10%/wk; age 27 |
+| Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 2 (was 2) | 25% | RB2 on depth chart; snap share trending +10%/wk; age 27 |
 | Corey Kiner | RB | NE | 24.7 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +8%/wk; age 25 |
 | Oscar Delp | TE | NO | 23.2 | 0 | 3 (was 3) | 38% | TE3 on depth chart; snap share trending +6%/wk; team passes #4; age 23 |
 | Carson Steele | RB | PHI | 24.0 | 2 | 3 (was 3) | 2% | RB3 on depth chart; snap share trending +5%/wk; age 24 |
