@@ -133,6 +133,20 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,drop,12711,,6
 2026,5,free_agent,add,11608,Isaiah Williams,6
 2026,5,free_agent,drop,2306,Jameis Winston,6
+2026,6,waiver,add,8210,Chig Okonkwo,8
+2026,6,waiver,drop,2133,Davante Adams,8
+2026,6,waiver,add,4950,Christian Kirk,2
+2026,6,waiver,drop,11439,Jaleel McLaughlin,2
+2026,6,waiver,add,9501,DeMario Douglas,8
+2026,6,waiver,drop,8121,Romeo Doubs,8
+2026,6,waiver,add,11565,J.J. McCarthy,6
+2026,6,waiver,drop,7571,Rashod Bateman,6
+2026,6,waiver,add,5189,,6
+2026,6,waiver,drop,11786,,6
+2026,6,waiver,add,CLE,,6
+2026,6,waiver,drop,KC,,6
+2026,6,waiver,add,11655,Tyrone Tracy Jr.,2
+2026,6,waiver,drop,12542,Efton Chism III,2
 2026,6,free_agent,add,2197,Brandin Cooks,7
 2026,6,free_agent,drop,6783,Jerry Jeudy,7
 2026,6,free_agent,add,9482,Michael Mayer,5
@@ -151,3 +165,5 @@ season,week,type,action,sleeper_id,name,rosters
 2026,6,free_agent,drop,5012,Mark Andrews,2
 2026,6,free_agent,add,7600,Pat Freiermuth,2
 2026,6,free_agent,drop,13264,Dohnte Meyers,2
+2026,7,free_agent,add,8119,Jahan Dotson,4
+2026,7,free_agent,drop,2306,Jameis Winston,4
