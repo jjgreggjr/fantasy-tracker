@@ -85,7 +85,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,5,free_agent,add,12185,,12
 2026,5,free_agent,add,12509,Tre Harris,2
 2026,5,free_agent,drop,11631,Brian Thomas Jr.,2
+2026,6,waiver,add,8408,Jordan Mason,2
 2026,6,free_agent,drop,11439,Jaleel McLaughlin,2
+2026,6,waiver,add,TB,,12
+2026,6,waiver,drop,12493,Oronde Gadsden II,12
 2026,6,free_agent,add,11439,Jaleel McLaughlin,2
 2026,6,free_agent,add,11647,Kimani Vidal,1
 2026,6,free_agent,add,11631,Brian Thomas Jr.,1
@@ -95,3 +98,5 @@ season,week,type,action,sleeper_id,name,rosters
 2026,6,free_agent,add,7528,Najee Harris,7
 2026,6,free_agent,add,8210,Chig Okonkwo,3
 2026,6,free_agent,add,9230,Tanner McKee,3
+2026,7,free_agent,drop,3634,Kalif Raymond,11
+2026,7,free_agent,add,2197,Brandin Cooks,3

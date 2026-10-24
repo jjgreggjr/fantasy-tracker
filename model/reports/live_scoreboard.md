@@ -113,14 +113,14 @@ Non-blank frozen values per league-week in `data/model_pts.csv` (the actual-poin
 | 2026 | 5 | james-gregg-espn | 457 | 142 | 457 | 457 | 457 | 454 | 454 |
 | 2026 | 5 | we-can-think-of-something-funny | 457 | 242 | 457 | 457 | 457 | 454 | 454 |
 | 2026 | 5 | where-you-at | 457 | 253 | 457 | 457 | 457 | 454 | 454 |
-| 2026 | 6 | gooma-s-family-league | 424 | 218 | 424 | 424 | 424 | 422 | 422 |
+| 2026 | 6 | gooma-s-family-league | 424 | 219 | 424 | 424 | 424 | 422 | 422 |
 | 2026 | 6 | james-gregg-espn | 424 | 142 | 424 | 424 | 424 | 422 | 422 |
 | 2026 | 6 | we-can-think-of-something-funny | 424 | 241 | 424 | 424 | 424 | 422 | 422 |
 | 2026 | 6 | where-you-at | 424 | 255 | 424 | 424 | 424 | 422 | 422 |
-| 2026 | 7 | gooma-s-family-league | 445 | 0 | 445 | 445 | 445 | 442 | 442 |
-| 2026 | 7 | james-gregg-espn | 445 | 0 | 445 | 445 | 445 | 442 | 442 |
-| 2026 | 7 | we-can-think-of-something-funny | 445 | 0 | 445 | 445 | 445 | 442 | 442 |
-| 2026 | 7 | where-you-at | 445 | 0 | 445 | 445 | 445 | 442 | 442 |
+| 2026 | 7 | gooma-s-family-league | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | james-gregg-espn | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | we-can-think-of-something-funny | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | where-you-at | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
 
 ## Limits
 

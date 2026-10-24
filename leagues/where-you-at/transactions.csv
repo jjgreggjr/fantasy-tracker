@@ -154,3 +154,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,6,waiver,add,4017,Deshaun Watson,8
 2026,6,waiver,add,12542,Efton Chism III,10
 2026,6,free_agent,drop,11589,Trey Benson,10
+2026,7,free_agent,drop,5816,,4
+2026,7,waiver,add,12978,,10
+2026,7,waiver,drop,9486,Dontayvion Wicks,10
+2026,7,waiver,add,8365,,10
+2026,7,waiver,drop,12493,Oronde Gadsden II,10
