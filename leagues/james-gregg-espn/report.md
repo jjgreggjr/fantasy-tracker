@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 7
 
 redraft · 17 roster slots  
-Generated 2026-10-25 17:15 UTC · baselines: 2026 only · lineup as of 2026-10-25T17:15:41Z
+Generated 2026-10-25 18:34 UTC · baselines: 2026 only · lineup as of 2026-10-25T18:34:46Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -81,7 +81,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Hunter Henry | TE | NE | CHI | 12.4 | 5.0 | 15% | 1 | 9 | High |  |
 | DeMario Douglas | WR | NE | CHI | 12.8 | 5.4 | 16% | 2 | 14 | High |  |
 | Darius Cooper | WR | PHI | DAL | 11.8 | 3.7 | 18% | 4 | 3 | Low | 🔥 |
-| Jaylin Noel | WR | HOU | NYG | 11.6 | 4.5 | 13% | 3 | 25 | Med | 🔥 |
+| Jaylin Noel | WR | HOU | NYG | 11.6 | 4.5 | 13% | 3 | 25 | Med |  |
 | Keenan Allen | WR | IND | MIN | 10.7 | 8.5 | 25% | 2 | 32 | Med | 🔥 |
 | Malik Washington | WR | MIA | NYJ | 10.5 | 7.5 | 22% | 1 | 13 | High | 🔥 |
 | Ryan Flournoy | WR | DAL | PHI | 10.4 | 5.7 | 15% | 3 | 6 | Med | 🔥 |
@@ -91,10 +91,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 2) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
+| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
 | Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +36%/wk; age 26 |
 | Mike Washington Jr. | RB | LV | 23.3 | 0 | 2 (was 2) | 22% | RB2 on depth chart; snap share trending +27%/wk; age 23 |
-| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 3) | 19% | TE2 on depth chart; up from 3; snap share trending +24%/wk; team passes #14; age 23 |
+| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #14; age 23 |
 | Malachi Fields | WR | NYG | 23.2 | 0 | 2 (was 2) | 83% | WR2 on depth chart; snap share trending +22%/wk; team passes #13; age 23 |
 | Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 2 (was 2) | 29% | RB2 on depth chart; snap share trending +19%/wk; age 27 |
 | Ryan Flournoy | WR | DAL | 27.0 | 2 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +19%/wk; team passes #2; age 27 |

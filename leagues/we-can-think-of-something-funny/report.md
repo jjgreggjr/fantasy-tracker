@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 7
 
 dynasty · 31 roster slots  
-Generated 2026-10-25 17:15 UTC · baselines: 2026 only · lineup as of 2026-10-25T17:15:34Z
+Generated 2026-10-25 18:34 UTC · baselines: 2026 only · lineup as of 2026-10-25T18:34:35Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -113,9 +113,9 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 2) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
+| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
 | Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +36%/wk; age 26 |
-| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 3) | 19% | TE2 on depth chart; up from 3; snap share trending +24%/wk; team passes #14; age 23 |
+| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #14; age 23 |
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +13%/wk; team passes #2; age 27 |
 | Bryce Lance | WR | NO | 24.2 | 0 | 3 (was 3) | 46% | WR3 on depth chart; snap share trending +8%/wk; team passes #4; age 24 |
 | Oscar Delp | TE | NO | 23.2 | 0 | 3 (was 3) | 40% | TE3 on depth chart; snap share trending +5%/wk; team passes #4; age 23 |

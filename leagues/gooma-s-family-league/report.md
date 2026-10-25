@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 7
 
 redraft · 20 roster slots  
-Generated 2026-10-25 17:15 UTC · baselines: 2026 only · lineup as of 2026-10-25T17:15:34Z
+Generated 2026-10-25 18:34 UTC · baselines: 2026 only · lineup as of 2026-10-25T18:34:34Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -104,8 +104,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 2) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
-| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 3) | 19% | TE2 on depth chart; up from 3; snap share trending +24%/wk; team passes #14; age 23 |
+| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
+| Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #14; age 23 |
 | Malachi Fields | WR | NYG | 23.2 | 0 | 2 (was 2) | 83% | WR2 on depth chart; snap share trending +22%/wk; team passes #13; age 23 |
 | Michael Mayer | TE | LV | 25.3 | 3 | 2 (was 2) | 72% | TE2 on depth chart; snap share trending +14%/wk; team passes #10; age 25 |
 | Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +13%/wk; team passes #2; age 27 |

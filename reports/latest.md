@@ -1,6 +1,6 @@
 # Week 7 digest — 2026
 
-Generated 2026-10-25 17:15 UTC  
+Generated 2026-10-25 18:34 UTC  
 Stats through: **Week 6** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 6** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 954
 - Sleeper players cache: 2026-10-25
-- projections: 868 players (Sleeper, 2026-10-25T17:15:37Z)
-- league rosters: 3 leagues, lineups read 2026-10-25T17:15:34Z
-- ESPN rosters: Average Joes (2026-10-25T17:15:41Z)
+- projections: 868 players (Sleeper, 2026-10-25T18:34:40Z)
+- league rosters: 3 leagues, lineups read 2026-10-25T18:34:34Z
+- ESPN rosters: Average Joes (2026-10-25T18:34:46Z)
 - status rows: 595 players; 100 with practice reports
 - gameday inactives: 0 on the week 7 list (games not yet started)
 
@@ -37,7 +37,7 @@ Stats through: **Week 6** · Baselines: **2026 only**
 
 **Needs a decision:** Breece Hall (OUT), Jordyn Tyson (IR), Jakobi Meyers (BYE), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT), Parker Washington (BYE)
 
-**Trending and still free here:** Tyler Huntley (QB, 13.5), Justice Hill (RB, 6.5), Khalil Herbert (RB, 3.6)
+**Trending and still free here:** Tyler Huntley (QB, 13.5), Justice Hill (RB, 6.5), Kaelon Black (RB, 4.5)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
