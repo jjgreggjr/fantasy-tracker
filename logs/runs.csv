@@ -57,3 +57,4 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-10-24T00:40:44Z,2026,7,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [7],
 2026-10-25T17:15:44Z,2026,7,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [7],
 2026-10-25T18:34:49Z,2026,7,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [7],
+2026-10-25T21:48:55Z,2026,7,WARN,0,2,player_weeks.volume: suspiciously few rows in week(s) [7]; player_weeks.snaps: 89% of week 7 missing snap counts,
