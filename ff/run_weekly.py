@@ -442,9 +442,26 @@ def _main(argv=None) -> int:
             inactives, ina_rows = pd.DataFrame(columns=status_mod.INACTIVE_COLS), None
     players["inactive"] = players.gsis_id.isin(set(inactives.gsis_id)).astype(int)
 
-    st = status_mod.build(players, depth, proj, preview_week, injuries, inactives)
+    # Repeat DNP (0 opps in each of the team's last 2 games, from player_weeks) and this week's IR
+    # activations / practice-squad elevations (nflverse weekly_rosters status RES/PUP/DEV -> ACT).
+    # Both are best-effort: a failure is a WARN and the rule simply does not fire this run.
+    dnp, roles = pd.DataFrame(columns=status_mod.DNP_COLS), pd.DataFrame(columns=status_mod.ROLE_CHANGE_COLS)
+    try:
+        dnp = status_mod.recent_dnp(pw_season, season, preview_week, players, sched)
+        roles = status_mod.role_changes(wr, season, preview_week, now.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        log.info("repeat DNP: %d player(s); role changes this week: %d", len(dnp), len(roles))
+    except Exception as e:                      # new data must never stop the rest
+        log.warning("repeat-DNP / role-change rules failed: %s", e)
+        warnings.append(f"repeat-DNP / role-change rules failed ({e}) — not applied this run.")
+
+    st = status_mod.build(players, depth, proj, preview_week, injuries, inactives, dnp, roles)
     if not st.empty:
         st.to_csv(DATA / "status.csv", index=False)
+        # the two rules reach E_pts through the players frame, like `inactive` above
+        by_id = st.drop_duplicates("gsis_id").set_index("gsis_id")
+        for col in ("repeat_dnp", "role_change"):
+            players[col] = (players.gsis_id.map(by_id[col]).fillna(0).astype(int)
+                            if col in by_id.columns else 0)
         flagged = st[(st.depth_disagreement >= 2)
                      | (st.opportunity_ahead >= 0.15)]
         log.info("status: %d players, %d flagged for review", len(st), len(flagged))
