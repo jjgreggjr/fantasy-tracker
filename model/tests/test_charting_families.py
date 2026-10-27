@@ -261,13 +261,13 @@ class Loaders(unittest.TestCase):
         sn = RawTable("snap_counts", pd.DataFrame({"player_id": ["x"], "position": ["WR"],
                                                    KNOWN_AT: pd.Series([ts("2022-01-01")]).astype("datetime64[ns, UTC]")}), "t")
         with mock.patch.multiple(pit, load_player_games=mock.DEFAULT, load_snap_counts=mock.DEFAULT, load_schedule_tables=mock.DEFAULT,
-                                 load_xfp=mock.DEFAULT, load_injuries=mock.DEFAULT, load_depth_charts=mock.DEFAULT,
+                                 load_xfp=mock.DEFAULT, load_injuries=mock.DEFAULT, load_depth_charts=mock.DEFAULT, load_depth_charts_def=mock.DEFAULT,
                                  load_static_tables=mock.DEFAULT, load_career_pre_cutoff=mock.DEFAULT, load_ngs_tables=mock.DEFAULT,
                                  load_pfr_tables=mock.DEFAULT, load_ftn_tables=mock.DEFAULT, load_coaches=mock.DEFAULT) as m:
             m["load_player_games"].return_value, m["load_snap_counts"].return_value = tiny, sn
             for k in ("load_schedule_tables", "load_static_tables", "load_ngs_tables", "load_pfr_tables", "load_ftn_tables"):
                 m[k].return_value = []
-            for k in ("load_xfp", "load_injuries", "load_depth_charts", "load_career_pre_cutoff", "load_coaches"):
+            for k in ("load_xfp", "load_injuries", "load_depth_charts", "load_depth_charts_def", "load_career_pre_cutoff", "load_coaches"):
                 m[k].return_value = RawTable(k, tiny.df, "t")
             pit.load_store([2022], adp=False, college=False, pbp=False)
             self.assertFalse(m["load_ngs_tables"].called or m["load_pfr_tables"].called or m["load_ftn_tables"].called)
