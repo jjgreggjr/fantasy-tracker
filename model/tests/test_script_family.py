@@ -103,8 +103,10 @@ class ScriptSums(unittest.TestCase):
             "epa": [0.5, -0.2, np.nan, 1.0, 0.0, 0.3], "success": [1.0, 0.0, np.nan, 1.0, 0.0, 1.0],
             "pass_oe": [10.0, -20.0, 5.0, np.nan, 30.0, 0.0], "xpass": [0.6, 0.3, 0.5, np.nan, 0.7, 0.5],
             "no_huddle": [0, 1, 1, 0, 0, 0], "down": [1, 2, 3, 1, 4, 1], "wp": [0.5, 0.9, 0.3, 0.1, 0.8, 0.5],
-            "dropback": [True, False, True, True, False, False], "rz": [False, False, True, True, False, False]})
+            "dropback": [True, False, True, True, False, False], "rz": [False, False, True, True, False, False],
+            "yards_gained": [25.0, 3.0, np.nan, 20.0, -2.0, 19.0]})
         r = pit._script_sums(p, ["game_id", "posteam"]).iloc[0]
+        self.assertEqual(r["sc_explosive"], 2.0, "20+ yards: 25 and exactly 20; NaN counts as 0")
         self.assertAlmostEqual(r["sc_epa"], 0.5 - 0.2 + 1.0 + 0.0 + 0.3)
         self.assertEqual(r["sc_epa_n"], 5.0)
         self.assertEqual(r["sc_succ"], 3.0)

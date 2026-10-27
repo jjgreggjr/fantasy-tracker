@@ -122,7 +122,7 @@ def _write_release_cache(root: Path) -> None:
         (g2, 1, "pass", 1, 0, 1, 0, "00-W1", None, "00-Q1"),
     ], columns=["game_id", "play_id", "play_type", "pass_attempt", "rush_attempt", "qb_dropback", "two_point_attempt",
                 "receiver_player_id", "rusher_player_id", "passer_player_id"])
-    pbp["season"], pbp["season_type"], pbp["posteam"] = 2022, "REG", "BBB"
+    pbp["season"], pbp["season_type"], pbp["posteam"], pbp["defteam"] = 2022, "REG", "BBB", "AAA"
     pbp["week"] = [1] * 7 + [2]
     pbp.to_parquet(nv / "play_by_play_2022.parquet")
     flags = ["is_motion", "is_play_action", "is_screen_pass", "is_rpo", "is_qb_out_of_pocket", "is_interception_worthy",
@@ -243,6 +243,12 @@ class Loaders(unittest.TestCase):
                          (2.0, 1.0, 1.0, 1.0, 2.0, 9.0))
         tm = self.ftn["ftn_team"].df.set_index("week")
         self.assertEqual((tm.loc[1, "T_tgt"], tm.loc[1, "T_tgt_motion"], tm.loc[1, "T_tgt_pa"]), (2.0, 1.0, 1.0))
+        # the defense's side (`ftn_def`): AAA faced every charted play, keyed by defteam, same stamps as the other two tables
+        de = self.ftn["ftn_def"].df.set_index("week")
+        self.assertEqual(set(de["team"]), {"AAA"})
+        self.assertEqual(tuple(de.loc[1, c] for c in pit.FTN_DEF_COUNTS), (2.0, 1.0, 14.0, 2.0, 1.0, 2.0, 9.0))
+        self.assertEqual(tuple(de.loc[2, c] for c in pit.FTN_DEF_COUNTS), (0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 4.0))
+        self.assertTrue((de[KNOWN_AT].values == tm[KNOWN_AT].values).all())
 
     def test_ftn_2021_is_not_published_so_it_has_no_rows_and_no_request_is_made(self):
         for t in self.ftn.values():

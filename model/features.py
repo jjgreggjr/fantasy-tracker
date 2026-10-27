@@ -89,6 +89,14 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               plays, catchable and contested target rates, drops per game; light-box (<= 6) share and mean box on his carries;
               QB blitzed / out-of-pocket / play-action rates, mean pass rushers, interception-worthy rate. FTN starts in 2022: every
               2021 row is NaN (the 2021 asset is a 404), as is week 1. Wednesday refresh.
+  dvp_split   (Phase 5 candidate, 2026-10-27) the opponent's defense SPLIT by stat, where `dvp` is whole-position PPR only
+              (week 7 miss review: the model under-predicts against easy defenses, +1.6 overall, WR +2.3). Per game allowed to
+              the target's position over the defense's last 4 / all completed REG games this season (same window as `dvp`:
+              ends at week-1): receiving yards / targets / TDs, rushing yards / attempts / TDs, passing yards / TDs, sacks; from
+              play-by-play, EPA per dropback and per rush allowed, dropback rate and explosive-play (20+ yards) rate faced; from
+              FTN by defense (`ftn_def`, Wednesday release), light-box rate, blitz rate and pass rushers over the last 4 charted
+              games; and the defense's season-to-date rank (1 = most allowed) in receiving and rushing yards to the position
+              among the defenses with a game. A row carries the stems that bear on his position (DVPS_POS) and NaN for the rest.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -215,6 +223,31 @@ FTN_SPEC = {"tgt_share_motion": ("tgt_motion", "T_tgt_motion"), "tgt_share_pa": 
             "qb_blitz_rate": ("db_blitz", "db"), "qb_oop_rate": ("db_oop", "db"), "qb_pa_rate": ("db_pa", "db"),
             "qb_avg_rushers": ("rushers_sum", "db_rush_n"), "qb_int_worthy_rate": ("int_worthy", "db")}
 FTN_STATS = tuple(FTN_SPEC)
+# ---- `dvp_split`: the opponent's defense by stat (2026-10-27)
+DVPS_WINDOW = 4
+DVPS_WINDOWS = ("l4", "std")
+# stem -> player_games column, summed per (game, position) over the rows whose opponent_team is the defense; 0 when the
+# position had no row in a game the defense played (as in `dvp`)
+DVPS_ALLOWED = {"rec_yd": "receiving_yards", "rec_tgt": "targets", "rec_td": "receiving_tds", "rush_yd": "rushing_yards",
+                "rush_att": "carries", "rush_td": "rushing_tds", "pass_yd": "passing_yards", "pass_td": "passing_tds",
+                "sacks": "sacks_suffered"}
+DVPS_PBP = ("epa_pass", "epa_rush", "pass_rate_faced", "explosive_rate")        # pbp_team rows with the defense as `opponent`
+DVPS_FTN = ("light_box_rate", "blitz_rate", "avg_rushers")                     # ftn_def rows, l4 only
+FTN_D = ("car_box", "car_light", "box_sum", "db", "db_blitz", "db_rush_n", "rushers_sum")   # ftn_def columns (pinned by a test)
+DVPS_RANKS = {"rank_rec_yd": "receiving_yards", "rank_rush_yd": "rushing_yards"}
+DVPS_COLUMNS = ([f"dvps_{s}_{w}" for w in DVPS_WINDOWS for s in (*DVPS_ALLOWED, *DVPS_PBP)]
+                + [f"dvps_{s}_l4" for s in DVPS_FTN] + [f"dvps_{s}_std" for s in DVPS_RANKS])
+DVPS_STEM = {c: c[len("dvps_"):].rsplit("_", 1)[0] for c in DVPS_COLUMNS}
+# the stems a position's row carries; every other dvp_split column is NaN on it (the trees already get `position`)
+DVPS_POS: dict[str, frozenset] = {
+    "QB": frozenset({"pass_yd", "pass_td", "sacks", "rush_yd", "rush_att", "rush_td", "epa_pass", "epa_rush", "pass_rate_faced",
+                     "explosive_rate", "blitz_rate", "avg_rushers", "rank_rush_yd"}),
+    "RB": frozenset({"rec_yd", "rec_tgt", "rec_td", "rush_yd", "rush_att", "rush_td", "epa_pass", "epa_rush", "pass_rate_faced",
+                     "explosive_rate", "light_box_rate", "rank_rec_yd", "rank_rush_yd"}),
+    "WR": frozenset({"rec_yd", "rec_tgt", "rec_td", "epa_pass", "pass_rate_faced", "explosive_rate", "blitz_rate", "avg_rushers",
+                     "rank_rec_yd"}),
+}
+DVPS_POS["TE"] = DVPS_POS["WR"]
 
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
@@ -258,6 +291,8 @@ FAMILIES: dict[str, list[str]] = {
     "ngs": [f"ngs_{s}_{w}" for s in NGS_STATS for w in ("l1", "l3")],
     "pfr": [f"pfr_{s}_{w}" for s in PFR_STATS for w in ("l1", "l3")],
     "ftn": [f"ftn_{s}_l3" for s in FTN_STATS],
+    # ---- Phase 5 candidate (2026-10-27; opt-in): `python -m model.trial --candidate +family:dvp_split`
+    "dvp_split": DVPS_COLUMNS,
 }
 # market column -> sleeper_proj column (a stat Sleeper omits is a projected 0 when the row exists)
 MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets": "rec_tgt", "mkt_carries": "rush_att",
@@ -1105,6 +1140,92 @@ def _charting_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:
     return out
 
 
+# --------------------------------------------------------------------------- opponent DvP split by stat (Phase 5 candidate)
+def _dvps_league(store, t: TargetRow, trace) -> dict[tuple, float]:
+    """{(rank stem, position, defense): rank} over every defense with a completed REG game this season before this game's result
+    cutoff: 1 = most yards allowed per game to that position (ties share the better rank). The one league-wide read of the
+    family; memoised per game (both teams share the kickoff, so the cutoff)."""
+    def build() -> dict[tuple, float]:
+        rk = _rk(t.kickoff)
+        gr = as_of_join(store, "game_results", rk, trace=trace)
+        gr = gr[(gr["season"] == t.season) & (gr["game_type"] == "REG")]
+        games = gr.groupby("team")["game_id"].nunique()
+        games = games[games > 0]
+        pg = as_of_join(store, "player_games", rk, trace=trace)
+        pg = pg[pg["season"] == t.season]
+        cols = [c for c in DVPS_RANKS.values() if c in pg.columns]
+        sums = pg.groupby(["opponent_team", "position"])[cols].sum()
+        out: dict[tuple, float] = {}
+        for stem, col in DVPS_RANKS.items():
+            if col not in cols:
+                continue
+            for pos in POSITIONS:
+                allowed = {tm: float(sums[col].get((tm, pos), 0.0)) / float(n) for tm, n in games.items()}
+                for tm, v in allowed.items():
+                    out[(stem, pos, tm)] = 1.0 + sum(o > v for o in allowed.values())
+        return out
+    return _memo(store, trace, ("dvps_league", t.game_id), build)
+
+
+def _dvp_split_table(store, t: TargetRow, trace) -> dict[str, dict[str, float]]:
+    """{position: {column: value}} for the opponent's defense: its completed REG games this season before this game's result
+    cutoff (kickoff - RESULT_LAG, as `dvp`), l4 = the last four, std = all of them. Per-game means of what it allowed to each
+    position (DVPS_ALLOWED), ratios of sums for the play-by-play rates (pbp_team rows with the defense as `opponent`) and the
+    FTN rates (`ftn_def`, read at kickoff: a Wednesday release), ranks from `_dvps_league`. NaN with no history (week 1) or
+    without the table. Memoised per (game, defense)."""
+    def build() -> dict[str, dict[str, float]]:
+        rk = _rk(t.kickoff)
+        out = {pos: {c: NAN for c in DVPS_COLUMNS} for pos in POSITIONS}
+        if not (store.has("game_results") and store.has("player_games")):
+            return out
+        gr = as_of_join(store, "game_results", rk, team=t.opponent, trace=trace)
+        gr = gr[(gr["season"] == t.season) & (gr["game_type"] == "REG")]
+        gids = list(gr["game_id"])                               # oldest known first: chronological
+        pg = as_of_join(store, "player_games", rk, opponent_team=t.opponent, trace=trace)
+        pg = pg[pg["season"] == t.season]
+        have = {s: c for s, c in DVPS_ALLOWED.items() if c in pg.columns}
+        sums = pg.groupby(["game_id", "position"])[list(have.values())].sum()
+        for pos in POSITIONS:
+            d = out[pos]
+            for w, sel in (("l4", gids[-DVPS_WINDOW:]), ("std", gids)):
+                if not sel:
+                    continue
+                for s, c in have.items():
+                    d[f"dvps_{s}_{w}"] = float(sum(float(sums[c].get((g, pos), 0.0)) for g in sel) / len(sel))
+        if store.has("pbp_team"):
+            faced = as_of_join(store, "pbp_team", rk, opponent=t.opponent, trace=trace)
+            faced = faced[(faced["game_type"] == "REG") & (faced["season"] == t.season)]
+            for w, df in (("l4", faced.tail(DVPS_WINDOW)), ("std", faced)):
+                rates = {f"dvps_epa_pass_{w}": _sr(df, "sc_pass_epa", "sc_pass_n"),
+                         f"dvps_epa_rush_{w}": _sr(df, "sc_rush_epa", "sc_rush_n"),
+                         f"dvps_pass_rate_faced_{w}": _sr(df, "dropbacks", "plays"),
+                         f"dvps_explosive_rate_{w}": _sr(df, "sc_explosive", "plays") if "sc_explosive" in df.columns else NAN}
+                for pos in POSITIONS:
+                    out[pos].update(rates)
+        if store.has("ftn_def"):
+            fd = as_of_join(store, "ftn_def", t.kickoff, team=t.opponent, trace=trace)
+            fd = fd[fd["season"] == t.season].tail(DVPS_WINDOW)
+            rates = {"dvps_light_box_rate_l4": _sr(fd, "car_light", "car_box"), "dvps_blitz_rate_l4": _sr(fd, "db_blitz", "db"),
+                     "dvps_avg_rushers_l4": _sr(fd, "rushers_sum", "db_rush_n")}
+            for pos in POSITIONS:
+                out[pos].update(rates)
+        if gids:
+            league = _dvps_league(store, t, trace)
+            for pos in POSITIONS:
+                for stem in DVPS_RANKS:
+                    out[pos][f"dvps_{stem}_std"] = league.get((stem, pos, t.opponent), NAN)
+        return out
+    return _memo(store, trace, ("dvps", t.game_id, t.opponent), build)
+
+
+def _dvp_split_features(store, t: TargetRow, trace) -> dict[str, float]:
+    """The `dvp_split` family for his row: the defense table's column for his position where the stem bears on it (DVPS_POS),
+    NaN elsewhere."""
+    row = _dvp_split_table(store, t, trace).get(t.position, {})
+    keep = DVPS_POS.get(t.position, frozenset())
+    return {c: (row.get(c, NAN) if DVPS_STEM[c] in keep else NAN) for c in DVPS_COLUMNS}
+
+
 # --------------------------------------------------------------------------- the row
 def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     """Feature row for one target. Deterministic; NaN where history does not exist."""
@@ -1126,6 +1247,7 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
 
     # ---- opponent DvP vs position ----------------------------------------------------
     out.update(ctx["dvp"].get(t.position) or {k: (NAN if "ppr" in k else None) for k in ctx["dvp"]["QB"]})
+    out.update(_dvp_split_features(store, t, trace))     # opt-in `dvp_split`: the same defense, split by stat
 
     # ---- Vegas + context + weather (team-game level) ----------------------------------
     out.update(ctx["vegas"])
