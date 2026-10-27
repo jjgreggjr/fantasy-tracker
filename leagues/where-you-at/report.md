@@ -1,7 +1,7 @@
-# Where You At? — 2026 Week 7
+# Where You At? — 2026 Week 8
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-25 21:48 UTC · baselines: 2026 only · lineup as of 2026-10-25T21:48:38Z
+Generated 2026-10-27 23:08 UTC · baselines: 2026 only · lineup as of 2026-10-27T23:08:27Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -12,7 +12,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 - David Montgomery: depth charts disagree (ESPN 1 vs Sleeper 3) — his listed rank may reflect availability, not role
 - Deebo Samuel: depth charts disagree (ESPN 2 vs Sleeper 8) — his listed rank may reflect availability, not role
-- Terry McLaurin: depth charts disagree (ESPN 6 vs Sleeper 1) — his listed rank may reflect availability, not role
+- Chris Godwin Jr.: 24% of the volume ahead of him belongs to players unlikely to play (Emeka Egbuka (out))
 - David Montgomery: OUT (Groin) — his depth rank of 1 reflects that, not his role
 - Jaxson Dart: IR (Knee - Meniscus) — his depth rank of 4 reflects that, not his role
 - Deebo Samuel: OUT (Hamstring) — his depth rank of 2 reflects that, not his role
@@ -23,104 +23,104 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Brock Purdy | QB | SF | ATL | 18.9 | 4.2 |  | 1 | 13 | High |  |
-| Dak Prescott | QB | DAL | PHI | 15.1 | 2.1 |  | 1 | 14 | Low |  |
-| Bo Nix | QB | DEN | ARI | 15.0 | 4.0 |  | 1 | 5 | High |  |
-| Jaxson Dart | QB | NYG | HOU |  | 0.0 |  | 4 | 18 | Low | IR |
-| Trevor Lawrence | QB | JAX | BYE |  | 1.5 |  | 1 |  | Low | BYE |
-| Kenneth Walker III | RB | KC | SEA | 21.3 | 22.5 | 68% | 1 | 5 | High |  |
-| D'Andre Swift | RB | CHI | NE | 14.2 | 18.6 | 45% | 1 | 19 | High |  |
-| Aaron Jones | RB | MIN | IND | 12.0 | 17.7 | 48% | 1 | 29 | High |  |
-| Emanuel Wilson | RB | SEA | KC | 11.1 | 16.7 | 47% | 1 | 25 | High |  |
-| Emmett Johnson | RB | KC | SEA | 3.2 | 4.6 | 10% | 2 | 5 | Med |  |
-| David Montgomery | RB | HOU | NYG |  | 1.2 |  | 1 | 24 | Low | OUT |
-| Kyle Pitts | TE | ATL | SF | 10.6 | 5.4 | 16% | 1 | 19 | High |  |
-| Dalton Schultz | TE | HOU | NYG | 4.8 | 5.1 | 16% | 1 | 22 | High |  |
-| Gunnar Helm | TE | TEN | CLE | 3.0 | 3.1 | 12% | 1 | 17 | Med |  |
-| Dalton Kincaid | TE | BUF | BYE |  | 2.5 |  | 1 |  | Low | QUESTIONABLE |
-| Brenton Strange | TE | JAX | BYE |  | 3.8 |  | 1 |  | Low | BYE |
-| Jaxon Smith-Njigba | WR | SEA | KC | 16.5 | 11.8 | 34% | 1 | 31 | High |  |
-| Germie Bernard | WR | PIT | NO | 10.3 | 8.2 | 23% | 2 | 19 | Med |  |
-| Chris Godwin Jr. | WR | TB | CAR | 7.4 | 5.9 | 22% | 2 | 12 | High |  |
-| Rashod Bateman | WR | BAL | CIN | 4.7 | 3.4 | 11% | 2 | 15 | Med |  |
-| Terry McLaurin | WR | WAS | BYE |  | 1.2 |  | 6 |  | Low | OUT |
-| Deebo Samuel Sr. | WR | SF | ATL |  | 1.2 |  | 2 | 17 | Low | OUT |
-| Parker Washington | WR | JAX | BYE |  | 5.0 |  | 1 |  | Low | BYE |
+| Dak Prescott | QB | DAL | ARI | 20.2 | 1.8 |  | 1 | 3 | Med |  |
+| Trevor Lawrence | QB | JAX | IND | 19.7 | 3.7 |  | 1 | 23 | Med |  |
+| Bo Nix | QB | DEN | KC | 12.7 | 4.8 |  | 1 | 22 | High |  |
+| Brock Purdy | QB | SF | BYE |  | 2.4 |  | 1 |  | Low | BYE |
+| Jaxson Dart | QB | NYG | BYE |  | 0.0 |  | 4 |  | Low | IR |
+| Kenneth Walker III | RB | KC | DEN | 19.2 | 21.2 | 65% | 1 | 25 | High |  |
+| D'Andre Swift | RB | CHI | SEA | 16.0 | 18.5 | 46% | 1 | 12 | High |  |
+| Aaron Jones | RB | MIN | DET | 10.0 | 15.3 | 35% | 2 | 20 | Low | QUESTIONABLE |
+| Emanuel Wilson | RB | SEA | CHI | 9.2 | 16.3 | 30% | 1 | 28 | Med |  |
+| Emmett Johnson | RB | KC | DEN | 2.9 | 4.7 | 13% | 2 | 25 | High |  |
+| David Montgomery | RB | HOU | BYE |  | 1.2 |  | 1 |  | Low | OUT |
+| Kyle Pitts | TE | ATL | TB | 12.2 | 5.3 | 16% | 1 | 9 | High |  |
+| Brenton Strange | TE | JAX | IND | 8.7 | 6.4 | 18% | 1 | 26 | Med |  |
+| Dalton Kincaid | TE | BUF | BAL | 6.0 | 5.0 | 17% | 1 | 21 | Med | QUESTIONABLE |
+| Gunnar Helm | TE | TEN | CIN | 3.3 | 2.9 | 11% | 1 | 15 | High |  |
+| Dalton Schultz | TE | HOU | BYE |  | 3.2 |  | 1 |  | Low | BYE |
+| Jaxon Smith-Njigba | WR | SEA | CHI | 22.3 | 12.2 | 34% | 1 | 14 | High |  |
+| Parker Washington | WR | JAX | IND | 11.9 | 9.0 | 25% | 1 | 28 | High |  |
+| Germie Bernard | WR | PIT | CLE | 10.0 | 8.0 | 22% | 2 | 22 | Med |  |
+| Chris Godwin Jr. | WR | TB | ATL | 6.5 | 5.5 | 18% | 2 | 18 | High |  |
+| Rashod Bateman | WR | BAL | BUF | 5.0 | 3.5 | 12% | 2 | 1 | High |  |
+| Terry McLaurin | WR | WAS | PHI |  | 1.2 |  | 6 | 3 | Low | OUT |
+| Deebo Samuel Sr. | WR | SF | BYE |  | 1.2 |  | 2 |  | Low | OUT |
 
 
 ### Why each call
 
-- **Brock Purdy** — 4.2 exp opps (proj 4, recent 4) · QB1 · vs ATL (DvP 13, +3%) · High confidence
-- **Dak Prescott** — 2.1 exp opps (proj 3, recent 1) · QB1 · vs PHI (DvP 14, +2%) · Low confidence
-- **Bo Nix** — 4.0 exp opps (proj 4, recent 4) · QB1 · vs ARI (DvP 5, +9%) · High confidence
-- **Jaxson Dart** — 0.0 exp opps (proj 0, recent 6) · QB4 · vs HOU (DvP 18, -1%) · Low confidence · IR
-- **Trevor Lawrence** — 1.5 exp opps (proj 0, recent 3) · QB1 · Low confidence · BYE
-- **Kenneth Walker III** — 22.5 exp opps (proj 23, recent 22) · RB1 · 68% of team carries · vs SEA (DvP 5, +9%) · High confidence
-- **D'Andre Swift** — 18.6 exp opps (proj 16, recent 20) · RB1 · 45% of team carries · vs NE (DvP 19, -2%) · High confidence
-- **Aaron Jones** — 17.7 exp opps (proj 17, recent 18) · RB1 · 48% of team carries · vs IND (DvP 29, -9%) · High confidence
-- **Emanuel Wilson** — 16.7 exp opps (proj 15, recent 18) · RB1 · 47% of team carries · vs KC (DvP 25, -6%) · High confidence
-- **Emmett Johnson** — 4.6 exp opps (proj 4, recent 6) · RB2 · 10% of team carries · vs SEA (DvP 5, +9%) · Med confidence
-- **David Montgomery** — 1.2 exp opps (proj 0, recent 5) · RB1 · vs NYG (DvP 24, -5%) · Low confidence · OUT
-- **Kyle Pitts** — 5.4 exp opps (proj 5, recent 6) · TE1 · 16% of team targets · vs SF (DvP 19, -2%) · High confidence
-- **Dalton Schultz** — 5.1 exp opps (proj 5, recent 5) · TE1 · 16% of team targets · vs NYG (DvP 22, -4%) · High confidence
-- **Gunnar Helm** — 3.1 exp opps (proj 4, recent 2) · TE1 · 12% of team targets · vs CLE (DvP 17, +0%) · Med confidence
-- **Dalton Kincaid** — 2.5 exp opps (proj 0, recent 5) · TE1 · Low confidence · QUESTIONABLE
-- **Brenton Strange** — 3.8 exp opps (proj 0, recent 8) · TE1 · Low confidence · BYE
-- **Jaxon Smith-Njigba** — 11.8 exp opps (proj 11, recent 12) · WR1 · 34% of team targets · vs KC (DvP 31, -10%) · High confidence
-- **Germie Bernard** — 8.2 exp opps (proj 7, recent 9) · WR2 · 23% of team targets · vs NO (DvP 19, -2%) · Med confidence
-- **Chris Godwin Jr.** — 5.9 exp opps (proj 6, recent 6) · WR2 · 22% of team targets · vs CAR (DvP 12, +4%) · High confidence
-- **Rashod Bateman** — 3.4 exp opps (proj 3, recent 4) · WR2 · 11% of team targets · vs CIN (DvP 15, +1%) · Med confidence
+- **Dak Prescott** — 1.8 exp opps (proj 3, recent 1) · QB1 · vs ARI (DvP 3, +10%) · Med confidence
+- **Trevor Lawrence** — 3.7 exp opps (proj 4, recent 3) · QB1 · vs IND (DvP 23, -5%) · Med confidence
+- **Bo Nix** — 4.8 exp opps (proj 5, recent 5) · QB1 · vs KC (DvP 22, -4%) · High confidence
+- **Brock Purdy** — 2.4 exp opps (proj 0, recent 4) · QB1 · Low confidence · BYE
+- **Jaxson Dart** — 0.0 exp opps (proj 0, recent 6) · QB4 · Low confidence · IR
+- **Kenneth Walker III** — 21.2 exp opps (proj 22, recent 20) · RB1 · 65% of team carries · vs DEN (DvP 25, -6%) · High confidence
+- **D'Andre Swift** — 18.5 exp opps (proj 16, recent 20) · RB1 · 46% of team carries · vs SEA (DvP 12, +4%) · High confidence
+- **Aaron Jones** — 15.3 exp opps (proj 12, recent 18) · RB2 · 35% of team carries · vs DET (DvP 20, -2%) · Low confidence · QUESTIONABLE
+- **Emanuel Wilson** — 16.3 exp opps (proj 10, recent 21) · RB1 · 30% of team carries · vs CHI (DvP 28, -8%) · Med confidence
+- **Emmett Johnson** — 4.7 exp opps (proj 5, recent 4) · RB2 · 13% of team carries · vs DEN (DvP 25, -6%) · High confidence
+- **David Montgomery** — 1.2 exp opps (proj 0, recent 5) · RB1 · Low confidence · OUT
+- **Kyle Pitts** — 5.3 exp opps (proj 4, recent 6) · TE1 · 16% of team targets · vs TB (DvP 9, +6%) · High confidence
+- **Brenton Strange** — 6.4 exp opps (proj 5, recent 8) · TE1 · 18% of team targets · vs IND (DvP 26, -7%) · Med confidence
+- **Dalton Kincaid** — 5.0 exp opps (proj 5, recent 5) · TE1 · 17% of team targets · vs BAL (DvP 21, -3%) · Med confidence · QUESTIONABLE
+- **Gunnar Helm** — 2.9 exp opps (proj 3, recent 2) · TE1 · 11% of team targets · vs CIN (DvP 15, +1%) · High confidence
+- **Dalton Schultz** — 3.2 exp opps (proj 0, recent 5) · TE1 · Low confidence · BYE
+- **Jaxon Smith-Njigba** — 12.2 exp opps (proj 11, recent 13) · WR1 · 34% of team targets · vs CHI (DvP 14, +2%) · High confidence
+- **Parker Washington** — 9.0 exp opps (proj 8, recent 10) · WR1 · 25% of team targets · vs IND (DvP 28, -8%) · High confidence
+- **Germie Bernard** — 8.0 exp opps (proj 7, recent 9) · WR2 · 22% of team targets · vs CLE (DvP 22, -4%) · Med confidence
+- **Chris Godwin Jr.** — 5.5 exp opps (proj 5, recent 6) · WR2 · 18% of team targets · vs ATL (DvP 18, -1%) · High confidence
 
 
 ## Waiver wire — best available
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Jalon Daniels | QB | TB | CAR | 6.8 | 2.8 |  | 2 | 25 | Low |  |
-| Tyler Huntley | QB | BAL | CIN | 13.3 | 4.9 |  | 2 | 21 | High | 🔥 |
-| Tanner McKee | QB | PHI | DAL | 13.2 | 2.3 |  | 1 | 9 | Low | 🔥 |
-| Geno Smith | QB | NYJ | MIA | 13.2 | 3.0 |  | 1 | 8 | High | 🔥 |
-| Jameis Winston | QB | NYG | HOU | 10.0 | 2.4 |  | 2 | 18 | Low |  |
-| Tyrod Taylor | QB | GB | DET | 1.8 | 0.5 |  | 2 | 3 | Low |  |
-| Tyrone Tracy Jr. | RB | NYG | HOU | 6.9 | 7.3 | 21% | 2 | 3 | High |  |
-| Bam Knight | RB | ARI | DEN | 5.6 | 9.8 | 36% | 3 | 23 | Med | 🔥 |
-| Dylan Sampson | RB | CLE | TEN | 5.3 | 7.6 | 19% | 2 | 14 | Med |  |
-| Devin Singletary | RB | NYG | HOU | 5.1 | 6.4 | 20% | 3 | 3 | Med |  |
-| Samaje Perine | RB | CIN | BAL | 4.8 | 8.1 | 18% | 2 | 31 | Med |  |
-| Pierre Strong | RB | GB | DET | 4.4 | 8.5 | 13% | 3 | 30 | Low |  |
-| Tyler Higbee | TE | LA | LV | 7.8 | 5.0 | 15% | 1 | 13 | High | 🔥 |
-| Darnell Washington | TE | PIT | NO | 6.8 | 3.5 | 12% | 1 | 14 | High |  |
-| Tommy Tremble | TE | CAR | TB | 6.6 | 2.8 | 8% | 1 | 10 | High |  |
-| Noah Fant | TE | NO | PIT | 5.3 | 2.0 | 9% | 2 | 23 | Low |  |
-| Matthew Hibner | TE | BAL | CIN | 5.2 | 0.0 |  | 2 | 15 | Med |  |
-| Eli Raridon | TE | NE | CHI | 4.4 | 3.5 | 8% | 2 | 8 | Med |  |
-| Ryan Flournoy | WR | DAL | PHI | 8.4 | 5.7 | 15% | 3 | 6 | Med | 🔥 |
-| Kyle Williams | WR | NE | CHI | 5.5 | 2.1 | 8% | 4 | 13 | Low |  |
-| Konata Mumpfield | WR | LA | LV | 5.4 | 3.2 | 10% | 2 | 5 | High | 🔥 |
-| Jordan Watkins | WR | SF | ATL | 4.7 | 3.5 | 11% | 5 | 17 | Med | 🔥 |
-| Dohnte Meyers | WR | CIN | BAL | 4.5 | 1.9 | 5% | 3 | 9 | Med |  |
-| Darius Cooper | WR | PHI | DAL | 10.4 | 3.7 | 18% | 4 | 3 | Low | 🔥 |
+| Jalon Daniels | QB | TB | ATL | 5.0 | 2.8 |  | 2 | 14 | Low |  |
+| Geno Smith | QB | NYJ | LV | 17.4 | 3.0 |  | 1 | 2 | High | 🔥 |
+| Tanner McKee | QB | PHI | WAS | 12.6 | 1.9 |  | 1 | 15 | Low |  |
+| Tyler Huntley | QB | BAL | BUF | 11.8 | 2.8 |  | 2 | 1 | Low |  |
+| Tyrod Taylor | QB | GB | CAR | 1.5 | 0.5 |  | 2 | 25 | Low |  |
+| Tyson Bagent | QB | CHI | SEA | 0.9 | 0.8 |  | 2 | 31 | Low |  |
+| Samaje Perine | RB | CIN | TEN | 7.1 | 8.6 | 20% | 2 | 15 | Med |  |
+| Bam Knight | RB | ARI | DAL | 6.8 | 9.1 | 25% | 3 | 11 | Med |  |
+| Dylan Sampson | RB | CLE | PIT | 5.1 | 7.3 | 18% | 2 | 24 | Med | 🔥 |
+| Sean Tucker | RB | TB | ATL | 4.5 | 3.8 | 5% | 3 | 1 | Low |  |
+| Corey Kiner | RB | NE | MIA | 4.3 | 7.0 | 20% | 3 | 13 | Med |  |
+| Ty Johnson | RB | BUF | BAL | 4.3 | 4.3 | 11% | 2 | 31 | Med |  |
+| Eli Raridon | TE | NE | MIA | 7.2 | 3.4 | 8% | 2 | 1 | Med |  |
+| Darnell Washington | TE | PIT | CLE | 5.8 | 3.4 | 12% | 1 | 18 | High |  |
+| Tyler Higbee | TE | LA | LAC | 5.3 | 4.3 | 14% | 1 | 27 | High |  |
+| Josh Cuevas | TE | BAL | BUF | 5.1 | 2.4 | 3% | 3 | 5 | Low |  |
+| Tommy Tremble | TE | CAR | GB | 5.0 | 2.9 | 8% | 1 | 31 | High |  |
+| Matthew Hibner | TE | BAL | BUF | 5.0 | 0.0 |  | 2 | 5 | Med |  |
+| Ryan Flournoy | WR | DAL | ARI | 9.1 | 5.3 | 14% | 3 | 21 | Med | 🔥 |
+| Treylon Burks | WR | WAS | PHI | 6.8 | 4.6 | 13% | 3 | 3 | Med | 🔥 |
+| Cooper Kupp | WR | SEA | CHI | 5.2 | 4.6 | 13% | 3 | 14 | Med |  |
+| Kyle Williams | WR | NE | MIA | 4.9 | 2.1 | 9% | 4 | 30 | Low |  |
+| John Metchie III | WR | CAR | GB | 3.8 | 3.1 | 8% | 4 | 8 | Med |  |
+| Laquon Treadwell | WR | IND | JAX | 3.6 | 4.0 | 9% | 3 | 2 | Low |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Jaleel McLaughlin | RB | CLE | 26.1 | 3 | 3 (was 3) | 42% | RB3 on depth chart; snap share trending +41%/wk; age 26 |
-| Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 26% | RB3 on depth chart; snap share trending +36%/wk; age 26 |
+| Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 2) | 17% | RB2 on depth chart; snap share trending +26%/wk; age 22 |
 | Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #12; age 23 |
-| Tyrone Tracy Jr. | RB | NYG | 26.9 | 2 | 2 (was 2) | 29% | RB2 on depth chart; snap share trending +19%/wk; age 27 |
-| Ryan Flournoy | WR | DAL | 27.0 | 2 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +19%/wk; team passes #2; age 27 |
-| Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 40% | TE2 on depth chart; snap share trending +13%/wk; team passes #2; age 27 |
-| Bryce Lance | WR | NO | 24.2 | 0 | 3 (was 3) | 46% | WR3 on depth chart; snap share trending +8%/wk; team passes #3; age 24 |
-| Oscar Delp | TE | NO | 23.2 | 0 | 3 (was 3) | 40% | TE3 on depth chart; snap share trending +5%/wk; team passes #3; age 23 |
-| DJ Giddens | RB | IND | 23.2 | 1 | 3 (was 3) | 18% | RB3 on depth chart; age 23 |
-| Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 20% | TE3 on depth chart; team passes #11; age 26 |
-| Dylan Sampson | RB | CLE | 22.1 | 1 | 2 (was 2) | 26% | RB2 on depth chart; age 22 |
-| Sean Tucker | RB | TB | 25.0 | 3 | 3 (was 3) | 10% | RB3 on depth chart; age 25 |
-| Sione Vaki | RB | DET | 25.2 | 2 | 2 (was 2) | 35% | RB2 on depth chart; age 25 |
-| Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 14% | RB2 on depth chart; age 26 |
-| Jalen Brooks | WR | ARI | 26.5 | 3 | 3 (was 3) | 53% | WR3 on depth chart; team passes #3; age 26 |
+| Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 35% | RB3 on depth chart; snap share trending +22%/wk; age 26 |
+| Bryce Lance | WR | NO | 24.2 | 0 | 3 (was 3) | 57% | WR3 on depth chart; snap share trending +18%/wk; team passes #3; age 24 |
+| Brevyn Spann-Ford | TE | DAL | 26.8 | 2 | 2 (was 2) | 44% | TE2 on depth chart; snap share trending +10%/wk; team passes #3; age 27 |
+| Davis Allen | TE | LA | 25.7 | 3 | 3 (was 3) | 50% | TE3 on depth chart; snap share trending +10%/wk; team passes #2; age 26 |
+| Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +9%/wk; team passes #10; age 26 |
+| Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 26% | TE3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
+| Jordan Whittington | WR | LA | 26.1 | 2 | 3 (was 3) | 17% | WR3 on depth chart; snap share trending +8%/wk; team passes #2; age 26 |
+| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 3 (was 3) | 50% | WR3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
+| Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +7%/wk; age 26 |
+| Tahj Brooks | RB | CIN | 24.5 | 1 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
+| Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 35% | WR3 on depth chart; snap share trending +6%/wk; team passes #5; age 27 |
+| Ryan Flournoy | WR | DAL | 27.0 | 2 | 3 (was 3) | 78% | WR3 on depth chart; snap share trending +5%/wk; team passes #3; age 27 |
+| Sean Tucker | RB | TB | 25.0 | 3 | 3 (was 3) | 12% | RB3 on depth chart; age 25 |
 
 
 ## Ask me

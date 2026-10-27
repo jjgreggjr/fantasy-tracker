@@ -2,9 +2,9 @@
 
 **Adoption gate: the model earns recipe preference only when it beats Sleeper's projection on pick accuracy over at least 6 completed 2026 weeks.**
 
-**Gate status: NOT MET.** 3 of 6 completed weeks scored (2026 wk4, 2026 wk5, 2026 wk6). Pooled pick accuracy on identical rows: model (E_pts_model) 0.667, Sleeper 0.659 (difference 0.008). The gate cannot be met before 6 weeks are scored, whatever the difference. 
+**Gate status: NOT MET.** 4 of 6 completed weeks scored (2026 wk4, 2026 wk5, 2026 wk6, 2026 wk7). Pooled pick accuracy on identical rows: model (E_pts_model) 0.669, Sleeper 0.662 (difference 0.006). The gate cannot be met before 6 weeks are scored, whatever the difference. 
 
-Week-blocked 95% interval for that difference: [-0.025, +0.035] (informational; the gate is the point estimate over 6+ weeks, as written).
+Week-blocked 95% interval for that difference: [-0.017, +0.028] (informational; the gate is the point estimate over 6+ weeks, as written).
 
 ## What is scored
 
@@ -24,11 +24,11 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 1895 | 44181 | 0.667 | 0.448 |
-| `model_flat` | 1895 | 44181 | 0.660 | 0.429 |
-| `model_blend` | 1895 | 44181 | 0.666 | 0.440 |
-| `sleeper` | 1895 | 44181 | 0.659 | 0.438 |
-| `e_pts` | 1895 | 44181 | 0.650 | 0.377 |
+| `model_components` | 2478 | 56529 | 0.669 | 0.429 |
+| `model_flat` | 2478 | 56529 | 0.663 | 0.423 |
+| `model_blend` | 2478 | 56529 | 0.669 | 0.431 |
+| `sleeper` | 2478 | 56529 | 0.662 | 0.430 |
+| `e_pts` | 2478 | 56529 | 0.655 | 0.388 |
 
 ### By position
 
@@ -36,41 +36,41 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 291 | 3512 | 0.688 | 0.527 |
-| `model_flat` | 291 | 3512 | 0.690 | 0.520 |
-| `model_blend` | 291 | 3512 | 0.688 | 0.524 |
-| `sleeper` | 291 | 3512 | 0.702 | 0.545 |
-| `e_pts` | 291 | 3512 | 0.653 | 0.425 |
+| `model_components` | 385 | 4599 | 0.661 | 0.446 |
+| `model_flat` | 385 | 4599 | 0.676 | 0.483 |
+| `model_blend` | 385 | 4599 | 0.674 | 0.480 |
+| `sleeper` | 385 | 4599 | 0.690 | 0.512 |
+| `e_pts` | 385 | 4599 | 0.643 | 0.404 |
 
 **RB**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 562 | 13327 | 0.708 | 0.553 |
-| `model_flat` | 562 | 13327 | 0.701 | 0.539 |
-| `model_blend` | 562 | 13327 | 0.710 | 0.554 |
-| `sleeper` | 562 | 13327 | 0.703 | 0.544 |
-| `e_pts` | 562 | 13327 | 0.699 | 0.525 |
+| `model_components` | 726 | 16633 | 0.696 | 0.513 |
+| `model_flat` | 726 | 16633 | 0.689 | 0.500 |
+| `model_blend` | 726 | 16633 | 0.698 | 0.514 |
+| `sleeper` | 726 | 16633 | 0.694 | 0.513 |
+| `e_pts` | 726 | 16633 | 0.692 | 0.505 |
 
 **WR**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 751 | 23825 | 0.652 | 0.415 |
-| `model_flat` | 751 | 23825 | 0.645 | 0.402 |
-| `model_blend` | 751 | 23825 | 0.651 | 0.418 |
-| `sleeper` | 751 | 23825 | 0.638 | 0.384 |
-| `e_pts` | 751 | 23825 | 0.636 | 0.381 |
+| `model_components` | 983 | 30704 | 0.665 | 0.452 |
+| `model_flat` | 983 | 30704 | 0.659 | 0.440 |
+| `model_blend` | 983 | 30704 | 0.664 | 0.453 |
+| `sleeper` | 983 | 30704 | 0.652 | 0.423 |
+| `e_pts` | 983 | 30704 | 0.649 | 0.420 |
 
 **TE**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 291 | 3517 | 0.601 | 0.296 |
-| `model_flat` | 291 | 3517 | 0.581 | 0.255 |
-| `model_blend` | 291 | 3517 | 0.585 | 0.263 |
-| `sleeper` | 291 | 3517 | 0.591 | 0.278 |
-| `e_pts` | 291 | 3517 | 0.560 | 0.177 |
+| `model_components` | 384 | 4593 | 0.602 | 0.306 |
+| `model_flat` | 384 | 4593 | 0.585 | 0.270 |
+| `model_blend` | 384 | 4593 | 0.589 | 0.276 |
+| `sleeper` | 384 | 4593 | 0.587 | 0.271 |
+| `e_pts` | 384 | 4593 | 0.576 | 0.225 |
 
 ### By week (pick accuracy, pooled over leagues)
 
@@ -79,15 +79,16 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 | 2026 wk04 | 0.679 | 0.670 | 0.678 | 0.644 | 0.647 |
 | 2026 wk05 | 0.675 | 0.670 | 0.674 | 0.700 | 0.668 |
 | 2026 wk06 | 0.645 | 0.638 | 0.643 | 0.635 | 0.636 |
+| 2026 wk07 | 0.672 | 0.673 | 0.676 | 0.673 | 0.673 |
 
 ### By league (pick accuracy, pooled over weeks)
 
 | league | model_components | model_flat | model_blend | sleeper | e_pts |
 |---|---|---|---|---|---|
-| gooma-s-family-league | 0.664 | 0.656 | 0.663 | 0.656 | 0.645 |
-| james-gregg-espn | 0.629 | 0.617 | 0.627 | 0.616 | 0.605 |
-| we-can-think-of-something-funny | 0.688 | 0.681 | 0.687 | 0.681 | 0.672 |
-| where-you-at | 0.665 | 0.660 | 0.664 | 0.657 | 0.651 |
+| gooma-s-family-league | 0.667 | 0.661 | 0.666 | 0.660 | 0.652 |
+| james-gregg-espn | 0.626 | 0.617 | 0.625 | 0.617 | 0.610 |
+| we-can-think-of-something-funny | 0.689 | 0.685 | 0.690 | 0.684 | 0.676 |
+| where-you-at | 0.666 | 0.662 | 0.666 | 0.660 | 0.655 |
 
 ## Coverage
 
@@ -98,6 +99,7 @@ Played rostered skill players per week (summed over leagues), how many had a mod
 | 2026 | 4 | 675 | 675 | 675 |
 | 2026 | 5 | 631 | 624 | 624 |
 | 2026 | 6 | 609 | 596 | 596 |
+| 2026 | 7 | 609 | 583 | 583 |
 
 ## Which comparators exist
 
@@ -117,10 +119,14 @@ Non-blank frozen values per league-week in `data/model_pts.csv` (the actual-poin
 | 2026 | 6 | james-gregg-espn | 424 | 142 | 424 | 424 | 424 | 422 | 422 |
 | 2026 | 6 | we-can-think-of-something-funny | 424 | 241 | 424 | 424 | 424 | 422 | 422 |
 | 2026 | 6 | where-you-at | 424 | 255 | 424 | 424 | 424 | 422 | 422 |
-| 2026 | 7 | gooma-s-family-league | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
-| 2026 | 7 | james-gregg-espn | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
-| 2026 | 7 | we-can-think-of-something-funny | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
-| 2026 | 7 | where-you-at | 435 | 0 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | gooma-s-family-league | 435 | 219 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | james-gregg-espn | 435 | 143 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | we-can-think-of-something-funny | 435 | 241 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 7 | where-you-at | 435 | 253 | 435 | 435 | 435 | 432 | 432 |
+| 2026 | 8 | gooma-s-family-league | 394 | 0 | 394 | 394 | 394 | 392 | 392 |
+| 2026 | 8 | james-gregg-espn | 394 | 0 | 394 | 394 | 394 | 392 | 392 |
+| 2026 | 8 | we-can-think-of-something-funny | 394 | 0 | 394 | 394 | 394 | 392 | 392 |
+| 2026 | 8 | where-you-at | 394 | 0 | 394 | 394 | 394 | 392 | 392 |
 
 ## Limits
 

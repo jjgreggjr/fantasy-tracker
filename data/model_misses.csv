@@ -202,3 +202,56 @@ season,week,gsis_id,name,position,team,league,comparator,predicted,actual,error,
 2026,6,00-0040719,Bhayshul Tuten,RB,JAX,gooma-s-family-league,sleeper,11.94,24.7,-12.76,td_variance,,20.333333333333332,16.0,0.3333333333333333,2.0,0.5833333333333334,0.58,-3.0,,True,0.0
 2026,6,00-0041489,Germie Bernard,WR,PIT,gooma-s-family-league,sleeper,10.05,25.7,-15.649999999999999,volume_up,,4.333333333333333,12.0,0.0,1.0,0.53,0.94,7.0,,True,0.0
 2026,6,00-0041511,Omar Cooper Jr.,WR,NYJ,gooma-s-family-league,sleeper,5.86,22.3,-16.44,teammate_out,volume_up,1.0,7.0,0.0,1.0,0.07,0.82,-7.0,Adonai Mitchell,True,0.0
+2026,7,00-0034796,Lamar Jackson,QB,BAL,gooma-s-family-league,e_pts,18.0,0.0,18.0,inactive_missed,,27.666666666666668,,1.6666666666666667,,0.84,,-22.0,Lamar Jackson,False,1.0
+2026,7,00-0035261,Tony Pollard,RB,TEN,gooma-s-family-league,e_pts,9.1,36.5,-27.4,volume_up,td_variance,18.333333333333332,28.0,0.3333333333333333,3.0,0.59,0.75,-3.0,,True,0.0
+2026,7,00-0036554,Nico Collins,WR,HOU,gooma-s-family-league,e_pts,16.3,2.6,13.700000000000001,unexplained,,7.0,5.0,0.6666666666666666,0.0,0.71,0.67,-6.0,,True,0.0
+2026,7,00-0037240,Jameson Williams,WR,DET,gooma-s-family-league,e_pts,12.5,26.1,-13.600000000000001,volume_up,td_variance,5.333333333333333,9.0,0.6666666666666666,2.0,0.9,0.84,3.0,,True,0.0
+2026,7,00-0037744,Trey McBride,TE,ARI,gooma-s-family-league,e_pts,14.4,27.1,-12.700000000000001,unexplained,,10.333333333333334,13.0,0.3333333333333333,1.0,0.9466666666666667,0.93,-14.0,,True,0.0
+2026,7,00-0037838,Isaiah Likely,TE,NYG,gooma-s-family-league,e_pts,16.3,3.2,13.100000000000001,volume_down,,12.0,4.0,1.0,0.0,0.79,0.86,6.0,,True,0.0
+2026,7,00-0038120,Breece Hall,RB,NYJ,gooma-s-family-league,e_pts,14.4,0.0,14.4,inactive_missed,,20.333333333333332,,0.3333333333333333,,0.57,,-3.0,Breece Hall,False,1.0
+2026,7,00-0038128,Malik Willis,QB,MIA,gooma-s-family-league,e_pts,12.9,26.02,-13.12,td_variance,,33.0,29.0,0.6666666666666666,3.0,1.0,1.0,3.0,,True,0.0
+2026,7,00-0038134,Kenneth Walker III,RB,KC,gooma-s-family-league,e_pts,23.1,9.7,13.400000000000002,td_variance,,21.666666666666668,19.0,2.0,0.0,0.7399999999999999,0.74,-17.0,,True,0.0
+2026,7,00-0039032,Tyjae Spears,RB,TEN,gooma-s-family-league,e_pts,5.2,0.0,5.2,inactive_missed,,5.333333333333333,,0.0,,0.38000000000000006,,-3.0,Tyjae Spears,False,1.0
+2026,7,00-0039491,Jalen Coker,WR,CAR,gooma-s-family-league,e_pts,15.5,1.9,13.6,blowout_script,volume_down,8.666666666666666,4.0,0.0,0.0,0.6233333333333334,0.66,-30.0,,True,0.0
+2026,7,00-0040236,Kyle Monangai,RB,CHI,gooma-s-family-league,e_pts,8.7,0.0,8.7,inactive_missed,,17.666666666666668,,0.6666666666666666,,0.39666666666666667,,6.0,Kyle Monangai,False,1.0
+2026,7,00-0040715,Cam Skattebo,RB,NYG,gooma-s-family-league,e_pts,6.4,19.1,-12.700000000000001,unexplained,,19.666666666666668,18.0,0.0,1.0,0.68,0.56,6.0,,True,0.0
+2026,7,00-0040736,Mason Taylor,TE,NYJ,we-can-think-of-something-funny,e_pts,6.5,27.7,-21.2,td_variance,,4.0,6.0,0.0,2.0,0.6,0.63,-3.0,,True,0.0
+2026,7,00-0041511,Omar Cooper Jr.,WR,NYJ,gooma-s-family-league,e_pts,9.4,22.5,-13.1,unexplained,,4.0,5.0,0.5,1.0,0.44499999999999995,0.64,-3.0,,True,0.0
+2026,7,00-0041523,Caleb Douglas,WR,MIA,gooma-s-family-league,e_pts,7.9,21.0,-13.1,td_variance,,5.0,3.0,0.0,2.0,0.885,0.68,3.0,,True,0.0
+2026,7,00-0041547,KC Concepcion,WR,CLE,gooma-s-family-league,e_pts,8.8,23.2,-14.399999999999999,volume_up,,5.666666666666667,13.0,0.0,0.0,0.63,0.79,3.0,,True,0.0
+2026,7,00-0032764,Derrick Henry,RB,BAL,gooma-s-family-league,model_components,18.023,5.9,12.123,td_variance,,23.0,19.0,0.6666666666666666,0.0,0.5833333333333334,0.51,-22.0,,True,0.0
+2026,7,00-0034796,Lamar Jackson,QB,BAL,gooma-s-family-league,model_components,18.205,0.0,18.205,inactive_missed,,27.666666666666668,,1.6666666666666667,,0.84,,-22.0,Lamar Jackson,False,1.0
+2026,7,00-0035261,Tony Pollard,RB,TEN,gooma-s-family-league,model_components,12.135,36.5,-24.365000000000002,volume_up,td_variance,18.333333333333332,28.0,0.3333333333333333,3.0,0.59,0.75,-3.0,,True,0.0
+2026,7,00-0036410,Tee Higgins,WR,CIN,gooma-s-family-league,model_components,13.323,26.8,-13.477,unexplained,,9.0,7.0,0.3333333333333333,1.0,0.8033333333333333,0.87,22.0,,True,0.0
+2026,7,00-0036554,Nico Collins,WR,HOU,gooma-s-family-league,model_components,16.593,2.6,13.993,unexplained,,7.0,5.0,0.6666666666666666,0.0,0.71,0.67,-6.0,,True,0.0
+2026,7,00-0037240,Jameson Williams,WR,DET,gooma-s-family-league,model_components,12.079,26.1,-14.021,volume_up,td_variance,5.333333333333333,9.0,0.6666666666666666,2.0,0.9,0.84,3.0,,True,0.0
+2026,7,00-0037744,Trey McBride,TE,ARI,gooma-s-family-league,model_components,14.668,27.1,-12.432000000000002,unexplained,,10.333333333333334,13.0,0.3333333333333333,1.0,0.9466666666666667,0.93,-14.0,,True,0.0
+2026,7,00-0038120,Breece Hall,RB,NYJ,gooma-s-family-league,model_components,13.624,0.0,13.624,inactive_missed,,20.333333333333332,,0.3333333333333333,,0.57,,-3.0,Breece Hall,False,1.0
+2026,7,00-0038128,Malik Willis,QB,MIA,gooma-s-family-league,model_components,12.694,26.02,-13.325999999999999,td_variance,,33.0,29.0,0.6666666666666666,3.0,1.0,1.0,3.0,,True,0.0
+2026,7,00-0039032,Tyjae Spears,RB,TEN,gooma-s-family-league,model_components,6.487,0.0,6.487,inactive_missed,,5.333333333333333,,0.0,,0.38000000000000006,,-3.0,Tyjae Spears,False,1.0
+2026,7,00-0039150,Bryce Young,QB,CAR,gooma-s-family-league,model_components,19.171,5.42,13.751,blowout_script,volume_down,44.666666666666664,28.0,1.6666666666666667,1.0,1.0,0.77,-30.0,,True,0.0
+2026,7,00-0040236,Kyle Monangai,RB,CHI,gooma-s-family-league,model_components,10.404,0.0,10.404,inactive_missed,,17.666666666666668,,0.6666666666666666,,0.39666666666666667,,6.0,Kyle Monangai,False,1.0
+2026,7,00-0040715,Cam Skattebo,RB,NYG,gooma-s-family-league,model_components,5.708,19.1,-13.392000000000001,unexplained,,19.666666666666668,18.0,0.0,1.0,0.68,0.56,6.0,,True,0.0
+2026,7,00-0040735,Luther Burden III,WR,CHI,gooma-s-family-league,model_components,11.12,23.7,-12.58,unexplained,,8.333333333333334,5.0,0.0,1.0,0.5733333333333334,0.61,6.0,,True,0.0
+2026,7,00-0040736,Mason Taylor,TE,NYJ,we-can-think-of-something-funny,model_components,6.042,27.7,-21.658,td_variance,,4.0,6.0,0.0,2.0,0.6,0.63,-3.0,,True,0.0
+2026,7,00-0040784,Quinshon Judkins,RB,CLE,gooma-s-family-league,model_components,10.856,23.4,-12.543999999999999,td_variance,,20.666666666666668,18.0,0.3333333333333333,2.0,0.5666666666666668,0.53,3.0,,True,0.0
+2026,7,00-0041511,Omar Cooper Jr.,WR,NYJ,gooma-s-family-league,model_components,8.948,22.5,-13.552,unexplained,,4.0,5.0,0.5,1.0,0.44499999999999995,0.64,-3.0,,True,0.0
+2026,7,00-0041523,Caleb Douglas,WR,MIA,gooma-s-family-league,model_components,7.71,21.0,-13.29,td_variance,,5.0,3.0,0.0,2.0,0.885,0.68,3.0,,True,0.0
+2026,7,00-0041547,KC Concepcion,WR,CLE,gooma-s-family-league,model_components,8.971,23.2,-14.229,volume_up,,5.666666666666667,13.0,0.0,0.0,0.63,0.79,3.0,,True,0.0
+2026,7,00-0034796,Lamar Jackson,QB,BAL,gooma-s-family-league,sleeper,18.23,0.0,18.23,inactive_missed,,27.666666666666668,,1.6666666666666667,,0.84,,-22.0,Lamar Jackson,False,1.0
+2026,7,00-0035261,Tony Pollard,RB,TEN,gooma-s-family-league,sleeper,11.98,36.5,-24.52,volume_up,td_variance,18.333333333333332,28.0,0.3333333333333333,3.0,0.59,0.75,-3.0,,True,0.0
+2026,7,00-0036554,Nico Collins,WR,HOU,gooma-s-family-league,sleeper,17.15,2.6,14.549999999999999,unexplained,,7.0,5.0,0.6666666666666666,0.0,0.71,0.67,-6.0,,True,0.0
+2026,7,00-0037240,Jameson Williams,WR,DET,gooma-s-family-league,sleeper,12.43,26.1,-13.670000000000002,volume_up,td_variance,5.333333333333333,9.0,0.6666666666666666,2.0,0.9,0.84,3.0,,True,0.0
+2026,7,00-0037740,Garrett Wilson,WR,NYJ,gooma-s-family-league,sleeper,16.88,4.6,12.28,volume_down,,7.0,3.0,0.3333333333333333,0.0,0.9700000000000001,0.85,-3.0,,True,0.0
+2026,7,00-0038120,Breece Hall,RB,NYJ,gooma-s-family-league,sleeper,14.19,0.0,14.19,inactive_missed,,20.333333333333332,,0.3333333333333333,,0.57,,-3.0,Breece Hall,False,1.0
+2026,7,00-0038563,Tre Tucker,WR,LV,gooma-s-family-league,sleeper,9.06,21.3,-12.24,volume_up,,7.333333333333333,12.0,0.6666666666666666,1.0,0.7066666666666667,0.82,-14.0,,True,0.0
+2026,7,00-0039032,Tyjae Spears,RB,TEN,gooma-s-family-league,sleeper,7.28,0.0,7.28,inactive_missed,,5.333333333333333,,0.0,,0.38000000000000006,,-3.0,Tyjae Spears,False,1.0
+2026,7,00-0039150,Bryce Young,QB,CAR,gooma-s-family-league,sleeper,17.99,5.42,12.569999999999999,blowout_script,volume_down,44.666666666666664,28.0,1.6666666666666667,1.0,1.0,0.77,-30.0,,True,0.0
+2026,7,00-0039491,Jalen Coker,WR,CAR,gooma-s-family-league,sleeper,15.58,1.9,13.68,blowout_script,volume_down,8.666666666666666,4.0,0.0,0.0,0.6233333333333334,0.66,-30.0,,True,0.0
+2026,7,00-0040236,Kyle Monangai,RB,CHI,gooma-s-family-league,sleeper,6.83,0.0,6.83,inactive_missed,,17.666666666666668,,0.6666666666666666,,0.39666666666666667,,6.0,Kyle Monangai,False,1.0
+2026,7,00-0040715,Cam Skattebo,RB,NYG,gooma-s-family-league,sleeper,4.89,19.1,-14.21,unexplained,,19.666666666666668,18.0,0.0,1.0,0.68,0.56,6.0,,True,0.0
+2026,7,00-0040736,Mason Taylor,TE,NYJ,we-can-think-of-something-funny,sleeper,5.35,27.7,-22.35,td_variance,,4.0,6.0,0.0,2.0,0.6,0.63,-3.0,,True,0.0
+2026,7,00-0040784,Quinshon Judkins,RB,CLE,gooma-s-family-league,sleeper,11.35,23.4,-12.049999999999999,td_variance,,20.666666666666668,18.0,0.3333333333333333,2.0,0.5666666666666668,0.53,3.0,,True,0.0
+2026,7,00-0041511,Omar Cooper Jr.,WR,NYJ,gooma-s-family-league,sleeper,9.51,22.5,-12.99,unexplained,,4.0,5.0,0.5,1.0,0.44499999999999995,0.64,-3.0,,True,0.0
+2026,7,00-0041523,Caleb Douglas,WR,MIA,gooma-s-family-league,sleeper,7.64,21.0,-13.36,td_variance,,5.0,3.0,0.0,2.0,0.885,0.68,3.0,,True,0.0
+2026,7,00-0041547,KC Concepcion,WR,CLE,gooma-s-family-league,sleeper,9.72,23.2,-13.479999999999999,volume_up,,5.666666666666667,13.0,0.0,0.0,0.63,0.79,3.0,,True,0.0
