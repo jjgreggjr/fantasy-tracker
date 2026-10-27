@@ -82,7 +82,8 @@ COLUMN_DOCS = {
                   "long-touchdown bonuses (40+/50+ yard TDs), first downs, per-distance reception bins, per-incompletion and "
                   "all-fumble scoring; kicking, team defence and IDP never score (skill positions only). The IDP league "
                   "'where-you-at' is half-PPR here; the dynasty league is PPR + 0.5 per TE catch with a -1 interception",
-    "p10": "PPR floor: LightGBM 10th-percentile model, recalibrated (underage_only) from trailing out-of-sample residuals",
+    "p10": "PPR floor: LightGBM 10th-percentile model, recalibrated (serving_config.json recalibration.mode: underage_only; "
+           "underage_by_position is the documented alternative) from trailing out-of-sample residuals",
     "p50": "PPR median from the LightGBM 50th-percentile model (not recalibrated)",
     "p90": "PPR ceiling: LightGBM 90th-percentile model, recalibrated like p10",
     "p10_<slug>": "floor in that league's own scoring, only for a league whose scoring is not PPR (the dynasty and IDP leagues): LightGBM "
@@ -592,7 +593,9 @@ def quantile_history(df, spec, season: int, params: dict, *, target: str | None 
 def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, *, target: str | None = None,
                      cache_dir: Path | None = None, log=print):
     """q10 / q50 / q90 for the served week (raw, sorted) and the recalibrated p10 / p90, exactly as the backtest recalibrates a
-    week: the shift comes from last season's out-of-sample rows plus this season's weeks before `week`, never `week` itself."""
+    week: the shift comes from last season's out-of-sample rows plus this season's weeks before `week`, never `week` itself.
+    The rule is `cfg["recalibration"]` (`ensemble.recal_kwargs`: the mode and, for `underage_by_position`, its options), the
+    same for the PPR band and each non-PPR league's own band (`target`)."""
     import numpy as np
     import pandas as pd
     from model import backtest as B
@@ -609,7 +612,7 @@ def band_predictions(df, spec, season: int, week: int, params: dict, cfg: dict, 
     cur = quantile_walk(df, spec, season, range(1, week), params, target)[cols] if week > 1 else pd.DataFrame(columns=cols)
     srv = pd.DataFrame({"position": df.loc[served.index, "position"], "week": week, "y": np.nan, "y_played": np.nan,
                         "q10": served["q10"], "q50": served["q50"], "q90": served["q90"]})
-    rec = E.recalibrate(srv.reset_index(drop=True) if cur.empty else _concat([cur, srv]), hist, mode=cfg["recalibration"]["mode"])
+    rec = E.recalibrate(srv.reset_index(drop=True) if cur.empty else _concat([cur, srv]), hist, **E.recal_kwargs(cfg["recalibration"]))
     mine = rec.iloc[len(cur):]
     served["p10"], served["p90"] = mine["q10a"].to_numpy(), mine["q90a"].to_numpy()
     return served
