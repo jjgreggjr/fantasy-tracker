@@ -142,8 +142,14 @@ answers, in plain English.
 `E_pts` is expected points **in that league's scoring**: the week's projected
 stat line blended with recent production (projections carry more weight early
 in the season, actual production more later), then adjusted up to ±12% for the
-matchup. It ranks opportunity; it is not a point projection. `explain` shows
-every component that produced it.
+matchup, plus a touchdown regression (`td_adj`, ±3 at most: his season TD rate per
+opportunity shrunk toward his position's, times expected opportunities; POLICY.md
+has the formula). It ranks opportunity; it is not a point projection. `explain`
+shows every component that produced it. Flags `REPEAT_DNP` (0 opportunities in each
+of his team's last two games and no Full practice: `play_prob` capped at 0.25, or 0
+and a blank `E_pts` when he is also Out/Doubtful or did not practise) and
+`ROLE_CHANGE` (IR activation or practice-squad elevation this week: his recent
+0-opp weeks are not held against him) come from `data/status.csv`.
 
 ## Roster policy
 
@@ -193,7 +199,7 @@ recorded run.
 | `data/schedule.csv` | Every team's opponent, spread and total, by week (BYE rows included) |
 | `data/projections.csv` | Weekly projected stat lines per player, with derived committee shares |
 | `data/trending.csv` | Most added/dropped across Sleeper in the last 24h |
-| `data/status.csv` | Availability, practice reports (`practice`) and the game designation (`report_status`), both from nflverse's weekly injury report for the current week and blank before Wednesday, plus the blocker chain for every player. Sleeper's live `injury_status` is the second signal for `status_flag` and `play_prob`; the more severe of the two wins. `inactive` (0/1) and `inactive_known_at`: on this week's gameday inactive list (nflverse `weekly_rosters`, status INA, posted ~90 min before each kickoff) for a game not yet started; that overrides both signals (`status_flag` `inactive`, `play_prob` 0, flag `INACTIVE` and blank `E_pts` in the league files) |
+| `data/status.csv` | Availability, practice reports (`practice`) and the game designation (`report_status`), both from nflverse's weekly injury report for the current week and blank before Wednesday, plus the blocker chain for every player. Sleeper's live `injury_status` is the second signal for `status_flag` and `play_prob`; the more severe of the two wins. `inactive` (0/1) and `inactive_known_at`: on this week's gameday inactive list (nflverse `weekly_rosters`, status INA, posted ~90 min before each kickoff) for a game not yet started; that overrides both signals (`status_flag` `inactive`, `play_prob` 0, flag `INACTIVE` and blank `E_pts` in the league files). `repeat_dnp` (0/1/2) and `dnp_weeks`: 0 opportunities in each of his team's last two games with no Full practice this week (1: `play_prob` capped at 0.25; 2: also Out/Doubtful or DNP, `play_prob` 0, `E_pts` blank). `role_change` (0/1) and `role_change_kind`: IR/PUP activation or practice-squad elevation this week per nflverse `weekly_rosters` status, which lifts the repeat-DNP cap |
 | `data/inactives.csv` | Every gameday inactive list of the season (nflverse `weekly_rosters`, status INA), one row per player-week, `inactive_known_at` = kickoff - 90 min. The record `model.retrospective` joins on (`on_inactive_list`) and the serve reads to withhold model rows |
 | `logs/runs.csv` | One row per run: when, week, pass/fail, and what failed |
 | `leagues/<slug>/roster.csv` | Your team in that league, scored; plus `E_pts_model`, `p10`, `p90` from the model (blank when the model has no row) |

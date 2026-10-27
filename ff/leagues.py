@@ -51,7 +51,7 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
 
     scfg = cfg.get("score", {})
     scored_mine = score_mod.compute(my_roster, players, base, proj, dvp, sched,
-                                    depth, points, meta, week, season, scfg)
+                                    depth, points, meta, week, season, scfg, pw=pw_all)
     if not scored_mine.empty and not ups.empty:
         scored_mine = scored_mine.merge(ups, on="gsis_id", how="left")
     if not scored_mine.empty:
@@ -60,7 +60,7 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
     if all_rosters is not None and not all_rosters.empty:
         scored_all = score_mod.compute(all_rosters, players, base, proj, dvp,
                                        sched, depth, points, meta, week, season,
-                                       scfg)
+                                       scfg, pw=pw_all)
         if not scored_all.empty and not ups.empty:
             scored_all = scored_all.merge(ups, on="gsis_id", how="left")
         if not scored_all.empty:
@@ -74,7 +74,7 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
                    & ~players.gsis_id.isin(owned)
                    & players.nfl_status.isin(["ACT", "DEV"])].copy()
     avail = score_mod.compute(pool, players, base, proj, dvp, sched, depth,
-                              points, meta, week, season, scfg)
+                              points, meta, week, season, scfg, pw=pw_all)
     if not avail.empty and not ups.empty:
         avail = avail.merge(ups, on="gsis_id", how="left")
     if not avail.empty:
