@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 8
 
 redraft · 20 roster slots  
-Generated 2026-10-27 22:34 UTC · baselines: 2026 only · lineup as of 2026-10-27T22:34:24Z
+Generated 2026-10-27 23:08 UTC · baselines: 2026 only · lineup as of 2026-10-27T23:08:26Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -80,7 +80,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyrod Taylor | QB | GB | CAR | 1.5 | 0.5 |  | 2 | 25 | Low |  |
 | Tyson Bagent | QB | CHI | SEA | 0.9 | 0.8 |  | 2 | 31 | Low |  |
 | Kenny Pickett | QB | CAR | GB | 0.4 | 0.2 |  | 2 | 29 | Low |  |
-| Joe Milton III | QB | PHI | WAS | 0.0 | 0.0 |  | 3 | 15 | Low |  |
+| Easton Stick | QB | TB | ATL | 0.0 | 0.0 |  |  | 14 | Low |  |
 | Jonah Coleman | RB | DEN | KC | 9.1 | 12.0 | 39% | 1 | 22 | High | 🔥 |
 | Kimani Vidal | RB | LAC | LA | 8.7 | 9.3 | 21% | 3 | 16 | Med |  |
 | Samaje Perine | RB | CIN | TEN | 7.7 | 8.6 | 20% | 2 | 15 | Med |  |
@@ -105,7 +105,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 3) | 17% | RB2 on depth chart; up from 3; snap share trending +26%/wk; age 22 |
+| Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 2) | 17% | RB2 on depth chart; snap share trending +26%/wk; age 22 |
 | Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #12; age 23 |
 | Bryce Lance | WR | NO | 24.2 | 0 | 3 (was 3) | 57% | WR3 on depth chart; snap share trending +18%/wk; team passes #3; age 24 |
 | Kaelon Black | RB | SF | 25.0 | 0 | 2 (was 2) | 29% | RB2 on depth chart; snap share trending +14%/wk; age 25 |
@@ -116,7 +116,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Michael Mayer | TE | LV | 25.3 | 3 | 2 (was 2) | 75% | TE2 on depth chart; snap share trending +8%/wk; team passes #7; age 25 |
 | Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 26% | TE3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
 | Jordan Whittington | WR | LA | 26.1 | 2 | 3 (was 3) | 17% | WR3 on depth chart; snap share trending +8%/wk; team passes #2; age 26 |
-| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 3 (was 5) | 50% | WR3 on depth chart; up from 5; snap share trending +8%/wk; team passes #11; age 26 |
+| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 3 (was 3) | 50% | WR3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +7%/wk; age 26 |
 | Savion Williams | WR | GB | 24.9 | 1 | 3 (was 3) | 56% | WR3 on depth chart; snap share trending +7%/wk; team passes #6; age 25 |
 | Tahj Brooks | RB | CIN | 24.5 | 1 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |

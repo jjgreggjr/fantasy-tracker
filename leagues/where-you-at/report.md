@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 8
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-10-27 22:34 UTC · baselines: 2026 only · lineup as of 2026-10-27T22:34:25Z
+Generated 2026-10-27 23:08 UTC · baselines: 2026 only · lineup as of 2026-10-27T23:08:27Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -92,8 +92,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Darnell Washington | TE | PIT | CLE | 5.8 | 3.4 | 12% | 1 | 18 | High |  |
 | Tyler Higbee | TE | LA | LAC | 5.3 | 4.3 | 14% | 1 | 27 | High |  |
 | Josh Cuevas | TE | BAL | BUF | 5.1 | 2.4 | 3% | 3 | 5 | Low |  |
-| Matthew Hibner | TE | BAL | BUF | 5.0 | 0.0 |  | 2 | 5 | Med |  |
 | Tommy Tremble | TE | CAR | GB | 5.0 | 2.9 | 8% | 1 | 31 | High |  |
+| Matthew Hibner | TE | BAL | BUF | 5.0 | 0.0 |  | 2 | 5 | Med |  |
 | Ryan Flournoy | WR | DAL | ARI | 9.1 | 5.3 | 14% | 3 | 21 | Med | 🔥 |
 | Treylon Burks | WR | WAS | PHI | 6.8 | 4.6 | 13% | 3 | 3 | Med | 🔥 |
 | Cooper Kupp | WR | SEA | CHI | 5.2 | 4.6 | 13% | 3 | 14 | Med |  |
@@ -106,7 +106,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 3) | 17% | RB2 on depth chart; up from 3; snap share trending +26%/wk; age 22 |
+| Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 2) | 17% | RB2 on depth chart; snap share trending +26%/wk; age 22 |
 | Sam Roush | TE | CHI | 23.1 | 0 | 2 (was 2) | 19% | TE2 on depth chart; snap share trending +24%/wk; team passes #12; age 23 |
 | Bam Knight | RB | ARI | 25.5 | 4 | 3 (was 3) | 35% | RB3 on depth chart; snap share trending +22%/wk; age 26 |
 | Bryce Lance | WR | NO | 24.2 | 0 | 3 (was 3) | 57% | WR3 on depth chart; snap share trending +18%/wk; team passes #3; age 24 |
@@ -115,7 +115,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 34% | WR3 on depth chart; snap share trending +9%/wk; team passes #10; age 26 |
 | Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 26% | TE3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
 | Jordan Whittington | WR | LA | 26.1 | 2 | 3 (was 3) | 17% | WR3 on depth chart; snap share trending +8%/wk; team passes #2; age 26 |
-| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 3 (was 5) | 50% | WR3 on depth chart; up from 5; snap share trending +8%/wk; team passes #11; age 26 |
+| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 3 (was 3) | 50% | WR3 on depth chart; snap share trending +8%/wk; team passes #11; age 26 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 18% | RB2 on depth chart; snap share trending +7%/wk; age 26 |
 | Tahj Brooks | RB | CIN | 24.5 | 1 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
 | Brycen Tremayne | WR | CAR | 26.9 | 3 | 3 (was 3) | 35% | WR3 on depth chart; snap share trending +6%/wk; team passes #5; age 27 |
