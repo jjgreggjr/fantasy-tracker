@@ -702,7 +702,9 @@ PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "d
             "rush_attempt", "qb_dropback", "two_point_attempt", "yardline_100", "air_yards", "receiver_player_id",
             "rusher_player_id", "wp", "down", "qtr", "half_seconds_remaining",
             # the `script` family's team-game sums (2026-10-16): efficiency, nflfastR's expected pass rate, tempo
-            "epa", "success", "pass_oe", "xpass", "no_huddle", "game_seconds_remaining", "fixed_drive"]
+            "epa", "success", "pass_oe", "xpass", "no_huddle", "game_seconds_remaining", "fixed_drive",
+            # the `dvp_split` family's explosive-play count (2026-10-27)
+            "yards_gained"]
 PBP_USAGE_COLS = ["tgt", "rz_tgt", "i10_tgt", "ay", "ay_n", "car", "rz_car", "i10_car"]
 PBP_TEAM_COUNTS = ["plays", "dropbacks", "neutral_plays", "neutral_dropbacks", "tgt", "rz_tgt", "i10_tgt", "ay", "car",
                    "rz_car", "i10_car", "part_dropbacks", "part_rush", "part_rz", "part_i10"]
@@ -716,9 +718,11 @@ PBP_PART_COLS = ["pass_on", "run_on", "rz_on", "i10_on"]
 #   sc_early_plays / sc_early_db       1st/2nd-down plays and dropbacks
 #   sc_wp_plays / sc_wp_db             plays and dropbacks with win probability 20-80% (any down, any quarter)
 #   sc_rz_plays                        plays snapped at the opponent's 20 or closer
+#   sc_explosive                       plays that gained EXPLOSIVE_YARDS or more (the `dvp_split` family reads it by defense)
 PBP_SCRIPT_COUNTS = ["sc_epa", "sc_succ", "sc_epa_n", "sc_pass_epa", "sc_pass_n", "sc_rush_epa", "sc_rush_n", "sc_pass_oe",
                      "sc_xpass", "sc_xp_n", "sc_nohuddle", "sc_secs", "sc_secs_n", "sc_early_plays", "sc_early_db",
-                     "sc_wp_plays", "sc_wp_db", "sc_rz_plays"]
+                     "sc_wp_plays", "sc_wp_db", "sc_rz_plays", "sc_explosive"]
+EXPLOSIVE_YARDS = 20
 # Head coach per (team, game), from the nflverse schedule's home_coach / away_coach. Who coaches a game is public before
 # it (an interim coach is named days ahead), so a row is known COACH_LEAD before its kickoff. Old team codes are mapped to
 # the current ones so a tenure that spans a relocation is one tenure.
@@ -761,7 +765,8 @@ def _script_sums(s: pd.DataFrame, key: list[str]) -> pd.DataFrame:
                  sc_nohuddle=(s["no_huddle"].fillna(0) == 1).astype(float),
                  sc_early_plays=early.astype(float), sc_early_db=(early & db).astype(float),
                  sc_wp_plays=mid.astype(float), sc_wp_db=(mid & db).astype(float),
-                 sc_rz_plays=s["rz"].astype(float))
+                 sc_rz_plays=s["rz"].astype(float),
+                 sc_explosive=(s["yards_gained"].fillna(0.0) >= EXPLOSIVE_YARDS).astype(float))
     # tempo: clock run off between a play and the previous scrimmage play of the same drive, regulation only
     s = s.sort_values(["game_id", "play_id"], kind="mergesort")
     reg = s["qtr"] <= 4
@@ -948,9 +953,11 @@ FTN_COUNTS = ("tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen", "tgt_catch
               "car", "car_box", "car_light", "box_sum", "db", "db_blitz", "db_oop", "db_pa", "db_rush_n", "rushers_sum",
               "int_worthy")
 FTN_TEAM_COUNTS = ("T_tgt", "T_tgt_motion", "T_tgt_pa", "T_tgt_rpo", "T_tgt_screen")
+# the same charted carries / dropbacks summed by the DEFENSE that faced them (`ftn_def`, the `dvp_split` family)
+FTN_DEF_COUNTS = ("car_box", "car_light", "box_sum", "db", "db_blitz", "db_rush_n", "rushers_sum")
 LIGHT_BOX_MAX = 6
-FTN_PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "play_type", "pass_attempt", "rush_attempt",
-                "qb_dropback", "two_point_attempt", "receiver_player_id", "rusher_player_id", "passer_player_id"]
+FTN_PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "defteam", "play_type", "pass_attempt",
+                "rush_attempt", "qb_dropback", "two_point_attempt", "receiver_player_id", "rusher_player_id", "passer_player_id"]
 
 
 def _charting_release_stamps(weekday: int) -> pd.Series:
@@ -1057,8 +1064,9 @@ def load_pfr_tables(seasons: Iterable[int]) -> list[RawTable]:
             RawTable("pfr_games", cov.reset_index(drop=True), rule)]
 
 
-def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series] | None:
-    """(player counts, team counts, max date_pulled per week) for one season, or None when the asset does not exist."""
+def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series] | None:
+    """(player counts, team counts, defense counts, max date_pulled per week) for one season, or None when the asset does not
+    exist."""
     f = _nflverse_optional("ftn_charting", f"ftn_charting_{y}.parquet")
     if f is None:
         return None
@@ -1098,8 +1106,17 @@ def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series] | None:
     tt = tg.groupby(key)[["tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen"]].sum()
     tt.columns = list(FTN_TEAM_COUNTS)
     team = team.join(tt, how="left").fillna(0.0).drop(columns="plays").reset_index()
+    # the defense's side of the same charted plays: box counts on the carries it faced, blitzes and rushers on the dropbacks
+    dkey = ["game_id", "defteam"]
+    cd = cr[["car_box", "car_light", "box_sum"]].assign(game_id=c["game_id"], defteam=c["defteam"]).groupby(dkey).sum()
+    dd = dbf[["db", "db_blitz", "db_rush_n", "rushers_sum"]].assign(game_id=d["game_id"], defteam=d["defteam"]).groupby(dkey).sum()
+    defense = pd.concat([cd, dd], axis=1).fillna(0.0).reset_index()
+    for col in FTN_DEF_COUNTS:
+        if col not in defense.columns:
+            defense[col] = 0.0
     pulled = f.groupby("week")["date_pulled"].max()
-    return players.rename(columns={"posteam": "team"}), team.rename(columns={"posteam": "team"}), pulled
+    return (players.rename(columns={"posteam": "team"}), team.rename(columns={"posteam": "team"}),
+            defense.rename(columns={"defteam": "team"}), pulled)
 
 
 def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
@@ -1108,20 +1125,22 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
     carries, light-box carries (box <= LIGHT_BOX_MAX), box sum; dropbacks, blitzed / out-of-pocket / play-action dropbacks, pass
     rushers, interception-worthy throws). `ftn_team` (team, game): the team's targets on those play types, one row per charted
     game, which is also the coverage list (a charted game with no row for him = he did none of it). Skill players only.
+    `ftn_def` (team, game): the DEFENSE's side of the same plays (FTN_DEF_COUNTS: charted / light-box carries and box sum it
+    faced, dropbacks it faced, those it blitzed, pass rushers), one row per charted game, same stamp (the `dvp_split` family).
     FTN publishes 2022 onward: 2021 (and earlier) answers 404, so those seasons have no rows and every ftn column is NaN there."""
     seasons = sorted(set(seasons))
     stamps = _charting_release_stamps(CHARTING_REFRESH_WEEKDAY["ftn"])
     g = _games()
     week_end = g.groupby(["season", "week"])["kickoff"].max() + CHARTING_GAME_END
     wg = _week_games(seasons)
-    players, teams, absent = [], [], []
+    players, teams, defenses, absent = [], [], [], []
     for y in seasons:
         got = _ftn_season(y)
         if got is None:
             absent.append(y)
             continue
-        pl, tm, pulled = got
-        for df in (pl, tm):
+        pl, tm, de, pulled = got
+        for df in (pl, tm, de):
             df["season"] = y
             df["week"] = df["game_id"].map(wg.drop_duplicates("game_id").set_index("game_id")["week"])
         known = {}
@@ -1131,17 +1150,19 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
             if dp is not None and not pd.isna(dp) and pd.Timestamp(dp) - week_end[(y, w)] <= CHARTING_PULL_WINDOW:
                 stamp = max(stamp, pd.Timestamp(dp).tz_convert("UTC"))
             known[w] = stamp
-        for df in (pl, tm):
+        for df in (pl, tm, de):
             df[KNOWN_AT] = _ns_utc(df["week"].map(known))
         players.append(pl[pl["player_id"].isin(skill_ids)])
         teams.append(tm)
+        defenses.append(de)
     if not teams:
         return []
     rule = ("23:59:59Z on the first Wednesday after the day the week's last game ended, or the week's FTN `date_pulled` when that "
             "is later and within 30 days of the week (CHARTING_PULL_WINDOW)")
     out = []
     for name, frames, cols in (("ftn", players, ["player_id", "season", "week", "game_id", "team", *FTN_COUNTS]),
-                               ("ftn_team", teams, ["team", "season", "week", "game_id", *FTN_TEAM_COUNTS])):
+                               ("ftn_team", teams, ["team", "season", "week", "game_id", *FTN_TEAM_COUNTS]),
+                               ("ftn_def", defenses, ["team", "season", "week", "game_id", *FTN_DEF_COUNTS])):
         df = pd.concat(frames, ignore_index=True)
         n_bad = int(df[KNOWN_AT].isna().sum())
         df = df[df[KNOWN_AT].notna()]
