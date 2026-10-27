@@ -90,6 +90,7 @@ class LoaderContracts(unittest.TestCase):
         d = store().describe()
         self.assertEqual(set(d["table"]), {"fixtures", "lines", "weather_obs", "game_results", "player_games",
                                            "snap_counts", "xfp", "injuries", "depth_charts",
+                                           "depth_charts_def",         # `opp_db_out`: the same files' defensive rows
                                            "players_static", "draft_picks", "combine",
                                            "career_pre_cutoff",        # Phase 1: pre-2020 career games
                                            "adp", "college",           # fetched CSVs (ADP since Phase 1's fetch, college: Phase 2)
