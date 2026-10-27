@@ -251,6 +251,7 @@ FAMILY_SOURCES = {
                                   "no rows means the read failed (data/projections.csv lacks the week and the endpoint failed), "
                                   "not that it is too early"),
     "streak": FamilySource(),                           # derived from the base tables: nothing to load
+    "opp_db_out": FamilySource(),                       # injuries + depth_charts_def: base tables the serve already refreshes
 }
 
 

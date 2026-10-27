@@ -61,7 +61,8 @@ OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff",
                    "market",                     # Phase 5 candidate (2026-10-16): `--candidate +family:market`
                    "script",                     # Phase 5 candidate (2026-10-16): `--candidate +family:script`
                    "ngs", "pfr", "ftn",          # Phase 5 candidates (2026-10-16): weekly NGS / PFR / FTN charting releases
-                   "dvp_split")                  # Phase 5 candidate (2026-10-27): `--candidate +family:dvp_split`
+                   "dvp_split",                  # Phase 5 candidate (2026-10-27): `--candidate +family:dvp_split`
+                   "opp_db_out")                 # Phase 5 candidate (2026-10-27): the opponent's defensive injury report
 
 REPORT_ORD = {"Questionable": 1.0, "Doubtful": 2.0, "Out": 2.0}          # 'Note' and anything unknown -> 0 (no designation)
 PRACTICE_ORD = {"Full Participation in Practice": 1.0, "Limited Participation in Practice": 2.0,

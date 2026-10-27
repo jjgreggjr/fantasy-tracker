@@ -248,6 +248,25 @@ DVPS_POS: dict[str, frozenset] = {
                      "rank_rec_yd"}),
 }
 DVPS_POS["TE"] = DVPS_POS["WR"]
+# `opp_db_out` (Phase 5 candidate, 2026-10-27; miss review 2026 wk7: McMillan wk4 vs DET missing both starting safeties, and
+# the opponent's defensive injuries were loaded then discarded). The opponent's injury report for THIS week, known before kickoff,
+# by defensive position group (INJ_DEF_GROUPS maps the report's roster position), joined to the opponent's newest defensive depth
+# chart before kickoff (`depth_charts_def`, no older than DEPTH_MAX_AGE) for who is a starter (rank 1 at his slot).
+#   opp_db_out_n / opp_lb_out_n / opp_dl_out_n   Out or Doubtful (OUT_LIKE) DBs / LBs / DL on the report
+#   opp_db_q_n                                   Questionable DBs
+#   opp_db_starter_out_n                         of the Out/Doubtful DBs, how many are rank 1 at a DB slot on that chart
+#   opp_def_out_n                                every defensive Out/Doubtful
+#   opp_def_out_l4wk                             defensive 'Out' rows the opponent carried in weeks N-4..N-1 of this season
+# A missing report and a clean report differ: every count is NaN when the opponent has no report rows for the week at all (the
+# meta column `opp_report_present` says which), and opp_def_out_l4wk is NaN when it has none in the window (week 1).
+# opp_db_starter_out_n is NaN without a fresh chart. IR is not a report designation (an IR player is off the report), so
+# "IR-equivalent" is Out/Doubtful only.
+OPP_DEF_COLUMNS = ["opp_db_out_n", "opp_db_q_n", "opp_db_starter_out_n", "opp_lb_out_n", "opp_dl_out_n", "opp_def_out_n",
+                   "opp_def_out_l4wk"]
+INJ_DEF_GROUPS = {"CB": "DB", "S": "DB", "SS": "DB", "FS": "DB", "DB": "DB", "SAF": "DB",
+                  "LB": "LB", "ILB": "LB", "OLB": "LB", "MLB": "LB",
+                  "DE": "DL", "DT": "DL", "NT": "DL", "DL": "DL", "EDGE": "DL"}
+OPP_DEF_WINDOW = 4
 
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
@@ -293,6 +312,8 @@ FAMILIES: dict[str, list[str]] = {
     "ftn": [f"ftn_{s}_l3" for s in FTN_STATS],
     # ---- Phase 5 candidate (2026-10-27; opt-in): `python -m model.trial --candidate +family:dvp_split`
     "dvp_split": DVPS_COLUMNS,
+    # ---- Phase 5 candidate (2026-10-27; opt-in; `--candidate +family:opp_db_out`): the OPPONENT's defensive injury report
+    "opp_db_out": OPP_DEF_COLUMNS,
 }
 # market column -> sleeper_proj column (a stat Sleeper omits is a projected 0 when the row exists)
 MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets": "rec_tgt", "mkt_carries": "rush_att",
@@ -302,7 +323,8 @@ STREAK_CAP = 6                         # a run of over/under games is reported a
 # Produced, but never a model input.
 IDENTITY = ["player_id", "season", "week", "team", "opponent", "position", "game_id", "kickoff_utc"]
 META = ["lag1_week", "lag2_week", "lag3_week", "dvp_l2_games", "dvp_l4_games", "dvp_l2_last_week",
-        "dvp_l4_last_week", "inj_last_report_week", "spine_src"]
+        "dvp_l4_last_week", "inj_last_report_week", "spine_src",
+        "opp_report_present"]          # `opp_db_out`: 1 if the opponent filed any report row this week (its counts are NaN when 0)
 EXCLUDED_FROM_MATRIX = {
     "inj_days_since_report": "real report timestamp <=2024, derived kickoff-24h from 2025 (always ~1 day): train/test skew",
 }
@@ -1316,7 +1338,47 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     out.update(_charting_features(store, t, h, trace))
     # ---- Phase 5 candidate: the market's projection for this game (opt-in) --------------
     out.update(_market_features(store, t, h, trace))
+    # ---- Phase 5 candidate: the opponent's defensive injury report (opt-in `opp_db_out`) ----
+    out.update(_opp_def_features(store, t, trace))
     return out
+
+
+def _opp_def_features(store, t: TargetRow, trace) -> dict[str, Any]:
+    """The `opp_db_out` family (OPP_DEF_COLUMNS and the meta `opp_report_present`), once per (store, game, opponent): the
+    opponent's injury rows for this season and week known before kickoff, grouped by INJ_DEF_GROUPS, and its newest defensive
+    depth chart before kickoff for who starts."""
+    def build() -> dict[str, Any]:
+        ko = t.kickoff
+        inj = as_of_join(store, "injuries", ko, team=t.opponent, trace=trace)
+        inj = inj[inj["season"] == t.season]
+        wk = inj[inj["week"] == t.week]
+        out: dict[str, Any] = {c: NAN for c in OPP_DEF_COLUMNS}
+        out["opp_report_present"] = int(len(wk) > 0)
+        # chronic: defensive 'Out' rows in the prior OPP_DEF_WINDOW weeks of this season (NaN with no report rows in the window)
+        prior = inj[(inj["week"] >= t.week - OPP_DEF_WINDOW) & (inj["week"] < t.week)]
+        if len(prior):
+            grp = prior["position"].map(INJ_DEF_GROUPS)
+            out["opp_def_out_l4wk"] = float(((prior["report_status"] == "Out") & grp.notna()).sum())
+        if not len(wk):
+            return out
+        status = dict(_cols(wk, "player_id", "report_status"))              # last known wins (sorted by known_at)
+        pos = dict(_cols(wk, "player_id", "position"))
+        grp = {pid: INJ_DEF_GROUPS.get(_s(p)) for pid, p in pos.items()}
+        out_like = [pid for pid, s in status.items() if s in OUT_LIKE and grp[pid]]
+        for g, col in (("DB", "opp_db_out_n"), ("LB", "opp_lb_out_n"), ("DL", "opp_dl_out_n")):
+            out[col] = float(sum(grp[pid] == g for pid in out_like))
+        out["opp_def_out_n"] = float(len(out_like))
+        out["opp_db_q_n"] = float(sum(s == "Questionable" and grp[pid] == "DB" for pid, s in status.items()))
+        if store.has("depth_charts_def"):
+            dc = as_of_join(store, "depth_charts_def", ko, team=t.opponent, trace=trace)
+            if len(dc):
+                newest = dc[KNOWN_AT].max()
+                if ko - newest <= DEPTH_MAX_AGE:
+                    dc = dc[dc[KNOWN_AT] == newest]
+                    starters = set(dc.loc[(dc["grp"] == "DB") & (dc["rank"] == 1), "player_id"])
+                    out["opp_db_starter_out_n"] = float(sum(pid in starters for pid in out_like if grp[pid] == "DB"))
+        return out
+    return _memo(store, trace, ("opp_def", t.game_id, t.opponent), build)
 
 
 def _market_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:

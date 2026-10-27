@@ -78,6 +78,18 @@ PFR_TEAM_TO_NFLVERSE = {"GNB": "GB", "KAN": "KC", "LAR": "LA", "LVR": "LV", "NOR
                         "SFO": "SF", "TAM": "TB", "OAK": "LV", "SDG": "LAC", "STL": "LA"}
 # Offense labels shared by both depth-chart formats (drops defense, KR/PR, specialists).
 OFFENSE_DEPTH_POS = ("QB", "RB", "HB", "FB", "F", "WR", "TE", "LT", "LG", "C", "RG", "RT")
+# Defensive depth-chart slot codes -> position group, for the opt-in `opp_db_out` family (`depth_charts_def`, a SEPARATE table:
+# `depth_charts` stays offense-only, byte for byte, because the spine and the Actions cache key depend on it). Both formats
+# name slots (LCB / RCB / NB / SS / FS ...) and rank players within a slot, so "starter" = rank 1 at his slot. Codes seen in
+# the <=2024 `depth_position` (formation == "Defense") and the >=2025 ESPN `pos_abb`; an unmapped defensive code is dropped
+# and counted in `dropped["unmapped_def_position"]`. Edge rushers are DL wherever the chart calls them a DE/EDGE/RUSH/LEO/JACK
+# and LB when it calls them an OLB (a 3-4 OLB is a run defender as often as a rusher: the chart's word is kept).
+DEF_DEPTH_GROUPS = {
+    "DB": ("CB", "LCB", "RCB", "NB", "NCB", "SCB", "NKL", "NICKEL", "DB", "S", "SS", "FS", "SAF", "FS/SS", "SS/FS"),
+    "LB": ("LB", "MLB", "ILB", "OLB", "WLB", "SLB", "LOLB", "ROLB", "LILB", "RILB", "WILL", "MIKE", "SAM", "LB1", "LB2"),
+    "DL": ("DL", "DE", "LDE", "RDE", "DT", "LDT", "RDT", "NT", "EDGE", "LEO", "RUSH", "JACK", "DE/OLB", "OLB/DE"),
+}
+DEF_DEPTH_POS = {code: grp for grp, codes in DEF_DEPTH_GROUPS.items() for code in codes}
 
 PEPA_STATS_COLS = ["passing_epa", "rushing_epa", "receiving_epa", "passing_cpoe", "passing_air_yards", "receiving_air_yards",
                    "receiving_yards_after_catch", "receiving_first_downs", "rushing_first_downs", "passing_first_downs",
@@ -647,6 +659,62 @@ def load_depth_charts(seasons: Iterable[int]) -> RawTable:
                              "no_gsis_id": n_noid})
 
 
+def load_depth_charts_def(seasons: Iterable[int]) -> RawTable:
+    """The DEFENSIVE rows of the same depth-chart files, stamped exactly like `load_depth_charts` (<=2024: the team's kickoff
+    that week, bye teams the league's last kickoff; >=2025: snapshot `dt`), as their own table so the offense table is untouched.
+    Columns: `slot` (the chart's own code: LCB / RCB / NB / SS / FS / MLB / ...), `grp` (DB / LB / DL per DEF_DEPTH_GROUPS) and
+    `rank` within the slot. Read by the opt-in `opp_db_out` family only (who the opponent's starters are, so an Out can be told
+    from a depth piece); nothing else, and no spine rule, looks at it."""
+    g = _games()
+    tw = pd.concat([g[["season", "week", "home_team", "kickoff"]].rename(columns={"home_team": "team"}),
+                    g[["season", "week", "away_team", "kickoff"]].rename(columns={"away_team": "team"})])
+    team_ko = tw.set_index(["season", "week", "team"])["kickoff"]
+    wk_last = g.groupby(["season", "week"])["kickoff"].max()
+    frames, n_sbbye, n_noid, n_unmapped = [], 0, 0, 0
+    for y in seasons:
+        d = _nflverse("depth_charts", f"depth_charts_{y}.parquet")
+        if "dt" in d.columns:
+            slot = d["pos_abb"].astype(str).str.strip().str.upper()
+            if "pos_grp" in d.columns:                          # ESPN groups: Offense / Defense / Special Teams
+                is_def = d["pos_grp"].astype(str).str.strip().str.lower() == "defense"
+            else:
+                is_def = slot.isin(DEF_DEPTH_POS)
+            n_unmapped += int((is_def & ~slot.isin(DEF_DEPTH_POS)).sum())
+            keep = is_def & slot.isin(DEF_DEPTH_POS)
+            d, slot = d[keep], slot[keep]
+            n_noid += int(d["gsis_id"].isna().sum())
+            ok = d["gsis_id"].notna()
+            d, slot = d[ok], slot[ok]
+            out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["team"], "season": y, "week": pd.NA,
+                                "slot": slot, "grp": slot.map(DEF_DEPTH_POS), "rank": d["pos_rank"].astype(int),
+                                KNOWN_AT: _ns_utc(d["dt"]), "known_at_source": "snapshot_dt"})
+        else:
+            n_sbbye += int(d["week"].isna().sum())
+            d = d[(d["formation"] == "Defense") & d["week"].notna()]
+            slot = d["depth_position"].astype(str).str.strip().str.upper()
+            n_unmapped += int((~slot.isin(DEF_DEPTH_POS)).sum())
+            keep = slot.isin(DEF_DEPTH_POS)
+            d, slot = d[keep], slot[keep]
+            n_noid += int(d["gsis_id"].isna().sum())
+            ok = d["gsis_id"].notna()
+            d, slot = d[ok], slot[ok]
+            keys = list(zip(d["season"], d["week"].astype(int), d["club_code"]))
+            k = pd.Series(keys, index=d.index).map(team_ko)
+            bye = k.isna()
+            k[bye] = pd.Series(list(zip(d["season"], d["week"].astype(int))), index=d.index)[bye].map(wk_last)
+            out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["club_code"], "season": d["season"],
+                                "week": d["week"].astype(int), "slot": slot, "grp": slot.map(DEF_DEPTH_POS),
+                                "rank": pd.to_numeric(d["depth_team"]).astype(int),
+                                KNOWN_AT: _ns_utc(k), "known_at_source": "derived_team_kickoff"})
+        frames.append(out)
+    df = pd.concat(frames, ignore_index=True)
+    n_bad = int(df[KNOWN_AT].isna().sum())
+    return RawTable("depth_charts_def", df[df[KNOWN_AT].notna()].reset_index(drop=True),
+                    "<=2024: team kickoff that week (derived); >=2025: snapshot dt (same rule as depth_charts)",
+                    dropped={"no_timestamp_derivable": n_bad, "sbbye_snapshot_no_week": n_sbbye,
+                             "no_gsis_id": n_noid, "unmapped_def_position": n_unmapped})
+
+
 def load_career_pre_cutoff() -> RawTable:
     """Skill-position appearance rows per player through the season before CAREER_CUTOFF_SEASON,
     stamped at that season's start. Later seasons' games come from `player_games` through the gate,
@@ -1188,7 +1256,7 @@ def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: b
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
-              load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
+              load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons), load_depth_charts_def(seasons),
               *load_static_tables(), load_career_pre_cutoff(), load_coaches(seasons)]
     if pbp:
         tables += load_pbp_tables(seasons, pg.df, sn.df)
