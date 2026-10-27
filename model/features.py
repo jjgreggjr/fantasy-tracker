@@ -51,6 +51,12 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               1/2/3 games, their 4-game sum, run lengths of consecutive over/under games (capped +-6), the volume analogue, and
               the last two games against last season's per-game mean. Last season's REG games precede this season's so the
               first weeks have a window (`_cur_prev`); a game without xFP has a NaN residual and ends a run.
+  shape       (Phase 5 candidate, 2026-10-27) player archetype from `Hist` alone (no new table, no new gate call): how steady
+              his share is (std of target / carry share over his last 6 games), how spiky his scoring is (coefficient of variation
+              of PPR over his last 8, fraction of those 8 at or above 1.5x their mean), how TD-dependent he is (season-to-date
+              TDs per opportunity shrunk toward a position prior, share of PPR from TDs over the last 8), and the slope of his
+              opportunities over the last 4. Last season's REG games precede this season's, as for `streak`. Raised by the week
+              4-7 miss review: high-CV players land above p90 15% of the time against 9-12%, and E_pts's TD-rate bias.
   ecr         (Phase 5 candidate, 2026-10-16) FantasyPros weekly expert consensus (model/fetch_ecr.py), the newest scrape
               assigned to THIS week that is known before kickoff: ecr_rank = PPR superflex OVERALL ECR (the archive's only
               weekly cross-position offense list), ecr_pos_rank = ordinal rank on his weekly PPR position page, ecr_sd / best /
@@ -296,6 +302,9 @@ FAMILIES: dict[str, list[str]] = {
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:streak`)
     "streak": ["resid_xfp_l1", "resid_xfp_l2", "resid_xfp_l3", "over_xfp_streak", "resid_xfp_sum_l4",
                "over_trail_streak", "resid_opps_l1", "pts_vs_prev_season_l2"],
+    # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:shape`; 2026-10-27, from the miss review)
+    "shape": ["shape_tgt_share_std_l6", "shape_car_share_std_l6", "shape_pts_cv_l8", "shape_td_per_opp_std",
+              "shape_td_pts_share_l8", "shape_boom_rate_l8", "shape_opps_trend_l4"],
     # ---- Phase 5 candidate (opt-in; `python -m model.trial --candidate +family:ecr`)
     "ecr": ["ecr_rank", "ecr_pos_rank", "ecr_sd", "ecr_best", "ecr_worst", "ecr_spread", "ecr_owned_pct", "ecr_delta_l1"],
     # ---- Phase 5 candidates (2026-10-16; opt-in): `+family:nfelo`, `+family:pepa`
@@ -320,6 +329,13 @@ MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets
                 "mkt_pass_att": "pass_att", "mkt_rec_yd": "rec_yd", "mkt_rush_yd": "rush_yd", "mkt_pass_yd": "pass_yd",
                 "mkt_pos_rank": "pos_rank"}
 STREAK_CAP = 6                         # a run of over/under games is reported as min(run, 6), signed
+# `shape` (2026-10-27): TDs per opportunity, shrunk toward a position prior worth SHAPE_TD_K opportunities. The priors are the
+# 2015-2019 EFF_PRIORS rates: a QB's pass TDs per attempt; for the others rush + rec TDs per carry + target, the rec rate for
+# receivers and the midpoint of the rush and rec rates for a back (both 0.03). Fixed constants, never refit.
+SHAPE_TD_PRIOR = {"QB": 0.045, "RB": 0.030, "WR": 0.048, "TE": 0.054}
+SHAPE_TD_K = {"QB": 150.0, "RB": 60.0, "WR": 60.0, "TE": 60.0}
+SHAPE_BOOM = 1.5                       # a boom game scores at least this multiple of the window's mean
+SHAPE_TD_PTS = {"rush": 6.0, "rec": 6.0, "pass": 4.0}
 # Produced, but never a model input.
 IDENTITY = ["player_id", "season", "week", "team", "opponent", "position", "game_id", "kickoff_utc"]
 META = ["lag1_week", "lag2_week", "lag3_week", "dvp_l2_games", "dvp_l4_games", "dvp_l2_last_week",
@@ -571,6 +587,64 @@ def _streak_features(h: Hist, t: TargetRow) -> dict[str, float]:
     out["over_trail_streak"] = _run_length(vol)
     out["resid_opps_l1"] = float(vol[-1]) if n else NAN
     out["pts_vs_prev_season_l2"] = _nm(seq[-2:, PTS]) - _nm(prev[:, PTS]) if n and len(prev) else NAN
+    return out
+
+
+def _nstd(a: np.ndarray) -> float:
+    """NaN-ignoring population standard deviation; NaN with fewer than two values."""
+    a = a[~np.isnan(a)]
+    return float(a.std()) if a.size >= 2 else NAN
+
+
+def _slope(a: np.ndarray) -> float:
+    """OLS slope of the values against their order (0, 1, ...), NaN entries dropped; NaN with fewer than two values."""
+    x = np.arange(len(a), dtype="float64")
+    ok = ~np.isnan(a)
+    if ok.sum() < 2:
+        return NAN
+    xs, ys = x[ok], a[ok]
+    dx = xs - xs.mean()
+    return float((dx * (ys - ys.mean())).sum() / (dx * dx).sum())
+
+
+def _shape_features(h: Hist, t: TargetRow) -> dict[str, float]:
+    """The `shape` family (player archetype). Windows: the last 6 / 8 / 4 games of last season's REG appearances followed by this
+    season's (`_cur_prev`, both strictly before kickoff); `_std` = this season's appearances only, like the lag `_std` columns.
+      shape_tgt_share_std_l6 / shape_car_share_std_l6   std of his weekly target / carry share over the last 6
+      shape_pts_cv_l8                                   std / mean of PPR over the last 8 (NaN when the mean is not positive)
+      shape_td_per_opp_std                              (TDs + k * prior) / (opps + k): pass TDs per attempt for a QB (k 150), rush +
+                                                        rec TDs per carry + target otherwise (k 60); NaN with no opportunity this season
+      shape_td_pts_share_l8                             6 * (rush + rec TDs) + 4 * pass TDs over PPR points, sums over the last 8
+      shape_boom_rate_l8                                share of the last 8 at or above 1.5x the window's mean PPR
+      shape_opps_trend_l4                               OLS slope of opportunities over the last 4 (per game; a QB's opportunities
+                                                        add his pass attempts, as the retrospective counts volume)
+    NaN where the window is empty or a ratio has no denominator; never a model input unless `+family:shape` is adopted."""
+    cur, prev = _cur_prev(h, t.season)
+    seq = np.vstack([prev, cur]) if len(prev) and len(cur) else (cur if len(cur) else prev)
+    n = len(seq)
+    out: dict[str, float] = {c: NAN for c in FAMILIES["shape"]}
+    if n:
+        w6, w8, w4 = seq[-6:], seq[-8:], seq[-4:]
+        out["shape_tgt_share_std_l6"] = _nstd(w6[:, TSH])
+        out["shape_car_share_std_l6"] = _nstd(w6[:, CSH])
+        mean8 = _nm(w8[:, PTS])
+        if not math.isnan(mean8) and mean8 > 0:
+            out["shape_pts_cv_l8"] = _nstd(w8[:, PTS]) / mean8
+            pts8 = w8[:, PTS][~np.isnan(w8[:, PTS])]
+            out["shape_boom_rate_l8"] = float((pts8 >= SHAPE_BOOM * mean8).mean())
+        td_pts = (SHAPE_TD_PTS["rush"] * np.nansum(w8[:, RUSHTD]) + SHAPE_TD_PTS["rec"] * np.nansum(w8[:, RECTD])
+                  + SHAPE_TD_PTS["pass"] * np.nansum(w8[:, PASSTD]))
+        pts_sum = float(np.nansum(w8[:, PTS]))
+        out["shape_td_pts_share_l8"] = float(td_pts / pts_sum) if pts_sum > 0 else NAN
+        out["shape_opps_trend_l4"] = _slope(w4[:, ATT] + w4[:, OPPS] if t.position == "QB" else w4[:, OPPS])
+    if len(cur):
+        if t.position == "QB":
+            td, opp = float(np.nansum(cur[:, PASSTD])), float(np.nansum(cur[:, ATT]))
+        else:
+            td, opp = float(np.nansum(cur[:, RUSHTD]) + np.nansum(cur[:, RECTD])), float(np.nansum(cur[:, OPPS]))
+        k = SHAPE_TD_K.get(t.position, 60.0)
+        prior = SHAPE_TD_PRIOR.get(t.position, 0.045)
+        out["shape_td_per_opp_std"] = (td + k * prior) / (opp + k) if opp > 0 else NAN
     return out
 
 
@@ -1263,6 +1337,7 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
     # ---- lags, season-to-date, prior season, TD luck ---------------------------------
     out.update(_lag_and_history_features(h, t))
     out.update(_streak_features(h, t))                # opt-in family; same history, nothing new read
+    out.update(_shape_features(h, t))                 # opt-in family (2026-10-27); same history, nothing new read
 
     # ---- role + teammate-injury context ----------------------------------------------
     out.update(_role_features(ctx, h, t))

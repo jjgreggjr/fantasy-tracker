@@ -42,8 +42,9 @@ What it computes, per completed league-week:
 Outputs: `data/model_misses.csv`, one row per big miss per comparator, the (season, week) partition replaced through
 `ff.build.replace_partition` like model_pts.csv; and `model/reports/retrospective.md`: the drift table (pick accuracy by week per
 comparator from data/model_eval.csv, league-pooled, with the cumulative mean and the week-to-week standard deviation), reason shares
-per comparator, the latest week's top 15 misses with evidence, and a candidate-signals section DERIVED from the reason shares and the
-frozen `inputs` of model/serving_config.json. It edits nothing else (not candidates.md, not the scoreboard's files).
+per comparator, the p10-p90 band coverage by position (`ensemble.coverage_report`: inside / above p90 / below p10 on the played rows,
+the miss review's calibration table), the latest week's top 15 misses with evidence, and a candidate-signals section DERIVED from the
+reason shares and the frozen `inputs` of model/serving_config.json. It edits nothing else (not candidates.md, not the scoreboard's files).
 
 Like `model.serve` and `model.scoreboard` it can never break the pipeline: any failure is one WARN row (check `model.retrospective`)
 and nothing is written. Every number is a function of the committed inputs (no clock), so a rerun changes no byte.
@@ -478,6 +479,42 @@ def reason_shares(misses):
     return out
 
 
+def band_rows(inp: dict, weeks) -> "pd.DataFrame":
+    """The frozen PPR band (p10 / p90 of data/model_pts.csv) against the box score's PPR points (data/player_weeks.csv `fpts_ppr`)
+    for the completed `weeks`, played rows only (snaps > 0, or a stats row when snaps are unknown): what `ensemble.coverage_report`
+    tabulates. Empty when either file lacks the columns."""
+    import pandas as pd
+    mp, pw = inp.get("mp"), inp.get("pw")
+    cols = ["season", "week", "gsis_id", "position", "y", "p10", "p90"]
+    if mp is None or pw is None or mp.empty or pw.empty or not {"p10", "p90"} <= set(mp.columns) or "fpts_ppr" not in pw.columns:
+        return pd.DataFrame(columns=cols)
+    m = mp[["season", "week", "gsis_id", "position", "p10", "p90"]].copy()
+    m["gsis_id"] = m["gsis_id"].astype(str)
+    m = m[[(int(s), int(w)) in set(weeks) for s, w in zip(m["season"], m["week"])]].drop_duplicates(["season", "week", "gsis_id"])
+    p = pw[["season", "week", "gsis_id", "snaps", "fpts_ppr"]].copy() if "snaps" in pw.columns else pw[["season", "week", "gsis_id", "fpts_ppr"]].assign(snaps=float("nan"))
+    p["gsis_id"] = p["gsis_id"].astype(str)
+    snaps = _num(p, "snaps")
+    p = p[snaps.isna() | (snaps > 0)].drop_duplicates(["season", "week", "gsis_id"]).rename(columns={"fpts_ppr": "y"})
+    j = m.merge(p[["season", "week", "gsis_id", "y"]], on=["season", "week", "gsis_id"], how="inner")
+    for c in ("y", "p10", "p90"):
+        j[c] = _num(j, c)
+    return j.dropna(subset=["y", "p10", "p90"])[cols].reset_index(drop=True)
+
+
+def band_coverage_section(inp: dict, weeks) -> list[str]:
+    """The p10-p90 calibration table by position (`ensemble.coverage_report`), so the retrospective shows which tail of which
+    position's band is short, not only the point misses."""
+    from model import ensemble as E
+    rows = band_rows(inp, weeks)
+    L = ["## Band coverage: actuals against the frozen p10 / p90", "",
+         "Share of played rows (PPR, `data/player_weeks.csv` against `data/model_pts.csv`) inside the frozen band, above p90 and below p10, "
+         "by position and pooled, all post-mortemed weeks. The band is recalibrated with `serving_config.json` `recalibration.mode`; a tail "
+         "over 10% is where `underage_by_position` would stretch it (model/ensemble.py).", ""]
+    if rows.empty:
+        return L + ["No frozen p10 / p90 rows match a played box-score row yet.", ""]
+    return L + [E.coverage_report(rows, "position", y="y", lo="p10", hi="p90", out=None), ""]
+
+
 def registry_columns() -> set[str]:
     """Every column the feature registry can build (model.features.FAMILIES); empty if the registry cannot be imported."""
     try:
@@ -581,6 +618,9 @@ def render(misses, q: dict, inp: dict, inputs: set[str]) -> str:
         L.append("")
     else:
         L += ["No big misses yet.", ""]
+    # (b2) band coverage
+    if weeks:
+        L += band_coverage_section(inp, weeks)
     # (c) latest week
     if weeks and len(misses):
         s, w = weeks[-1]

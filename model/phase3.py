@@ -162,7 +162,7 @@ def shipped(cfg: dict | None = None, *, draws: int = 2000) -> str:
         r, h = bands[season]
         q, hist = cov[season], cov[season - 1]
         played = q[q["y_played"] == 1]
-        rec = E.recalibrate(q, hist, mode=cfg["recalibration"]["mode"])
+        rec = E.recalibrate(q, hist, **E.recal_kwargs(cfg["recalibration"]))
         e = rec[(rec["y_played"] == 1) & rec["base_trail3_ppr"].notna()]
         raw = E.coverage_table(e, "q10", "q90", draws=draws)
         new = E.coverage_table(e.assign(q10=e["q10a"], q90=e["q90a"]), "q10", "q90", draws=draws)
@@ -181,7 +181,7 @@ def shipped(cfg: dict | None = None, *, draws: int = 2000) -> str:
                 continue
             tgt = SV.league_target(ls.slug)
             ql, qlh = quantiles(df, season, cfg, tgt), quantiles(df, season - 1, cfg, tgt)
-            recl = E.recalibrate(ql, qlh, mode=cfg["recalibration"]["mode"])
+            recl = E.recalibrate(ql, qlh, **E.recal_kwargs(cfg["recalibration"]))
             el = recl[(recl["y_played"] == 1) & recl["base_trail3_ppr"].notna()]
             rawl = E.coverage_table(el, "q10", "q90", draws=draws)
             newl = E.coverage_table(el.assign(q10=el["q10a"], q90=el["q90a"]), "q10", "q90", draws=draws)

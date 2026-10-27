@@ -56,6 +56,7 @@ FOLLOW_UP_TREE_FACTOR = 1.1
 # primary keeps exactly its Phase 2 inputs and its results reproduce.
 OPT_IN_FAMILIES = ("pbp_usage", "pbp_team", "pbp_part", "eff",
                    "streak",                     # Phase 5 candidate (2026-10-15): `--candidate +family:streak`
+                   "shape",                      # Phase 5 candidate (2026-10-27): `--candidate +family:shape` (player archetype, Hist only)
                    "ecr",                        # Phase 5 candidate (2026-10-16): `--candidate +family:ecr`
                    "nfelo", "pepa",              # Phase 5 candidates (2026-10-16): `+family:nfelo`, `+family:pepa`
                    "market",                     # Phase 5 candidate (2026-10-16): `--candidate +family:market`
