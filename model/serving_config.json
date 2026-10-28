@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "Frozen serving design (PLAN_MODEL.md Phase 3). Regenerate the component tree counts with `python -m model.serve --freeze`; the flat-model and quantile parameters live in tuned_params.json.",
+ "note": "Frozen serving design (PLAN_MODEL.md Phase 3). Regenerate the component tree counts with `python -m model.serve --freeze`; the flat-model and quantile parameters live in tuned_params.json. `recalibration` options (model/ensemble.py `recalibrate`, read by `recal_kwargs`): `mode` is `underage_only` (live), `all`, or `underage_by_position` (2026-10-27, not switched on: a frozen serving decision; each tail of each position's band is stretched about p50 from that position's own trailing residuals, pooled below `min_pos_rows`); with `underage_by_position` the optional keys are `allow_shrink` (default false; true also narrows a tail that over-covers, e.g. the QB band at 89%), `min_pos_rows` (default 200), `factor_bounds` (default [0.7, 1.6]). Example: {\"mode\": \"underage_by_position\", \"allow_shrink\": true, \"min_pos_rows\": 200, \"factor_bounds\": [0.7, 1.6]}.",
  "spec": {
   "name": "serve_71",
   "drop_cols": [

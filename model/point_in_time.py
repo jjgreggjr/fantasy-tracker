@@ -78,6 +78,18 @@ PFR_TEAM_TO_NFLVERSE = {"GNB": "GB", "KAN": "KC", "LAR": "LA", "LVR": "LV", "NOR
                         "SFO": "SF", "TAM": "TB", "OAK": "LV", "SDG": "LAC", "STL": "LA"}
 # Offense labels shared by both depth-chart formats (drops defense, KR/PR, specialists).
 OFFENSE_DEPTH_POS = ("QB", "RB", "HB", "FB", "F", "WR", "TE", "LT", "LG", "C", "RG", "RT")
+# Defensive depth-chart slot codes -> position group, for the opt-in `opp_db_out` family (`depth_charts_def`, a SEPARATE table:
+# `depth_charts` stays offense-only, byte for byte, because the spine and the Actions cache key depend on it). Both formats
+# name slots (LCB / RCB / NB / SS / FS ...) and rank players within a slot, so "starter" = rank 1 at his slot. Codes seen in
+# the <=2024 `depth_position` (formation == "Defense") and the >=2025 ESPN `pos_abb`; an unmapped defensive code is dropped
+# and counted in `dropped["unmapped_def_position"]`. Edge rushers are DL wherever the chart calls them a DE/EDGE/RUSH/LEO/JACK
+# and LB when it calls them an OLB (a 3-4 OLB is a run defender as often as a rusher: the chart's word is kept).
+DEF_DEPTH_GROUPS = {
+    "DB": ("CB", "LCB", "RCB", "NB", "NCB", "SCB", "NKL", "NICKEL", "DB", "S", "SS", "FS", "SAF", "FS/SS", "SS/FS"),
+    "LB": ("LB", "MLB", "ILB", "OLB", "WLB", "SLB", "LOLB", "ROLB", "LILB", "RILB", "WILL", "MIKE", "SAM", "LB1", "LB2"),
+    "DL": ("DL", "DE", "LDE", "RDE", "DT", "LDT", "RDT", "NT", "EDGE", "LEO", "RUSH", "JACK", "DE/OLB", "OLB/DE"),
+}
+DEF_DEPTH_POS = {code: grp for grp, codes in DEF_DEPTH_GROUPS.items() for code in codes}
 
 PEPA_STATS_COLS = ["passing_epa", "rushing_epa", "receiving_epa", "passing_cpoe", "passing_air_yards", "receiving_air_yards",
                    "receiving_yards_after_catch", "receiving_first_downs", "rushing_first_downs", "passing_first_downs",
@@ -647,6 +659,62 @@ def load_depth_charts(seasons: Iterable[int]) -> RawTable:
                              "no_gsis_id": n_noid})
 
 
+def load_depth_charts_def(seasons: Iterable[int]) -> RawTable:
+    """The DEFENSIVE rows of the same depth-chart files, stamped exactly like `load_depth_charts` (<=2024: the team's kickoff
+    that week, bye teams the league's last kickoff; >=2025: snapshot `dt`), as their own table so the offense table is untouched.
+    Columns: `slot` (the chart's own code: LCB / RCB / NB / SS / FS / MLB / ...), `grp` (DB / LB / DL per DEF_DEPTH_GROUPS) and
+    `rank` within the slot. Read by the opt-in `opp_db_out` family only (who the opponent's starters are, so an Out can be told
+    from a depth piece); nothing else, and no spine rule, looks at it."""
+    g = _games()
+    tw = pd.concat([g[["season", "week", "home_team", "kickoff"]].rename(columns={"home_team": "team"}),
+                    g[["season", "week", "away_team", "kickoff"]].rename(columns={"away_team": "team"})])
+    team_ko = tw.set_index(["season", "week", "team"])["kickoff"]
+    wk_last = g.groupby(["season", "week"])["kickoff"].max()
+    frames, n_sbbye, n_noid, n_unmapped = [], 0, 0, 0
+    for y in seasons:
+        d = _nflverse("depth_charts", f"depth_charts_{y}.parquet")
+        if "dt" in d.columns:
+            slot = d["pos_abb"].astype(str).str.strip().str.upper()
+            if "pos_grp" in d.columns:                          # ESPN groups: Offense / Defense / Special Teams
+                is_def = d["pos_grp"].astype(str).str.strip().str.lower() == "defense"
+            else:
+                is_def = slot.isin(DEF_DEPTH_POS)
+            n_unmapped += int((is_def & ~slot.isin(DEF_DEPTH_POS)).sum())
+            keep = is_def & slot.isin(DEF_DEPTH_POS)
+            d, slot = d[keep], slot[keep]
+            n_noid += int(d["gsis_id"].isna().sum())
+            ok = d["gsis_id"].notna()
+            d, slot = d[ok], slot[ok]
+            out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["team"], "season": y, "week": pd.NA,
+                                "slot": slot, "grp": slot.map(DEF_DEPTH_POS), "rank": d["pos_rank"].astype(int),
+                                KNOWN_AT: _ns_utc(d["dt"]), "known_at_source": "snapshot_dt"})
+        else:
+            n_sbbye += int(d["week"].isna().sum())
+            d = d[(d["formation"] == "Defense") & d["week"].notna()]
+            slot = d["depth_position"].astype(str).str.strip().str.upper()
+            n_unmapped += int((~slot.isin(DEF_DEPTH_POS)).sum())
+            keep = slot.isin(DEF_DEPTH_POS)
+            d, slot = d[keep], slot[keep]
+            n_noid += int(d["gsis_id"].isna().sum())
+            ok = d["gsis_id"].notna()
+            d, slot = d[ok], slot[ok]
+            keys = list(zip(d["season"], d["week"].astype(int), d["club_code"]))
+            k = pd.Series(keys, index=d.index).map(team_ko)
+            bye = k.isna()
+            k[bye] = pd.Series(list(zip(d["season"], d["week"].astype(int))), index=d.index)[bye].map(wk_last)
+            out = pd.DataFrame({"player_id": d["gsis_id"], "team": d["club_code"], "season": d["season"],
+                                "week": d["week"].astype(int), "slot": slot, "grp": slot.map(DEF_DEPTH_POS),
+                                "rank": pd.to_numeric(d["depth_team"]).astype(int),
+                                KNOWN_AT: _ns_utc(k), "known_at_source": "derived_team_kickoff"})
+        frames.append(out)
+    df = pd.concat(frames, ignore_index=True)
+    n_bad = int(df[KNOWN_AT].isna().sum())
+    return RawTable("depth_charts_def", df[df[KNOWN_AT].notna()].reset_index(drop=True),
+                    "<=2024: team kickoff that week (derived); >=2025: snapshot dt (same rule as depth_charts)",
+                    dropped={"no_timestamp_derivable": n_bad, "sbbye_snapshot_no_week": n_sbbye,
+                             "no_gsis_id": n_noid, "unmapped_def_position": n_unmapped})
+
+
 def load_career_pre_cutoff() -> RawTable:
     """Skill-position appearance rows per player through the season before CAREER_CUTOFF_SEASON,
     stamped at that season's start. Later seasons' games come from `player_games` through the gate,
@@ -702,7 +770,9 @@ PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "d
             "rush_attempt", "qb_dropback", "two_point_attempt", "yardline_100", "air_yards", "receiver_player_id",
             "rusher_player_id", "wp", "down", "qtr", "half_seconds_remaining",
             # the `script` family's team-game sums (2026-10-16): efficiency, nflfastR's expected pass rate, tempo
-            "epa", "success", "pass_oe", "xpass", "no_huddle", "game_seconds_remaining", "fixed_drive"]
+            "epa", "success", "pass_oe", "xpass", "no_huddle", "game_seconds_remaining", "fixed_drive",
+            # the `dvp_split` family's explosive-play count (2026-10-27)
+            "yards_gained"]
 PBP_USAGE_COLS = ["tgt", "rz_tgt", "i10_tgt", "ay", "ay_n", "car", "rz_car", "i10_car"]
 PBP_TEAM_COUNTS = ["plays", "dropbacks", "neutral_plays", "neutral_dropbacks", "tgt", "rz_tgt", "i10_tgt", "ay", "car",
                    "rz_car", "i10_car", "part_dropbacks", "part_rush", "part_rz", "part_i10"]
@@ -716,9 +786,11 @@ PBP_PART_COLS = ["pass_on", "run_on", "rz_on", "i10_on"]
 #   sc_early_plays / sc_early_db       1st/2nd-down plays and dropbacks
 #   sc_wp_plays / sc_wp_db             plays and dropbacks with win probability 20-80% (any down, any quarter)
 #   sc_rz_plays                        plays snapped at the opponent's 20 or closer
+#   sc_explosive                       plays that gained EXPLOSIVE_YARDS or more (the `dvp_split` family reads it by defense)
 PBP_SCRIPT_COUNTS = ["sc_epa", "sc_succ", "sc_epa_n", "sc_pass_epa", "sc_pass_n", "sc_rush_epa", "sc_rush_n", "sc_pass_oe",
                      "sc_xpass", "sc_xp_n", "sc_nohuddle", "sc_secs", "sc_secs_n", "sc_early_plays", "sc_early_db",
-                     "sc_wp_plays", "sc_wp_db", "sc_rz_plays"]
+                     "sc_wp_plays", "sc_wp_db", "sc_rz_plays", "sc_explosive"]
+EXPLOSIVE_YARDS = 20
 # Head coach per (team, game), from the nflverse schedule's home_coach / away_coach. Who coaches a game is public before
 # it (an interim coach is named days ahead), so a row is known COACH_LEAD before its kickoff. Old team codes are mapped to
 # the current ones so a tenure that spans a relocation is one tenure.
@@ -761,7 +833,8 @@ def _script_sums(s: pd.DataFrame, key: list[str]) -> pd.DataFrame:
                  sc_nohuddle=(s["no_huddle"].fillna(0) == 1).astype(float),
                  sc_early_plays=early.astype(float), sc_early_db=(early & db).astype(float),
                  sc_wp_plays=mid.astype(float), sc_wp_db=(mid & db).astype(float),
-                 sc_rz_plays=s["rz"].astype(float))
+                 sc_rz_plays=s["rz"].astype(float),
+                 sc_explosive=(s["yards_gained"].fillna(0.0) >= EXPLOSIVE_YARDS).astype(float))
     # tempo: clock run off between a play and the previous scrimmage play of the same drive, regulation only
     s = s.sort_values(["game_id", "play_id"], kind="mergesort")
     reg = s["qtr"] <= 4
@@ -948,9 +1021,11 @@ FTN_COUNTS = ("tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen", "tgt_catch
               "car", "car_box", "car_light", "box_sum", "db", "db_blitz", "db_oop", "db_pa", "db_rush_n", "rushers_sum",
               "int_worthy")
 FTN_TEAM_COUNTS = ("T_tgt", "T_tgt_motion", "T_tgt_pa", "T_tgt_rpo", "T_tgt_screen")
+# the same charted carries / dropbacks summed by the DEFENSE that faced them (`ftn_def`, the `dvp_split` family)
+FTN_DEF_COUNTS = ("car_box", "car_light", "box_sum", "db", "db_blitz", "db_rush_n", "rushers_sum")
 LIGHT_BOX_MAX = 6
-FTN_PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "play_type", "pass_attempt", "rush_attempt",
-                "qb_dropback", "two_point_attempt", "receiver_player_id", "rusher_player_id", "passer_player_id"]
+FTN_PBP_COLS = ["game_id", "play_id", "season", "week", "season_type", "posteam", "defteam", "play_type", "pass_attempt",
+                "rush_attempt", "qb_dropback", "two_point_attempt", "receiver_player_id", "rusher_player_id", "passer_player_id"]
 
 
 def _charting_release_stamps(weekday: int) -> pd.Series:
@@ -1057,8 +1132,9 @@ def load_pfr_tables(seasons: Iterable[int]) -> list[RawTable]:
             RawTable("pfr_games", cov.reset_index(drop=True), rule)]
 
 
-def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series] | None:
-    """(player counts, team counts, max date_pulled per week) for one season, or None when the asset does not exist."""
+def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series] | None:
+    """(player counts, team counts, defense counts, max date_pulled per week) for one season, or None when the asset does not
+    exist."""
     f = _nflverse_optional("ftn_charting", f"ftn_charting_{y}.parquet")
     if f is None:
         return None
@@ -1098,8 +1174,17 @@ def _ftn_season(y: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series] | None:
     tt = tg.groupby(key)[["tgt", "tgt_motion", "tgt_pa", "tgt_rpo", "tgt_screen"]].sum()
     tt.columns = list(FTN_TEAM_COUNTS)
     team = team.join(tt, how="left").fillna(0.0).drop(columns="plays").reset_index()
+    # the defense's side of the same charted plays: box counts on the carries it faced, blitzes and rushers on the dropbacks
+    dkey = ["game_id", "defteam"]
+    cd = cr[["car_box", "car_light", "box_sum"]].assign(game_id=c["game_id"], defteam=c["defteam"]).groupby(dkey).sum()
+    dd = dbf[["db", "db_blitz", "db_rush_n", "rushers_sum"]].assign(game_id=d["game_id"], defteam=d["defteam"]).groupby(dkey).sum()
+    defense = pd.concat([cd, dd], axis=1).fillna(0.0).reset_index()
+    for col in FTN_DEF_COUNTS:
+        if col not in defense.columns:
+            defense[col] = 0.0
     pulled = f.groupby("week")["date_pulled"].max()
-    return players.rename(columns={"posteam": "team"}), team.rename(columns={"posteam": "team"}), pulled
+    return (players.rename(columns={"posteam": "team"}), team.rename(columns={"posteam": "team"}),
+            defense.rename(columns={"defteam": "team"}), pulled)
 
 
 def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
@@ -1108,20 +1193,22 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
     carries, light-box carries (box <= LIGHT_BOX_MAX), box sum; dropbacks, blitzed / out-of-pocket / play-action dropbacks, pass
     rushers, interception-worthy throws). `ftn_team` (team, game): the team's targets on those play types, one row per charted
     game, which is also the coverage list (a charted game with no row for him = he did none of it). Skill players only.
+    `ftn_def` (team, game): the DEFENSE's side of the same plays (FTN_DEF_COUNTS: charted / light-box carries and box sum it
+    faced, dropbacks it faced, those it blitzed, pass rushers), one row per charted game, same stamp (the `dvp_split` family).
     FTN publishes 2022 onward: 2021 (and earlier) answers 404, so those seasons have no rows and every ftn column is NaN there."""
     seasons = sorted(set(seasons))
     stamps = _charting_release_stamps(CHARTING_REFRESH_WEEKDAY["ftn"])
     g = _games()
     week_end = g.groupby(["season", "week"])["kickoff"].max() + CHARTING_GAME_END
     wg = _week_games(seasons)
-    players, teams, absent = [], [], []
+    players, teams, defenses, absent = [], [], [], []
     for y in seasons:
         got = _ftn_season(y)
         if got is None:
             absent.append(y)
             continue
-        pl, tm, pulled = got
-        for df in (pl, tm):
+        pl, tm, de, pulled = got
+        for df in (pl, tm, de):
             df["season"] = y
             df["week"] = df["game_id"].map(wg.drop_duplicates("game_id").set_index("game_id")["week"])
         known = {}
@@ -1131,17 +1218,19 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
             if dp is not None and not pd.isna(dp) and pd.Timestamp(dp) - week_end[(y, w)] <= CHARTING_PULL_WINDOW:
                 stamp = max(stamp, pd.Timestamp(dp).tz_convert("UTC"))
             known[w] = stamp
-        for df in (pl, tm):
+        for df in (pl, tm, de):
             df[KNOWN_AT] = _ns_utc(df["week"].map(known))
         players.append(pl[pl["player_id"].isin(skill_ids)])
         teams.append(tm)
+        defenses.append(de)
     if not teams:
         return []
     rule = ("23:59:59Z on the first Wednesday after the day the week's last game ended, or the week's FTN `date_pulled` when that "
             "is later and within 30 days of the week (CHARTING_PULL_WINDOW)")
     out = []
     for name, frames, cols in (("ftn", players, ["player_id", "season", "week", "game_id", "team", *FTN_COUNTS]),
-                               ("ftn_team", teams, ["team", "season", "week", "game_id", *FTN_TEAM_COUNTS])):
+                               ("ftn_team", teams, ["team", "season", "week", "game_id", *FTN_TEAM_COUNTS]),
+                               ("ftn_def", defenses, ["team", "season", "week", "game_id", *FTN_DEF_COUNTS])):
         df = pd.concat(frames, ignore_index=True)
         n_bad = int(df[KNOWN_AT].isna().sum())
         df = df[df[KNOWN_AT].notna()]
@@ -1153,22 +1242,26 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
 
 def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
                ecr: bool = False, nfelo: bool = False, sleeper_proj: bool = False,
-               charting: bool | None = None) -> RawStore:
+               charting: bool | None = None, defense: bool = False) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
     tables (Phase 2.5); `charting` (default: the value of `pbp`, so the serving path, which passes pbp=False, loads none of
-    it) adds the weekly NGS / PFR / FTN tables (Phase 5 candidates); `ecr=True` adds the weekly FantasyPros ECR table only
-    if `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the greerreNFL
-    tables (model/nfelo.py: opt-in, network refresh); `sleeper_proj=True` adds Sleeper's archived weekly projections
-    (the opt-in `market` family) only if `python -m model.fetch_sleeper_proj` has cached them. ecr / nfelo / sleeper_proj
-    are off by default so the serving store and the leakage audit keep exactly their tables; `build_features` turns
-    them on."""
+    it) adds the weekly NGS / PFR / FTN tables (Phase 5 candidates; FTN's `ftn_def`, the `dvp_split` family's defensive side,
+    is one of them and has no switch of its own); `defense=True` adds `depth_charts_def` (the depth-chart files' defensive
+    rows, a second parse of every season's file: the opt-in `opp_db_out` family); `ecr=True` adds the weekly FantasyPros ECR
+    table only if `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the
+    greerreNFL tables (model/nfelo.py: opt-in, network refresh); `sleeper_proj=True` adds Sleeper's archived weekly projections
+    (the opt-in `market` family) only if `python -m model.fetch_sleeper_proj` has cached them. defense / ecr / nfelo /
+    sleeper_proj are off by default so the serving store and the leakage audit keep exactly their tables; `build_features`
+    turns them on, and the serve turns one on only when serving_config.json adopts its family (`serve.FAMILY_SOURCES`)."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
               load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
               *load_static_tables(), load_career_pre_cutoff(), load_coaches(seasons)]
+    if defense:
+        tables.append(load_depth_charts_def(seasons))
     if pbp:
         tables += load_pbp_tables(seasons, pg.df, sn.df)
     if pbp if charting is None else charting:

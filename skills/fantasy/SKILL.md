@@ -39,6 +39,8 @@ when cleared. That is the weekly "is he back yet?" check. `data/status.csv` has 
 
 `status_flag` **`inactive`** (`inactive` = 1) means he is on the league's gameday inactive list for a game that has not kicked off: he will not dress, whatever his designation said (`play_prob` 0, flag `INACTIVE`, `E_pts` blank). The list is posted ~90 min before each kickoff (`inactive_known_at`), so only a Sunday run, or Friday's for Thursday night, can see it; on any other day a blank `inactive` is not a clean bill. Say so when a Questionable player's game is close.
 
+`repeat_dnp` 1 (flag `REPEAT_DNP`) means 0 opportunities in each of his team's last two games (`dnp_weeks`) and no Full practice this week: `play_prob` is capped at 0.25 and his `E_pts` is a number for a player who has not been playing, so say so. `repeat_dnp` 2 adds Out/Doubtful or a DNP practice: `play_prob` 0, `E_pts` blank. `role_change` 1 (`role_change_kind`: IR activation, PUP activation, practice-squad elevation; flag `ROLE_CHANGE`) lifts that: his recent 0-opp weeks are not held against him.
+
 A `depth_disagreement` of 2+ means ESPN and Sleeper's depth charts disagree, which is the signature of a rank driven by health rather than role. Always mention it.
 
 ## Lineup freshness — do this first

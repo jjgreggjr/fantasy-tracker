@@ -46,7 +46,15 @@
   "score": {
     "trail_cap": 0.6,
     "trail_games": 4,
-    "matchup_swing": 0.24
+    "matchup_swing": 0.24,
+    "td_regress": true,
+    "td_prior_opps": {
+      "QB": 150,
+      "RB": 60,
+      "WR": 60,
+      "TE": 60
+    },
+    "td_adj_clip": 3.0
   },
   "espn_leagues": [
     {

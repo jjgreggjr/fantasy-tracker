@@ -188,8 +188,26 @@ class Registry(unittest.TestCase):
         r.assert_not_called()
 
     def test_a_family_built_from_the_base_tables_needs_no_switch(self):
-        kw, warns, _ = self.load(("streak",))
-        self.assertEqual(kw, dict(adp=False, college=False, pbp=False))
+        for fam in ("streak", "shape"):
+            kw, warns, _ = self.load((fam,))
+            self.assertEqual(kw, dict(adp=False, college=False, pbp=False), fam)
+            self.assertEqual(warns, [])
+
+    def test_opp_db_out_turns_on_the_defensive_depth_chart_switch_with_nothing_to_refresh_or_check(self):
+        """Its table is cut from the depth-chart file the base store reads (and refresh_raw re-downloads), so adoption is the
+        `defense` switch alone: no refresh, no readability check, no WARN."""
+        src = SV.FAMILY_SOURCES["opp_db_out"]
+        self.assertEqual((src.store_kwarg, src.table, src.refresh, src.load, src.extend), ("defense", "depth_charts_def", None, None, None))
+        self.assertFalse(inspect.signature(pit.load_store).parameters["defense"].default)
+        kw, warns, _ = self.load(("opp_db_out",))
+        self.assertEqual(kw, dict(adp=False, college=False, pbp=False, defense=True))
+        self.assertEqual(warns, [])
+        # the week check: the season's defensive rows (2025+ rows are dated snapshots with no week), none -> the fallback
+        self.assertEqual(src.week_rows(FakeStore(), 2026, 6), 0)
+        dc = pd.DataFrame({"season": [2025, 2026, 2026], "week": [pd.NA] * 3})
+        self.assertEqual(src.week_rows(FakeStore(depth_charts_def=dc), 2026, 6), 2)
+        self.assertEqual(src.week_rows(FakeStore(depth_charts_def=dc), 2024, 6), 0)
+        self.assertEqual(sorted(SV.store_families(FakeStore(depth_charts_def=dc, ecr=ecr_table()))), ["ecr", "opp_db_out"])
 
     def test_a_failed_download_keeps_the_cached_table_with_a_warn(self):
         kw, warns, _ = self.load(("ecr",), refresh_ok=False)

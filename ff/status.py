@@ -26,6 +26,28 @@ INACTIVE = "inactive"
 PRACTICE_WEIGHT = {"DNP": 0.15, "Did Not Participate In Practice": 0.15,
                    "Limited": 0.65, "Limited Participation in Practice": 0.65,
                    "Full": 0.95, "Full Participation in Practice": 0.95}
+PRACTICE_FULL = {"Full", "Full Participation in Practice"}
+PRACTICE_DNP = {"DNP", "Did Not Participate In Practice"}
+
+# Repeat DNP (2026-10-27, model/reports/miss_review_2026wk07.md): a player with 0 opportunities (carries, targets
+# or pass attempts) and 0 snaps in each of his team's last `REPEAT_DNP_WEEKS` completed games (a missing stat row
+# is 0) is not playing, whatever his designation says; Caleb Williams (2026 week 5) had missed weeks 3-4 and still
+# carried 14.8 E_pts. The rule only looks at a player the league has said something about: one on this week's
+# injury report (a designation, or a practice entry) or whose nflverse roster status is not ACT. A healthy,
+# unlisted backup with two 0-snap games is a backup, not a DNP (2026-10-28: 218 of 642 skill players were flagged
+# on week-8 data, 102 of them with no designation at all). Unless he practised in Full this week, play_prob is
+# capped at REPEAT_DNP_CAP (`repeat_dnp` 1); Out/Doubtful or a DNP practice on top makes it 0 (`repeat_dnp` 2,
+# E_pts blanked in score.py). An IR activation or practice-squad elevation this week (`role_changes`, nflverse
+# weekly_rosters) lifts it: his 0-opp weeks had a reason that is gone.
+REPEAT_DNP_WEEKS = 2
+REPEAT_DNP_CAP = 0.25
+ACTIVE_NFL_STATUS = "ACT"
+# nflverse weekly_rosters `status` the week before -> what this week's ACT means
+ROLE_CHANGE_FROM = {"RES": "IR activation", "PUP": "PUP activation", "DEV": "practice-squad elevation"}
+ROLE_CHANGE_COLS = ["gsis_id", "prev_status", "status", "role_change_kind", "role_change_known_at"]
+# per-row timestamp columns a weekly_rosters frame might carry (nflverse's own has none as of 2026)
+ROSTER_TIME_COLS = ["known_at", "date_modified", "updated_at", "timestamp", "date"]
+DNP_COLS = ["gsis_id", "dnp_weeks"]
 
 
 def _severity(s: str) -> int:
@@ -231,17 +253,163 @@ def inactive_archive(rosters: pd.DataFrame | None, season: int,
     return r.drop_duplicates(["week", "gsis_id"])[cols].reset_index(drop=True)
 
 
+def _team_byes(sched: pd.DataFrame | None, season: int) -> dict:
+    """{team: set of bye weeks} from schedule.csv (explicit BYE rows, build.build_schedule)."""
+    if sched is None or sched.empty or not {"team", "week", "opponent"} <= set(sched.columns):
+        return {}
+    s = sched[pd.to_numeric(sched["season"], errors="coerce") == season] if "season" in sched.columns else sched
+    b = s[s["opponent"].astype(str).str.upper().eq("BYE")]
+    return {t: set(pd.to_numeric(g["week"], errors="coerce").dropna().astype(int)) for t, g in b.groupby("team")}
+
+
+def recent_dnp(pw: pd.DataFrame | None, season: int, week: int | None,
+               players: pd.DataFrame | None = None, sched: pd.DataFrame | None = None,
+               n_weeks: int = REPEAT_DNP_WEEKS) -> pd.DataFrame:
+    """Players with 0 opportunities and 0 snaps in each of their team's last `n_weeks` completed games
+    before `week` of `season`: `gsis_id`, `dnp_weeks` ("3,4").
+
+    A game is played when he had a carry, a target, a pass attempt or a snap. Pass attempts are not in `opps`
+    (carries + targets), and snaps come from a PFR join that lags on Tuesday, so without them a pocket QB who
+    threw 30 times and never ran or caught a ball reads as 0-0.
+
+    The games are the team's: a week in which the team has no stat rows at all (its bye, or a week whose stats
+    are not published yet) is not one of its games, so weeks 3 and 5 are the last two when 4 was the bye, and
+    a Tuesday run before the stats land does not flag a whole team. A player with no stat row for a game
+    (nflverse writes none for a player who did not dress) counts as 0, which is what makes a 14.8-point
+    projection for a player on his third missed week visible. The universe is `players` (every skill player
+    on a roster) when given, else everyone in `pw` this season; a team on its bye in `week` (from `sched`) is
+    left out (nothing to cap: E_pts is blank on a bye). Fewer than `n_weeks` completed games for the team
+    means nobody on it is flagged. Whether a flagged player is then capped is `_availability_rules`' call."""
+    if week is None or week <= n_weeks or pw is None or pw.empty:
+        return pd.DataFrame(columns=DNP_COLS)
+    need = {"season", "week", "gsis_id", "opps"}
+    if not need <= set(pw.columns):
+        return pd.DataFrame(columns=DNP_COLS)
+    p = pw[(pd.to_numeric(pw.season, errors="coerce") == season)
+           & (pd.to_numeric(pw.week, errors="coerce") < week) & pw.gsis_id.notna()].copy()
+    p["week"] = pd.to_numeric(p["week"], errors="coerce").astype(int)
+    p["_opps"] = pd.to_numeric(p["opps"], errors="coerce").fillna(0)
+    num = lambda col: pd.to_numeric(p[col], errors="coerce").fillna(0) if col in p.columns else 0.0
+    p["_snaps"] = num("snaps")
+    p["_att"] = num("pass_att")
+    played = p[(p._opps > 0) | (p._snaps > 0) | (p._att > 0)]
+    played_weeks = played.groupby("gsis_id")["week"].apply(set).to_dict()
+    team_weeks = (p.groupby("team")["week"].apply(set).to_dict() if "team" in p.columns else {})
+    all_weeks = set(p["week"])
+
+    if players is not None and not players.empty and {"gsis_id", "team"} <= set(players.columns):
+        uni = players[["gsis_id", "team"]].dropna(subset=["gsis_id"]).drop_duplicates("gsis_id")
+    else:
+        uni = (p.sort_values("week").drop_duplicates("gsis_id", keep="last")[["gsis_id", "team"]]
+               if "team" in p.columns else p[["gsis_id"]].drop_duplicates().assign(team=np.nan))
+    byes = _team_byes(sched, season)
+    rows = []
+    for gid, team in zip(uni["gsis_id"], uni["team"]):
+        if week in byes.get(team, set()):
+            continue
+        weeks_with_rows = team_weeks.get(team, all_weeks) if pd.notna(team) else all_weeks
+        games = sorted(w for w in weeks_with_rows if w < week)[-n_weeks:]
+        if len(games) < n_weeks:
+            continue
+        have = played_weeks.get(gid, set())
+        if not any(w in have for w in games):
+            rows.append({"gsis_id": gid, "dnp_weeks": ",".join(str(w) for w in games)})
+    return pd.DataFrame(rows, columns=DNP_COLS)
+
+
+def role_changes(rosters: pd.DataFrame | None, season: int, week: int | None,
+                 known_at: str | None = None) -> pd.DataFrame:
+    """Players whose nflverse weekly_rosters `status` is ACT in `week` after RES / PUP / DEV in their previous
+    roster week of `season`: an IR or PUP activation, or a practice-squad elevation. Columns ROLE_CHANGE_COLS.
+    The file carries no per-row timestamp; a week's rows appear with the Friday publish, so `known_at` (the
+    run's own time) is what the retrospective gets. No rows for `week` yet means an empty frame.
+
+    One row per player per week is the norm. When a week carries several (a mid-week transaction), the rows
+    are ordered by week, then by any timestamp the file carries (`ROSTER_TIME_COLS`, newest last), and the
+    last row wins; with no timestamp the file's own order decides, except that in `week` itself an ACT row
+    beats a non-ACT row, because the question asked is whether he was activated."""
+    if week is None or rosters is None or rosters.empty or not {"status", "week", "gsis_id"} <= set(rosters.columns):
+        return pd.DataFrame(columns=ROLE_CHANGE_COLS)
+    r = rosters[rosters["gsis_id"].notna()].copy()
+    if "season" in r.columns:
+        r = r[pd.to_numeric(r["season"], errors="coerce") == season]
+    r["week"] = pd.to_numeric(r["week"], errors="coerce")
+    r["status"] = r["status"].astype(str).str.strip().str.upper()
+    r = r[r["week"].notna() & (r["week"] <= week)]
+    order = ["week"]
+    tcol = next((c for c in ROSTER_TIME_COLS if c in r.columns), None)
+    if tcol is not None:
+        r["_t"] = pd.to_datetime(r[tcol], errors="coerce", utc=True)
+        order.append("_t")
+    r["_act"] = (r["week"] == week) & r["status"].eq("ACT")     # this week's ACT row sorts last
+    order.append("_act")
+    r = r.sort_values(order, kind="stable", na_position="first")
+    now = r[r["week"] == week].drop_duplicates("gsis_id", keep="last")
+    prev = r[r["week"] < week].drop_duplicates("gsis_id", keep="last").set_index("gsis_id")["status"]
+    if now.empty or prev.empty:
+        return pd.DataFrame(columns=ROLE_CHANGE_COLS)
+    now = now[now["status"].eq("ACT")].copy()
+    now["prev_status"] = now["gsis_id"].map(prev)
+    now = now[now["prev_status"].isin(ROLE_CHANGE_FROM)]
+    now["role_change_kind"] = now["prev_status"].map(ROLE_CHANGE_FROM)
+    now["role_change_known_at"] = known_at if known_at else np.nan
+    return now[ROLE_CHANGE_COLS].reset_index(drop=True)
+
+
+def _availability_rules(p: pd.DataFrame, dnp: pd.DataFrame | None,
+                        roles: pd.DataFrame | None) -> pd.DataFrame:
+    """Apply the repeat-DNP cap and the role-change lift to a players frame that already has
+    `status_flag`, `play_prob`, `practice_participation` and `inactive`. Adds `repeat_dnp` (0/1/2),
+    `dnp_weeks`, `role_change` (0/1), `role_change_kind`.
+
+    The cap needs two things: two 0-opportunity games (`dnp`) AND a reason to doubt him this week, which is
+    being on the injury report (`status_flag` other than healthy, or a practice entry) or an nflverse roster
+    status other than ACT. A healthy backup who is on nobody's report is simply not playing ahead of the
+    starter, and is left alone. `dnp_weeks` is still filled for him, so the history stays visible."""
+    p = p.copy()
+    p["role_change"] = 0
+    p["role_change_kind"] = np.nan
+    if roles is not None and not roles.empty:
+        rk = roles.drop_duplicates("gsis_id").set_index("gsis_id")["role_change_kind"]
+        p["role_change_kind"] = p["gsis_id"].map(rk)
+        p["role_change"] = p["role_change_kind"].notna().astype(int)
+    p["repeat_dnp"] = 0
+    p["dnp_weeks"] = np.nan
+    if dnp is None or dnp.empty:
+        return p
+    dw = dnp.drop_duplicates("gsis_id").set_index("gsis_id")["dnp_weeks"]
+    p["dnp_weeks"] = p["gsis_id"].map(dw)
+    prac = (p["practice_participation"].where(p["practice_participation"].notna(), "").astype(str).str.strip()
+            if "practice_participation" in p else pd.Series("", index=p.index))
+    full = prac.isin(PRACTICE_FULL)
+    on_report = p["status_flag"].ne("healthy") | prac.ne("")
+    nfl = (p["nfl_status"].where(p["nfl_status"].notna(), ACTIVE_NFL_STATUS).astype(str).str.strip().str.upper()
+           if "nfl_status" in p else pd.Series(ACTIVE_NFL_STATUS, index=p.index))
+    cap = p["dnp_weeks"].notna() & ~full & p["role_change"].eq(0) & (on_report | nfl.ne(ACTIVE_NFL_STATUS))
+    hard = cap & (p["status_flag"].isin({"doubtful"} | {s.lower() for s in OUT_STATES}) | prac.isin(PRACTICE_DNP))
+    p.loc[cap, "repeat_dnp"] = 1
+    p.loc[hard, "repeat_dnp"] = 2
+    pp = pd.to_numeric(p["play_prob"], errors="coerce")
+    p.loc[cap, "play_prob"] = pp[cap].clip(upper=REPEAT_DNP_CAP)
+    p.loc[hard, "play_prob"] = 0.0
+    return p
+
+
 def build(players: pd.DataFrame, depth: pd.DataFrame,
           proj: pd.DataFrame | None = None, week: int | None = None,
           injuries: pd.DataFrame | None = None,
-          inactives: pd.DataFrame | None = None) -> pd.DataFrame:
+          inactives: pd.DataFrame | None = None,
+          dnp: pd.DataFrame | None = None,
+          roles: pd.DataFrame | None = None) -> pd.DataFrame:
     """One status row per player on a depth chart, including the blocker chain.
 
     `injuries` is nflverse's injuries_{season} table; its rows for `week` supply the
     practice participation and the game designation (see `week_reports`). `inactives` is
     `week_inactives(...)`: the week's gameday inactive list, already guarded. A player on it
     is flagged `inactive` (play_prob 0) whatever his designation; `injury_status` stays as
-    Sleeper reported it."""
+    Sleeper reported it. `dnp` is `recent_dnp(...)` and `roles` is `role_changes(...)`: the
+    repeat-DNP cap and the activation lift (`_availability_rules`), columns `repeat_dnp`,
+    `dnp_weeks`, `role_change`, `role_change_kind`."""
     if depth is None or depth.empty:
         return pd.DataFrame()
 
@@ -253,14 +421,18 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                               if ina is not None and "inactive_known_at" in ina else np.nan)
     p["status_flag"] = p.apply(status_flag, axis=1)
     p["play_prob"] = p.apply(play_probability, axis=1)
+    p = _availability_rules(p, dnp, roles)
     p["news_age_hours"] = p.get("news_updated", pd.Series(index=p.index)).map(_news_age_hours)
 
     d = depth.merge(
         p[["gsis_id", "status_flag", "report_status", "play_prob", "news_age_hours",
            "injury_body_part", "practice_participation", "sleeper_depth_order",
-           "inactive", "inactive_known_at"]],
+           "inactive", "inactive_known_at", "repeat_dnp", "dnp_weeks",
+           "role_change", "role_change_kind"]],
         on="gsis_id", how="left")
     d["inactive"] = pd.to_numeric(d["inactive"], errors="coerce").fillna(0).astype(int)
+    for c in ("repeat_dnp", "role_change"):
+        d[c] = pd.to_numeric(d[c], errors="coerce").fillna(0).astype(int)
     # A player on a depth chart with no match in players.csv has unknown
     # availability, which is not the same as healthy — say so rather than
     # letting NaN propagate into the blocker chain.
@@ -305,6 +477,10 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                 "play_prob": r.play_prob,
                 "inactive": int(r.inactive),
                 "inactive_known_at": r.inactive_known_at,
+                "repeat_dnp": int(r.repeat_dnp),
+                "dnp_weeks": r.dnp_weeks,
+                "role_change": int(r.role_change),
+                "role_change_kind": r.role_change_kind,
                 "injury_body_part": r.injury_body_part,
                 "practice": r.practice_participation,
                 "news_age_hours": r.news_age_hours,
@@ -347,6 +523,15 @@ def warnings(st: pd.DataFrame, roster_ids: set | None = None) -> list[str]:
     for _, r in s[s.status_flag.eq(INACTIVE)].iterrows():
         out.append(f"{r['name']}: INACTIVE on the gameday list ({_inactive_note(r)}) — "
                    "he will not dress; E_pts blanked")
+    if "repeat_dnp" in s.columns:
+        for _, r in s[pd.to_numeric(s.repeat_dnp, errors="coerce").fillna(0) >= 1].iterrows():
+            out.append(f"{r['name']}: REPEAT DNP — 0 opportunities in weeks {r.get('dnp_weeks')} and no "
+                       f"Full practice this week (play_prob {r.play_prob:.2f}"
+                       + ("; E_pts blanked)" if int(r.repeat_dnp) >= 2 else ")"))
+    if "role_change" in s.columns:
+        for _, r in s[pd.to_numeric(s.role_change, errors="coerce").fillna(0) == 1].iterrows():
+            out.append(f"{r['name']}: {r.get('role_change_kind') or 'role change'} this week — "
+                       "his recent 0-opportunity weeks are not held against him")
     return out
 
 
@@ -366,6 +551,10 @@ def describe(st: pd.DataFrame, name: str) -> str:
     bits = [f"{r.status_flag}"]
     if r.get("status_flag") == INACTIVE:
         bits = [f"INACTIVE (gameday inactive list, {_inactive_note(r)}; will not play)"]
+    if pd.notna(r.get("repeat_dnp")) and int(r.get("repeat_dnp") or 0) >= 1:
+        bits.append(f"REPEAT DNP (0 opps in weeks {r.get('dnp_weeks')}, play_prob {r.play_prob:.2f})")
+    if pd.notna(r.get("role_change_kind")):
+        bits.append(f"{r.role_change_kind} this week")
     if pd.notna(r.practice):
         bits.append(f"practice: {r.practice}")
     if pd.notna(r.injury_body_part):

@@ -19,7 +19,85 @@ DEFAULTS = {
     "trail_cap": 0.0,
     "trail_games": 4,       # games needed to reach that cap
     "matchup_swing": 0.24,  # total range of the matchup multiplier (±12%)
+    # Touchdown regression (2026-10-27, model/reports/miss_review_2026wk07.md): the biggest attributable
+    # E_pts residual was the player's own season TD rate per opportunity (eta² .037: high-TD players
+    # over-predicted by 1.6, low-TD under-predicted by 1.8), which the projection takes at face value.
+    # The season rate is shrunk toward the position's league-wide rate with a prior worth
+    # `td_prior_opps` opportunities (pass attempts for a QB) and the difference, times expected
+    # opportunities and the league's TD points, is added to E_pts, clipped to ±`td_adj_clip`.
+    "td_regress": True,
+    "td_prior_opps": {"QB": 150, "RB": 60, "WR": 60, "TE": 60},
+    "td_adj_clip": 3.0,
 }
+
+TD_POS_DEFAULT_PTS = {"rush_td": 6.0, "rec_td": 6.0, "pass_td": 4.0}
+
+
+def td_regression(df: pd.DataFrame, pw: pd.DataFrame | None, season: int, week: int,
+                  scoring_rules: dict | None, c: dict) -> pd.DataFrame:
+    """`td_rate_raw`, `td_rate_shrunk`, `td_adj` for every row of `df` (needs gsis_id, position, E_opps,
+    and proj_pass_att for QBs).
+
+        shrunk = (TDs + prior × pos_rate) / (opps + prior)
+        td_adj = clip((shrunk − raw) × E_opps × td_pts, ±td_adj_clip)
+
+    where TDs/opps are the player's season-to-date rush+rec TDs over carries+targets (pass TDs over
+    attempts for a QB) from `pw` (weeks before `week` of `season`), pos_rate the same ratio pooled over
+    his position, and E_opps the expected opportunities (projected attempts for a QB, else his season
+    mean). A player with no season rows, zero opportunities or no E_opps gets td_adj 0 and NaN rates:
+    nothing moves for him. Calibration on the 1,019 frozen e_pts rows of 2026 weeks 4-7 (Gooma scoring):
+    residual ~ 1.07 x td_adj, MAE 4.73 -> 4.66, so the full correction ships unscaled."""
+    out = pd.DataFrame({"td_rate_raw": np.nan, "td_rate_shrunk": np.nan, "td_adj": 0.0},
+                       index=df.index)
+    if pw is None or pw.empty or df.empty or not c.get("td_regress", True):
+        return out
+    need = {"season", "week", "gsis_id", "position", "opps", "rec_tds", "rush_tds", "pass_att", "pass_tds"}
+    if not need <= set(pw.columns):
+        return out
+    p = pw[(pd.to_numeric(pw.season, errors="coerce") == season)
+           & (pd.to_numeric(pw.week, errors="coerce") < week)].copy()
+    if p.empty:
+        return out
+    num = lambda col: pd.to_numeric(p[col], errors="coerce").fillna(0.0)
+    is_qb = p.position.eq("QB")
+    p["_tds"] = np.where(is_qb, num("pass_tds"), num("rec_tds") + num("rush_tds"))
+    p["_opps"] = np.where(is_qb, num("pass_att"), num("opps"))
+    per_player = p.groupby("gsis_id")[["_tds", "_opps"]].sum()
+    # a QB's expected attempts when Sleeper has not projected him: his season mean in games he threw in
+    thrown = p[is_qb & (p._opps > 0)]
+    att_per_game = thrown.groupby("gsis_id")._opps.mean()
+    per_pos = p.groupby("position")[["_tds", "_opps"]].sum()
+    pos_rate = (per_pos._tds / per_pos._opps.where(per_pos._opps > 0)).to_dict()
+
+    sc = scoring_rules or {}
+    pts = lambda k: float(sc.get(k) or TD_POS_DEFAULT_PTS[k])
+    skill_td_pts = (pts("rush_td") + pts("rec_td")) / 2.0
+
+    prior_cfg = c.get("td_prior_opps", DEFAULTS["td_prior_opps"])
+    prior_of = (lambda pos: float(prior_cfg.get(pos, 60))) if isinstance(prior_cfg, dict) \
+        else (lambda pos: float(prior_cfg))
+
+    gid = df.gsis_id.astype(object)
+    tds = gid.map(per_player._tds)
+    opps = gid.map(per_player._opps)
+    prate = df.position.map(pos_rate)
+    prior = df.position.map(prior_of).astype(float)
+    qb = df.position.eq("QB")
+    e_opps = pd.to_numeric(df.get("E_opps"), errors="coerce")
+    e_att = pd.to_numeric(df.get("proj_pass_att"), errors="coerce") if "proj_pass_att" in df else \
+        pd.Series(np.nan, index=df.index)
+    e_att = e_att.fillna(gid.map(att_per_game))
+    volume = e_att.where(qb, e_opps)
+    td_pts = np.where(qb, pts("pass_td"), skill_td_pts)
+
+    ok = tds.notna() & (opps > 0) & prate.notna() & volume.notna()
+    raw = tds / opps.where(opps > 0)
+    shrunk = (tds + prior * prate) / (opps + prior)
+    adj = ((shrunk - raw) * volume * td_pts).clip(-c["td_adj_clip"], c["td_adj_clip"])
+    out["td_rate_raw"] = raw.where(ok).round(4)
+    out["td_rate_shrunk"] = shrunk.where(ok).round(4)
+    out["td_adj"] = adj.where(ok, 0.0).fillna(0.0).round(2)
+    return out
 
 
 def _conf_label(v: float) -> str:
@@ -31,8 +109,12 @@ def _conf_label(v: float) -> str:
 def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
             proj: pd.DataFrame, dvp: pd.DataFrame, sched: pd.DataFrame,
             depth: pd.DataFrame, points: pd.DataFrame, meta: dict,
-            week: int, season: int, cfg: dict | None = None) -> pd.DataFrame:
-    """Score a set of players (a roster, or the free-agent pool) for one week."""
+            week: int, season: int, cfg: dict | None = None,
+            pw: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Score a set of players (a roster, or the free-agent pool) for one week.
+
+    `pw` is player_weeks (any seasons); it feeds the touchdown regression (`td_regression`) and is
+    optional: without it td_adj is 0 for everyone."""
     c = {**DEFAULTS, **(cfg or {})}
     if roster is None or roster.empty:
         return pd.DataFrame()
@@ -49,9 +131,14 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
 
     pinfo = players[["gsis_id", "age", "years_exp", "injury_status",
                      "nfl_status", "draft_number", "rookie_year"]
-                    + (["inactive"] if "inactive" in players.columns else [])]
+                    + [x for x in ("inactive", "repeat_dnp", "role_change")
+                       if x in players.columns]]
     df = df.merge(pinfo, on="gsis_id", how="left")
     df = df.merge(base, on="gsis_id", how="left")
+    # An IR activation or practice-squad elevation this week (status.role_changes): his recent weeks
+    # were 0-opportunity weeks for a reason that is gone, so trailing volume is not held against him
+    # where a projection exists. With no projection the trailing numbers are all he has and stay.
+    role_change = _role_change_mask(df)
 
     # this league's trailing points (last 3 weeks played)
     if points is not None and not points.empty:
@@ -70,9 +157,9 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
 
     # projections for this week
     if proj is not None and not proj.empty:
-        pw = proj[proj.week == week].drop(columns=["team", "position"],
+        pj = proj[proj.week == week].drop(columns=["team", "position"],
                                           errors="ignore")
-        df = df.merge(pw, on="gsis_id", how="left")
+        df = df.merge(pj, on="gsis_id", how="left")
     for col in ["proj_opps", "proj_targets", "proj_carries",
                 "proj_carry_share", "proj_target_share"]:
         if col not in df.columns:
@@ -101,7 +188,7 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     games = df.get("games", pd.Series(0, index=df.index)).fillna(0)
     w_trail = (games / c["trail_games"]).clip(0, c["trail_cap"])
     has_proj = df.proj_opps.notna()
-    has_trail = df.avg_opps.notna()
+    has_trail = df.avg_opps.notna() & ~(role_change & has_proj)
     w_trail = np.where(~has_proj, 1.0, np.where(~has_trail, 0.0, w_trail))
     w_proj = 1.0 - w_trail
     df["w_proj"] = np.round(w_proj, 2)
@@ -131,7 +218,7 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     # Otherwise a player with a projection but no history is scored as though
     # his history were zero, which quietly deflates every rookie and newcomer.
     has_p = df.proj_pts_league.notna()
-    has_t = df.trail_pts.notna()
+    has_t = df.trail_pts.notna() & ~(role_change & has_p)
     wp = np.where(has_p, w_proj, 0.0)
     wt = np.where(has_t, w_trail, 0.0)
     tot = wp + wt
@@ -140,7 +227,10 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
         (wp * df.proj_pts_league.fillna(0) + wt * df.trail_pts.fillna(0))
         / np.where(tot > 0, tot, 1),
         np.nan)
-    df["E_pts"] = np.round(e_pts * df.mult, 1)
+    # touchdown regression: an additive, clipped correction on top of the blend (see td_regression)
+    td = td_regression(df, pw, season, week, meta.get("scoring", {}), c)
+    df["td_rate_raw"], df["td_rate_shrunk"], df["td_adj"] = td.td_rate_raw, td.td_rate_shrunk, td.td_adj
+    df["E_pts"] = np.round(e_pts * df.mult + df.td_adj.to_numpy(), 1)
     # share of the blend that came from the projection, for transparency
     df["pts_mix"] = [
         ("projection only" if not t_ else f"{p_/(p_+t_):.0%} projection")
@@ -186,18 +276,42 @@ def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[df.E_opps.isna(), "flag"] = "NO BASELINE"
     bye = df.opponent.eq("BYE") | df.opponent.isna()
     df.loc[bye, "flag"] = "BYE"
+    # an activation / practice-squad elevation this week (status.role_changes) is worth a label of
+    # its own, but only where nothing else is already said
+    df.loc[_role_change_mask(df) & df.flag.eq(""), "flag"] = "ROLE_CHANGE"
     for st, lab in [("Questionable", "QUESTIONABLE"), ("Doubtful", "DOUBTFUL"),
                     ("Out", "OUT"), ("IR", "IR"), ("PUP", "PUP")]:
         df.loc[df.injury_status.eq(st), "flag"] = lab
+    # 0 opportunities in each of the last two completed weeks and no Full practice this week
+    # (status.recent_dnp): Caleb Williams (2026 week 5) had missed weeks 3-4 and kept 14.8 E_pts.
+    # repeat_dnp 1 = capped (play_prob <= 0.25), 2 = also Out/Doubtful or DNP, so zeroed.
+    rd = _repeat_dnp_level(df)
+    df.loc[rd.ge(1) & ~df.flag.isin(["OUT", "IR", "PUP", "BYE", "NO BASELINE"]),
+           "flag"] = "REPEAT_DNP"
     # the gameday inactive list beats any designation: Jalen Coker (2026 week 4) was
     # Questionable until he was inactive and still made the E_pts-optimal lineup.
     df.loc[_inactive_mask(df), "flag"] = "INACTIVE"
     # a bye is a bye whatever the injury tag says: a Questionable player on a
     # bye week once kept his E_pts and the optimizer started him (Aaron Jones,
     # 2026 week 6). Apply the bye zero on the mask, not on the final label.
-    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "PUP", "INACTIVE", "NO BASELINE"]),
+    df.loc[bye | rd.ge(2)
+           | df.flag.isin(["BYE", "OUT", "IR", "PUP", "INACTIVE", "NO BASELINE"]),
            "E_pts"] = np.nan
     return df
+
+
+def _repeat_dnp_level(df: pd.DataFrame) -> pd.Series:
+    """0 / 1 (capped) / 2 (zeroed) from `repeat_dnp` (set by the run from ff.status.build)."""
+    if "repeat_dnp" not in df.columns:
+        return pd.Series(0, index=df.index)
+    return pd.to_numeric(df["repeat_dnp"], errors="coerce").fillna(0).astype(int)
+
+
+def _role_change_mask(df: pd.DataFrame) -> pd.Series:
+    """Rows activated / elevated this week (`role_change` == 1, set by the run from ff.status.role_changes)."""
+    if "role_change" not in df.columns:
+        return pd.Series(False, index=df.index)
+    return pd.to_numeric(df["role_change"], errors="coerce").fillna(0).astype(int).eq(1)
 
 
 def _why(df: pd.DataFrame) -> pd.Series:
@@ -221,9 +335,15 @@ def _why(df: pd.DataFrame) -> pd.Series:
         if pd.notna(r.get("dvp_rank")) and pd.notna(r.get("opponent")):
             pct = (r.mult - 1) * 100
             bits.append(f"vs {r.opponent} (DvP {int(r.dvp_rank)}, {pct:+.0f}%)")
+        adj = r.get("td_adj")
+        if pd.notna(adj) and abs(float(adj)) >= 0.05:
+            bits.append(f"TD regress {float(adj):+.1f} "
+                        f"(season {r.td_rate_raw:.1%}/opp -> {r.td_rate_shrunk:.1%})")
         if r.get("conf"):
             bits.append(f"{r.conf} confidence")
         if r.get("flag"):
             bits.append(r.flag)
+        if pd.notna(r.get("role_change")) and int(r.get("role_change") or 0) == 1:
+            bits.append("activated/elevated this week: recent 0-opp weeks not counted")
         out.append(" · ".join(bits))
     return pd.Series(out, index=df.index)
