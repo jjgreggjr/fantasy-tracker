@@ -103,6 +103,10 @@ Phase 2.5 families (opt-in for the models: `train.OPT_IN_FAMILIES`, so the Phase
               FTN by defense (`ftn_def`, Wednesday release), light-box rate, blitz rate and pass rushers over the last 4 charted
               games; and the defense's season-to-date rank (1 = most allowed) in receiving and rushing yards to the position
               among the defenses with a game. A row carries the stems that bear on his position (DVPS_POS) and NaN for the rest.
+              Computed only on a store with the play-by-play tables (the matrix builder's); the serving store gets NaN unread.
+  opp_db_out  (Phase 5 candidate, 2026-10-27) the opponent's defensive injury report joined to its defensive depth chart
+              (`depth_charts_def`, loaded by `load_store(defense=True)`: the matrix builder's store, or the serve once the
+              family is adopted through `serve.FAMILY_SOURCES`); NaN unread on a store without that table.
 
 Cross-team aggregates (DvP, teammate context) only ever use GAMES THAT ENDED: the opponent's and our own
 previous games are days old. Nothing here sums across the league for the current week (finding 7).
@@ -1237,26 +1241,48 @@ def _charting_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:
 
 
 # --------------------------------------------------------------------------- opponent DvP split by stat (Phase 5 candidate)
+# The family reads player_games by GAME (`_dvps_game_sums`), never league-wide: a completed game's stat lines never change, so
+# its per-position sums are memoised once per (store, defense, game) and every later target that sees the game (the league
+# ranks of each of the ~32 defenses, this defense's own window) reuses them. The gate still decides which games a target sees
+# (`game_results` at its result cutoff; a game's stat rows carry the same stamp as its result row, so a visible game is wholly
+# readable), and the trace of a build shows exactly those per-game reads.
+DVPS_GAME_COLS = tuple(dict.fromkeys((*DVPS_ALLOWED.values(), *DVPS_RANKS.values())))
+
+
+def _dvps_game_sums(store, t: TargetRow, defense: str, game_id: str, trace) -> dict[tuple, float]:
+    """{(position, player_games column): sum} of what `defense` allowed in one completed game, for DVPS_GAME_COLS; a position
+    with no stat row in the game has no key (read as 0). Called only for games `game_results` shows before the cutoff."""
+    def build() -> dict[tuple, float]:
+        pg = as_of_join(store, "player_games", _rk(t.kickoff), game_id=game_id, opponent_team=defense, trace=trace)
+        cols = [c for c in DVPS_GAME_COLS if c in pg.columns]
+        if not len(pg) or not cols:
+            return {}
+        sums = pg.groupby("position")[cols].sum()
+        return {(pos, c): float(sums.at[pos, c]) for pos in sums.index for c in cols}
+    return _memo(store, trace, ("dvps_game", defense, game_id), build)
+
+
+def _dvps_games(store, t: TargetRow, trace, team: str | None = None) -> pd.DataFrame:
+    """REG `game_results` rows of this season known before the result cutoff: this `team`'s (chronological) or everyone's."""
+    keys = {"team": team} if team is not None else {}
+    gr = as_of_join(store, "game_results", _rk(t.kickoff), trace=trace, **keys)
+    return gr[(gr["season"] == t.season) & (gr["game_type"] == "REG")]
+
+
 def _dvps_league(store, t: TargetRow, trace) -> dict[tuple, float]:
     """{(rank stem, position, defense): rank} over every defense with a completed REG game this season before this game's result
-    cutoff: 1 = most yards allowed per game to that position (ties share the better rank). The one league-wide read of the
-    family; memoised per game (both teams share the kickoff, so the cutoff)."""
+    cutoff: 1 = most yards allowed per game to that position (ties share the better rank). The season's completed games come
+    from one `game_results` read; each defense's per-game sums from `_dvps_game_sums` (memoised, so a game is read once per
+    store). Memoised per game (both teams share the kickoff, so the cutoff)."""
     def build() -> dict[tuple, float]:
-        rk = _rk(t.kickoff)
-        gr = as_of_join(store, "game_results", rk, trace=trace)
-        gr = gr[(gr["season"] == t.season) & (gr["game_type"] == "REG")]
-        games = gr.groupby("team")["game_id"].nunique()
-        games = games[games > 0]
-        pg = as_of_join(store, "player_games", rk, trace=trace)
-        pg = pg[pg["season"] == t.season]
-        cols = [c for c in DVPS_RANKS.values() if c in pg.columns]
-        sums = pg.groupby(["opponent_team", "position"])[cols].sum()
+        gids = {tm: list(dict.fromkeys(g["game_id"])) for tm, g in _dvps_games(store, t, trace).groupby("team", sort=False)}
         out: dict[tuple, float] = {}
+        if not gids:
+            return out
+        sums = {tm: [_dvps_game_sums(store, t, tm, g, trace) for g in gs] for tm, gs in gids.items()}
         for stem, col in DVPS_RANKS.items():
-            if col not in cols:
-                continue
             for pos in POSITIONS:
-                allowed = {tm: float(sums[col].get((tm, pos), 0.0)) / float(n) for tm, n in games.items()}
+                allowed = {tm: sum(s.get((pos, col), 0.0) for s in ss) / len(ss) for tm, ss in sums.items()}
                 for tm, v in allowed.items():
                     out[(stem, pos, tm)] = 1.0 + sum(o > v for o in allowed.values())
         return out
@@ -1266,28 +1292,23 @@ def _dvps_league(store, t: TargetRow, trace) -> dict[tuple, float]:
 def _dvp_split_table(store, t: TargetRow, trace) -> dict[str, dict[str, float]]:
     """{position: {column: value}} for the opponent's defense: its completed REG games this season before this game's result
     cutoff (kickoff - RESULT_LAG, as `dvp`), l4 = the last four, std = all of them. Per-game means of what it allowed to each
-    position (DVPS_ALLOWED), ratios of sums for the play-by-play rates (pbp_team rows with the defense as `opponent`) and the
-    FTN rates (`ftn_def`, read at kickoff: a Wednesday release), ranks from `_dvps_league`. NaN with no history (week 1) or
-    without the table. Memoised per (game, defense)."""
+    position (DVPS_ALLOWED, from `_dvps_game_sums`), ratios of sums for the play-by-play rates (pbp_team rows with the defense
+    as `opponent`) and the FTN rates (`ftn_def`, read at kickoff: a Wednesday release), ranks from `_dvps_league`. NaN with no
+    history (week 1) or without the table. Memoised per (game, defense)."""
     def build() -> dict[str, dict[str, float]]:
         rk = _rk(t.kickoff)
         out = {pos: {c: NAN for c in DVPS_COLUMNS} for pos in POSITIONS}
         if not (store.has("game_results") and store.has("player_games")):
             return out
-        gr = as_of_join(store, "game_results", rk, team=t.opponent, trace=trace)
-        gr = gr[(gr["season"] == t.season) & (gr["game_type"] == "REG")]
-        gids = list(gr["game_id"])                               # oldest known first: chronological
-        pg = as_of_join(store, "player_games", rk, opponent_team=t.opponent, trace=trace)
-        pg = pg[pg["season"] == t.season]
-        have = {s: c for s, c in DVPS_ALLOWED.items() if c in pg.columns}
-        sums = pg.groupby(["game_id", "position"])[list(have.values())].sum()
+        gids = list(dict.fromkeys(_dvps_games(store, t, trace, team=t.opponent)["game_id"]))   # oldest known first: chronological
+        sums = {g: _dvps_game_sums(store, t, t.opponent, g, trace) for g in gids}
         for pos in POSITIONS:
             d = out[pos]
             for w, sel in (("l4", gids[-DVPS_WINDOW:]), ("std", gids)):
                 if not sel:
                     continue
-                for s, c in have.items():
-                    d[f"dvps_{s}_{w}"] = float(sum(float(sums[c].get((g, pos), 0.0)) for g in sel) / len(sel))
+                for s, c in DVPS_ALLOWED.items():
+                    d[f"dvps_{s}_{w}"] = float(sum(sums[g].get((pos, c), 0.0) for g in sel) / len(sel))
         if store.has("pbp_team"):
             faced = as_of_join(store, "pbp_team", rk, opponent=t.opponent, trace=trace)
             faced = faced[(faced["game_type"] == "REG") & (faced["season"] == t.season)]
@@ -1316,7 +1337,11 @@ def _dvp_split_table(store, t: TargetRow, trace) -> dict[str, dict[str, float]]:
 
 def _dvp_split_features(store, t: TargetRow, trace) -> dict[str, float]:
     """The `dvp_split` family for his row: the defense table's column for his position where the stem bears on it (DVPS_POS),
-    NaN elsewhere."""
+    NaN elsewhere. Computed only on a store with the play-by-play tables (`pbp_team`, the matrix builder's store): the serving
+    store (`load_store(pbp=False)`) gets NaN without a read, like the charting families, until the family is adopted and
+    `serve.FAMILY_SOURCES` loads what it needs."""
+    if not store.has("pbp_team"):
+        return dict.fromkeys(DVPS_COLUMNS, NAN)
     row = _dvp_split_table(store, t, trace).get(t.position, {})
     keep = DVPS_POS.get(t.position, frozenset())
     return {c: (row.get(c, NAN) if DVPS_STEM[c] in keep else NAN) for c in DVPS_COLUMNS}
@@ -1421,13 +1446,18 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
 def _opp_def_features(store, t: TargetRow, trace) -> dict[str, Any]:
     """The `opp_db_out` family (OPP_DEF_COLUMNS and the meta `opp_report_present`), once per (store, game, opponent): the
     opponent's injury rows for this season and week known before kickoff, grouped by INJ_DEF_GROUPS, and its newest defensive
-    depth chart before kickoff for who starts."""
+    depth chart before kickoff for who starts. Computed only on a store with `depth_charts_def` (`load_store(defense=True)`: the
+    matrix builder's store, or the serve once the family is adopted): without it every column is NaN and nothing is read, so
+    an un-adopted serve never pays for the family and an adopted one never serves it half-built."""
     def build() -> dict[str, Any]:
         ko = t.kickoff
+        out: dict[str, Any] = {c: NAN for c in OPP_DEF_COLUMNS}
+        out["opp_report_present"] = 0
+        if not store.has("depth_charts_def"):
+            return out
         inj = as_of_join(store, "injuries", ko, team=t.opponent, trace=trace)
         inj = inj[inj["season"] == t.season]
         wk = inj[inj["week"] == t.week]
-        out: dict[str, Any] = {c: NAN for c in OPP_DEF_COLUMNS}
         out["opp_report_present"] = int(len(wk) > 0)
         # chronic: defensive 'Out' rows in the prior OPP_DEF_WINDOW weeks of this season (NaN with no report rows in the window)
         prior = inj[(inj["week"] >= t.week - OPP_DEF_WINDOW) & (inj["week"] < t.week)]
@@ -1444,14 +1474,13 @@ def _opp_def_features(store, t: TargetRow, trace) -> dict[str, Any]:
             out[col] = float(sum(grp[pid] == g for pid in out_like))
         out["opp_def_out_n"] = float(len(out_like))
         out["opp_db_q_n"] = float(sum(s == "Questionable" and grp[pid] == "DB" for pid, s in status.items()))
-        if store.has("depth_charts_def"):
-            dc = as_of_join(store, "depth_charts_def", ko, team=t.opponent, trace=trace)
-            if len(dc):
-                newest = dc[KNOWN_AT].max()
-                if ko - newest <= DEPTH_MAX_AGE:
-                    dc = dc[dc[KNOWN_AT] == newest]
-                    starters = set(dc.loc[(dc["grp"] == "DB") & (dc["rank"] == 1), "player_id"])
-                    out["opp_db_starter_out_n"] = float(sum(pid in starters for pid in out_like if grp[pid] == "DB"))
+        dc = as_of_join(store, "depth_charts_def", ko, team=t.opponent, trace=trace)
+        if len(dc):
+            newest = dc[KNOWN_AT].max()
+            if ko - newest <= DEPTH_MAX_AGE:
+                dc = dc[dc[KNOWN_AT] == newest]
+                starters = set(dc.loc[(dc["grp"] == "DB") & (dc["rank"] == 1), "player_id"])
+                out["opp_db_starter_out_n"] = float(sum(pid in starters for pid in out_like if grp[pid] == "DB"))
         return out
     return _memo(store, trace, ("opp_def", t.game_id, t.opponent), build)
 

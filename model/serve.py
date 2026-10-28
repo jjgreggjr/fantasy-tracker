@@ -123,7 +123,8 @@ class FamilySource:
     store_kwarg  the `point_in_time.load_store` switch that adds its table (None: built from the base tables)
     table        the RawStore table that switch adds
     refresh      re-download its in-season source at serve time (None: nothing to refresh)
-    load         read the table from disk to check it is readable BEFORE the store is built (raises, or returns None if absent)
+    load         read the table from disk to check it is readable BEFORE the store is built (raises, or returns None if absent;
+                 None here: the table is cut from a base file the store reads anyway, so there is nothing separate to check)
     week_rows    (store, season, week) -> the table's rows for the served week: 0 means its columns would be empty on every row
     timing       when the source publishes, for the WARN
     extend       (store, seasons) -> the store with serve-only rows added to its table after `point_in_time.load_store` built it
@@ -239,9 +240,21 @@ def table_week_rows(table: str):
     return rows
 
 
+def table_season_rows(table: str):
+    """For a table without a usable `week` (depth_charts_def: 2025+ rows are dated snapshots, week NA): the season's rows."""
+    def rows(store, season: int, week: int) -> int:
+        if not store.has(table):
+            return 0
+        return int((store._tables[table].df["season"] == season).sum())
+    return rows
+
+
 # family -> what serving it needs. A future family (nfelo, ...) is one entry here plus its `load_store` switch. A family
-# not listed cannot be served (pbp_* and eff need play-by-play the serve does not refresh; pbp_part is a backtest proxy), so a
-# spec that adds one is refused (a WARN, nothing written) rather than served with empty columns.
+# not listed cannot be served (pbp_* and eff need play-by-play the serve does not refresh, and `dvp_split` is computed only on
+# a store that has it; pbp_part is a backtest proxy), so a spec that adds one is refused (a WARN, nothing written) rather than
+# served with empty columns. A family derived from the base tables alone (streak, shape: the player's own history) needs no
+# switch; one whose table is cut from a base file the serve already refreshes (opp_db_out: the depth-chart files' defensive
+# rows) needs the switch but no refresh or readability check of its own.
 FAMILY_SOURCES = {
     "ecr": FamilySource("ecr", "ecr", refresh=refresh_ecr, load=_load_ecr, week_rows=table_week_rows("ecr"),
                         timing="DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no "
@@ -252,7 +265,10 @@ FAMILY_SOURCES = {
                                   "no rows means the read failed (data/projections.csv lacks the week and the endpoint failed), "
                                   "not that it is too early"),
     "streak": FamilySource(),                           # derived from the base tables: nothing to load
-    "opp_db_out": FamilySource(),                       # injuries + depth_charts_def: base tables the serve already refreshes
+    "shape": FamilySource(),                            # derived from the base tables (Hist), like streak: nothing to load
+    "opp_db_out": FamilySource("defense", "depth_charts_def", week_rows=table_season_rows("depth_charts_def"),
+                               timing="the defensive rows of the season's depth-chart file, which every serve re-downloads with "
+                                      "the offensive ones; no rows means nflverse has not published the season's charts"),
 }
 
 
@@ -377,7 +393,7 @@ def load_store(season: int, *, refresh: bool = True, families=(), warnings: list
                 warnings.append(f"{fam}: could not refresh its source ({type(e).__name__}: {str(e)[:160]}); using the cached copy, "
                                 "if there is one")
         try:
-            ok, why = src.load() is not None, "not fetched"
+            ok, why = src.load is None or src.load() is not None, "not fetched"   # no `load`: cut from a base file
         except Exception as e:
             ok, why = False, f"{type(e).__name__}: {str(e)[:160]}"
         if ok:
