@@ -164,3 +164,15 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,9486,Dontayvion Wicks,10
 2026,7,waiver,add,8365,,10
 2026,7,waiver,drop,12493,Oronde Gadsden II,10
+2026,8,trade,add,11584,Bucky Irving,"2, 5"
+2026,8,trade,add,11627,Troy Franklin,"2, 5"
+2026,8,trade,add,12512,Quinshon Judkins,"2, 5"
+2026,8,trade,add,13294,Makai Lemon,"2, 5"
+2026,8,trade,add,13346,Denzel Boston,"2, 5"
+2026,8,trade,add,9997,Zay Flowers,"2, 5"
+2026,8,trade,drop,11584,Bucky Irving,"2, 5"
+2026,8,trade,drop,11627,Troy Franklin,"2, 5"
+2026,8,trade,drop,12512,Quinshon Judkins,"2, 5"
+2026,8,trade,drop,13294,Makai Lemon,"2, 5"
+2026,8,trade,drop,13346,Denzel Boston,"2, 5"
+2026,8,trade,drop,9997,Zay Flowers,"2, 5"
