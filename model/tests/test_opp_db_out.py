@@ -148,10 +148,15 @@ class Starters(unittest.TestCase):
         self.assertEqual(feats(self.OUTS, fresh)["opp_db_starter_out_n"], 1.0)
         self.assertEqual(feats(self.OUTS, [dc("CB1", "LCB", "DB", 1, KO - SEC)])["opp_db_starter_out_n"], 1.0)
 
-    def test_without_the_defensive_depth_table_the_counts_stand_and_only_starters_are_nan(self):
-        f = feats(self.OUTS, charts=None)
-        self.assertTrue(math.isnan(f["opp_db_starter_out_n"]))
-        self.assertEqual((f["opp_db_out_n"], f["opp_lb_out_n"], f["opp_def_out_n"]), (3.0, 1.0, 4.0))
+    def test_without_the_defensive_depth_table_the_family_is_nan_and_nothing_is_read(self):
+        """The serving store has no `depth_charts_def` unless the family is adopted (`load_store(defense=True)`): the family is
+        then NaN without a read, as the charting families are, rather than the counts without the starters (a half-built row)."""
+        trace: list = []
+        f = feats(self.OUTS, charts=None, trace=trace)
+        self.assertTrue(all(math.isnan(f[c]) for c in COLS))
+        self.assertEqual(f["opp_report_present"], 0)
+        self.assertEqual(trace, [])
+        self.assertEqual(feats(self.OUTS, charts=[])["opp_db_out_n"], 3.0)          # the table, even empty: the report counts
 
     def test_another_teams_chart_is_not_the_opponents(self):
         ours = [dc("CB2", "LCB", "DB", 1, CHART_AT + DAY, team="KC")]          # newer, but KC's: neither newest-for-DET nor a DET starter
@@ -282,6 +287,33 @@ class Loader(unittest.TestCase):
         self.assertEqual(de.name, "depth_charts_def")
         self.assertEqual(set(de.df["grp"]), {"DB", "LB", "DL"})
 
+    def test_the_store_loads_the_defensive_table_only_behind_the_defense_switch(self):
+        """`load_store(pbp=False)` with the default switches (the serving store) parses neither the defensive depth chart nor
+        FTN's `ftn_def`; `defense=True` (the matrix builder) adds the one, `charting=True` the other."""
+        stamp = pd.Series([KO]).astype("datetime64[ns, UTC]")
+        tiny = RawTable("player_games", pd.DataFrame({"player_id": ["x"], KNOWN_AT: stamp}), "t")
+        sn = RawTable("snap_counts", pd.DataFrame({"player_id": ["x"], "position": ["WR"], KNOWN_AT: stamp}), "t")
+        loaders = ("load_xfp", "load_injuries", "load_depth_charts", "load_depth_charts_def", "load_career_pre_cutoff", "load_coaches")
+        lists = ("load_schedule_tables", "load_static_tables", "load_ngs_tables", "load_pfr_tables", "load_pbp_tables")
+        with mock.patch.multiple(pit, load_player_games=mock.DEFAULT, load_snap_counts=mock.DEFAULT, load_ftn_tables=mock.DEFAULT,
+                                 **{k: mock.DEFAULT for k in loaders + lists}) as m:
+            m["load_player_games"].return_value, m["load_snap_counts"].return_value = tiny, sn
+            for k in lists:
+                m[k].return_value = []
+            for k in loaders:
+                m[k].return_value = RawTable(k.removeprefix("load_"), tiny.df, "t")
+            m["load_ftn_tables"].return_value = [RawTable(n, tiny.df, "t") for n in ("ftn", "ftn_team", "ftn_def")]
+            st = pit.load_store([2025], adp=False, college=False, pbp=False)
+            self.assertFalse(m["load_depth_charts_def"].called or m["load_ftn_tables"].called)
+            self.assertFalse(st.has("depth_charts_def") or st.has("ftn_def"))
+            self.assertTrue(st.has("depth_charts") and st.has("injuries"))
+            self.assertFalse(m["load_depth_charts_def"].called)
+            st = pit.load_store([2025], adp=False, college=False, pbp=False, defense=True)
+            self.assertEqual(m["load_depth_charts_def"].call_args.args, ([2025],))
+            self.assertTrue(st.has("depth_charts_def") and not st.has("ftn_def"))
+            st = pit.load_store([2025], adp=False, college=False, pbp=False, charting=True)
+            self.assertTrue(st.has("ftn_def") and not st.has("depth_charts_def"))
+
     def test_the_group_constants_cover_every_group_once(self):
         self.assertEqual(set(pit.DEF_DEPTH_GROUPS), {"DB", "LB", "DL"})
         codes = [c for codes in pit.DEF_DEPTH_GROUPS.values() for c in codes]
@@ -297,6 +329,7 @@ class Registry(unittest.TestCase):
                                 "opp_def_out_n", "opp_def_out_l4wk"])
         self.assertIn("opp_db_out", T.OPT_IN_FAMILIES)
         self.assertIn("opp_db_out", S.FAMILY_SOURCES)
+        self.assertEqual((S.FAMILY_SOURCES["opp_db_out"].store_kwarg, S.FAMILY_SOURCES["opp_db_out"].table), ("defense", "depth_charts_def"))
         self.assertIn("opp_report_present", F.META)
         self.assertNotIn("opp_report_present", F.feature_columns())
         df = pd.DataFrame({c: [0.0, 1.0] for c in F.feature_columns()} | {"position": ["QB", "RB"]})

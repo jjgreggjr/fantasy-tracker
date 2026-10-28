@@ -13,7 +13,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from model import features, train as T, trial as TR
+from model import features, serve as S, train as T, trial as TR
 from model.features import (ATT, CSH, NAN, N_VALUES, OPPS, PASSTD, PTS, RECTD, RUSHTD, TSH, Hist, SHAPE_TD_K, SHAPE_TD_PRIOR,
                             _shape_features)
 from model.point_in_time import TargetRow
@@ -115,6 +115,12 @@ class Registry(unittest.TestCase):
     def test_shape_is_registered_opt_in_and_the_serving_inputs_are_unchanged(self):
         self.assertIn("shape", features.FAMILIES)
         self.assertIn("shape", T.OPT_IN_FAMILIES)
+        # servable like streak: derived from the base tables (Hist), so no store switch, table, refresh or week check
+        src = S.family_source("shape")
+        self.assertEqual((src.store_kwarg, src.table, src.refresh, src.load, src.week_rows), (None, None, None, None, None))
+        cfg = TR.load_config()
+        steps = TR.adoption_steps(TR.compose(["+family:shape"], TR.serving_spec(cfg)), cfg, "average")
+        self.assertFalse(any("cannot be served" in s for s in steps), steps)
         self.assertEqual(len(COLS), 7)
         self.assertEqual(len(set(COLS)), 7)
         for c in COLS:

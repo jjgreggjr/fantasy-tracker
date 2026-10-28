@@ -8,14 +8,17 @@ model/point_in_time.py `load_ftn_tables`) on a synthetic store. No network, no c
   * per-game means allowed to each position (a game where the position scored nothing counts 0), the play-by-play ratios of sums,
     the FTN defense rates, the season-to-date ranks (1 = most allowed); l4 and std differ where the hand arithmetic says so
   * position conditioning: a row carries the stems in DVPS_POS for its position and NaN for the rest
-  * week 1 is NaN; a store without pbp_team / ftn_def leaves those columns NaN and the rest intact
-  * the trace: every read is at or before the cutoff and never holds the target game
+  * week 1 is NaN; a store without ftn_def leaves those columns NaN and the rest intact; a store without play-by-play (the
+    serving store) gets the whole family NaN without a read
+  * the trace: every read is at or before the cutoff and never holds the target game; player_games is read by game (once per
+    store per game), never league-wide
   * registry: 31 columns, unique, opt-in, nothing shared with another family, FTN_D pinned to the loader
 """
 from __future__ import annotations
 
 import math
 import unittest
+from unittest import mock
 
 import pandas as pd
 
@@ -239,14 +242,72 @@ class Leakage(unittest.TestCase):
             f = feats(st, pos, week=1, game=f"2024_01_KC_{DEF}")
             self.assertTrue(all(math.isnan(v) for v in f.values()), pos)
 
-    def test_a_store_without_pbp_or_ftn_leaves_those_columns_nan_and_the_rest_intact(self):
-        f = feats(synthetic_store(pbp=False, ftn=False), "WR")
-        for s in F.DVPS_PBP:
-            self.assertTrue(math.isnan(f[f"dvps_{s}_l4"]) and math.isnan(f[f"dvps_{s}_std"]), s)
-        self.assertTrue(math.isnan(f["dvps_blitz_rate_l4"]))
+    def test_a_store_without_ftn_leaves_its_columns_nan_and_the_rest_intact(self):
+        f = feats(synthetic_store(ftn=False), "WR")
+        self.assertTrue(math.isnan(f["dvps_blitz_rate_l4"]) and math.isnan(f["dvps_avg_rushers_l4"]))
         self.assertTrue(same(f["dvps_rec_yd_std"], 30.0) and f["dvps_rank_rec_yd_std"] == 2.0)
+        self.assertTrue(same(f["dvps_epa_pass_std"], 15 / 150))
+
+    def test_a_store_without_play_by_play_is_nan_without_a_read(self):
+        """The serving store (`load_store(pbp=False)`): the whole family is NaN and nothing is read or memoised, as for the
+        charting families, so an un-adopted serve never pays for it (the 25-minute Actions cap)."""
+        st = synthetic_store(pbp=False)
+        trace: list = []
+        for pos in F.POSITIONS:
+            f = feats(st, pos, trace=trace)
+            self.assertEqual(set(f), set(F.DVPS_COLUMNS))
+            self.assertTrue(all(math.isnan(v) for v in f.values()), pos)
+            self.assertTrue(all(math.isnan(v) for v in feats(st, pos).values()), pos)        # the memoised path too
+        self.assertEqual(trace, [])
+        self.assertEqual(st._memo, {})
         bare = F._dvp_split_features(RawStore([]), target(), None)
         self.assertTrue(all(math.isnan(v) for v in bare.values()))
+
+    def test_player_games_is_read_by_game_never_league_wide_and_each_game_once_per_store(self):
+        """The league ranks need every defense's completed games: they come from one `game_results` read and per-game
+        `player_games` reads keyed by game_id (memoised per (store, defense, game)), never a league-wide scan per target."""
+        st = synthetic_store()
+        calls: list[dict] = []
+
+        def spy(store, table, ts, **kw):
+            calls.append({"table": table, **{k: v for k, v in kw.items() if k != "trace"}})
+            return pit.as_of_join(store, table, ts, **kw)
+        with mock.patch.object(F, "as_of_join", side_effect=spy):
+            a = feats(st, "WR")
+            for pos in ("RB", "QB", "TE"):
+                feats(st, pos)
+            week5 = feats(st, "WR", week=5, game=f"2024_05_KC_{DEF}")       # another target: the same games, read already
+        pg_reads = [c for c in calls if c["table"] == "player_games"]
+        self.assertTrue(pg_reads)
+        for c in pg_reads:
+            self.assertIn("game_id", c, c)
+            self.assertIn("opponent_team", c, c)
+        self.assertEqual(len(pg_reads), len({(c["opponent_team"], c["game_id"]) for c in pg_reads}), "a game is read once per store")
+        self.assertEqual({(c["opponent_team"], c["game_id"]) for c in pg_reads},
+                         {(d, gid(w, d)) for d in (DEF, "D1", "D2") for w in range(1, 6)})
+        self.assertTrue(same(a["dvps_rec_yd_std"], 30.0) and a["dvps_rank_rec_yd_std"] == 2.0)
+        self.assertTrue(same(week5["dvps_rec_yd_std"], 25.0))
+        self.assertEqual(sorted({c["table"] for c in calls}), ["ftn_def", "game_results", "pbp_team", "player_games"])
+
+    def test_build_features_on_the_serving_store_emits_nan_for_the_family_without_a_league_wide_read(self):
+        """The real serving store (`load_store(pbp=False)`, the raw cache) through `build_features`: every dvp_split column NaN
+        and no `player_games` read without a key. Skipped where the raw cache is not present."""
+        if not (pit.CACHE_DIR / "nflverse" / "games.parquet").exists():
+            self.skipTest("raw cache not present")
+        st = pit.load_store((2024,), adp=False, college=False, pbp=False)
+        from model import audit
+        rows = audit.sample_targets(st, per_pos=1, weeks=(6,))
+        calls: list[dict] = []
+
+        def spy(store, table, ts, **kw):
+            calls.append({"table": table, **{k: v for k, v in kw.items() if k != "trace"}})
+            return pit.as_of_join(store, table, ts, **kw)
+        with mock.patch.object(F, "as_of_join", side_effect=spy):
+            for t in rows:
+                f = F.build_features(st, t)
+                self.assertTrue(all(math.isnan(f[c]) for c in F.DVPS_COLUMNS), t)
+        self.assertFalse([c for c in calls if c["table"] == "player_games" and len(c) == 1], "league-wide player_games read")
+        self.assertFalse(any(k[0] in ("dvps", "dvps_league", "dvps_game") for k in st._memo))
 
     def test_a_defense_with_games_but_no_stat_rows_allowed_zero(self):
         st = synthetic_store()

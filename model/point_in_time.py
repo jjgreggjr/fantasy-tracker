@@ -1242,22 +1242,26 @@ def load_ftn_tables(seasons: Iterable[int], skill_ids: set) -> list[RawTable]:
 
 def load_store(seasons: Iterable[int] = (2024,), *, adp: bool = True, college: bool = True, pbp: bool = True,
                ecr: bool = False, nfelo: bool = False, sleeper_proj: bool = False,
-               charting: bool | None = None) -> RawStore:
+               charting: bool | None = None, defense: bool = False) -> RawStore:
     """Every raw table, each with known_at. Season-scoped except the static tables (and the pre-2020
     career table). `adp=True` adds the `adp` table only if fetched CSVs exist (model/data/adp/); `college=True`
     adds the `college` table only if fetched CFBD CSVs exist (model/data/cfbd/); `pbp=True` adds the three play-by-play
     tables (Phase 2.5); `charting` (default: the value of `pbp`, so the serving path, which passes pbp=False, loads none of
-    it) adds the weekly NGS / PFR / FTN tables (Phase 5 candidates); `ecr=True` adds the weekly FantasyPros ECR table only
-    if `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the greerreNFL
-    tables (model/nfelo.py: opt-in, network refresh); `sleeper_proj=True` adds Sleeper's archived weekly projections
-    (the opt-in `market` family) only if `python -m model.fetch_sleeper_proj` has cached them. ecr / nfelo / sleeper_proj
-    are off by default so the serving store and the leakage audit keep exactly their tables; `build_features` turns
-    them on."""
+    it) adds the weekly NGS / PFR / FTN tables (Phase 5 candidates; FTN's `ftn_def`, the `dvp_split` family's defensive side,
+    is one of them and has no switch of its own); `defense=True` adds `depth_charts_def` (the depth-chart files' defensive
+    rows, a second parse of every season's file: the opt-in `opp_db_out` family); `ecr=True` adds the weekly FantasyPros ECR
+    table only if `python -m model.fetch_ecr` has written model/cache/ecr/ecr_weekly.parquet; `nfelo=True` adds the
+    greerreNFL tables (model/nfelo.py: opt-in, network refresh); `sleeper_proj=True` adds Sleeper's archived weekly projections
+    (the opt-in `market` family) only if `python -m model.fetch_sleeper_proj` has cached them. defense / ecr / nfelo /
+    sleeper_proj are off by default so the serving store and the leakage audit keep exactly their tables; `build_features`
+    turns them on, and the serve turns one on only when serving_config.json adopts its family (`serve.FAMILY_SOURCES`)."""
     seasons = list(seasons)
     pg, sn = load_player_games(seasons), load_snap_counts(seasons)
     tables = [*load_schedule_tables(seasons), pg, sn,
-              load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons), load_depth_charts_def(seasons),
+              load_xfp(seasons), load_injuries(seasons), load_depth_charts(seasons),
               *load_static_tables(), load_career_pre_cutoff(), load_coaches(seasons)]
+    if defense:
+        tables.append(load_depth_charts_def(seasons))
     if pbp:
         tables += load_pbp_tables(seasons, pg.df, sn.df)
     if pbp if charting is None else charting:
