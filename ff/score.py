@@ -138,8 +138,7 @@ def compute(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     # An IR activation or practice-squad elevation this week (status.role_changes): his recent weeks
     # were 0-opportunity weeks for a reason that is gone, so trailing volume is not held against him
     # where a projection exists. With no projection the trailing numbers are all he has and stay.
-    role_change = (pd.to_numeric(df["role_change"], errors="coerce").fillna(0).astype(int).eq(1)
-                   if "role_change" in df.columns else pd.Series(False, index=df.index))
+    role_change = _role_change_mask(df)
 
     # this league's trailing points (last 3 weeks played)
     if points is not None and not points.empty:
@@ -309,6 +308,7 @@ def _repeat_dnp_level(df: pd.DataFrame) -> pd.Series:
 
 
 def _role_change_mask(df: pd.DataFrame) -> pd.Series:
+    """Rows activated / elevated this week (`role_change` == 1, set by the run from ff.status.role_changes)."""
     if "role_change" not in df.columns:
         return pd.Series(False, index=df.index)
     return pd.to_numeric(df["role_change"], errors="coerce").fillna(0).astype(int).eq(1)

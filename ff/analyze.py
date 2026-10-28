@@ -164,6 +164,17 @@ def dvp_ranks(dvp: pd.DataFrame, preview_week: int, trailing: int,
     return m[cols].sort_values(["position", "dvp_rank"]).reset_index(drop=True)
 
 
+def _level(df: pd.DataFrame, col: str) -> pd.Series:
+    """Integer level of a 0/1/2 status column the run sets on players (0 when the column is absent)."""
+    if col not in df.columns:
+        return pd.Series(0, index=df.index)
+    return pd.to_numeric(df[col], errors="coerce").fillna(0).astype(int)
+
+
+def _mask(df: pd.DataFrame, col: str) -> pd.Series:
+    return _level(df, col).eq(1)
+
+
 def start_sit(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
               dvp: pd.DataFrame, sched: pd.DataFrame, depth: pd.DataFrame,
               week: int, weights: dict) -> pd.DataFrame:
@@ -205,14 +216,21 @@ def start_sit(roster: pd.DataFrame, players: pd.DataFrame, base: pd.DataFrame,
     df.loc[df.avg_opps.isna(), "flag"] = "NO BASELINE"
     bye = df.opponent.eq("BYE") | df.opponent.isna()
     df.loc[bye, "flag"] = "BYE"
+    # the status-layer rules (ff.status.build), mirrored from score.apply_flags so start_score and
+    # E_pts never disagree about who is playing: an activation / elevation gets its own label where
+    # nothing else is said; repeat DNP (0 opps in the team's last two games and no Full practice)
+    # is labelled at level 1 and zeroed, like INACTIVE, at level 2
+    df.loc[_mask(df, "role_change") & df.flag.eq(""), "flag"] = "ROLE_CHANGE"
     for st, lab in [("Out", "OUT"), ("IR", "IR"), ("Doubtful", "DOUBTFUL"),
                     ("Questionable", "QUESTIONABLE")]:
         df.loc[df.injury_status.eq(st), "flag"] = lab
+    rd = _level(df, "repeat_dnp")
+    df.loc[rd.ge(1) & ~df.flag.isin(["OUT", "IR", "BYE", "NO BASELINE"]), "flag"] = "REPEAT_DNP"
     # the gameday inactive list (ff.status.week_inactives) beats any designation
-    if "inactive" in df.columns:
-        df.loc[pd.to_numeric(df["inactive"], errors="coerce").fillna(0).eq(1), "flag"] = "INACTIVE"
+    df.loc[_mask(df, "inactive"), "flag"] = "INACTIVE"
     # the injury label may overwrite "BYE"; the bye zero must not depend on it
-    df.loc[bye | df.flag.isin(["BYE", "OUT", "IR", "INACTIVE", "NO BASELINE"]), "start_score"] = np.nan
+    df.loc[bye | rd.ge(2) | df.flag.isin(["BYE", "OUT", "IR", "INACTIVE", "NO BASELINE"]),
+           "start_score"] = np.nan
     return df.sort_values(["position", "start_score"],
                           ascending=[True, False]).reset_index(drop=True)
 

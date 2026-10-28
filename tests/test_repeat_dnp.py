@@ -13,21 +13,23 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from ff import score, status
+from ff import analyze, score, status
 
 
 def weeks(rows) -> pd.DataFrame:
-    """player_weeks rows: (week, gsis_id, team, opps, snaps)."""
-    return pd.DataFrame([{"season": 2026, "week": w, "gsis_id": g, "team": t, "position": "QB",
-                          "opps": o, "snaps": s} for w, g, t, o, s in rows])
+    """player_weeks rows: (week, gsis_id, team, opps, snaps[, pass_att])."""
+    return pd.DataFrame([{"season": 2026, "week": r[0], "gsis_id": r[1], "team": r[2], "position": "QB",
+                          "opps": r[3], "snaps": r[4], "pass_att": r[5] if len(r) > 5 else 0} for r in rows])
 
 
-def players(ids, teams=None, practice=None, injury=None) -> pd.DataFrame:
+def players(ids, teams=None, practice=None, injury=None, nfl=None) -> pd.DataFrame:
     teams = teams or {}
     practice = practice or {}
     injury = injury or {}
+    nfl = nfl or {}
     return pd.DataFrame({"gsis_id": ids, "name": ids, "team": [teams.get(i, "CHI") for i in ids],
                          "injury_status": [injury.get(i) for i in ids], "injury_body_part": [None] * len(ids),
+                         "nfl_status": [nfl.get(i, "ACT") for i in ids],
                          "practice_participation": [practice.get(i) for i in ids],
                          "news_updated": [None] * len(ids), "sleeper_depth_order": list(range(1, len(ids) + 1))})
 
@@ -73,6 +75,16 @@ class RecentDnp(unittest.TestCase):
         d = status.recent_dnp(PW, 2026, 5, players(["caleb"]), sched_with_bye(bye=5))
         self.assertTrue(d.empty)
 
+    def test_pass_attempts_are_a_game_played(self):
+        # a pocket QB: 0 carries + targets, and snaps not joined yet (NaN) on a Tuesday, but 30 attempts
+        pw = weeks([(3, "pocket", "CHI", 0, np.nan, 30), (4, "pocket", "CHI", 0, np.nan, 28),
+                    (3, "clip", "CHI", 0, 0, 0), (4, "clip", "CHI", 0, 0, 0)])
+        d = status.recent_dnp(pw, 2026, 5, players(["pocket", "clip"]))
+        self.assertEqual(dict(zip(d.gsis_id, d.dnp_weeks)), {"clip": "3,4"})
+        # a frame without the column still works (attempts count as 0)
+        d = status.recent_dnp(pw.drop(columns=["pass_att"]), 2026, 5, players(["pocket", "clip"]))
+        self.assertEqual(set(d.gsis_id), {"pocket", "clip"})
+
     def test_unpublished_stats_do_not_flag_a_whole_team(self):
         # a Tuesday run before week 4's stats land: the last two games with rows are 2 and 3
         pw = PW[PW.week <= 3]
@@ -82,19 +94,42 @@ class RecentDnp(unittest.TestCase):
 
 
 class BuildAppliesTheRules(unittest.TestCase):
-    def _build(self, practice=None, injury=None, roles=None, injuries=None):
-        p = players(["caleb", "tyson"], practice=practice, injury=injury)
+    def _build(self, practice=None, injury=None, roles=None, injuries=None, nfl=None, drop=()):
+        p = players(["caleb", "tyson"], practice=practice, injury=injury, nfl=nfl).drop(columns=list(drop))
         dnp = status.recent_dnp(PW, 2026, 5, p)
         st = status.build(p, depth(["caleb", "tyson"]), None, 5, injuries, None, dnp, roles)
         return st.set_index("gsis_id")
 
     def test_capped_at_a_quarter_and_flagged(self):
-        st = self._build()
+        # caleb is on the report (a Limited practice) with two 0-opp games behind him
+        st = self._build(practice={"caleb": "Limited"})
         self.assertEqual(st.loc["caleb", "repeat_dnp"], 1)
         self.assertLessEqual(st.loc["caleb", "play_prob"], status.REPEAT_DNP_CAP)
         self.assertEqual(st.loc["caleb", "dnp_weeks"], "3,4")
         self.assertEqual(st.loc["tyson", "repeat_dnp"], 0)
         self.assertEqual(st.loc["tyson", "play_prob"], 0.97)
+
+    def test_a_healthy_unlisted_backup_is_a_backup_not_a_dnp(self):
+        # not on the injury report (no designation, no practice entry) and ACT: two 0-snap games mean he
+        # is behind the starter, nothing more. 102 such players were flagged on 2026 week-8 data.
+        st = self._build()
+        self.assertEqual(st.loc["caleb", "repeat_dnp"], 0)
+        self.assertEqual(st.loc["caleb", "play_prob"], 0.97)
+        self.assertEqual(st.loc["caleb", "dnp_weeks"], "3,4")           # the history is still shown
+        self.assertFalse(any("REPEAT DNP" in w for w in status.warnings(st.reset_index())))
+        # a players frame without nfl_status is read as ACT
+        self.assertEqual(self._build(drop=["nfl_status"]).loc["caleb", "repeat_dnp"], 0)
+
+    def test_a_designation_or_a_roster_status_puts_him_in_scope(self):
+        self.assertEqual(self._build(injury={"caleb": "Questionable"}).loc["caleb", "repeat_dnp"], 1)
+        for nfl in ("RES", "DEV", "CUT", "INA"):
+            st = self._build(nfl={"caleb": nfl})
+            self.assertEqual(st.loc["caleb", "repeat_dnp"], 1, nfl)
+            self.assertLessEqual(st.loc["caleb", "play_prob"], status.REPEAT_DNP_CAP)
+        # the nflverse report alone (a practice entry for the week) is enough
+        inj = pd.DataFrame([{"season": 2026, "week": 5, "gsis_id": "caleb", "report_status": None,
+                             "practice_status": "Limited Participation in Practice"}])
+        self.assertEqual(self._build(injuries=inj).loc["caleb", "repeat_dnp"], 1)
 
     def test_full_practice_exempts(self):
         st = self._build(practice={"caleb": "Full Participation in Practice"})
@@ -113,7 +148,9 @@ class BuildAppliesTheRules(unittest.TestCase):
     def test_activation_clears_the_penalty(self):
         roles = pd.DataFrame([{"gsis_id": "caleb", "prev_status": "RES", "status": "ACT",
                                "role_change_kind": "IR activation", "role_change_known_at": None}])
-        st = self._build(roles=roles)
+        # Sleeper still says RES (it lags the transaction), which alone would put him in the rule's scope
+        st = self._build(roles=roles, nfl={"caleb": "RES"})
+        self.assertEqual(self._build(nfl={"caleb": "RES"}).loc["caleb", "repeat_dnp"], 1)
         self.assertEqual(st.loc["caleb", "repeat_dnp"], 0)
         self.assertEqual(st.loc["caleb", "role_change"], 1)
         self.assertEqual(st.loc["caleb", "role_change_kind"], "IR activation")
@@ -150,6 +187,22 @@ class RoleChanges(unittest.TestCase):
         self.assertTrue(status.role_changes(r, 2026, 5).empty)
         self.assertTrue(status.role_changes(None, 2026, 5).empty)
 
+    def test_several_rows_in_the_same_week(self):
+        # no timestamp: the file's last row wins for the previous week, but in the target week an ACT row
+        # beats a non-ACT one whatever the order, because the question is whether he was activated
+        r = self.rosters([(4, "a", "RES"), (5, "a", "ACT"), (5, "a", "RES"),
+                          (4, "b", "ACT"), (4, "b", "RES"), (5, "b", "ACT"),
+                          (4, "c", "RES"), (4, "c", "ACT"), (5, "c", "ACT")])
+        got = dict(zip(*[status.role_changes(r, 2026, 5)[c] for c in ("gsis_id", "role_change_kind")]))
+        self.assertEqual(got, {"a": "IR activation", "b": "IR activation"})
+        # a timestamp column orders the rows instead: the newest row wins
+        r = self.rosters([(4, "d", "ACT"), (4, "d", "RES"), (5, "d", "ACT"),
+                          (4, "e", "RES"), (4, "e", "ACT"), (5, "e", "ACT")])
+        r["known_at"] = ["2026-09-30T12:00:00Z", "2026-09-29T12:00:00Z", "2026-10-03T12:00:00Z",
+                         "2026-09-29T12:00:00Z", "2026-09-30T12:00:00Z", "2026-10-03T12:00:00Z"]
+        self.assertEqual(list(status.role_changes(r, 2026, 5).gsis_id), [])   # d's newest week-4 row is ACT, e's too
+        self.assertEqual(list(status.role_changes(r.drop(columns=["known_at"]), 2026, 5).gsis_id), ["d"])
+
 
 class ScoreFlags(unittest.TestCase):
     def frame(self, **rows):
@@ -179,6 +232,72 @@ class ScoreFlags(unittest.TestCase):
     def test_frames_without_the_columns_are_unchanged(self):
         df = score.apply_flags(self.frame(fine={}).drop(columns=["repeat_dnp", "role_change"]))
         self.assertEqual((df.flag.iloc[0], df.E_pts.iloc[0]), ("", 12.0))
+
+    def test_one_role_change_mask(self):
+        df = pd.DataFrame({"role_change": [1, 0, np.nan, "1"]})
+        self.assertEqual(score._role_change_mask(df).tolist(), [True, False, False, True])
+        self.assertEqual(score._role_change_mask(df.drop(columns=["role_change"])).tolist(), [False] * 4)
+
+
+class StartSitMirrorsTheRules(unittest.TestCase):
+    """analyze.start_sit has its own flag / zero path; it must say the same thing as score.apply_flags."""
+    WEEK = 5
+
+    def run_it(self, players_extra: dict, drop=()):
+        ids = list(players_extra)
+        roster = pd.DataFrame({"gsis_id": ids, "name": ids, "position": "QB", "team": "CHI"})
+        p = pd.DataFrame({"gsis_id": ids,
+                          "injury_status": [v.get("injury_status") for v in players_extra.values()],
+                          "inactive": [v.get("inactive", 0) for v in players_extra.values()],
+                          "repeat_dnp": [v.get("repeat_dnp", 0) for v in players_extra.values()],
+                          "role_change": [v.get("role_change", 0) for v in players_extra.values()]})
+        p = p.drop(columns=list(drop))
+        base = pd.DataFrame({"gsis_id": ids, "avg_opps": 6.0, "avg_snap_pct": 0.8})
+        sched = pd.DataFrame({"week": [self.WEEK], "team": ["CHI"], "opponent": ["GB"], "home": [1],
+                              "spread_line": [1.0], "total_line": [44.0], "gameday": ["2026-10-05"]})
+        dvp = pd.DataFrame({"defense": ["GB"], "position": ["QB"], "dvp_rank": [5], "fpts": [30.0]})
+        dep = pd.DataFrame({"gsis_id": ids, "rank": range(1, len(ids) + 1), "prev_rank": range(1, len(ids) + 1)})
+        return analyze.start_sit(roster, p, base, dvp, sched, dep, self.WEEK,
+                                 {"opps": 0.5, "snap_pct": 0.3, "dvp_rank": 0.2}).set_index("gsis_id")
+
+    def test_level_two_is_zeroed_like_inactive_level_one_is_labelled(self):
+        out = self.run_it({"capped": {"repeat_dnp": 1}, "zeroed": {"repeat_dnp": 2},
+                           "doubt": {"repeat_dnp": 2, "injury_status": "Doubtful"},
+                           "hurt": {"repeat_dnp": 2, "injury_status": "Out"},
+                           "back": {"role_change": 1}, "ina": {"repeat_dnp": 1, "inactive": 1}, "fine": {}})
+        self.assertEqual(out.loc["capped", "flag"], "REPEAT_DNP")
+        self.assertFalse(np.isnan(out.loc["capped", "start_score"]))
+        self.assertEqual(out.loc["zeroed", "flag"], "REPEAT_DNP")
+        self.assertTrue(np.isnan(out.loc["zeroed", "start_score"]))
+        self.assertEqual(out.loc["doubt", "flag"], "REPEAT_DNP")      # the rule, not DOUBTFUL, is what zeroes him
+        self.assertTrue(np.isnan(out.loc["doubt", "start_score"]))
+        self.assertEqual(out.loc["hurt", "flag"], "OUT")
+        self.assertTrue(np.isnan(out.loc["hurt", "start_score"]))
+        self.assertEqual(out.loc["back", "flag"], "ROLE_CHANGE")
+        self.assertFalse(np.isnan(out.loc["back", "start_score"]))
+        self.assertEqual(out.loc["ina", "flag"], "INACTIVE")
+        self.assertTrue(np.isnan(out.loc["ina", "start_score"]))
+        self.assertEqual(out.loc["fine", "flag"], "")
+        self.assertFalse(np.isnan(out.loc["fine", "start_score"]))
+
+    def test_same_verdict_as_apply_flags(self):
+        cases = {"capped": {"repeat_dnp": 1}, "zeroed": {"repeat_dnp": 2}, "back": {"role_change": 1},
+                 "q": {"injury_status": "Questionable"}, "fine": {}}
+        ss = self.run_it(cases)
+        ep = score.apply_flags(pd.DataFrame({
+            "name": list(cases), "E_opps": 10.0, "opponent": "GB",
+            "injury_status": [v.get("injury_status") for v in cases.values()],
+            "repeat_dnp": [v.get("repeat_dnp", 0) for v in cases.values()],
+            "role_change": [v.get("role_change", 0) for v in cases.values()], "E_pts": 12.0})).set_index("name")
+        for k in cases:
+            self.assertEqual(ss.loc[k, "flag"], ep.loc[k, "flag"], k)
+            self.assertEqual(np.isnan(ss.loc[k, "start_score"]), np.isnan(ep.loc[k, "E_pts"]), k)
+
+    def test_frames_without_the_columns_are_unchanged(self):
+        out = self.run_it({"fine": {}, "q": {"injury_status": "Questionable"}},
+                          drop=["repeat_dnp", "role_change", "inactive"])
+        self.assertEqual(out.flag.tolist(), ["", "QUESTIONABLE"])
+        self.assertFalse(out.start_score.isna().any())
 
 
 if __name__ == "__main__":

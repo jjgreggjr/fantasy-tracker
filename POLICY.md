@@ -112,18 +112,28 @@ Every run now builds `data/status.csv`, one row per player on a depth chart:
 of a backup are hurt, his expected volume should rise *this week*, before any
 projection updates.
 
-**Repeat DNP (adopted 2026-10-27).** Caleb Williams had no stat row in 2026 weeks 3-4 and still carried
-14.8 E_pts into week 5: nothing asked whether a player who has not played lately is playing now. Now a player
-with 0 opportunities and 0 snaps in each of his team's last two completed games (a missing row counts as 0; a
-bye or an unpublished week is not one of the team's games) and no Full practice this week gets `repeat_dnp` 1:
-`play_prob` capped at 0.25, flag `REPEAT_DNP`, E_pts kept. If he is also Out/Doubtful or did not practise,
-`repeat_dnp` 2: `play_prob` 0 and E_pts blank. `dnp_weeks` names the weeks.
+**Repeat DNP (adopted 2026-10-27, narrowed 2026-10-28).** Caleb Williams had no stat row in 2026 weeks 3-4 and
+still carried 14.8 E_pts into week 5: nothing asked whether a player who has not played lately is playing now.
+Now a player with 0 opportunities (carries, targets or pass attempts) and 0 snaps in each of his team's last two
+completed games (a missing row counts as 0; a bye or an unpublished week is not one of the team's games) and no
+Full practice this week gets `repeat_dnp` 1: `play_prob` capped at 0.25, flag `REPEAT_DNP`, E_pts kept. If he is
+also Out/Doubtful or did not practise, `repeat_dnp` 2: `play_prob` 0 and E_pts blank (and `start_score` blank,
+the same way INACTIVE is mirrored there). `dnp_weeks` names the weeks. The rule only applies to a player the
+league has said something about: one on this week's injury report (a designation or a practice entry) or whose
+nflverse roster status is not ACT. A healthy, unlisted backup with two 0-snap games is a backup, not a DNP: on
+week-8 data the first version flagged 218 of 642 skill players, 102 of them with no designation at all (Wentz,
+Fields, Richardson at depth 2), each one a warning line and a "needs a decision" entry every week; the narrowed
+rule flags 155, none of them healthy and active. Level 1 only lowers `play_prob`, which E_pts and `ask` do not
+read: at level 1 the `REPEAT_DNP` label is the deliverable, and level 2 is where the number changes.
 
 **Role change (adopted 2026-10-27).** Coker, DJ Moore and Cooper were catchable from an IR activation or a
 practice-squad elevation the same week. nflverse `weekly_rosters` carries each player's roster `status` per week;
 RES or PUP → ACT is an activation and DEV → ACT an elevation (`role_change` 1, `role_change_kind`, known at the
 Friday publish). It lifts the repeat-DNP cap and, where a projection exists, drops his trailing volume from the
-blend, so the 0-opportunity weeks he spent off the active roster are not held against him (flag `ROLE_CHANGE`).
+blend, so the 0-opportunity weeks he spent off the active roster are not held against him (flag `ROLE_CHANGE`,
+in both E_pts and `start_score`). The file carries no per-row timestamp, so when a week holds several rows for
+one player the last row wins, except that in the target week an ACT row beats a non-ACT one; a timestamp column,
+if one ever appears, orders the rows instead.
 
 **Enforcement.** Every recipe prints a status line for every player it names,
 including who is ahead of him. Every league report opens with a status-warnings

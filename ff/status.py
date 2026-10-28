@@ -29,17 +29,24 @@ PRACTICE_WEIGHT = {"DNP": 0.15, "Did Not Participate In Practice": 0.15,
 PRACTICE_FULL = {"Full", "Full Participation in Practice"}
 PRACTICE_DNP = {"DNP", "Did Not Participate In Practice"}
 
-# Repeat DNP (2026-10-27, model/reports/miss_review_2026wk07.md): a player with 0 opportunities and 0 snaps in
-# each of his team's last `REPEAT_DNP_WEEKS` completed games (a missing stat row is 0) is not playing, whatever
-# his designation says; Caleb Williams (2026 week 5) had missed weeks 3-4 and still carried 14.8 E_pts. Unless he
-# practised in Full this week, play_prob is capped at REPEAT_DNP_CAP (`repeat_dnp` 1); Out/Doubtful or a DNP
-# practice on top makes it 0 (`repeat_dnp` 2, E_pts blanked in score.py). An IR activation or practice-squad
-# elevation this week (`role_changes`, nflverse weekly_rosters) lifts it: his 0-opp weeks had a reason that is gone.
+# Repeat DNP (2026-10-27, model/reports/miss_review_2026wk07.md): a player with 0 opportunities (carries, targets
+# or pass attempts) and 0 snaps in each of his team's last `REPEAT_DNP_WEEKS` completed games (a missing stat row
+# is 0) is not playing, whatever his designation says; Caleb Williams (2026 week 5) had missed weeks 3-4 and still
+# carried 14.8 E_pts. The rule only looks at a player the league has said something about: one on this week's
+# injury report (a designation, or a practice entry) or whose nflverse roster status is not ACT. A healthy,
+# unlisted backup with two 0-snap games is a backup, not a DNP (2026-10-28: 218 of 642 skill players were flagged
+# on week-8 data, 102 of them with no designation at all). Unless he practised in Full this week, play_prob is
+# capped at REPEAT_DNP_CAP (`repeat_dnp` 1); Out/Doubtful or a DNP practice on top makes it 0 (`repeat_dnp` 2,
+# E_pts blanked in score.py). An IR activation or practice-squad elevation this week (`role_changes`, nflverse
+# weekly_rosters) lifts it: his 0-opp weeks had a reason that is gone.
 REPEAT_DNP_WEEKS = 2
 REPEAT_DNP_CAP = 0.25
+ACTIVE_NFL_STATUS = "ACT"
 # nflverse weekly_rosters `status` the week before -> what this week's ACT means
 ROLE_CHANGE_FROM = {"RES": "IR activation", "PUP": "PUP activation", "DEV": "practice-squad elevation"}
 ROLE_CHANGE_COLS = ["gsis_id", "prev_status", "status", "role_change_kind", "role_change_known_at"]
+# per-row timestamp columns a weekly_rosters frame might carry (nflverse's own has none as of 2026)
+ROSTER_TIME_COLS = ["known_at", "date_modified", "updated_at", "timestamp", "date"]
 DNP_COLS = ["gsis_id", "dnp_weeks"]
 
 
@@ -261,6 +268,10 @@ def recent_dnp(pw: pd.DataFrame | None, season: int, week: int | None,
     """Players with 0 opportunities and 0 snaps in each of their team's last `n_weeks` completed games
     before `week` of `season`: `gsis_id`, `dnp_weeks` ("3,4").
 
+    A game is played when he had a carry, a target, a pass attempt or a snap. Pass attempts are not in `opps`
+    (carries + targets), and snaps come from a PFR join that lags on Tuesday, so without them a pocket QB who
+    threw 30 times and never ran or caught a ball reads as 0-0.
+
     The games are the team's: a week in which the team has no stat rows at all (its bye, or a week whose stats
     are not published yet) is not one of its games, so weeks 3 and 5 are the last two when 4 was the bye, and
     a Tuesday run before the stats land does not flag a whole team. A player with no stat row for a game
@@ -268,7 +279,7 @@ def recent_dnp(pw: pd.DataFrame | None, season: int, week: int | None,
     projection for a player on his third missed week visible. The universe is `players` (every skill player
     on a roster) when given, else everyone in `pw` this season; a team on its bye in `week` (from `sched`) is
     left out (nothing to cap: E_pts is blank on a bye). Fewer than `n_weeks` completed games for the team
-    means nobody on it is flagged."""
+    means nobody on it is flagged. Whether a flagged player is then capped is `_availability_rules`' call."""
     if week is None or week <= n_weeks or pw is None or pw.empty:
         return pd.DataFrame(columns=DNP_COLS)
     need = {"season", "week", "gsis_id", "opps"}
@@ -278,8 +289,10 @@ def recent_dnp(pw: pd.DataFrame | None, season: int, week: int | None,
            & (pd.to_numeric(pw.week, errors="coerce") < week) & pw.gsis_id.notna()].copy()
     p["week"] = pd.to_numeric(p["week"], errors="coerce").astype(int)
     p["_opps"] = pd.to_numeric(p["opps"], errors="coerce").fillna(0)
-    p["_snaps"] = pd.to_numeric(p.get("snaps"), errors="coerce").fillna(0)
-    played = p[(p._opps > 0) | (p._snaps > 0)]
+    num = lambda col: pd.to_numeric(p[col], errors="coerce").fillna(0) if col in p.columns else 0.0
+    p["_snaps"] = num("snaps")
+    p["_att"] = num("pass_att")
+    played = p[(p._opps > 0) | (p._snaps > 0) | (p._att > 0)]
     played_weeks = played.groupby("gsis_id")["week"].apply(set).to_dict()
     team_weeks = (p.groupby("team")["week"].apply(set).to_dict() if "team" in p.columns else {})
     all_weeks = set(p["week"])
@@ -309,7 +322,12 @@ def role_changes(rosters: pd.DataFrame | None, season: int, week: int | None,
     """Players whose nflverse weekly_rosters `status` is ACT in `week` after RES / PUP / DEV in their previous
     roster week of `season`: an IR or PUP activation, or a practice-squad elevation. Columns ROLE_CHANGE_COLS.
     The file carries no per-row timestamp; a week's rows appear with the Friday publish, so `known_at` (the
-    run's own time) is what the retrospective gets. No rows for `week` yet means an empty frame."""
+    run's own time) is what the retrospective gets. No rows for `week` yet means an empty frame.
+
+    One row per player per week is the norm. When a week carries several (a mid-week transaction), the rows
+    are ordered by week, then by any timestamp the file carries (`ROSTER_TIME_COLS`, newest last), and the
+    last row wins; with no timestamp the file's own order decides, except that in `week` itself an ACT row
+    beats a non-ACT row, because the question asked is whether he was activated."""
     if week is None or rosters is None or rosters.empty or not {"status", "week", "gsis_id"} <= set(rosters.columns):
         return pd.DataFrame(columns=ROLE_CHANGE_COLS)
     r = rosters[rosters["gsis_id"].notna()].copy()
@@ -317,7 +335,15 @@ def role_changes(rosters: pd.DataFrame | None, season: int, week: int | None,
         r = r[pd.to_numeric(r["season"], errors="coerce") == season]
     r["week"] = pd.to_numeric(r["week"], errors="coerce")
     r["status"] = r["status"].astype(str).str.strip().str.upper()
-    r = r[r["week"].notna() & (r["week"] <= week)].sort_values("week", kind="stable")
+    r = r[r["week"].notna() & (r["week"] <= week)]
+    order = ["week"]
+    tcol = next((c for c in ROSTER_TIME_COLS if c in r.columns), None)
+    if tcol is not None:
+        r["_t"] = pd.to_datetime(r[tcol], errors="coerce", utc=True)
+        order.append("_t")
+    r["_act"] = (r["week"] == week) & r["status"].eq("ACT")     # this week's ACT row sorts last
+    order.append("_act")
+    r = r.sort_values(order, kind="stable", na_position="first")
     now = r[r["week"] == week].drop_duplicates("gsis_id", keep="last")
     prev = r[r["week"] < week].drop_duplicates("gsis_id", keep="last").set_index("gsis_id")["status"]
     if now.empty or prev.empty:
@@ -334,7 +360,12 @@ def _availability_rules(p: pd.DataFrame, dnp: pd.DataFrame | None,
                         roles: pd.DataFrame | None) -> pd.DataFrame:
     """Apply the repeat-DNP cap and the role-change lift to a players frame that already has
     `status_flag`, `play_prob`, `practice_participation` and `inactive`. Adds `repeat_dnp` (0/1/2),
-    `dnp_weeks`, `role_change` (0/1), `role_change_kind`."""
+    `dnp_weeks`, `role_change` (0/1), `role_change_kind`.
+
+    The cap needs two things: two 0-opportunity games (`dnp`) AND a reason to doubt him this week, which is
+    being on the injury report (`status_flag` other than healthy, or a practice entry) or an nflverse roster
+    status other than ACT. A healthy backup who is on nobody's report is simply not playing ahead of the
+    starter, and is left alone. `dnp_weeks` is still filled for him, so the history stays visible."""
     p = p.copy()
     p["role_change"] = 0
     p["role_change_kind"] = np.nan
@@ -348,10 +379,13 @@ def _availability_rules(p: pd.DataFrame, dnp: pd.DataFrame | None,
         return p
     dw = dnp.drop_duplicates("gsis_id").set_index("gsis_id")["dnp_weeks"]
     p["dnp_weeks"] = p["gsis_id"].map(dw)
-    prac = p["practice_participation"].astype(str).str.strip() if "practice_participation" in p else \
-        pd.Series("", index=p.index)
+    prac = (p["practice_participation"].where(p["practice_participation"].notna(), "").astype(str).str.strip()
+            if "practice_participation" in p else pd.Series("", index=p.index))
     full = prac.isin(PRACTICE_FULL)
-    cap = p["dnp_weeks"].notna() & ~full & p["role_change"].eq(0)
+    on_report = p["status_flag"].ne("healthy") | prac.ne("")
+    nfl = (p["nfl_status"].where(p["nfl_status"].notna(), ACTIVE_NFL_STATUS).astype(str).str.strip().str.upper()
+           if "nfl_status" in p else pd.Series(ACTIVE_NFL_STATUS, index=p.index))
+    cap = p["dnp_weeks"].notna() & ~full & p["role_change"].eq(0) & (on_report | nfl.ne(ACTIVE_NFL_STATUS))
     hard = cap & (p["status_flag"].isin({"doubtful"} | {s.lower() for s in OUT_STATES}) | prac.isin(PRACTICE_DNP))
     p.loc[cap, "repeat_dnp"] = 1
     p.loc[hard, "repeat_dnp"] = 2
