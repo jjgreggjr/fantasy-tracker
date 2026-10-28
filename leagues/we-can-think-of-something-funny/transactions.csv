@@ -165,6 +165,22 @@ season,week,type,action,sleeper_id,name,rosters
 2026,6,free_agent,drop,5012,Mark Andrews,2
 2026,6,free_agent,add,7600,Pat Freiermuth,2
 2026,6,free_agent,drop,13264,Dohnte Meyers,2
+2026,7,waiver,add,12482,Savion Williams,4
+2026,7,waiver,drop,HOU,,4
+2026,7,waiver,add,13303,Cade Klubnik,8
+2026,7,waiver,drop,13324,,8
+2026,7,waiver,add,4017,Deshaun Watson,2
+2026,7,waiver,drop,10219,Chris Rodriguez Jr.,2
+2026,7,waiver,add,JAX,,2
+2026,7,waiver,drop,12718,Konata Mumpfield,2
+2026,7,waiver,add,11786,,6
+2026,7,waiver,drop,5189,,6
+2026,7,waiver,add,11435,Emanuel Wilson,6
+2026,7,waiver,drop,12048,George Holani,6
+2026,7,waiver,add,10955,,1
+2026,7,waiver,drop,NYG,,1
+2026,7,waiver,add,13421,Eli Raridon,8
+2026,7,waiver,drop,8110,Jake Ferguson,8
 2026,7,free_agent,add,NYJ,,5
 2026,7,free_agent,drop,7090,Darnell Mooney,5
 2026,7,free_agent,add,12718,Konata Mumpfield,2
@@ -177,3 +193,9 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,8259,,3
 2026,7,free_agent,add,8119,Jahan Dotson,4
 2026,7,free_agent,drop,2306,Jameis Winston,4
+2026,8,free_agent,add,11618,Jalen McMillan,8
+2026,8,free_agent,drop,11643,Jaylen Wright,8
+2026,8,free_agent,add,8122,Bam Knight,7
+2026,8,free_agent,drop,6768,Tua Tagovailoa,7
+2026,8,free_agent,add,KC,,6
+2026,8,free_agent,drop,CLE,,6
