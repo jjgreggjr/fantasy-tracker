@@ -7,7 +7,9 @@ so you can argue with the assumptions rather than with a black box.
 ## Two different questions
 
 `E_pts` (PlayScore) answers **"will he produce this week."** It is projection
-blended with recent production, adjusted for the matchup.
+blended with recent production, adjusted for the matchup. The trailing-production weight is capped by
+`score.trail_cap`, adopted at 0 on 2026-10-15 (`DEFAULTS["trail_cap"]` in `ff/score.py`): a real projection is not moved by
+trailing data. A stale `config.json` override of 0.6 was removed 2026-10-29, so it is live from week 8 runs.
 
 `keep_value` answers **"should he occupy a roster spot."** In a dynasty league
 that is a different question with a longer horizon, so it uses different
@@ -193,6 +195,10 @@ same pre-kickoff features; `PLAN_MODEL.md` has the evidence) and writes it next 
   **`p10` / `p90`** are its floor and ceiling: quantile models recalibrated from trailing residuals, fit on PPR
   points for a league that scores PPR and on that league's own points for the dynasty and IDP leagues (a mean does
   not compose into a quantile, and moving the PPR band by the change in the mean misses badly for a TE premium).
+  Recalibration is `underage_by_position` (live since 2026-10-29, `model/serving_config.json` `recalibration`): each tail of each
+  position's band is stretched, or with `allow_shrink` narrowed, about p50 from that position's own trailing residuals
+  (`min_pos_rows` 200, factors bounded 0.7-1.6). Why: the miss review had 12.9% of actuals above p90 vs 8.5% below, RB/WR
+  ceilings short and the QB band 89% inside. It moves p10/p90 only, not `E_pts_model`.
   They are in `roster.csv`, `ff.ask live` and `ff.ask lineup`, and in full
   (PPR point estimate, components, per-league points, the frozen Sleeper projection and `E_pts`) in
   `data/model_pts.csv`. `python -m model.serve --columns` documents every column.

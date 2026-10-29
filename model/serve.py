@@ -23,7 +23,7 @@ What it does, in order (every step reuses training code; nothing is re-implement
        * PPR point estimate: the plain average of LightGBM, XGBoost and CatBoost (`tuned_params.json`);
        * 14 LightGBM component models (own frozen tree counts), composed under each league's linear scoring
          (`leaguescore`): `pts_<slug>`; under PPR: `pts_model_components`;
-       * LightGBM p10 / p50 / p90 with `underage_only` recalibration from trailing residuals.
+       * LightGBM p10 / p50 / p90 with `underage_by_position` recalibration from trailing residuals.
      Inputs are the frozen `serving_config.json` `inputs` (Phase 2's 71 columns until a trial's SHIPS is adopted).
   5. Who gets no row: a player the model predicts "points if he plays", so availability is the status layer's, not the model's.
      A row is WITHHELD when Sleeper's `injury_status` (data/players.csv, the pipeline's own status layer, `ff.status.OUT_STATES`)
@@ -82,13 +82,13 @@ COLUMN_DOCS = {
                   "long-touchdown bonuses (40+/50+ yard TDs), first downs, per-distance reception bins, per-incompletion and "
                   "all-fumble scoring; kicking, team defence and IDP never score (skill positions only). The IDP league "
                   "'where-you-at' is half-PPR here; the dynasty league is PPR + 0.5 per TE catch with a -1 interception",
-    "p10": "PPR floor: LightGBM 10th-percentile model, recalibrated (serving_config.json recalibration.mode: underage_only; "
-           "underage_by_position is the documented alternative) from trailing out-of-sample residuals",
+    "p10": "PPR floor: LightGBM 10th-percentile model, recalibrated (serving_config.json recalibration.mode: underage_by_position; "
+           "underage_only is the previous setting) from trailing out-of-sample residuals",
     "p50": "PPR median from the LightGBM 50th-percentile model (not recalibrated)",
     "p90": "PPR ceiling: LightGBM 90th-percentile model, recalibrated like p10",
     "p10_<slug>": "floor in that league's own scoring, only for a league whose scoring is not PPR (the dynasty and IDP leagues): LightGBM "
                   "10th-percentile model fit on that league's composed actual points (same linear terms as pts_<slug>), recalibrated "
-                  "(underage_only) from that league's trailing residuals. A PPR-scoring league uses p10",
+                  "(the serving_config.json recalibration rule) from that league's trailing residuals. A PPR-scoring league uses p10",
     "p90_<slug>": "ceiling in that league's own scoring, for the same leagues, built like p10_<slug>",
     "sleeper_proj": "Sleeper's PPR projection for the player and week, read from data/projections.csv at serve time (no new "
                     "network call) and frozen with the row",

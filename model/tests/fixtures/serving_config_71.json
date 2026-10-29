@@ -50,7 +50,13 @@
   "source": "the 39 registry columns under 0.15% of out-of-sample 2024 SHAP attribution (shap2024_lightgbm; model/cache/phase2/prune_list.json, git-ignored, frozen here) and the ADP family (no preseason 2026 ADP snapshot exists). Weather, season, college and every Phase 2.5 opt-in family stay out."
  },
  "recalibration": {
-  "mode": "underage_only"
+  "mode": "underage_by_position",
+  "allow_shrink": true,
+  "min_pos_rows": 200,
+  "factor_bounds": [
+   0.7,
+   1.6
+  ]
  },
  "components": {
   "y_tgt": {

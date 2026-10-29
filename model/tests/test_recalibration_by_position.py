@@ -152,7 +152,8 @@ class ByPosition(unittest.TestCase):
         import json
         from pathlib import Path
         cfg = json.loads((Path(E.__file__).with_name("serving_config.json")).read_text())
-        self.assertEqual(cfg["recalibration"], {"mode": "underage_only"}, "the live mode is a frozen serving decision")
+        self.assertEqual(cfg["recalibration"], {"mode": "underage_by_position", "allow_shrink": True, "min_pos_rows": 200, "factor_bounds": [0.7, 1.6]},
+                         "the live mode is a frozen serving decision")
         self.assertIn("underage_by_position", cfg["note"])
         for key in ("allow_shrink", "min_pos_rows", "factor_bounds"):
             self.assertIn(key, cfg["note"])
