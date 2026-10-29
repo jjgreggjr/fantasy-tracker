@@ -194,6 +194,7 @@ class Feature(unittest.TestCase):
 
 class Registry(unittest.TestCase):
     def test_ecr_is_opt_in_and_the_primary_and_serving_inputs_are_unchanged(self):
+        """Opt-in family, outside the Phase 2 primary; adopted into the serving spec on 2026-10-18 (its columns are in the served inputs, not the fallback)."""
         self.assertIn("ecr", T.OPT_IN_FAMILIES)
         self.assertEqual(len(COLS), 8)
         for c in COLS:
@@ -206,10 +207,12 @@ class Registry(unittest.TestCase):
         serving = T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",))
         X, _ = T.encode(df, serving)
         self.assertEqual(set(X.columns), set(cfg["inputs"]))
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertIn("ecr", TR.serving_spec(cfg).add_families, "ecr was adopted into the serving spec (2026-10-18)")
+        self.assertTrue(set(COLS) <= set(cfg["inputs"]))
+        self.assertFalse(set(COLS) & set(cfg["fallback"]["inputs"]), "the fallback is the spec without ecr")
         added = T.feature_columns(df, T.Spec("x", add_families=("ecr",)))
         self.assertEqual(set(added) - set(prim), set(COLS))
-        self.assertRegex(TR.list_families(cfg), r"ecr  \[0/8 not in serving, opt-in\]")
+        self.assertRegex(TR.list_families(cfg), r"ecr  \[8/8 serving, opt-in\]")
 
 
 if __name__ == "__main__":

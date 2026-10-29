@@ -98,7 +98,8 @@ class Registry(unittest.TestCase):
         cfg = TR.load_config()
         X, _ = T.encode(df, T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",)))
         self.assertEqual(set(X.columns), set(cfg["inputs"]))
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertFalse(set(COLS) & set(cfg["inputs"]), "pepa is not adopted: none of its columns are served")
+        self.assertNotIn("pepa", TR.serving_spec(cfg).add_families)
         self.assertEqual(set(T.feature_columns(df, T.Spec("x", add_families=("pepa",)))) - set(prim), set(COLS))
 
     def test_no_duplicate_of_an_existing_feature(self):
