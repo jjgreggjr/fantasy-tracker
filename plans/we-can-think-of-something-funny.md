@@ -1,7 +1,7 @@
 # We can think of something funny — rebuild plan
 
 James is MrMasculinity. 8-team dynasty superflex, full PPR, TE +0.5 per catch.
-Last updated 2026-10-27 (week-6 result recorded from data/matchup_results.csv; live Sleeper roster read 2026-10-27 16:37Z showed no lineup changes and no trades executed all season; Mayer claimed, Bell and Mooney dropped). Week 7 result: record after the 10/27 18:37Z run.
+Last updated 2026-10-29 (week-7 result recorded from data/matchup_results.csv; live Sleeper roster read 2026-10-29 23:55Z showed no lineup changes and no trades executed all season; all trade targets still on the same rosters as of the 10/28 run). Week 7: WIN 237.38 vs NegativeSquash 219.74, beat the median too (2-0), scoring rank 2 of 8. Record 6-8.
 
 ## Where he stands
 - 4-8 through 6 weeks (league counts a vs-median game each week: 0-2, 0-2, 2-0,
@@ -15,7 +15,7 @@ Last updated 2026-10-27 (week-6 result recorded from data/matchup_results.csv; l
 - Don't trade: own 2027 1st (likely top 3), Tuten, Henderson, Judkins, Fannin, Bo Nix.
 
 ## Open moves
-No trades executed as of 10/27 16:37Z; James still has Swift, Kamara, Pollard, Pitts, Stafford, Charbonnet, and none of the targets (Lamb, Young, Kyler, Mendoza, Ward). Mayer claim done (Bell, Mooney cut). Trades here process instantly (no review period).
+No trades executed as of 10/29 23:55Z (week 8: Olave on bye in a starting slot; Hall back to Questionable, start him at FLEX over Odunze, with Tuten/Coleman/Kincaid in for Boston/Fannin/Odunze); James still has Swift, Kamara, Pollard, Pitts, Stafford, Charbonnet, and none of the targets (Lamb, Young, Kyler, Mendoza, Ward). Mayer claim done (Bell, Mooney cut). Trades here process instantly (no review period).
 1. **NegativeSquash** (pending, strongest): Swift for a QB. Hurts is now on IR (calf), so they start Purdy/Young with Kyler (14.5, benched) and Mendoza spare — still a seller. Options, in order: Swift for Kyler Murray (cleanest ask); Swift + James's 2028 2nd for Bryce Young; Swift for Fernando Mendoza + their 2028 2nd. Swift is healthy as of 10/27.
 2. **njmoses** (pending): Kamara + Pollard + Pitts for CeeDee Lamb (Questionable) + **their 2028 3rd**. The Simpson version is dead (week-4 taxi deadline passed 10/1). Counter: Kamara + Pitts + a pick for Lamb. They're 2-8 and 7th in PF, so still a plausible seller, but James is last in PF, not them.
 3. **jakelotwin** (weakened, probably drop): Stafford for Jaxson Dart. Dart is IR knee-meniscus (confirmed 10/11). They have since cycled Mariota and Winston off and now roster Rodgers, Daniels, Darnold, Herbert and Dart, so they no longer need a QB.
