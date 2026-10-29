@@ -61,21 +61,24 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     if roster.empty:
         return pd.DataFrame(), "No roster data for this league."
     all_slots = scoring.starting_slots(meta)
-    # slots we cannot fill because those positions are out of scope (IDP, K, DST)
-    slots = [s for s in all_slots if scoring.SLOT_ELIGIBILITY.get(s)]
-    unscored = [s for s in all_slots if not scoring.SLOT_ELIGIBILITY.get(s)]
+    # DL / LB / DB / K slots are fillable only in a league whose IDP is scored (league_idp_positions);
+    # anywhere else, and for DST always, they are out of scope
+    idp_on = bool(scoring.league_idp_positions(meta))
+    elig = lambda sl: (scoring.IDP_SLOTS[sl] if idp_on and sl in scoring.IDP_SLOTS
+                       else scoring.SLOT_ELIGIBILITY.get(sl, set()))
+    slots = [s for s in all_slots if elig(s)]
+    unscored = [s for s in all_slots if not elig(s)]
     roster = modelcols.attach(roster, slug, ROOT)        # display only: E_pts stays what every pick below sorts on
     mcols = [c for c in modelcols.MODEL_COLS if c in roster.columns]
     pool = roster[roster.E_pts.notna()].sort_values("E_pts", ascending=False).copy()
     used, picks = set(), []
 
     # scarcest slots first so a SUPER_FLEX doesn't eat the only eligible QB
-    order = sorted(range(len(slots)),
-                   key=lambda i: len(scoring.SLOT_ELIGIBILITY.get(slots[i], set())))
+    order = sorted(range(len(slots)), key=lambda i: len(elig(slots[i])))
     for i in order:
         slot = slots[i]
         for _, p in pool.iterrows():
-            if p.gsis_id in used or not scoring.slot_allows(slot, p.position):
+            if p.gsis_id in used or not scoring.slot_allows(slot, p.position, idp_on):
                 continue
             picks.append({"slot": slot, "name": p["name"], "position": p.position,
                           "team": p.team, "opponent": p.get("opponent"),
@@ -89,9 +92,9 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     if not bench.empty and not start.empty:
         gaps = []
         for _, b in bench.iterrows():
-            elig = start[start.slot.map(lambda s: scoring.slot_allows(s, b.position))]
-            gaps.append(round(b.E_pts - elig.E_pts.min(), 1)
-                        if not elig.empty and pd.notna(b.E_pts) else np.nan)
+            fits = start[start.slot.map(lambda s: scoring.slot_allows(s, b.position, idp_on))]
+            gaps.append(round(b.E_pts - fits.E_pts.min(), 1)
+                        if not fits.empty and pd.notna(b.E_pts) else np.nan)
         bench["gap_to_starter"] = gaps
         bench = bench.sort_values("gap_to_starter", ascending=False)
     if "flag" in bench.columns:
@@ -101,7 +104,8 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     note = f"{len(start)} of {len(slots)} scoreable slots filled."
     if unscored:
         note += (f" {len(unscored)} slot(s) not scored here ("
-                 + ", ".join(sorted(set(unscored))) + ") — K, DST and IDP are out of scope.")
+                 + ", ".join(sorted(set(unscored)))
+                 + ") — " + ("DST is" if idp_on else "K, DST and IDP are") + " out of scope.")
     if not shaky.empty:
         note += (" Low confidence: "
                  + ", ".join(shaky["name"].tolist())
@@ -226,7 +230,7 @@ def roster_overage(slug: str) -> tuple[int, dict]:
             # K/DEF read as null position on Sleeper rows and as "K"/"DEF" on
             # ESPN rows — count both so the footer's "N K/DEF" is truthful.
             "non_skill": int((full.position.isna()
-                              | full.position.isin(["K", "DEF"])).sum())}
+                              | full.position.isin(["K", "DEF", "DL", "LB", "DB"])).sum())}
     return max(0, active - cap), info
 
 
@@ -296,7 +300,7 @@ def cut(slug: str, n: int | None = None) -> tuple[pd.DataFrame, str]:
              f"({w['label']}"
              + (f", bench/starters {w['bench_ratio']}" if "bench_ratio" in w else "")
              + ").")
-    if meta.get("idp"):
+    if meta.get("idp") and not scoring.league_idp_positions(meta):
         note += " IDP players count toward the limit but are not scored here."
     return cands, note
 

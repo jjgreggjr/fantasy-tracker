@@ -500,6 +500,47 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
+NO_DEPTH_MODEL = "n/a (no depth-chart model for IDP/K)"
+
+
+def build_idp(idp_players: pd.DataFrame, week: int | None = None,
+              injuries: pd.DataFrame | None = None,
+              inactives: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Status rows for defenders and kickers, in `build`'s columns.
+
+    Availability is the same two signals as for a skill player (nflverse's injury report for `week`,
+    which is not position-filtered, plus Sleeper's live designation) and the gameday inactive list.
+    What does not exist for them is a depth chart: `espn_rank` is blank, `blocked_by` says so, and the
+    repeat-DNP and role-change rules (built on skill-player opportunities) are 0."""
+    cols = ["gsis_id", "name", "team", "position", "espn_rank", "sleeper_rank", "depth_disagreement",
+            "status_flag", "report_status", "play_prob", "inactive", "inactive_known_at", "repeat_dnp",
+            "dnp_weeks", "role_change", "role_change_kind", "injury_body_part", "practice",
+            "news_age_hours", "n_blockers", "blockers_out", "opportunity_ahead", "blocked_by"]
+    if idp_players is None or idp_players.empty:
+        return pd.DataFrame(columns=cols)
+    p = with_reports(idp_players, week_reports(injuries, week))
+    ina = (inactives.drop_duplicates("gsis_id").set_index("gsis_id")
+           if inactives is not None and not inactives.empty else None)
+    p["inactive"] = p["gsis_id"].isin(ina.index).astype(int) if ina is not None else 0
+    p["inactive_known_at"] = (p["gsis_id"].map(ina["inactive_known_at"])
+                              if ina is not None and "inactive_known_at" in ina else np.nan)
+    p["status_flag"] = p.apply(status_flag, axis=1)
+    p["play_prob"] = p.apply(play_probability, axis=1)
+    p = _availability_rules(p, None, None)
+    p["news_age_hours"] = p.get("news_updated", pd.Series(index=p.index)).map(_news_age_hours)
+    out = pd.DataFrame({
+        "gsis_id": p.gsis_id, "name": p["name"], "team": p.team, "position": p.position,
+        "espn_rank": np.nan, "sleeper_rank": p.get("sleeper_depth_order"),
+        "depth_disagreement": np.nan, "status_flag": p.status_flag,
+        "report_status": p.report_status, "play_prob": p.play_prob,
+        "inactive": p.inactive.astype(int), "inactive_known_at": p.inactive_known_at,
+        "repeat_dnp": 0, "dnp_weeks": np.nan, "role_change": 0, "role_change_kind": np.nan,
+        "injury_body_part": p.get("injury_body_part"), "practice": p.practice_participation,
+        "news_age_hours": p.news_age_hours, "n_blockers": 0, "blockers_out": 0,
+        "opportunity_ahead": 0.0, "blocked_by": NO_DEPTH_MODEL})
+    return out[cols].reset_index(drop=True)
+
+
 def warnings(st: pd.DataFrame, roster_ids: set | None = None) -> list[str]:
     """Things a human should look at before trusting a recommendation."""
     if st is None or st.empty:
@@ -518,6 +559,9 @@ def warnings(st: pd.DataFrame, roster_ids: set | None = None) -> list[str]:
     hurt = s[(s.status_flag.isin(["out", "ir", "pup", "doubtful"]))]
     for _, r in hurt.iterrows():
         bp = f" ({r.injury_body_part})" if pd.notna(r.injury_body_part) else ""
+        if pd.isna(r.espn_rank):                 # IDP / K: no depth chart to misread
+            out.append(f"{r['name']}: {r.status_flag.upper()}{bp}")
+            continue
         out.append(f"{r['name']}: {r.status_flag.upper()}{bp} — his depth rank "
                    f"of {int(r.espn_rank)} reflects that, not his role")
     for _, r in s[s.status_flag.eq(INACTIVE)].iterrows():
@@ -559,7 +603,10 @@ def describe(st: pd.DataFrame, name: str) -> str:
         bits.append(f"practice: {r.practice}")
     if pd.notna(r.injury_body_part):
         bits.append(str(r.injury_body_part))
-    bits.append(f"{r.position}{int(r.espn_rank)}, behind: {r.blocked_by}")
+    if pd.isna(r.espn_rank):                     # IDP / K: availability only, no depth chart
+        bits.append(f"{r.position}, no depth-chart model")
+    else:
+        bits.append(f"{r.position}{int(r.espn_rank)}, behind: {r.blocked_by}")
     if r.opportunity_ahead >= 0.10:
         bits.append(f"{r.opportunity_ahead:.0%} of volume ahead of him is in doubt")
     return " · ".join(bits)

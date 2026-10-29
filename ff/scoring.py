@@ -38,6 +38,34 @@ STAT_KEYS = {
     "fum_lost": "fum_lost",
 }
 
+# Sleeper scoring key -> column of data/idp_weeks.csv (build.IDP_WEEK_COLS), for individual defenders
+# and kickers. Sleeper counts a stat once under every key it matches: a 35-yard miss is one `fgmiss`
+# AND one `fgmiss_30_39`, so a league that sets both is charged both (nothing here picks the
+# "more specific" one). Team-defence keys (`sack`, `int`, `def_td`, `pts_allow_*`...) are not in this
+# table and stay ignored. Keys a league sets that nflverse has no column for (`idp_sack_yd`,
+# `idp_int_ret_yd`, `idp_pass_def_3p`, `fgm_yds`...) are logged by `score_idp` and not scored.
+IDP_STAT_KEYS = {
+    "idp_tkl_solo": "tkl_solo", "idp_tkl_ast": "tkl_ast", "idp_tkl": "tkl",
+    "idp_tkl_loss": "tkl_loss", "idp_sack": "sacks", "idp_qb_hit": "qb_hits",
+    "idp_int": "ints", "idp_pass_def": "pass_def", "idp_ff": "ff",
+    "idp_fum_rec": "fum_rec", "idp_def_td": "def_td", "idp_safe": "safeties",
+    "idp_blk_kick": "blk_kick",
+    "fgm": "fg_made", "fga": "fg_att", "fgmiss": "fg_missed",
+    "fgm_0_19": "fgm_0_19", "fgm_20_29": "fgm_20_29", "fgm_30_39": "fgm_30_39",
+    "fgm_40_49": "fgm_40_49", "fgm_50_59": "fgm_50_59", "fgm_60p": "fgm_60p", "fgm_50p": "fgm_50p",
+    "fgmiss_0_19": "fgmiss_0_19", "fgmiss_20_29": "fgmiss_20_29", "fgmiss_30_39": "fgmiss_30_39",
+    "fgmiss_40_49": "fgmiss_40_49", "fgmiss_50_59": "fgmiss_50_59", "fgmiss_60p": "fgmiss_60p",
+    "fgmiss_50p": "fgmiss_50p",
+    "xpm": "xpm", "xpa": "xpa", "xpmiss": "xpmiss",
+}
+# score keys that are IDP / kicker by name but have no stat column: reported, not scored
+IDP_UNSCORED_KEYS = {"idp_sack_yd", "idp_int_ret_yd", "idp_fum_ret_yd", "idp_pass_def_3p",
+                     "fgm_yds", "fgm_yds_over_30", "fg_ret_yd", "idp_fum_rec_yd"}
+
+IDP_SLOTS = {"DL": {"DL"}, "LB": {"LB"}, "DB": {"DB"}, "K": {"K"},
+             "IDP_FLEX": {"DL", "LB", "DB"}, "DEF_LINE": {"DL"},
+             "LINEBACKER": {"LB"}, "DEF_BACK": {"DB"}}
+
 # Per-reception bonuses that apply only to one position.
 POS_REC_BONUS = {"bonus_rec_te": "TE", "bonus_rec_rb": "RB", "bonus_rec_wr": "WR"}
 
@@ -104,6 +132,45 @@ def score_frame(pw: pd.DataFrame, scoring: dict, label: str = "") -> pd.Series:
     return pts.round(2)
 
 
+def score_idp(df: pd.DataFrame, scoring: dict, label: str = "") -> pd.Series:
+    """Fantasy points for individual defenders and kickers under one league's `scoring` dict.
+
+    `df` carries the stat columns named in `IDP_STAT_KEYS` (data/idp_weeks.csv, or a projected line built
+    the same way); a missing or NaN column counts as 0. `idp_tkl` (all tackles) is solo + assisted."""
+    if df.empty:
+        return pd.Series(dtype=float)
+    col = lambda c: (pd.to_numeric(df[c], errors="coerce").fillna(0.0) if c in df.columns
+                     else pd.Series(0.0, index=df.index))
+    pts = pd.Series(0.0, index=df.index)
+    skipped = []
+    for key, val in (scoring or {}).items():
+        if not val or str(key) not in IDP_STAT_KEYS:
+            if val and str(key) in IDP_UNSCORED_KEYS:
+                skipped.append(str(key))
+            continue
+        c = IDP_STAT_KEYS[str(key)]
+        pts += (col("tkl_solo") + col("tkl_ast") if c == "tkl" else col(c)) * float(val)
+    if skipped:
+        log.info("%s: IDP/kicker keys with no nflverse stat, not scored: %s",
+                 label or "league", ", ".join(sorted(skipped)))
+    return pts.round(2)
+
+
+def league_idp_positions(meta: dict) -> list[str]:
+    """DL / LB / DB / K positions this league starts, but only for a league that starts IDP.
+
+    A league with no defender slot returns [] and the IDP path is never entered for it: its outputs
+    are exactly what they were before IDP scoring existed. That includes the leagues here whose
+    lineup has a K slot but no IDP: kickers are scored only alongside IDP."""
+    slots = [p for p in (meta.get("roster_positions") or []) if p not in ("BN", "TAXI", "IR")]
+    pos = set()
+    for sl in slots:
+        pos |= IDP_SLOTS.get(sl, set())
+    if not pos & {"DL", "LB", "DB"}:
+        return []
+    return [p for p in ("DL", "LB", "DB", "K") if p in pos]
+
+
 def sleeper_league_meta(league: dict, users: list, rosters: list,
                         my_user_id: str) -> dict:
     """Extract the rules the recipes need from a Sleeper league object."""
@@ -152,5 +219,10 @@ SLOT_ELIGIBILITY = {
 }
 
 
-def slot_allows(slot: str, position: str) -> bool:
-    return position in SLOT_ELIGIBILITY.get(slot, set())
+def slot_allows(slot: str, position: str, idp: bool = False) -> bool:
+    """May `position` fill `slot`? Defender and kicker slots are fillable only when `idp` (the league's
+    IDP rows are scored; see league_idp_positions)."""
+    elig = SLOT_ELIGIBILITY.get(slot, set())
+    if idp and slot in IDP_SLOTS:
+        elig = IDP_SLOTS[slot]
+    return position in elig

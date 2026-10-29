@@ -194,6 +194,8 @@ recorded run.
 |---|---|
 | `data/players.csv` | One row per skill player: ids, team, position, age, experience, injury |
 | `data/player_weeks.csv` | One row per player per week: targets, carries, snaps, yards, TDs, opponent |
+| `data/idp_weeks.csv` | One row per DL / LB / DB / K per week: nflverse counts (solo and assisted tackles, tackles for loss, sacks, QB hits, interceptions, passes defended, forced and recovered fumbles, defensive TDs, safeties, blocked kicks; field goals made and missed by distance, extra points). Raw counts, never points. Written only while a tracked league starts a defender; a sibling of `player_weeks.csv` because that table is skill-position-only and dvp, the touchdown regression and the repeat-DNP rule read it without a position filter |
+| `data/idp_projections.csv` | Sleeper's projected stat line for those players, same keys as league scoring (`idp_sack`, `fgm_30_39`...), one row per projected player-week |
 | `data/depth_charts.csv` | Weekly snapshot of each team's QB/RB/WR/TE order, with last week's rank |
 | `data/defense_vs_pos.csv` | Per defense, per position, per week: yards/TDs/targets/carries allowed |
 | `data/schedule.csv` | Every team's opponent, spread and total, by week (BYE rows included) |
@@ -219,6 +221,10 @@ recorded run.
 | `data/props.csv` | Player-props archive from The Odds API: one row per game, player, market, bookmaker and line, with Over/Under (or anytime-TD Yes) American odds, the bookmaker's own update time and `fetched_at`; `gsis_id` blank when a name did not match. One snapshot per game at the last run before its kickoff, frozen once the game has kicked off. Written by `python -m model.fetch_props` (reads the `ODDS_API_KEY` Actions secret; without it the step skips with one WARN line). **Archive only: no model or report reads it.** `python -m model.fetch_props --columns` documents every column |
 | `raw/` | Cached downloads. Safe to delete; they re-download. |
 | `logs/` | One log per run, including any player that failed to match an ID |
+
+### Defenders and kickers
+
+A league whose lineup has a DL, LB or DB slot (`where-you-at`) also tracks defenders and kickers. nflverse's weekly stats are folded into `data/idp_weeks.csv` (`DE/DT/NT` are DL, `ILB/OLB/MLB` LB, `CB/S/SS/FS` DB) and scored by `scoring.score_idp` with that league's own `idp_*`, `fgm_*`, `fgmiss_*` and `xpm` weights; Sleeper's projected line is scored the same way. Their rows join `roster.csv`, `all_rosters.csv` and `available.csv` with `E_pts`, `E_opps` (tackles + assists a game; field-goal + extra-point attempts for a kicker), `conf`, `flag` and `why`, with the skill-only columns blank, and `ff.ask lineup` fills the K / DL / LB / DB slots from them. `E_pts` is the projection when Sleeper projected the player and his average over his team's last three games otherwise; there is no depth-chart, snap or matchup model, and the waiver pool keeps the best 60 per position. Injury and gameday-inactive status come from the same nflverse and Sleeper feeds as for skill players (`data/status.csv` rows with no depth rank). A league with no defender slot never reads any of it, so a K or DEF slot alone changes nothing.
 
 ### Model columns
 
@@ -267,8 +273,9 @@ against zero.
   per-game totals, not the length of each score. Only "We can think of something
   funny" uses them, worth roughly 0.1-0.3 pts/game for a player who scores. Every
   run logs this as a warning so it stays visible.
-- Kickers, team defenses and IDP players are never scored. In an IDP league
-  they still count toward the roster limit, so `cut` accounts for them.
+- Team defenses (DEF) are never scored, and kickers only in a league that also starts IDP. Defender and kicker
+  `E_pts` is projection-or-trailing with no opportunity model (see "Defenders and kickers"); the boosted-tree
+  model columns skip them.
 - ESPN is fetched only by the workflow. Claude's question sandbox cannot reach
   ESPN's API (the egress policy refuses the host), so `ff.ask live` for an ESPN
   league returns the committed lineup labelled with its time rather than a
