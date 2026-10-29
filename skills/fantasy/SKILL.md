@@ -10,7 +10,8 @@ James's pipeline runs on **GitHub Actions**, not his PC. The public repo
 (nflverse, Sleeper and, for one league, ESPN), scores every player in each
 league's own scoring rules,
 and commits the results Tuesday 18:37 (backstop 19:41), Wednesday 14:07 and
-Friday 22:11 UTC.
+Friday 22:11 UTC, plus Sunday 11:52, 13:52 and 17:17 UTC (GitHub cron runs 1.4-5.75 h late; these
+are early so they still land before the 17:00 and 20:05 UTC locks).
 Your job is to read that output and answer, not to rebuild it.
 
 Sleeper's read-only API **is reachable** from question sessions (verified),
