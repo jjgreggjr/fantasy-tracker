@@ -211,7 +211,7 @@ class ShippedDesign(unittest.TestCase):
         self.assertTrue(all(v["n_estimators"] >= 50 for v in c.values()))
 
     def test_flat_quantile_and_recalibration_settings_are_the_shipped_ones(self):
-        self.assertEqual(cfg()["recalibration"], {"mode": "underage_only"})
+        self.assertEqual(cfg()["recalibration"], {"mode": "underage_by_position", "allow_shrink": True, "min_pos_rows": 200, "factor_bounds": [0.7, 1.6]})
         self.assertEqual(T.LIBS, ("lightgbm", "xgboost", "catboost"))
         p = T.load_params()
         self.assertEqual(sorted(p["quantile"]), ["0.1", "0.5", "0.9"])

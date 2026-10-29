@@ -16,21 +16,23 @@ on:
     - cron: "11 22 * * 5"   # Fri 16:11 MDT — final injury designations
     # Sunday gets two pre-lock slots because one is not enough. Every scheduled run this season
     # arrived 1.4-5.75 h after its cron time (GitHub queues cron under load), so a lone 15:52 run
-    # usually lands after the 17:00 UTC early-slate lock and refreshes nothing that matters. The
-    # 13:52 slot is the one meant to land before the lock even when it is 3 h late; 15:52 stays as
-    # its backstop and as the on-time case. Both are safe to run together: the serve re-predicts
+    # usually lands after the 17:00 UTC early-slate lock and refreshes nothing that matters. Week 7
+    # (2026-10-25) proved even 13:52 / 15:52 / 19:17 too late: they ran at 17:15 / 18:34 / 21:48 UTC,
+    # all after the locks, and the props archive got 7 of 13 games. So the early slots moved 2 h
+    # earlier: the 11:52 slot is the one meant to land before the lock even when it is 3 h late
+    # (and still before it at the 5.75 h worst case seen); 13:52 stays as its backstop and as the on-time case. Both are safe to run together: the serve re-predicts
     # only games that have not kicked off and freezes the rest, so two or three serves in a day
     # leave one row per player (tests: SundayServe), and the props archive will not re-buy a game
     # snapshotted in the last 30 h. The earlier run also matters for the props fetcher: its window
     # is 40 h, so Friday's run reaches only games kicking off before Sunday 14:11 UTC, while a
-    # Sunday run puts every Sunday game and Monday night inside the window, and the 13:52 slot
+    # Sunday run puts every Sunday game and Monday night inside the window, and the 11:52 slot
     # snapshots the 1 pm slate before it kicks off even when the cron is hours late.
-    - cron: "52 13 * * 0"   # Sun 07:52 MDT — pre-lock refresh, the early one (lands before 17:00 UTC even when 3 h late)
-    - cron: "52 15 * * 0"   # Sun 09:52 MDT — pre-lock refresh, backstop
+    - cron: "52 11 * * 0"   # Sun 05:52 MDT — pre-lock refresh, the early one (lands before 17:00 UTC even when 5 h late)
+    - cron: "52 13 * * 0"   # Sun 07:52 MDT — pre-lock refresh, backstop (lands before 17:00 UTC when up to 3 h late)
     # The gameday inactive list posts ~90 min before each kickoff. The runs above see the early slate's
     # lists (~15:30 UTC); the late-afternoon games' lists post ~18:55 UTC, so one more run before the
-    # 20:05 UTC locks picks them up (2026 weeks 4-5: 3 of 13 listed inactives were late-slate only).
-    - cron: "17 19 * * 0"   # Sun 13:17 MDT — pre-lock refresh, late-afternoon slate inactives
+    # 20:05 UTC locks picks them up (17:17 UTC + 2.8 h lag is still before 20:05) (2026 weeks 4-5: 3 of 13 listed inactives were late-slate only).
+    - cron: "17 17 * * 0"   # Sun 11:17 MDT — pre-lock refresh, late-afternoon slate inactives
   workflow_dispatch:        # the "Run workflow" button — first run, and any refresh
 
 concurrency:
