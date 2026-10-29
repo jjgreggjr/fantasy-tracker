@@ -182,6 +182,12 @@ their position's age cliff: RB 26+, WR 28+, TE 29+, QB 33+. That is the window
 the aging research points to — selling at 27 for a running back means selling
 after the market already knows.
 
+## IDP and kicker `E_pts`
+
+- For a league that starts DL / LB / DB, `E_pts` for defenders and kickers is Sleeper's projected stat line scored in the league's own weights, else the average of the last three team games; no blend, no matchup multiplier, no touchdown regression, no opportunity model.
+- A game without a stat row counts as 0 once the player has a row in the window (a lineman who played and recorded nothing has none); a player with no row in the window has no trailing figure. Confidence is health times how much is known (0.9 projection and trailing, 0.75 projection only, 0.6 trailing only).
+- Out, IR, PUP, bye and the gameday inactive list blank `E_pts` exactly as for skill players. Nothing here has been scored against results yet; treat it as a ranking, not a forecast.
+
 ## Model column — `E_pts_model`, beside `E_pts`, on probation
 
 Since Phase 3 the weekly run also serves a boosted-tree model (LightGBM, XGBoost and CatBoost on the

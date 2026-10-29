@@ -22,6 +22,7 @@ log = logging.getLogger(__name__)
 BASE = "https://api.sleeper.com/projections/nfl"
 UA = {"User-Agent": "ff-volume-tracker/1.0 (personal use)"}
 POSITIONS = ["QB", "RB", "WR", "TE"]
+IDP_POSITIONS = ["DL", "LB", "DB", "K"]
 
 # our column -> possible keys in Sleeper's stats blob, in preference order
 ALIASES = {
@@ -52,21 +53,22 @@ def _pick(stats: dict, names: list[str]) -> float:
     return np.nan
 
 
-def fetch_sleeper(season: int, week: int, raw_dir: Path, today: str) -> list[dict]:
+def fetch_sleeper(season: int, week: int, raw_dir: Path, today: str,
+                  positions: list[str] = POSITIONS, prefix: str = "projections") -> list[dict]:
     """One call per week, cached to disk by date."""
     raw_dir.mkdir(parents=True, exist_ok=True)
-    cache = raw_dir / f"projections_{season}_wk{week:02d}_{today}.json"
+    cache = raw_dir / f"{prefix}_{season}_wk{week:02d}_{today}.json"
     if cache.exists():
         log.info("using cached Sleeper projections for %s wk%s", season, week)
         return json.loads(cache.read_text(encoding="utf-8"))
 
     params = [("season_type", "regular"), ("order_by", "pts_ppr")]
-    params += [("position[]", p) for p in POSITIONS]
+    params += [("position[]", p) for p in positions]
     r = requests.get(f"{BASE}/{season}/{week}", params=params, headers=UA, timeout=120)
     r.raise_for_status()
     data = r.json()
     cache.write_text(json.dumps(data), encoding="utf-8")
-    for old in sorted(raw_dir.glob(f"projections_{season}_wk{week:02d}_*.json"))[:-2]:
+    for old in sorted(raw_dir.glob(f"{prefix}_{season}_wk{week:02d}_*.json"))[:-2]:
         old.unlink()
     return data
 
@@ -135,3 +137,84 @@ def build(season: int, week: int, players: pd.DataFrame, raw_dir: Path,
             + ["proj_opps", "proj_carry_share", "proj_target_share"])
     return out[cols].sort_values(["position", "proj_opps"],
                                  ascending=[True, False]).reset_index(drop=True)
+
+
+# --------------------------------------------------------------------------
+# Defenders and kickers
+# --------------------------------------------------------------------------
+# Sleeper's projected stat line uses the same keys as league scoring (`idp_sack`, `fgm_30_39`,
+# `xpm`...), so a projected line is scored exactly like a played one. Checked on the live API
+# (2026 week 8, position[]=DL/LB/DB/K): ~650 of ~4,500 defenders carry `idp_tkl_solo` and
+# `idp_tkl_ast`; `idp_def_td` and `idp_blk_kick` are never projected (0 here); kickers carry
+# `fgm`, `fga`, `fgm_20_29`..`fgm_50p`, `fgmiss_30_39`..`fgmiss_50p`, `xpm`, `xpa`, `xpmiss`
+# (no 0-19 makes and no 0-29 misses are published). A key a player does not have is NaN here, so
+# "Sleeper projected him" stays distinguishable from "projected zero".
+IDP_ALIASES = {
+    "proj_tkl_solo": ["idp_tkl_solo"], "proj_tkl_ast": ["idp_tkl_ast"],
+    "proj_tkl_loss": ["idp_tkl_loss"], "proj_sacks": ["idp_sack"],
+    "proj_qb_hits": ["idp_qb_hit"], "proj_ints": ["idp_int"],
+    "proj_pass_def": ["idp_pass_def"], "proj_ff": ["idp_ff"],
+    "proj_fum_rec": ["idp_fum_rec"], "proj_def_td": ["idp_def_td"],
+    "proj_safeties": ["idp_safe"], "proj_blk_kick": ["idp_blk_kick"],
+    "proj_fg_att": ["fga"], "proj_fg_made": ["fgm"],
+    "proj_fgm_0_19": ["fgm_0_19"], "proj_fgm_20_29": ["fgm_20_29"],
+    "proj_fgm_30_39": ["fgm_30_39"], "proj_fgm_40_49": ["fgm_40_49"],
+    "proj_fgm_50p": ["fgm_50p"],
+    "proj_fgmiss_0_19": ["fgmiss_0_19"], "proj_fgmiss_20_29": ["fgmiss_20_29"],
+    "proj_fgmiss_30_39": ["fgmiss_30_39"], "proj_fgmiss_40_49": ["fgmiss_40_49"],
+    "proj_fgmiss_50p": ["fgmiss_50p"],
+    "proj_xpa": ["xpa"], "proj_xpm": ["xpm"], "proj_xpmiss": ["xpmiss"],
+}
+# the fields whose presence means Sleeper actually projected a line for him
+IDP_PRESENCE = ["proj_tkl_solo", "proj_tkl_ast", "proj_sacks", "proj_ints", "proj_pass_def",
+                "proj_fg_made", "proj_fg_att", "proj_xpm"]
+_FG_MISS_BUCKETS = ["proj_fgmiss_0_19", "proj_fgmiss_20_29", "proj_fgmiss_30_39",
+                    "proj_fgmiss_40_49", "proj_fgmiss_50p"]
+
+
+def idp_from_raw(raw: list, idp_players: pd.DataFrame, season: int, week: int) -> pd.DataFrame:
+    """The pure half of `build_idp`: Sleeper's projection payload -> data/idp_projections.csv rows.
+
+    `proj_fg_missed` is derived (Sleeper publishes no total): the larger of attempts minus makes and the
+    sum of the miss buckets it does publish. Players with no projected stat line are not written."""
+    rows = []
+    for item in raw or []:
+        stats = item.get("stats") or {}
+        rec = {"sleeper_id": str(item.get("player_id")),
+               "proj_team": item.get("team"), "proj_opponent": item.get("opponent")}
+        for col, names in IDP_ALIASES.items():
+            rec[col] = _pick(stats, names)
+        rows.append(rec)
+    if not rows:
+        return pd.DataFrame()
+    df = pd.DataFrame(rows)
+    from .build import norm_id
+    df["sleeper_id"] = df.sleeper_id.map(norm_id)
+    df = df[df[IDP_PRESENCE].notna().any(axis=1)]
+    xw = idp_players[["gsis_id", "sleeper_id", "position", "team"]].copy()
+    xw["sleeper_id"] = xw.sleeper_id.map(norm_id)
+    xw = xw.dropna(subset=["sleeper_id"]).drop_duplicates("sleeper_id")
+    out = df.merge(xw, on="sleeper_id", how="left").dropna(subset=["gsis_id"]).copy()
+    if out.empty:
+        return out
+    out["team"] = out.team.fillna(out.proj_team)
+    buckets = out[_FG_MISS_BUCKETS].fillna(0).sum(axis=1)
+    out["proj_fg_missed"] = np.maximum((out.proj_fg_att - out.proj_fg_made).clip(lower=0).fillna(0), buckets)
+    out.loc[out.proj_fg_att.isna() & out.proj_fg_made.isna() & (buckets == 0), "proj_fg_missed"] = np.nan
+    out["season"], out["week"] = season, week
+    out["source"] = "sleeper"
+    out["pulled_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    cols = (["season", "week", "gsis_id", "source", "pulled_at", "team", "position"]
+            + list(IDP_ALIASES.keys()) + ["proj_fg_missed"])
+    return out[cols].sort_values(["position", "gsis_id"]).reset_index(drop=True)
+
+
+def build_idp(season: int, week: int, idp_players: pd.DataFrame, raw_dir: Path,
+              today: str) -> pd.DataFrame:
+    """data/idp_projections.csv rows for one week: Sleeper's projected stat line for DL / LB / DB / K."""
+    try:
+        raw = fetch_sleeper(season, week, raw_dir, today, IDP_POSITIONS, "projections_idp")
+    except Exception as e:
+        log.warning("Sleeper IDP/K projections unavailable for wk%s: %s", week, e)
+        return pd.DataFrame()
+    return idp_from_raw(raw, idp_players, season, week)

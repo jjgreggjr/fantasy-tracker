@@ -136,6 +136,7 @@ If a question doesn't name a league and the answer would differ, ask which.
 ## Definitions to use correctly
 
 - **E_pts** — expected points this week in *that league's* scoring. Not a projection; a ranking of opportunity.
+- **IDP and K `E_pts`** (`where-you-at`'s DL / LB / DB / K rows only) — Sleeper's projected stat line in that league's scoring, else his average points over his team's last three games; no depth chart, matchup or opportunity model behind it. The volume to quote is `E_opps` (tackles + assists a game; a kicker's FG + XP attempts), and `why` carries tackles and sacks a game. `E_pts_model` is blank for them, and their status rows are availability only (no blocker chain). DEF is still not scored.
 - **keep_pts** — what roster decisions use. Falls back to a healthy baseline when a player can't play this week, because "hurt this week" and "not worth a spot" are different questions.
 - **DvP rank 1 = the softest matchup**, the opposite of how defensive rankings usually read. Say so whenever you cite it.
 - **NO BASELINE** — no history at all (rookie), not the same as injured.

@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from . import idp as idp_mod
 from . import score as score_mod
 from . import upside as upside_mod
 from . import scoring, sources
@@ -31,8 +32,12 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
                  pw_all: pd.DataFrame, base: pd.DataFrame, proj: pd.DataFrame,
                  dvp: pd.DataFrame, sched: pd.DataFrame, depth: pd.DataFrame,
                  week: int, season: int, trending: pd.DataFrame,
-                 cfg: dict) -> dict:
-    """Write one league's folder and return the scored frames for the report."""
+                 cfg: dict, idp: dict | None = None) -> dict:
+    """Write one league's folder and return the scored frames for the report.
+
+    `idp` is {"players": DL/LB/DB/K player dimension, "weeks": idp_weeks history, "proj": idp projections};
+    it is used only when the league starts a defender slot (`scoring.league_idp_positions`), and for any
+    other league it is never read, so their files are exactly what they were without it."""
     slug = meta["slug"]
     d = root / "leagues" / slug
     d.mkdir(parents=True, exist_ok=True)
@@ -46,12 +51,32 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
                                             meta.get("name", slug))
         points.to_csv(d / "player_points.csv", index=False)
 
+    # ---- defenders and kickers: only for a league that starts IDP -----------
+    idp_pos = scoring.league_idp_positions(meta) if idp else []
+    idp_points = pd.DataFrame()
+    if idp_pos:
+        idp_points = idp_mod.league_points(idp.get("weeks"), meta.get("scoring", {}),
+                                           meta.get("name", slug))
+        if not idp_points.empty:
+            idp_points.to_csv(d / "idp_points.csv", index=False)
+
+    def _with_idp(scored: pd.DataFrame, rows: pd.DataFrame) -> pd.DataFrame:
+        """`scored` (skill players) plus the scored DL/LB/DB/K rows of `rows`."""
+        if not idp_pos:
+            return scored
+        extra = idp_mod.compute(rows, idp["players"], idp.get("weeks"), idp.get("proj"),
+                                idp_points, sched, meta, week, season, idp_pos)
+        if extra.empty:
+            return scored
+        return extra if scored.empty else pd.concat([scored, extra], ignore_index=True)
+
     # historical role/ceiling, computed once and merged into every scored frame
     ups = upside_mod.player_upside(pw_all, points)
 
     scfg = cfg.get("score", {})
     scored_mine = score_mod.compute(my_roster, players, base, proj, dvp, sched,
                                     depth, points, meta, week, season, scfg, pw=pw_all)
+    scored_mine = _with_idp(scored_mine, my_roster)
     if not scored_mine.empty and not ups.empty:
         scored_mine = scored_mine.merge(ups, on="gsis_id", how="left")
     if not scored_mine.empty:
@@ -61,6 +86,7 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
         scored_all = score_mod.compute(all_rosters, players, base, proj, dvp,
                                        sched, depth, points, meta, week, season,
                                        scfg, pw=pw_all)
+        scored_all = _with_idp(scored_all, all_rosters)
         if not scored_all.empty and not ups.empty:
             scored_all = scored_all.merge(ups, on="gsis_id", how="left")
         if not scored_all.empty:
@@ -75,6 +101,13 @@ def write_league(root: Path, meta: dict, my_roster: pd.DataFrame,
                    & players.nfl_status.isin(["ACT", "DEV"])].copy()
     avail = score_mod.compute(pool, players, base, proj, dvp, sched, depth,
                               points, meta, week, season, scfg, pw=pw_all)
+    if idp_pos:
+        n_skill = len(avail)
+        avail = _with_idp(avail, idp_mod.pool(idp["players"], owned, idp_pos))
+        if len(avail) > n_skill:                   # trim the defender / kicker pool, never the skill rows
+            skill, extra = avail.iloc[:n_skill], avail.iloc[n_skill:]
+            avail = pd.concat([skill, idp_mod.top_of_pool(extra, cfg.get("idp_pool_top", 60))],
+                              ignore_index=True)
     if not avail.empty and not ups.empty:
         avail = avail.merge(ups, on="gsis_id", how="left")
     if not avail.empty:
