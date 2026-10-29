@@ -11,7 +11,7 @@ free key for the player-props archive (below).
 
 **GitHub Actions (current).** `.github/workflows/pipeline.yml` runs the pipeline
 on GitHub's machines Tuesday 12:37 (with a 13:41 backstop), Wednesday 08:07,
-Friday 16:11 and Sunday 07:52 and 09:52 Mountain,
+Friday 16:11 and Sunday 05:52, 07:52 and 11:17 Mountain (MDT; one hour earlier on the clock after Nov 1),
 plus a manual "Run workflow" button on the Actions tab. Every run commits
 `data/`, `leagues/`, `reports/` and `logs/runs.csv` back to the repo, so the
 repo *is* the database and every week is a diffable commit. The job is marked
