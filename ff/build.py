@@ -11,6 +11,15 @@ import pandas as pd
 log = logging.getLogger(__name__)
 
 SKILL = ["QB", "RB", "WR", "TE"]
+# Individual defensive players and kickers. They live in their own tables (idp_players in memory,
+# data/idp_weeks.csv on disk): player_weeks.csv is a skill-position table that dvp, the touchdown
+# regression, upside and the repeat-DNP rule all read without a position filter.
+IDP_POS = ["DL", "LB", "DB", "K"]
+# nflverse stats_player_week uses fine-grained position codes; leagues slot DL / LB / DB / K.
+IDP_CODES = {"DE": "DL", "DT": "DL", "NT": "DL", "DL": "DL",
+             "LB": "LB", "ILB": "LB", "OLB": "LB", "MLB": "LB",
+             "CB": "DB", "S": "DB", "SS": "DB", "FS": "DB", "SAF": "DB", "DB": "DB",
+             "K": "K", "PK": "K"}
 OFFENSE_GRP = "3WR 1TE"
 
 ID_COLS = ["sleeper_id", "espn_id", "pfr_id", "gsis_id"]
@@ -121,9 +130,16 @@ def replace_partition(path: Path, new: pd.DataFrame, partition: list[str],
 
 
 # --------------------------------------------------------------------------
+def idp_position(code) -> str | None:
+    """DL / LB / DB / K for an nflverse or Sleeper position code, else None (P, LS, OL, offense...)."""
+    return IDP_CODES.get(str(code).strip().upper()) if code is not None and not pd.isna(code) else None
+
+
 def build_players(roster: pd.DataFrame, sleeper: dict | None,
-                  asof: pd.Timestamp) -> pd.DataFrame:
-    r = roster[roster.position.isin(SKILL)].copy()
+                  asof: pd.Timestamp, positions: list[str] = SKILL) -> pd.DataFrame:
+    """The player dimension for `positions` (skill players by default; `IDP_POS` for defenders and kickers)."""
+    roster = roster.assign(position=roster.position.map(lambda p: IDP_CODES.get(p, p)))
+    r = roster[roster.position.isin(positions)].copy()
     r = r.sort_values("week").drop_duplicates("gsis_id", keep="last")
     r = r[r.gsis_id.notna()]
 
@@ -166,7 +182,7 @@ def build_players(roster: pd.DataFrame, sleeper: dict | None,
              "sleeper_status": v.get("status"),
              "sleeper_active": v.get("active")}
             for k, v in sleeper.items()
-            if v.get("position") in SKILL
+            if (v.get("position") in positions or idp_position(v.get("position")) in positions)
         ])
         status_cols = ["injury_status", "injury_note", "injury_body_part",
                        "injury_start_date", "practice_participation",
@@ -255,6 +271,73 @@ def build_player_weeks(stats: pd.DataFrame, snaps: pd.DataFrame | None,
             "pass_yds", "pass_tds", "pass_int", "two_pt", "fum", "fum_lost",
             "fum_rec", "fum_rec_td", "touches", "opps", "fpts_ppr"]
     return out[cols].sort_values(["week", "position", "name"]).reset_index(drop=True)
+
+
+IDP_WEEK_COLS = [
+    "season", "week", "gsis_id", "name", "position", "team", "opponent",
+    # defence (nflverse def_* columns)
+    "tkl_solo", "tkl_ast", "tkl_loss", "sacks", "qb_hits", "ints", "pass_def", "ff",
+    "fum_rec", "def_td", "safeties", "blk_kick",
+    # kicking
+    "fg_att", "fg_made", "fg_missed",
+    "fgm_0_19", "fgm_20_29", "fgm_30_39", "fgm_40_49", "fgm_50_59", "fgm_60p", "fgm_50p",
+    "fgmiss_0_19", "fgmiss_20_29", "fgmiss_30_39", "fgmiss_40_49", "fgmiss_50_59", "fgmiss_60p", "fgmiss_50p",
+    "xpa", "xpm", "xpmiss",
+]
+
+
+def build_idp_weeks(stats: pd.DataFrame, season: int) -> pd.DataFrame:
+    """One row per DL / LB / DB / K per regular-season week from nflverse `stats_player_week`.
+
+    The raw counts are kept, never points: each league applies its own scoring (`scoring.score_idp`).
+    Positions are the fine-grained nflverse codes folded into `IDP_POS` (`IDP_CODES`). Column names
+    that nflverse has spelled two ways (`def_tackle_assists` / `def_tackles_with_assist`) are read
+    either way; a column the file does not have is 0, so an old season still loads.
+    """
+    if stats is None or stats.empty or "position" not in stats.columns:
+        return pd.DataFrame(columns=IDP_WEEK_COLS)
+    pos = stats.position.map(idp_position)
+    s = stats[(stats.season_type == "REG") & pos.notna()].copy()
+    if s.empty:
+        return pd.DataFrame(columns=IDP_WEEK_COLS)
+    s["_pos"] = pos[s.index]
+    num = lambda *cols: next((pd.to_numeric(s[c], errors="coerce").fillna(0)
+                              for c in cols if c in s.columns), pd.Series(0.0, index=s.index))
+    out = pd.DataFrame({
+        "season": s.season.astype(int),
+        "week": s.week.astype(int),
+        "gsis_id": s.player_id,
+        "name": s.player_display_name,
+        "position": s._pos,
+        "team": s.team,
+        "opponent": s.opponent_team,
+        "tkl_solo": num("def_tackles_solo"),
+        "tkl_ast": num("def_tackle_assists", "def_tackles_with_assist"),
+        "tkl_loss": num("def_tackles_for_loss"),
+        "sacks": num("def_sacks"),
+        "qb_hits": num("def_qb_hits"),
+        "ints": num("def_interceptions"),
+        "pass_def": num("def_pass_defended"),
+        "ff": num("def_fumbles_forced"),
+        "fum_rec": num("fumble_recovery_opp"),
+        "def_td": num("def_tds"),
+        "safeties": num("def_safeties"),
+        "blk_kick": num("def_fg_blocks") + num("def_pat_blocks") + num("def_punt_blocks"),
+        "fg_att": num("fg_att"),
+        "fg_made": num("fg_made"),
+        "fg_missed": num("fg_missed"),
+        "xpa": num("pat_att"),
+        "xpm": num("pat_made"),
+        "xpmiss": num("pat_missed"),
+    })
+    for b in ("0_19", "20_29", "30_39", "40_49", "50_59"):
+        out[f"fgm_{b}"] = num(f"fg_made_{b}")
+        out[f"fgmiss_{b}"] = num(f"fg_missed_{b}")
+    out["fgm_60p"] = num("fg_made_60_")
+    out["fgmiss_60p"] = num("fg_missed_60_")
+    out["fgm_50p"] = out.fgm_50_59 + out.fgm_60p
+    out["fgmiss_50p"] = out.fgmiss_50_59 + out.fgmiss_60p
+    return out[IDP_WEEK_COLS].sort_values(["week", "position", "name"]).reset_index(drop=True)
 
 
 def build_depth_charts(depth: pd.DataFrame, season: int, week: int,

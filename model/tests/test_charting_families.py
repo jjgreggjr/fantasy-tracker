@@ -538,10 +538,11 @@ class Registry(unittest.TestCase):
         cfg = TR.load_config()
         X, _ = T.encode(df, T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",)))
         self.assertEqual(set(X.columns), set(cfg["inputs"]))
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertFalse(set(NEW_COLS) & set(cfg["inputs"]), "none of the charting families is adopted")
+        base = TR.serving_spec(cfg)
         for f in FAMS:
             self.assertEqual(set(T.feature_columns(df, T.Spec("x", add_families=(f,)))) - set(prim), set(F.FAMILIES[f]))
-            self.assertEqual(TR.compose([f"+family:{f}"], TR.serving_spec(cfg)).spec.add_families, (f,))
+            self.assertEqual(TR.compose([f"+family:{f}"], base).spec.add_families, (*base.add_families, f))
 
     def test_constants_repeated_in_features_equal_the_loaders(self):
         self.assertEqual(F.NGS_STATS, tuple(s for v in pit.NGS_STATS.values() for s in v))

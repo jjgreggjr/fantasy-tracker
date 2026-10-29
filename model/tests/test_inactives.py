@@ -80,8 +80,8 @@ class Label(unittest.TestCase):
 class NobodysInput(unittest.TestCase):
     def test_not_a_matrix_label_and_not_a_serving_input(self):
         self.assertNotIn("y_inactive", BF.LABELS)
-        inputs = json.loads(Path(SV.CONFIG_PATH).read_text(encoding="utf-8"))["inputs"]
-        self.assertEqual(len(inputs), 71)
+        cfg = json.loads(Path(SV.CONFIG_PATH).read_text(encoding="utf-8"))
+        inputs = cfg["inputs"] + cfg["fallback"]["inputs"]
         self.assertFalse([c for c in inputs if "inactive" in c or c.startswith("ina_")])
 
     def test_the_serves_cache_key_does_not_hash_it(self):

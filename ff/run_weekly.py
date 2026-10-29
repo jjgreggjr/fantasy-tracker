@@ -348,7 +348,41 @@ def _main(argv=None) -> int:
 
     # ---- leagues --------------------------------------------------------
     leagues_raw = [] if args.skip_sleeper else resolve_leagues(cfg, season, warnings)
-    lr = build.build_league_rosters(leagues_raw, players, season, preview_week)
+
+    # ---- defenders and kickers (only when a tracked league starts IDP) ---
+    # Their own tables: data/idp_weeks.csv (nflverse counts, rebuilt from the whole season file every run)
+    # and data/idp_projections.csv (Sleeper). Leagues without a DL/LB/DB slot never read them.
+    want_idp = any(scoring.league_idp_positions({"roster_positions": lg["league"].get("roster_positions")})
+                   for lg in leagues_raw)
+    idp_players, idp_hist, idp_proj = pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+    xw_players = players
+    # Failure-isolated like the model step: a defender/kicker problem must never cost the skill-player
+    # run, so any exception here becomes a WARN and the league is written without IDP/K rows.
+    if want_idp:
+        try:
+            idp_players = build.build_players(nv["roster"], sleeper_players, pd.Timestamp(now.date()),
+                                              build.IDP_POS)
+            idp_new = (build.build_idp_weeks(nv["stats"], season) if nv.get("stats") is not None
+                       else pd.DataFrame())
+            if not idp_new.empty:
+                build.upsert(DATA / "idp_weeks.csv", idp_new, ["season", "week", "gsis_id"])
+            idp_cur = (build.read_data_csv(DATA / "idp_weeks.csv")
+                       if (DATA / "idp_weeks.csv").exists() else pd.DataFrame())
+            idp_prior = (build.build_idp_weeks(nv["stats_prior"], season - 1)
+                         if nv.get("stats_prior") is not None else pd.DataFrame())
+            idp_hist = pd.concat([f for f in (idp_prior, idp_cur) if not f.empty], ignore_index=True) \
+                if (not idp_prior.empty or not idp_cur.empty) else pd.DataFrame()
+            xw_players = pd.concat([players, idp_players], ignore_index=True)
+            log.info("IDP/K: %d players, %d player-weeks (%d this season)", len(idp_players),
+                     len(idp_hist), len(idp_cur))
+        except Exception as e:      # noqa: BLE001 - the contract is "never fail the run"
+            log.exception("IDP/K build failed")
+            warnings.append(f"IDP/K build failed ({type(e).__name__}: {e}); defenders and kickers "
+                            "skipped this run.")
+            want_idp = False
+            idp_players, idp_hist, idp_proj, xw_players = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), players
+
+    lr = build.build_league_rosters(leagues_raw, xw_players, season, preview_week)
     if not lr.empty:
         build.replace_partition(DATA / "league_rosters.csv", lr,
                                 ["season", "week", "league_id"],
@@ -398,10 +432,27 @@ def _main(argv=None) -> int:
                          ["season", "week", "gsis_id", "source"])
             log.info("projections: %d players", len(proj))
 
+    if want_idp:
+        try:
+            idp_proj = projections.build_idp(season, preview_week, idp_players, RAW / "sleeper", today)
+        except Exception as e:      # noqa: BLE001 - same contract: trailing fallback, never a failed run
+            log.exception("IDP/K projections failed")
+            warnings.append(f"IDP/K projections failed ({type(e).__name__}: {e}); their E_pts fall "
+                            "back to the trailing three-game average.")
+            idp_proj = pd.DataFrame()
+        if idp_proj.empty:
+            if not any(w.startswith("IDP/K projections failed") for w in warnings):
+                warnings.append("No IDP/K projections for this week; their E_pts fall back to the "
+                                "trailing three-game average.")
+        else:
+            build.upsert(DATA / "idp_projections.csv", idp_proj,
+                         ["season", "week", "gsis_id", "source"])
+            log.info("IDP/K projections: %d players", len(idp_proj))
+
     # ---- trending (league-agnostic hot list) -----------------------------
     trending = pd.DataFrame()
     if not args.skip_sleeper:
-        trending = leagues.trending_frame(players)
+        trending = leagues.trending_frame(xw_players)
         if not trending.empty:
             trending.to_csv(DATA / "trending.csv", index=False)
 
@@ -441,6 +492,8 @@ def _main(argv=None) -> int:
                             "no gameday inactive check this run.")
             inactives, ina_rows = pd.DataFrame(columns=status_mod.INACTIVE_COLS), None
     players["inactive"] = players.gsis_id.isin(set(inactives.gsis_id)).astype(int)
+    if want_idp:
+        idp_players["inactive"] = idp_players.gsis_id.isin(set(inactives.gsis_id)).astype(int)
 
     # Repeat DNP (0 opps in each of the team's last 2 games, from player_weeks) and this week's IR
     # activations / practice-squad elevations (nflverse weekly_rosters status RES/PUP/DEV -> ACT).
@@ -455,6 +508,18 @@ def _main(argv=None) -> int:
         warnings.append(f"repeat-DNP / role-change rules failed ({e}) — not applied this run.")
 
     st = status_mod.build(players, depth, proj, preview_week, injuries, inactives, dnp, roles)
+    if want_idp:
+        # status rows for every defender / kicker on a tracked roster or with a stat line this season
+        # (availability only: there is no depth chart or blocker chain for them); best-effort
+        try:
+            mine_ids = set(lr.gsis_id.dropna()) if not lr.empty else set()
+            seen = set(idp_hist[idp_hist.season == season].gsis_id) if not idp_hist.empty else set()
+            st_idp = status_mod.build_idp(idp_players[idp_players.gsis_id.isin(mine_ids | seen)],
+                                          preview_week, injuries, inactives)
+            st = st_idp if st.empty else pd.concat([st, st_idp], ignore_index=True)
+        except Exception as e:      # noqa: BLE001
+            log.exception("IDP/K status failed")
+            warnings.append(f"IDP/K status rows failed ({type(e).__name__}: {e}); skipped this run.")
     if not st.empty:
         st.to_csv(DATA / "status.csv", index=False)
         # the two rules reach E_pts through the players frame, like `inactive` above
@@ -485,9 +550,21 @@ def _main(argv=None) -> int:
         slugs_cfg.setdefault(str(meta["league_id"]), {})["slug"] = meta["slug"]
         sub = lr[lr.league_id == meta["league_id"]] if not lr.empty else pd.DataFrame()
         mine = _my_rows(sub, cfg)
-        ctx = leagues.write_league(ROOT, meta, mine, sub, players, pw_hist, base,
-                                   proj, ranks, sched, depth, preview_week,
-                                   season, trending, cfg)
+        idp_arg = ({"players": idp_players, "weeks": idp_hist, "proj": idp_proj} if want_idp else None)
+        try:
+            ctx = leagues.write_league(ROOT, meta, mine, sub, players, pw_hist, base,
+                                       proj, ranks, sched, depth, preview_week,
+                                       season, trending, cfg, idp=idp_arg)
+        except Exception as e:      # noqa: BLE001
+            if idp_arg is None:
+                raise
+            # the IDP/K path must never cost the league its skill-player outputs: retry without it
+            log.exception("write_league with IDP/K failed for %s", meta["slug"])
+            warnings.append(f"IDP/K rows failed for {meta['slug']} ({type(e).__name__}: {e}); "
+                            "league written without defenders and kickers.")
+            ctx = leagues.write_league(ROOT, meta, mine, sub, players, pw_hist, base,
+                                       proj, ranks, sched, depth, preview_week,
+                                       season, trending, cfg, idp=None)
         ctx["watchlist"] = analyze.watchlist(
             players, base, depth,
             set(sub.gsis_id.dropna()) if not sub.empty else set(),

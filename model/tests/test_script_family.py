@@ -288,7 +288,7 @@ class Registry(unittest.TestCase):
         self.assertFalse(set(cols) & others)
         self.assertFalse(set(pit.PBP_SCRIPT_COUNTS) & set(pit.PBP_TEAM_COUNTS))
 
-    def test_opt_in_and_the_primary_keeps_its_71_inputs(self):
+    def test_opt_in_and_the_primary_and_serving_inputs_exclude_it(self):
         self.assertIn("script", T.OPT_IN_FAMILIES)
         df = pd.DataFrame({c: [0.0, 1.0] for c in F.feature_columns()} | {"position": ["QB", "RB"]})
         prim = T.feature_columns(df, T.PRIMARY)
@@ -296,7 +296,7 @@ class Registry(unittest.TestCase):
         with_ = T.feature_columns(df, T.Spec("x", add_families=("script",)))
         self.assertEqual(set(with_) - set(prim), set(F.FAMILIES["script"]))
         cfg = json.loads((Path(T.__file__).resolve().parent / "serving_config.json").read_text())
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertNotIn("script", cfg["spec"].get("add_families", []))
         self.assertFalse(set(cfg["inputs"]) & set(F.FAMILIES["script"]))
 
     def test_a_store_without_pbp_or_coaches_says_nan(self):

@@ -124,6 +124,7 @@ class KnownAt(unittest.TestCase):
 # ------------------------------------------------------------------ registry: value only, opt-in, primary untouched
 class Registry(unittest.TestCase):
     def test_market_is_registered_opt_in_and_the_primary_and_serving_inputs_are_unchanged(self):
+        """Opt-in family, outside the Phase 2 primary; adopted into the serving spec on 2026-10-18 (its columns are in the served inputs, not the fallback)."""
         self.assertIn("market", features.FAMILIES)
         self.assertIn("market", T.OPT_IN_FAMILIES)
         self.assertEqual(len(COLS), 11)
@@ -138,7 +139,9 @@ class Registry(unittest.TestCase):
         serving = T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",))
         X, _ = T.encode(df, serving)
         self.assertEqual(set(X.columns), set(cfg["inputs"]))
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertIn("market", TR.serving_spec(cfg).add_families, "market was adopted into the serving spec (2026-10-18)")
+        self.assertTrue(set(COLS) <= set(cfg["inputs"]))
+        self.assertFalse(set(COLS) & set(cfg["fallback"]["inputs"]), "the fallback is the spec without market")
         added = T.feature_columns(df, T.Spec("x", add_families=("market",)))
         self.assertEqual(set(added) - set(prim), set(COLS))
 
@@ -151,9 +154,13 @@ class Registry(unittest.TestCase):
         self.assertTrue(all(math.isnan(v) for v in f.values()))
 
     def test_trial_accepts_the_candidate(self):
-        v = TR.compose(["+family:market"], TR.serving_spec(TR.load_config()))
-        self.assertEqual(v.spec.add_families, ("market",))
-        self.assertRegex(TR.list_families(TR.load_config()), r"market  \[0/11 not in serving, opt-in\]")
+        """market is already in the serving spec: the trial refuses to add it twice, drops it cleanly, and lists it as served."""
+        base = TR.serving_spec(TR.load_config())
+        with self.assertRaisesRegex(ValueError, "already added"):
+            TR.compose(["+family:market"], base)
+        v = TR.compose(["-family:market"], base)
+        self.assertNotIn("market", v.spec.add_families)
+        self.assertRegex(TR.list_families(TR.load_config()), r"market  \[11/11 serving, opt-in\]")
 
 
 # ------------------------------------------------------------------ feature values and leakage on a synthetic store

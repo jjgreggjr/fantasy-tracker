@@ -320,7 +320,8 @@ class Registry(unittest.TestCase):
         cfg = TR.load_config()
         X, _ = T.encode(df, T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",)))
         self.assertEqual(set(X.columns), set(cfg["inputs"]))
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertFalse(set(COLS) & set(cfg["inputs"]), "nfelo is not adopted: none of its columns are served")
+        self.assertNotIn("nfelo", TR.serving_spec(cfg).add_families)
         both = T.feature_columns(df, T.Spec("x", add_families=("nfelo", "pepa")))
         self.assertEqual(set(both) - set(prim), set(COLS) | set(features.FAMILIES["pepa"]))
 

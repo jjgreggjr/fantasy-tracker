@@ -159,13 +159,15 @@ class Registry(unittest.TestCase):
         serving = T.feature_columns(df, TR.serving_spec(cfg), dead=("college_breakout_age",))   # always NA in the real matrix
         X, _ = T.encode(df, serving)
         self.assertEqual(set(X.columns), set(cfg["inputs"]), "the frozen serving inputs must not move")
-        self.assertEqual(len(cfg["inputs"]), 71)
+        self.assertFalse(set(COLS) & set(cfg["inputs"]), "streak is not adopted: none of its columns are served")
+        self.assertNotIn("streak", TR.serving_spec(cfg).add_families)
         added = T.feature_columns(df, T.Spec("x", add_families=("streak",)))
         self.assertEqual(set(added) - set(prim), set(COLS))
 
     def test_trial_accepts_the_candidate_and_lists_it_as_opt_in(self):
-        v = TR.compose(["+family:streak"], TR.serving_spec(TR.load_config()))
-        self.assertEqual(v.spec.add_families, ("streak",))
+        base = TR.serving_spec(TR.load_config())
+        v = TR.compose(["+family:streak"], base)
+        self.assertEqual(v.spec.add_families, (*base.add_families, "streak"))
         self.assertTrue(v.changes_inputs(TR.serving_spec(TR.load_config())))
         text = TR.list_families(TR.load_config())
         self.assertRegex(text, r"streak  \[0/8 not in serving, opt-in\]")
