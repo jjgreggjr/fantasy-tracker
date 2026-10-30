@@ -55,11 +55,97 @@ def _load(slug: str):
     return meta, get("roster.csv"), get("available.csv"), get("all_rosters.csv"), d
 
 
-def lineup(slug: str) -> tuple[pd.DataFrame, str]:
-    """Fill every startable slot greedily by E_pts, honoring eligibility."""
+def _hungarian(cost: list[list[float]]) -> list[int]:
+    """Min-cost assignment on a square matrix (Kuhn-Munkres, O(n^3), pure Python).
+    Returns col assigned to each row. Deterministic: ties resolve by row/col order."""
+    n = len(cost)
+    INF = float("inf")
+    u, v = [0.0] * (n + 1), [0.0] * (n + 1)
+    match, way = [0] * (n + 1), [0] * (n + 1)
+    for i in range(1, n + 1):
+        match[0] = i
+        j0 = 0
+        minv, used = [INF] * (n + 1), [False] * (n + 1)
+        while True:
+            used[j0] = True
+            i0, delta, j1 = match[j0], INF, 0
+            for j in range(1, n + 1):
+                if used[j]:
+                    continue
+                cur = cost[i0 - 1][j - 1] - u[i0] - v[j]
+                if cur < minv[j]:
+                    minv[j], way[j] = cur, j0
+                if minv[j] < delta:
+                    delta, j1 = minv[j], j
+            for j in range(n + 1):
+                if used[j]:
+                    u[match[j]] += delta
+                    v[j] -= delta
+                else:
+                    minv[j] -= delta
+            j0 = j1
+            if match[j0] == 0:
+                break
+        while j0:
+            j1 = way[j0]
+            match[j0] = match[j1]
+            j0 = j1
+    row_to_col = [0] * n
+    for j in range(1, n + 1):
+        row_to_col[match[j] - 1] = j - 1
+    return row_to_col
+
+
+_BIG = 1e6    # cost of an ineligible pairing: far above any real score, so filling more slots always wins
+
+
+def optimize_lineup(pool: pd.DataFrame, slots: list[str], score_col: str, idp_on: bool) -> list[dict]:
+    """Exact best lineup: distinct players to slots maximizing total `score_col`, honoring eligibility.
+    Players with NaN in `score_col` are ineligible everywhere. Picks come back in the order of `slots`;
+    a slot nobody eligible can fill is left out. Ties: higher E_pts, then name, then slot order."""
+    if pool is None or pool.empty or not slots or score_col not in pool.columns:
+        return []
+    mcols = [c for c in modelcols.MODEL_COLS if c in pool.columns]
+    pl = pool[pool[score_col].notna()].copy()
+    if pl.empty:
+        return []
+    pl["_e"] = pl["E_pts"].fillna(0.0) if "E_pts" in pl.columns else 0.0
+    pl = pl.sort_values(["_e", "name"], ascending=[False, True], kind="mergesort").reset_index(drop=True)
+    n, m = len(pl), len(slots)
+    size = max(n, m)
+    pos = pl["position"].tolist()
+    sc = pl[score_col].astype(float).tolist()
+    ee = pl["_e"].astype(float).tolist()
+    cost = [[0.0] * size for _ in range(size)]
+    for i in range(n):
+        for j in range(m):
+            cost[i][j] = (-sc[i] - 1e-7 * ee[i] if scoring.slot_allows(slots[j], pos[i], idp_on) else _BIG)
+        for j in range(m, size):
+            cost[i][j] = 0.0
+    assign = _hungarian(cost)
+    by_slot = {}
+    for i in range(n):
+        j = assign[i]
+        if j < m and cost[i][j] < _BIG / 2:
+            by_slot[j] = i
+    picks = []
+    for j in range(m):
+        if j not in by_slot:
+            continue
+        p = pl.iloc[by_slot[j]]
+        picks.append({"slot": slots[j], "name": p["name"], "position": p.position,
+                      "team": p.team, "opponent": p.get("opponent"),
+                      "E_pts": p.E_pts, **{c: p.get(c) for c in mcols},
+                      "conf": p.get("conf"), "why": p.get("why"), "gsis_id": p.get("gsis_id")})
+    return picks
+
+
+def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
+    """Fill every startable slot with the exact optimum by E_pts, honoring eligibility.
+    When model columns exist, the optimum by E_pts_model is in `start.attrs["model_start"]`."""
     meta, roster, avail, _, _ = _load(slug)
     if roster.empty:
-        return pd.DataFrame(), "No roster data for this league."
+        return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
     all_slots = scoring.starting_slots(meta)
     # DL / LB / DB / K slots are fillable only in a league whose IDP is scored (league_idp_positions);
     # anywhere else, and for DST always, they are out of scope
@@ -68,26 +154,19 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
                        else scoring.SLOT_ELIGIBILITY.get(sl, set()))
     slots = [s for s in all_slots if elig(s)]
     unscored = [s for s in all_slots if not elig(s)]
-    roster = modelcols.attach(roster, slug, ROOT)        # display only: E_pts stays what every pick below sorts on
+    roster = modelcols.attach(roster, slug, ROOT)        # E_pts decides the lineup; model cols ride along
     mcols = [c for c in modelcols.MODEL_COLS if c in roster.columns]
-    pool = roster[roster.E_pts.notna()].sort_values("E_pts", ascending=False).copy()
-    used, picks = set(), []
-
-    # scarcest slots first so a SUPER_FLEX doesn't eat the only eligible QB
-    order = sorted(range(len(slots)), key=lambda i: len(elig(slots[i])))
-    for i in order:
-        slot = slots[i]
-        for _, p in pool.iterrows():
-            if p.gsis_id in used or not scoring.slot_allows(slot, p.position, idp_on):
-                continue
-            picks.append({"slot": slot, "name": p["name"], "position": p.position,
-                          "team": p.team, "opponent": p.get("opponent"),
-                          "E_pts": p.E_pts, **{c: p.get(c) for c in mcols},
-                          "conf": p.get("conf"), "why": p.get("why")})
-            used.add(p.gsis_id)
-            break
+    picks = optimize_lineup(roster, slots, "E_pts", idp_on)
+    used = {p["gsis_id"] for p in picks}
+    for p in picks:
+        p.pop("gsis_id", None)
+    m_picks = (optimize_lineup(roster, slots, "E_pts_model", idp_on)
+               if "E_pts_model" in roster.columns else [])
+    for p in m_picks:
+        p.pop("gsis_id", None)
 
     start = pd.DataFrame(picks)
+    start.attrs["model_start"] = pd.DataFrame(m_picks)
     bench = roster[~roster.gsis_id.isin(used)].copy()
     if not bench.empty and not start.empty:
         gaps = []
@@ -114,6 +193,51 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str]:
     if not close.empty:
         note += " Near-ties on the bench: " + ", ".join(close["name"].head(3).tolist()) + "."
     return start, note, bench
+
+
+def _fmt(x) -> str:
+    return "-" if x is None or pd.isna(x) else f"{x:.1f}"
+
+
+def side_by_side(e_start: pd.DataFrame, m_start: pd.DataFrame) -> str:
+    """Both optima slot-aligned: the E_pts lineup and the E_pts_model lineup, with a same / != marker."""
+    if e_start is None or e_start.empty or m_start is None or m_start.empty:
+        return ""
+
+    def keyed(df):
+        seen, out = {}, {}
+        for _, r in df.iterrows():
+            k = (r["slot"], seen.get(r["slot"], 0))
+            seen[r["slot"]] = k[1] + 1
+            out[k] = r
+        return out
+
+    e, m = keyed(e_start), keyed(m_start)
+    rank = {}
+    for df in (e_start, m_start):
+        for i, sl in enumerate(df["slot"]):
+            rank.setdefault(sl, i)
+    order = sorted(dict.fromkeys([*e, *m]), key=lambda k: (rank.get(k[0], 99), k[1]))
+    rows = []
+    for k in order:
+        a, b = e.get(k), m.get(k)
+        an = f"{a['name']} ({_fmt(a['E_pts'])})" if a is not None else "-"
+        bn = f"{b['name']} ({_fmt(b['E_pts_model'])})" if b is not None else "-"
+        same = a is not None and b is not None and a["name"] == b["name"]
+        rows.append((k[0], an, bn, "same" if same else "!="))
+    en, mn = set(e_start["name"]), set(m_start["name"])
+    w1 = max(len("E_pts pick (E_pts)"), *(len(r[1]) for r in rows))
+    w2 = max(len("model pick (E_pts_model)"), *(len(r[2]) for r in rows))
+    ws = max(4, *(len(r[0]) for r in rows))
+    lines = [f"{'slot':<{ws}}  {'E_pts pick (E_pts)':<{w1}}  {'model pick (E_pts_model)':<{w2}}",
+             *[f"{r[0]:<{ws}}  {r[1]:<{w1}}  {r[2]:<{w2}}  {r[3]}" for r in rows]]
+    tot = lambda df, c: float(pd.to_numeric(df[c], errors="coerce").sum())
+    lines.append(f"Totals  E_pts: {tot(e_start, 'E_pts'):.1f} (E_pts lineup) vs {tot(m_start, 'E_pts'):.1f} (model lineup)"
+                 f" | E_pts_model: {tot(e_start, 'E_pts_model'):.1f} vs {tot(m_start, 'E_pts_model'):.1f}")
+    lines.append("Differ: " + (("E_pts only: " + (", ".join(sorted(en - mn)) or "none")
+                               + " | model only: " + (", ".join(sorted(mn - en)) or "none"))
+                              if en != mn else "none (same players)"))
+    return "\n".join(lines)
 
 
 # Display order for played lineups: a starter's slot, not his position.
@@ -412,6 +536,13 @@ def main(argv=None):
                   f"is_starter as possibly stale.")
             return
         print(live_mod.render(res))
+        try:
+            _st, _, _ = lineup(a.slug)
+            sbs = side_by_side(_st, _st.attrs.get("model_start"))
+        except Exception:
+            sbs = ""
+        if sbs:
+            print("\nOptimal lineup, E_pts vs model (committed scores):\n" + sbs)
         st = res["mine"][res["mine"].is_starter == 1]
         if not st.empty:
             print("\nStatus of every current starter (and who is ahead of him):")
@@ -432,6 +563,9 @@ def main(argv=None):
             print(modelcols.NOTE + "\n")
         print(start.to_string(index=False) if not start.empty else "(no lineup)")
         print("\n" + note)
+        sbs = side_by_side(start, start.attrs.get("model_start"))
+        if sbs:
+            print("\nE_pts optimum vs model optimum:\n" + sbs)
         if not start.empty:
             print("\nStatus of every starter (and who is ahead of him):")
             for line in _status_block(_status(), start["name"].tolist()):
