@@ -211,7 +211,7 @@ def _f(x, nd: int = 3) -> str:
     return "n/a" if x is None or x != x else f"{x:.{nd}f}"
 
 
-def render(ev, cov, avail, gate: dict) -> str:
+def render(ev, cov, avail, gate: dict, extra: str = "") -> str:
     """The report. Everything in it is a function of the committed inputs (no clock), so a rerun changes nothing."""
     L = ["# Live scoreboard", "", f"**{GATE}**", ""]
     if ev.empty:
@@ -266,6 +266,8 @@ def render(ev, cov, avail, gate: dict) -> str:
         L += [f"| {r.season} | {r.week} | {r.league} | {r.model_rows} | {r.actual_rows} | " + " | ".join(str(getattr(r, c)) for c in COMPARATORS) + " |"
               for r in avail.sort_values(["season", "week", "league"]).itertuples()]
         L.append("")
+    if extra:
+        L += [extra.rstrip("\n"), ""]
     L += ["## Limits", "",
           "- Frozen means frozen at the last run before each game's kickoff; weeks served before this file existed have no rows and are not scored.",
           "- Few weeks are noise. Pick accuracy moves by several points from week to week; read the interval, not the ranking.",
@@ -306,7 +308,12 @@ def _by(ev, key: str) -> str:
 def run(root: Path = ROOT, *, write: bool = True) -> str:
     from ff import build
     ev, cov, avail = evaluate(root)
-    text = render(ev, cov, avail, gate_status(ev) if not ev.empty else {})
+    try:
+        from model import lineups
+        extra = lineups.section(root)             # recorded-lineup results: model.lineups scores, this file stays the one report writer
+    except Exception as e:
+        extra = f"## Lineups: which optimizer would have scored more\n\nSection unavailable ({type(e).__name__})."
+    text = render(ev, cov, avail, gate_status(ev) if not ev.empty else {}, extra)
     if write:
         if not ev.empty:
             build.replace_partition(root / "data" / "model_eval.csv", ev, ["season", "week"], KEYS)
