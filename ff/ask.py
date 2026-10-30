@@ -175,7 +175,7 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
     start.attrs["model_start"] = clean(three["model"]) if has_model else pd.DataFrame()
     start.attrs["call_start"] = three["call"].drop(columns=["E_opps"], errors="ignore")
     start.attrs["three"] = three
-    start.attrs["all_slots"] = all_slots
+    start.attrs["all_slots"] = scoring.starting_slots(meta)
     start.attrs["roster"] = roster
     bench = roster[~roster.gsis_id.isin(used)].copy()
     if not bench.empty and not start.empty:

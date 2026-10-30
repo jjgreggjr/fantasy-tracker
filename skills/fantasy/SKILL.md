@@ -82,6 +82,19 @@ Two things are easy to conflate — always say which you mean:
   `E_pts` regardless of what he set.
 Lead with the difference between the two; that difference *is* the advice.
 
+Both recipes print one slot-by-slot table in the league's slot order: the
+E_pts pick, the model pick (`same` when identical), and **the call** — a
+rule-based choice with its reason when they differ (rules in `ff/calls.py`
+and POLICY.md "The call": E_pts is authoritative; status first, then a
+near-tie goes to the model, then a model override on bigger model gap plus
+more volume). `IN` marks a pick not in the current lineup; the `Net:` line
+is the summary James wants. Give him that table as-is, don't rebuild it.
+Every run records the three lineups per league (`data/lineups_optimal.csv`,
+frozen slot by slot at kickoff) and, once the week completes, scores them and
+his actual lineup with real points (`data/lineup_eval.csv`, "Lineups" section
+of `model/reports/live_scoreboard.md`). Quote that section when he asks which
+optimizer is winning.
+
 ## What actually started (played weeks)
 
 `data/lineups_played.csv` and `data/matchup_results.csv` are the **only** valid
