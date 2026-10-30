@@ -89,11 +89,16 @@ and POLICY.md "The call": E_pts is authoritative; status first, then a
 near-tie goes to the model, then a model override on bigger model gap plus
 more volume). `IN` marks a pick not in the current lineup; the `Net:` line
 is the summary James wants. Give him that table as-is, don't rebuild it.
-Every run records the three lineups per league (`data/lineups_optimal.csv`,
+Every run records four lineups per league (E_pts, model, Sleeper, call) (`data/lineups_optimal.csv`,
 frozen slot by slot at kickoff) and, once the week completes, scores them and
 his actual lineup with real points (`data/lineup_eval.csv`, "Lineups" section
 of `model/reports/live_scoreboard.md`). Quote that section when he asks which
 optimizer is winning.
+
+- **"how is the model doing" / which number should pick my lineup** = quote
+  `python -m ff.ask scoreboard [slug]` as printed: the Summary (gate, pick
+  accuracy, lineup efficiency), the pooled lineup table (e_pts, model, sleeper,
+  call, actual, perfect), and with a slug that league's week-by-week table.
 
 ## What actually started (played weeks)
 

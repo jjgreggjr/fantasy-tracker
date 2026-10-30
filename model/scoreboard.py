@@ -211,9 +211,37 @@ def _f(x, nd: int = 3) -> str:
     return "n/a" if x is None or x != x else f"{x:.{nd}f}"
 
 
-def render(ev, cov, avail, gate: dict, extra: str = "") -> str:
+def summary_lines(ev, gate: dict, root: Path = ROOT) -> list[str]:
+    """The Summary block: the whole verdict in a few lines (gate, pooled pick accuracy, pooled lineup efficiency)."""
+    L = ["## Summary", ""]
+    if ev.empty:
+        L.append(f"- Gate: NOT STARTED (0 of {GATE_WEEKS} weeks scored).")
+        L.append("- Pick accuracy: nothing scored yet.")
+    else:
+        L.append(f"- Gate: {'MET' if gate['met'] else 'NOT MET'}, {gate['weeks']} of {GATE_WEEKS} completed weeks scored "
+                 f"(model minus Sleeper {gate['diff']:+.3f} pick accuracy).")
+        p = pooled(ev)
+        acc = ", ".join(f"{n} {_f(p[c]['pick_acc'])}" for n, c in (("model", GATE_MODEL), ("sleeper", "sleeper"), ("e_pts", "e_pts")) if c in p)
+        L.append(f"- Pick accuracy, pooled on identical rows: {acc}.")
+    try:
+        from model import lineups
+        L += [f"- {x}" for x in lineups.efficiency_lines(root)]
+    except Exception as e:
+        L.append(f"- Lineup efficiency unavailable ({type(e).__name__}).")
+    return L + [""]
+
+
+def committed_summary(root: Path = ROOT) -> str:
+    """The Summary block from the committed data/model_eval.csv and data/lineup_eval.csv (what `ff.ask scoreboard` prints)."""
+    import pandas as pd
+    p = root / "data" / "model_eval.csv"
+    ev = pd.read_csv(p, low_memory=False) if p.exists() else pd.DataFrame(columns=EVAL_COLS)
+    return "\n".join(summary_lines(ev, gate_status(ev) if not ev.empty else {}, root)).rstrip("\n")
+
+
+def render(ev, cov, avail, gate: dict, extra: str = "", root: Path = ROOT) -> str:
     """The report. Everything in it is a function of the committed inputs (no clock), so a rerun changes nothing."""
-    L = ["# Live scoreboard", "", f"**{GATE}**", ""]
+    L = ["# Live scoreboard", ""] + summary_lines(ev, gate, root) + [f"**{GATE}**", ""]
     if ev.empty:
         L += [f"**Gate status: not started.** No completed week has frozen model predictions yet (0 of {GATE_WEEKS} weeks).", ""]
     else:
@@ -313,7 +341,7 @@ def run(root: Path = ROOT, *, write: bool = True) -> str:
         extra = lineups.section(root)             # recorded-lineup results: model.lineups scores, this file stays the one report writer
     except Exception as e:
         extra = f"## Lineups: which optimizer would have scored more\n\nSection unavailable ({type(e).__name__})."
-    text = render(ev, cov, avail, gate_status(ev) if not ev.empty else {}, extra)
+    text = render(ev, cov, avail, gate_status(ev) if not ev.empty else {}, extra, root)
     if write:
         if not ev.empty:
             build.replace_partition(root / "data" / "model_eval.csv", ev, ["season", "week"], KEYS)

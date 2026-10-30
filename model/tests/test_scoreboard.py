@@ -157,7 +157,8 @@ class Gate(unittest.TestCase):
     def test_the_report_header_carries_the_gate_sentence_verbatim(self):
         root = make_root(weeks=2)
         text = S.run(root)
-        self.assertIn(S.GATE, text.splitlines()[2].strip("*"))
+        self.assertTrue(any(S.GATE in ln.strip("*") for ln in text.splitlines()[:16]))
+        self.assertLess(text.index("## Summary"), text.index(S.GATE))                  # the verdict comes before the gate text
         self.assertIn("2 of 6 completed weeks scored", text)
         self.assertIn("NOT MET", text)
         self.assertIn("cannot be met before 6 weeks", text)
