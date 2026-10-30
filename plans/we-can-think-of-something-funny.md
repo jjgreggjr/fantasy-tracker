@@ -9,7 +9,7 @@ QB Stafford · RB Tuten, Hall, Swift · WR Tate, Pickens, Metcalf, Boston · TE 
 - Judkins over Odunze at the last FLEX: E_pts tie (10.2 vs 9.9), model prefers Judkins by 4 on 18 opps vs 5; model, Sleeper and the call all agree. Caveat: a one-off split shows SEA is weakest against big downfield WRs (Odunze's type), so it is closer to a coin flip than the numbers say.
 - Kincaid over Pitts: E_pts +4.1, model calls it even. Kincaid Questionable (chest, limited, 68%); Pitts if he sits.
 - Hall: Questionable, quad, 25% play chance, 0 touches weeks 6–7. Check inactives before NYJ kicks off; Boston steps in if he sits.
-- Tate and DeVonta-style risk: Tate did not practice Friday (shoulder, 38%); Worthy 9.0 is the swap if he is Doubtful.
+- Tate did not practice Friday (shoulder, 38%); Worthy 9.0 is the swap if he is Doubtful. Pickens Questionable too (shoulder, limited).
 
 ## Where he stands
 - 4-8 through 6 weeks (league counts a vs-median game each week: 0-2, 0-2, 2-0,
