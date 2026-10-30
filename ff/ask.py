@@ -602,15 +602,37 @@ def explain(slug: str, player: str) -> tuple[pd.DataFrame, str]:
             f"{p['name']} — {p.position}, {p.team} — in {meta.get('name')}")
 
 
+def scoreboard(slug: str | None = None) -> str:
+    """How is the model doing: the scoreboard's Summary block, the pooled lineup table, and with a slug that league's per-week table
+    (which number should pick the lineup: E_pts, the model, Sleeper, or the call). Read from the committed data files."""
+    from model import lineups, scoreboard as sb
+    out = [sb.committed_summary(ROOT)]
+    ev = lineups.load_eval(ROOT)
+    if ev is None:
+        return "\n".join(out + ["", "No lineup weeks scored yet."])
+    out += ["", "Lineups, all leagues pooled:", "", lineups.pooled_table(ev)]
+    if slug:
+        known = sorted(ev["league"].unique())
+        out += ["", f"{slug}, week by week (points and efficiency; (b) = backfilled):", "",
+                lineups.league_table(ev, slug) if slug in known else f"No scored weeks for '{slug}' (have: {', '.join(known)})."]
+    return "\n".join(out)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Ask the tracker a question.")
     ap.add_argument("recipe",
                     choices=["live", "lineup", "played", "cut", "options", "explain",
-                             "trade"])
-    ap.add_argument("slug")
+                             "trade", "scoreboard"])
+    ap.add_argument("slug", nargs="?", default=None)
     ap.add_argument("arg", nargs="?", default=None)
     a = ap.parse_args(argv)
     pd.set_option("display.width", 200, "display.max_columns", 40)
+
+    if a.recipe == "scoreboard":
+        print(scoreboard(a.slug))
+        return
+    if not a.slug:
+        ap.error(f"`{a.recipe}` needs a league slug")
 
     if a.recipe == "live":
         try:
