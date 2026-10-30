@@ -29,7 +29,7 @@ points / perfect points on every row (`offense_efficiency` likewise, the perfect
 
 backfill: for every complete league-week with no live-recorded lineup, rebuild the four lineups from (a) his pre-game roster in
 data/league_rosters.csv (no IR / taxi, no blank rows) and (b) the predictions data/model_pts.csv froze at serve time, using only rows
-with served_at < kickoff_utc. A player with no frozen row has no prediction and cannot be picked; K / DEF / IDP have no model row, so
+with `frozen_before_kickoff` true (the column of data/model_pts.csv; rows from before it existed fall back to served_at < kickoff_utc). A player with no frozen row has no prediction and cannot be picked; K / DEF / IDP have no model row, so
 those slots stay empty in backfilled lineups (offense_efficiency is the like-for-like number). `call` is built with the status rule
 off (no historical practice / play_prob). Rows carry source = backfill (live rows: live); a live-recorded league-week is never touched.
 
@@ -326,7 +326,8 @@ def backfill_league(slug: str, meta: dict, root: Path, lp, snap, mp, existing, n
         if team.empty or wk.empty:
             continue
         any_row = set(wk["gsis_id"].dropna())
-        wk = wk[_ts(wk["served_at"]) < _ts(wk["kickoff_utc"])].dropna(subset=["gsis_id"]).drop_duplicates("gsis_id")   # frozen rows only
+        from model.serve import frozen_mask
+        wk = wk[frozen_mask(wk)].dropna(subset=["gsis_id"]).drop_duplicates("gsis_id")   # frozen rows only
         roster = team[[c for c in ("gsis_id", "sleeper_id", "espn_id", "name", "position", "team") if c in team.columns]].copy()
         for c in IDS:
             if c not in roster.columns:
@@ -629,6 +630,14 @@ def section(root: Path = ROOT) -> str:
               "before kickoff in `data/model_pts.csv`. Backfilled `call` lineups had no status rule (no historical practice / play_prob), "
               "and K / DEF / IDP slots have no frozen projection, so they are empty there. A league-week where a serve at kickoff overwrote the "
               "frozen rows (under 80% of his projected offensive players still frozen) is not backfilled.", ""]
+    try:
+        skipped = []
+        backfill(root, three_lineups=None, write=False, skipped=skipped)
+        for slug, season, week, cov in sorted(skipped):
+            L += [f"Frozen coverage: {slug} {season} week {week} skipped, only {cov:.0%} of its projected offensive players have a "
+                  f"pre-kickoff prediction (need {MIN_COVERAGE:.0%}).", ""]
+    except Exception:                                      # the report must render without it
+        pass
     return "\n".join(L)
 
 
@@ -638,9 +647,24 @@ def _do_record() -> str:
     return f"model.lineups: recorded {len(new)} rows {new.groupby('league').size().to_dict() if len(new) else {}}"
 
 
+def thin_warns(skipped, root: Path | None = None) -> list[str]:
+    """WARN texts for league-weeks backfill skipped for thin frozen coverage, minus those already in logs/runs.csv (a skipped week
+    stays skipped, and the same row on every pipeline run would only be noise)."""
+    try:
+        seen = ((root or ROOT) / "logs" / "runs.csv").read_text(encoding="utf-8")
+    except OSError:
+        seen = ""
+    msgs = [f"lineups backfill skipped {slug} {season} week {week}: frozen coverage {cov:.0%} of his projected offensive players "
+            f"(need {MIN_COVERAGE:.0%}); a serve at or after kickoff overwrote the pre-kickoff rows" for slug, season, week, cov in skipped]
+    return [m for m in msgs if m not in seen]
+
+
 def _do_backfill() -> str:
     skipped = []
     new = backfill(ROOT, skipped=skipped)
+    if skipped:
+        from model.serve import log_warns
+        log_warns(ROOT, thin_warns(skipped), check=CHECK)
     n = new.drop_duplicates(["season", "week", "league"]).groupby("league").size().to_dict() if len(new) else {}
     thin = f"; skipped for thin frozen coverage {skipped}" if skipped else ""
     return f"model.lineups: backfilled {len(new)} rows, league-weeks {n}{thin}"
