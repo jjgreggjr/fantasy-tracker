@@ -510,7 +510,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0039394,11806,4428796,WashCa01,Casey Washington,CAR,WR,25.7,2,2024,187.0,DEV,,,,,,,1788309624501.0,,Active,True
 00-0039397,11802,4875912,PalmTe00,Tejhaun Palmer,LAC,WR,26.4,2,2024,191.0,DEV,,,,,,,1793145607789.0,,Active,True
 00-0039398,11557,4360698,MiltJo00,Joe Milton III,PHI,QB,26.7,2,2024,193.0,ACT,,,,,,,1793059526030.0,3.0,Active,True
-00-0039356,11600,4431588,SandJa01,Ja'Tavion Sanders,CAR,TE,23.6,2,2024,101.0,ACT,Out,,Coach's Decision,,,,1793315706440.0,5.0,Active,True
+00-0039356,11600,4431588,SandJa01,Ja'Tavion Sanders,CAR,TE,23.6,2,2024,101.0,INA,Out,,Coach's Decision,,,,1793315706440.0,5.0,Active,True
 00-0039361,11584,4596448,IrviBu00,Bucky Irving,TB,RB,24.2,2,2024,125.0,ACT,,,,,,,1793296531696.0,1.0,Active,True
 00-0039364,11729,4912274,VakiSi00,Sione Vaki,DET,RB,25.3,2,2024,132.0,ACT,,,,,,,1792851657093.0,2.0,Active,True
 00-0039373,11579,4569682,EstiAu00,Audric Estimé,CLE,RB,23.1,2,2024,147.0,ACT,,,,,,,1792943707078.0,4.0,Active,True
@@ -585,7 +585,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0036429,7075,4035020,WoerCh00,Charlie Woerner,ATL,TE,29.0,6,2020,190.0,ACT,,,,,,,1780442450084.0,4.0,Active,True
 00-0036442,6770,3915511,BurrJo01,Joe Burrow,CIN,QB,29.9,6,2020,1.0,ACT,,,,,,,1792975510757.0,1.0,Active,True
 00-0036463,7521,4369886,BlaiCh00,Chris Blair,ATL,WR,29.1,6,2021,,ACT,,,,,,,1767685510813.0,5.0,Active,True
-00-0036332,7050,3914151,DeguJo00,Josiah Deguara,SEA,TE,29.7,6,2020,94.0,CUT,,,,,,,1793146807305.0,,Active,True
+00-0036332,7050,3914151,DeguJo00,Josiah Deguara,SEA,TE,29.7,6,2020,94.0,TRD,,,,,,,1793146807305.0,,Active,True
 00-0036345,7066,3916566,OsboKJ00,K.J. Osborn,TEN,WR,29.4,6,2020,176.0,DEV,,,,,,,1793058612448.0,,Active,True
 00-0036355,6797,4038941,HerbJu00,Justin Herbert,LAC,QB,28.6,6,2020,6.0,ACT,,,,,,,1792599352939.0,1.0,Active,True
 00-0036358,6786,4241389,LambCe00,CeeDee Lamb,DAL,WR,27.6,6,2020,17.0,ACT,,,,,,,1793073628379.0,1.0,Active,True
@@ -598,7 +598,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040129,12514,4567750,EgbuEm01,Emeka Egbuka,TB,WR,24.0,1,2025,19.0,ACT,Questionable,,Concussion,,,,1793310032957.0,1.0,Active,True
 00-0040131,12547,4613202,WillKy03,Kyle Williams,NE,WR,24.0,1,2025,69.0,ACT,,,,,,,1792814154193.0,3.0,Active,True
 00-0040134,12492,4600981,BryaPa00,Pat Bryant,DEN,WR,23.9,1,2025,74.0,RES,IR,Sprain,Ankle,,,,1793208922017.0,7.0,Inactive,True
-00-0040142,12504,4819231,JohnKa03,Kaleb Johnson,GB,RB,23.2,1,2025,83.0,ACT,Out,,Coach's Decision,,,,1793315706365.0,5.0,Active,True
+00-0040142,12504,4819231,JohnKa03,Kaleb Johnson,GB,RB,23.2,1,2025,83.0,INA,Out,,Coach's Decision,,,,1793315706365.0,5.0,Active,True
 00-0040075,12699,4690143,WestLa01,LaJohntay Wester,BAL,WR,24.6,1,2025,203.0,ACT,,,,,,,1790424926369.0,6.0,Active,True
 00-0040078,12455,4596602,SmitBr09,Brashard Smith,KC,RB,23.6,1,2025,228.0,RES,IR,,Hamstring,,,,1792865458825.0,5.0,Inactive,True
 00-0040081,12817,4431196,BrinJa00,Jake Briningstool,KC,TE,23.9,1,2025,,ACT,,,,,,,1790557258710.0,4.0,Active,True
@@ -666,7 +666,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040302,12865,,,A.J. Henning,MIA,WR,25.1,1,2025,,DEV,,,,,,,1790286045793.0,,Active,True
 00-0040311,12860,4426535,WeasTh00,Theo Wease Jr.,LAC,WR,25.3,1,2025,,ACT,,,,,,,1791681009072.0,7.0,Active,True
 00-0036264,6804,4036378,LoveJo03,Jordan Love,GB,QB,28.0,6,2020,26.0,ACT,,,,,,,1793226323785.0,1.0,Active,True
-00-0036265,6828,4239934,DillAJ00,AJ Dillon,CAR,RB,28.5,6,2020,62.0,ACT,Out,,Coach's Decision,,,,1793315706328.0,4.0,Active,True
+00-0036265,6828,4239934,DillAJ00,AJ Dillon,CAR,RB,28.5,6,2020,62.0,INA,Out,,Coach's Decision,,,,1793315706328.0,4.0,Active,True
 00-0036271,6927,4050373,WatkQu00,Quez Watkins,IND,WR,28.4,6,2020,200.0,DEV,,,,,,,1791320120860.0,,Active,True
 00-0036275,6790,4259545,SwifDA00,D'Andre Swift,CHI,RB,27.8,6,2020,35.0,ACT,,,,,,,1793284830276.0,1.0,Active,True
 00-0036290,6826,4258595,KmetCo00,Cole Kmet,CHI,TE,27.6,6,2020,43.0,RES,IR,,Knee,,,,1792791652432.0,4.0,Inactive,True
@@ -865,7 +865,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041131,13580,4685540,RyanCa00,Carsen Ryan,CLE,TE,23.2,0,2026,248.0,DEV,,,,,,,1793229924691.0,,Active,True
 00-0041132,13333,4683151,BurkDe02,Deion Burks,IND,WR,23.8,0,2026,254.0,ACT,,,,,,,1792379703718.0,4.0,Active,True
 00-0041133,13577,5159802,BentDa00,Dallen Bentley,DEN,TE,25.8,0,2026,256.0,ACT,,,,,,,1791141912429.0,4.0,Active,True
-00-0041149,13415,4428993,KingHa00,Haynes King,CAR,QB,25.8,0,2026,,ACT,Out,,Coach's Decision,,,,1793316005897.0,3.0,Active,True
+00-0041149,13415,4428993,KingHa00,Haynes King,CAR,QB,25.8,0,2026,,INA,Out,,Coach's Decision,,,,1793316005897.0,3.0,Active,True
 00-0041100,13394,4879194,CameJo01,Josh Cameron,JAX,WR,23.6,0,2026,191.0,ACT,,,,,,,1792463434073.0,4.0,Active,True
 00-0041104,13347,4832846,ClaiDe00,Demond Claiborne,MIN,RB,23.1,0,2026,198.0,ACT,,,,,,,1792942807127.0,3.0,Active,True
 00-0041106,13554,5085024,WillCJ00,C.J. Williams,JAX,WR,24.0,0,2026,203.0,ACT,,,,,,,1790527253607.0,8.0,Active,True
@@ -922,7 +922,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0034272,5086,3051738,ValdMa00,Marquez Valdes-Scantling,PIT,WR,32.1,8,2018,174.0,DEV,,,,,,,1792503939736.0,,Active,True
 00-0033699,4663,3068267,EkelAu00,Austin Ekeler,WAS,RB,31.5,9,2017,,ACT,,,,,,,1793172018276.0,2.0,Active,True
 00-0033757,4602,2975674,TonyRo00,Robert Tonyan,PIT,TE,32.5,9,2017,,ACT,,,,,,,1780622139428.0,3.0,Active,True
-00-0033858,4144,3054212,SmitJo01,Jonnu Smith,GB,TE,31.2,9,2017,100.0,ACT,Out,,Coach's Decision,,,,1793315105382.0,4.0,Active,True
+00-0033858,4144,3054212,SmitJo01,Jonnu Smith,GB,TE,31.2,9,2017,100.0,INA,Out,,Coach's Decision,,,,1793315105382.0,4.0,Active,True
 00-0033869,3976,3039707,TrubMi00,Mitchell Trubisky,TEN,QB,32.2,9,2017,2.0,ACT,,,,,,,1788994847353.0,2.0,Active,True
 00-0033873,4046,3139477,MahoPa00,Patrick Mahomes,KC,QB,31.1,9,2017,10.0,ACT,,,,,,,1793289030829.0,1.0,Active,True
 00-0033881,4066,3051876,EngrEv00,Evan Engram,DEN,TE,32.2,9,2017,23.0,ACT,,,,,,,1793061326681.0,1.0,Active,True

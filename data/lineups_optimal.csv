@@ -1,0 +1,629 @@
+season,week,league,basis,slot,gsis_id,sleeper_id,espn_id,name,position,team,E_pts,E_pts_model,kickoff_utc,recorded_at,locked,e_pick,m_pick,reason,source
+2026,4,gooma-s-family-league,call,QB,00-0036442,6770,,Joe Burrow,QB,CIN,16.3,17.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,RB,00-0040734,12529,,TreVeyon Henderson,RB,NE,11.5,8.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,TreVeyon Henderson,Quinshon Judkins,E_pts +2.5 Henderson; model only +1.1 Hockenson; volume 0.0 vs 0.0 opps,backfill
+2026,4,gooma-s-family-league,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,16.6,12.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,WR,00-0038393,9486,,Dontayvion Wicks,WR,PHI,11.1,9.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,10.8,10.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.1,15.0,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,Quinshon Judkins,T.J. Hockenson,E_pts +2.5 Henderson; model only +1.1 Hockenson; volume 0.0 vs 0.0 opps,backfill
+2026,4,gooma-s-family-league,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.2,11.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,call,SUPER_FLEX,00-0030565,1373,,Geno Smith,QB,NYJ,15.4,14.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,Geno Smith,Drake Maye,E_pts +2.3 Smith; model calls it even (0.7); volume similar (0.0 vs 0.0 opps),backfill
+2026,4,gooma-s-family-league,e_pts,QB,00-0036442,6770,,Joe Burrow,QB,CIN,16.3,17.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,RB,00-0040734,12529,,TreVeyon Henderson,RB,NE,11.5,8.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,16.6,12.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,WR,00-0038393,9486,,Dontayvion Wicks,WR,PHI,11.1,9.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,10.8,10.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.1,15.0,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.2,11.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,e_pts,SUPER_FLEX,00-0030565,1373,,Geno Smith,QB,NYJ,15.4,14.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,QB,00-0036442,6770,,Joe Burrow,QB,CIN,16.3,17.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,16.6,12.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,WR,00-0038393,9486,,Dontayvion Wicks,WR,PHI,11.1,9.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,10.8,10.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.1,15.0,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,9.0,9.4,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.2,11.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,model,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,13.1,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,QB,00-0036442,6770,,Joe Burrow,QB,CIN,16.3,17.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,RB,00-0040734,12529,,TreVeyon Henderson,RB,NE,11.5,8.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,16.6,12.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,WR,00-0038393,9486,,Dontayvion Wicks,WR,PHI,11.1,9.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,10.8,10.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.1,15.0,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,9.0,9.4,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,gooma-s-family-league,sleeper,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,13.1,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,QB,00-0039150,9228,4685720,Bryce Young,QB,CAR,23.2,18.2,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,11.4,9.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,20.2,17.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.1,16.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,11.5,12.6,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,call,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,14.7,16.7,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,Jalen Coker,Drake London,E_pts +3.1 Coker on ? opps; model +7.1 London on ? opps,backfill
+2026,4,james-gregg-espn,e_pts,QB,00-0039150,9228,4685720,Bryce Young,QB,CAR,23.2,18.2,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,11.4,9.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,20.2,17.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.1,16.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,11.5,12.6,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,e_pts,FLEX,00-0039491,11646,4695883,Jalen Coker,WR,CAR,17.8,9.6,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,QB,00-0039150,9228,4685720,Bryce Young,QB,CAR,23.2,18.2,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,11.4,9.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,20.2,17.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.1,16.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,11.5,12.6,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,model,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,14.7,16.7,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,QB,00-0039150,9228,4685720,Bryce Young,QB,CAR,23.2,18.2,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,14.7,16.0,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,11.4,9.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,20.2,17.1,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.1,16.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,11.5,12.6,2026-10-05T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,james-gregg-espn,sleeper,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,14.7,16.7,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,QB,00-0026498,421,,Matthew Stafford,QB,LA,19.7,18.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,18.7,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,12.9,11.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,TreVeyon Henderson,Tony Pollard,E_pts +2.3 Henderson on ? opps; model +3.6 Pollard on ? opps,backfill
+2026,4,we-can-think-of-something-funny,call,WR,00-0037239,8144,,Chris Olave,WR,NO,23.8,18.5,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,WR,00-0037247,8137,,George Pickens,WR,DAL,13.9,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,WR,00-0041037,13346,,Denzel Boston,WR,CLE,12.1,10.4,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,Denzel Boston,Rome Odunze,E_pts +4.7 Boston; model calls it even (0.2); volume similar (0.0 vs 0.0 opps),backfill
+2026,4,we-can-think-of-something-funny,call,WR,00-0041438,13279,,Carnell Tate,WR,TEN,9.8,11.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,14.4,11.5,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,13.8,13.1,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,FLEX,00-0035640,5846,,DK Metcalf,WR,PIT,9.7,10.9,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.2,11.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,call,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,16.0,16.2,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,QB,00-0026498,421,,Matthew Stafford,QB,LA,19.7,18.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,18.7,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,12.9,11.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,RB,00-0040734,12529,,TreVeyon Henderson,RB,NE,11.5,8.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,WR,00-0037239,8144,,Chris Olave,WR,NO,23.8,18.5,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,WR,00-0037247,8137,,George Pickens,WR,DAL,13.9,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,WR,00-0041037,13346,,Denzel Boston,WR,CLE,12.1,10.4,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,WR,00-0041438,13279,,Carnell Tate,WR,TEN,9.8,11.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,14.4,11.5,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,13.8,13.1,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,FLEX,00-0035640,5846,,DK Metcalf,WR,PIT,9.7,10.9,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,e_pts,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,16.0,16.2,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,QB,00-0026498,421,,Matthew Stafford,QB,LA,19.7,18.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,18.7,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,12.9,11.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,RB,00-0035261,5967,,Tony Pollard,RB,TEN,9.2,11.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,WR,00-0037239,8144,,Chris Olave,WR,NO,23.8,18.5,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,WR,00-0037247,8137,,George Pickens,WR,DAL,13.9,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,WR,00-0039919,11620,,Rome Odunze,WR,CHI,7.4,10.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,WR,00-0041438,13279,,Carnell Tate,WR,TEN,9.8,11.7,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,14.4,11.5,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,13.8,13.1,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,FLEX,00-0035640,5846,,DK Metcalf,WR,PIT,9.7,10.9,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,model,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,16.0,16.2,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,QB,00-0026498,421,,Matthew Stafford,QB,LA,19.7,18.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,18.7,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,12.9,11.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,RB,00-0033906,4035,,Alvin Kamara,RB,NO,7.0,8.7,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,WR,00-0037239,8144,,Chris Olave,WR,NO,23.8,18.5,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,WR,00-0037247,8137,,George Pickens,WR,DAL,13.9,15.4,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,WR,00-0041037,13346,,Denzel Boston,WR,CLE,12.1,10.4,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,WR,00-0040867,13294,,Makai Lemon,WR,PHI,6.7,6.5,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,14.4,11.5,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,13.8,13.1,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,10.0,13.5,2026-10-02T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,FLEX,00-0036970,7553,,Kyle Pitts,TE,ATL,6.4,9.2,2026-10-06T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,we-can-think-of-something-funny,sleeper,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,16.0,16.2,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,QB,00-0037834,8183,,Brock Purdy,QB,SF,22.8,19.1,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,20.3,17.5,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,17.1,14.2,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,25.2,15.8,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,14.1,10.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,call,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.1,9.6,2026-10-04T13:30:00+00:00,2026-10-30T17:34:12Z,1,Deebo Samuel Sr.,Terry McLaurin,E_pts tie (9.1 vs 9.1); model prefers McLaurin by 1.2; 0.0 vs 0.0 opps,backfill
+2026,4,where-you-at,call,TE,00-0034383,5001,,Dalton Schultz,TE,HOU,9.8,8.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,Dalton Kincaid,Dalton Schultz,E_pts tie (9.9 vs 9.8); model prefers Schultz by 0.8; 0.0 vs 0.0 opps,backfill
+2026,4,where-you-at,call,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,13.5,14.8,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,David Montgomery,Aaron Jones,E_pts tie (14.0 vs 13.5); model prefers Jones by 3.5; 0.0 vs 0.0 opps,backfill
+2026,4,where-you-at,e_pts,QB,00-0037834,8183,,Brock Purdy,QB,SF,22.8,19.1,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,20.3,17.5,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,17.1,14.2,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,25.2,15.8,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,14.1,10.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,WR,00-0035719,5872,,Deebo Samuel Sr.,WR,SF,9.1,8.4,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,9.9,8.0,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,e_pts,FLEX,00-0035685,5892,,David Montgomery,RB,HOU,14.0,11.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,QB,00-0037834,8183,,Brock Purdy,QB,SF,22.8,19.1,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,20.3,17.5,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,17.1,14.2,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,25.2,15.8,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,14.1,10.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.1,9.6,2026-10-04T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,TE,00-0034383,5001,,Dalton Schultz,TE,HOU,9.8,8.8,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,model,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,13.5,14.8,2026-10-04T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,QB,00-0036971,7523,,Trevor Lawrence,QB,JAX,18.6,16.9,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,20.3,17.5,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,17.1,14.2,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,25.2,15.8,2026-10-04T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,14.1,10.6,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.1,9.6,2026-10-04T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,9.9,8.0,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,4,where-you-at,sleeper,FLEX,00-0035685,5892,,David Montgomery,RB,HOU,14.0,11.3,2026-10-04T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,QB,00-0036442,6770,,Joe Burrow,QB,CIN,21.3,17.0,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,RB,00-0033293,4199,,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,WR,00-0037816,8121,,Romeo Doubs,WR,NE,13.1,8.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,12.9,11.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,9.8,10.4,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.8,14.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,11.4,10.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,call,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,QB,00-0036442,6770,,Joe Burrow,QB,CIN,21.3,17.0,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,RB,00-0033293,4199,,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,WR,00-0037816,8121,,Romeo Doubs,WR,NE,13.1,8.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,12.9,11.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,9.8,10.4,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.8,14.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,11.4,10.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,e_pts,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,QB,00-0036442,6770,,Joe Burrow,QB,CIN,21.3,17.0,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,RB,00-0033293,4199,,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,WR,00-0037816,8121,,Romeo Doubs,WR,NE,13.1,8.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,12.9,11.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,9.8,10.4,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.8,14.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,11.4,10.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,model,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,QB,00-0036442,6770,,Joe Burrow,QB,CIN,21.3,17.0,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,RB,00-0033293,4199,,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,WR,00-0037816,8121,,Romeo Doubs,WR,NE,13.1,8.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,12.9,11.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,WR,00-0038393,9486,,Dontayvion Wicks,WR,PHI,8.9,8.4,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.8,14.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,11.4,10.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,FLEX,00-0040734,12529,,TreVeyon Henderson,RB,NE,9.8,9.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,gooma-s-family-league,sleeper,SUPER_FLEX,00-0039851,11564,,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,12.3,12.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,22.8,19.8,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,WR,00-0037238,8112,4426502,Drake London,WR,ATL,19.0,16.6,2026-10-12T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,15.4,14.0,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,call,FLEX,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.5,15.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,12.3,12.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,22.8,19.8,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,WR,00-0037238,8112,4426502,Drake London,WR,ATL,19.0,16.6,2026-10-12T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,15.4,14.0,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,e_pts,FLEX,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.5,15.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,12.3,12.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,22.8,19.8,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,WR,00-0037238,8112,4426502,Drake London,WR,ATL,19.0,16.6,2026-10-12T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,15.4,14.0,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,model,FLEX,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.5,15.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,15.8,17.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,15.5,13.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,RB,00-0036875,7611,4569173,Rhamondre Stevenson,RB,NE,12.3,12.7,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,22.8,19.8,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,WR,00-0037238,8112,4426502,Drake London,WR,ATL,19.0,16.6,2026-10-12T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,15.4,14.0,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,james-gregg-espn,sleeper,FLEX,00-0036554,7569,4258173,Nico Collins,WR,HOU,18.5,15.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,QB,00-0026498,421,,Matthew Stafford,QB,LA,23.1,20.2,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.6,12.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,14.4,12.1,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,WR,00-0037239,8144,,Chris Olave,WR,NO,17.0,17.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,WR,00-0041438,13279,,Carnell Tate,WR,TEN,14.5,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,WR,00-0035640,5846,,DK Metcalf,WR,PIT,12.7,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,WR,00-0041037,13346,,Denzel Boston,WR,CLE,11.6,10.6,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,TE,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,15.0,13.5,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,FLEX,00-0037247,8137,,George Pickens,WR,DAL,11.5,14.9,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,Keon Coleman,Tony Pollard,E_pts +1.7 Coleman on ? opps; model +3.2 Odunze on ? opps,backfill
+2026,5,we-can-think-of-something-funny,call,FLEX,00-0039919,11620,,Rome Odunze,WR,CHI,9.6,12.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,Dalton Kincaid,Rome Odunze,E_pts tie (10.5 vs 10.2); model prefers Pollard by 1.3; 0.0 vs 0.0 opps,backfill
+2026,5,we-can-think-of-something-funny,call,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,18.3,17.5,2026-10-11T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,QB,00-0026498,421,,Matthew Stafford,QB,LA,23.1,20.2,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.6,12.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,14.4,12.1,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,WR,00-0037239,8144,,Chris Olave,WR,NO,17.0,17.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,WR,00-0041438,13279,,Carnell Tate,WR,TEN,14.5,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,WR,00-0035640,5846,,DK Metcalf,WR,PIT,12.7,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,WR,00-0041037,13346,,Denzel Boston,WR,CLE,11.6,10.6,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,TE,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,15.0,13.5,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,FLEX,00-0037247,8137,,George Pickens,WR,DAL,11.5,14.9,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,FLEX,00-0039901,11637,,Keon Coleman,WR,BUF,11.3,9.1,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,FLEX,00-0038933,10236,,Dalton Kincaid,TE,BUF,10.5,10.1,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,e_pts,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,18.3,17.5,2026-10-11T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,QB,00-0026498,421,,Matthew Stafford,QB,LA,23.1,20.2,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.6,12.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,14.4,12.1,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,WR,00-0037239,8144,,Chris Olave,WR,NO,17.0,17.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,WR,00-0041438,13279,,Carnell Tate,WR,TEN,14.5,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,WR,00-0035640,5846,,DK Metcalf,WR,PIT,12.7,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,WR,00-0041037,13346,,Denzel Boston,WR,CLE,11.6,10.6,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,TE,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,15.0,13.5,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,FLEX,00-0037247,8137,,George Pickens,WR,DAL,11.5,14.9,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,FLEX,00-0039919,11620,,Rome Odunze,WR,CHI,9.6,12.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,model,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,18.3,17.5,2026-10-11T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,QB,00-0026498,421,,Matthew Stafford,QB,LA,23.1,20.2,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.6,12.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,14.4,12.1,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,14.2,14.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,WR,00-0037239,8144,,Chris Olave,WR,NO,17.0,17.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,WR,00-0041438,13279,,Carnell Tate,WR,TEN,14.5,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,WR,00-0035640,5846,,DK Metcalf,WR,PIT,12.7,12.2,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,WR,00-0037247,8137,,George Pickens,WR,DAL,11.5,14.9,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,TE,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,15.0,13.5,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,FLEX,00-0040734,12529,,TreVeyon Henderson,RB,NE,9.8,9.9,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,FLEX,00-0033906,4035,,Alvin Kamara,RB,NO,10.3,9.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,FLEX,00-0038933,10236,,Dalton Kincaid,TE,BUF,10.5,10.1,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,we-can-think-of-something-funny,sleeper,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,18.3,17.5,2026-10-11T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,QB,00-0033077,3294,,Dak Prescott,QB,DAL,20.6,19.6,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,14.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.0,11.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,22.0,15.9,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,10.8,9.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.4,9.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,call,TE,00-0038935,9480,,Brenton Strange,TE,JAX,6.8,8.0,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,Dalton Schultz,Brenton Strange,E_pts tie (7.4 vs 6.8); model prefers Strange by 0.9; 0.0 vs 0.0 opps,backfill
+2026,5,where-you-at,call,FLEX,00-0038797,11435,,Emanuel Wilson,RB,SEA,13.0,10.5,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,QB,00-0033077,3294,,Dak Prescott,QB,DAL,20.6,19.6,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,14.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.0,11.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,22.0,15.9,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,10.8,9.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.4,9.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,TE,00-0034383,5001,,Dalton Schultz,TE,HOU,7.4,7.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,e_pts,FLEX,00-0038797,11435,,Emanuel Wilson,RB,SEA,13.0,10.5,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,QB,00-0033077,3294,,Dak Prescott,QB,DAL,20.6,19.6,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,14.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.0,11.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,22.0,15.9,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,10.8,9.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.4,9.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,TE,00-0038935,9480,,Brenton Strange,TE,JAX,6.8,8.0,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,model,FLEX,00-0038797,11435,,Emanuel Wilson,RB,SEA,13.0,10.5,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,QB,00-0033077,3294,,Dak Prescott,QB,DAL,20.6,19.6,2026-10-09T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,14.2,11.4,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,RB,00-0033293,4199,,Aaron Jones,RB,MIN,14.0,11.8,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,22.0,15.9,2026-10-11T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,10.8,9.5,2026-10-11T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,WR,00-0035659,5927,,Terry McLaurin,WR,WAS,9.4,9.3,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,7.3,6.8,2026-10-13T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,5,where-you-at,sleeper,FLEX,00-0035685,5892,,David Montgomery,RB,HOU,8.1,10.1,2026-10-11T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,QB,00-0039851,11564,,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,RB,00-0033293,4199,,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,WR,00-0040138,12536,,Jaylin Noel,WR,HOU,11.6,8.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,WR,00-0041511,13276,,Omar Cooper Jr.,WR,NYJ,9.4,8.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,WR,00-0041048,13317,,Ted Hurst III,WR,TB,8.4,7.3,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.1,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.1,12.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,T.J. Hockenson,Tony Pollard,E_pts tie (9.5 vs 9.1); model prefers Pollard by 2.4; 0.0 vs 0.0 opps,backfill
+2026,7,gooma-s-family-league,call,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,19.0,18.4,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,QB,00-0039851,11564,,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,RB,00-0033293,4199,,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,WR,00-0040138,12536,,Jaylin Noel,WR,HOU,11.6,8.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,WR,00-0041511,13276,,Omar Cooper Jr.,WR,NYJ,9.4,8.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,WR,00-0041048,13317,,Ted Hurst III,WR,TB,8.4,7.3,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.1,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,9.5,9.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,e_pts,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,19.0,18.4,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,QB,00-0039851,11564,,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,RB,00-0033293,4199,,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,WR,00-0040138,12536,,Jaylin Noel,WR,HOU,11.6,8.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,WR,00-0041511,13276,,Omar Cooper Jr.,WR,NYJ,9.4,8.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,WR,00-0041048,13317,,Ted Hurst III,WR,TB,8.4,7.3,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.1,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.1,12.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,model,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,19.0,18.4,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,QB,00-0039851,11564,,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,RB,00-0033293,4199,,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,WR,00-0040138,12536,,Jaylin Noel,WR,HOU,11.6,8.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,WR,00-0041511,13276,,Omar Cooper Jr.,WR,NYJ,9.4,8.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,WR,00-0041048,13317,,Ted Hurst III,WR,TB,8.4,7.3,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.1,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.1,12.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,gooma-s-family-league,sleeper,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,19.0,18.4,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,Drake Maye,Bryce Young,E_pts +9.3 Maye; model calls it even (0.7); volume similar (0.0 vs 0.0 opps),backfill
+2026,7,james-gregg-espn,call,RB,00-0038120,8155,4427366,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,26.6,20.0,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,16.3,16.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,13.0,13.3,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,call,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,16.2,18.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,RB,00-0038120,8155,4427366,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,26.6,20.0,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,16.3,16.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,13.0,13.3,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,e_pts,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,16.2,18.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,QB,00-0039150,9228,4685720,Bryce Young,QB,CAR,17.0,19.2,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,RB,00-0038120,8155,4427366,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,26.6,20.0,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,16.3,16.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,13.0,13.3,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,model,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,16.2,18.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,QB,00-0039851,11564,4431452,Drake Maye,QB,NE,26.3,18.5,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,RB,00-0038120,8155,4427366,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,RB,00-0033293,4199,3042519,Aaron Jones,RB,MIN,13.6,13.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,WR,00-0039075,9493,4426515,Puka Nacua,WR,LA,26.6,20.0,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,WR,00-0036554,7569,4258173,Nico Collins,WR,HOU,16.3,16.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,TE,00-0039065,10859,4430027,Sam LaPorta,TE,DET,13.0,13.3,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,james-gregg-espn,sleeper,FLEX,00-0037238,8112,4426502,Drake London,WR,ATL,16.2,18.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,QB,00-0026498,421,,Matthew Stafford,QB,LA,21.0,19.5,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,16.5,14.9,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,WR,00-0037247,8137,,George Pickens,WR,DAL,15.8,13.1,2026-10-27T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,WR,00-0037239,8144,,Chris Olave,WR,NO,15.5,15.8,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,WR,00-0035640,5846,,DK Metcalf,WR,PIT,14.1,13.9,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,WR,00-0041438,13279,,Carnell Tate,WR,TEN,13.4,12.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,12.5,10.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,call,FLEX,00-0041037,13346,,Denzel Boston,WR,CLE,10.9,10.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,Jaylin Noel,Rome Odunze,E_pts +2.0 Noel on ? opps; model +4.4 Odunze on ? opps,backfill
+2026,7,we-can-think-of-something-funny,call,FLEX,00-0039919,11620,,Rome Odunze,WR,CHI,10.0,13.2,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,Denzel Boston,Tony Pollard,E_pts +1.8 Boston; model only +1.4 Pollard; volume 0.0 vs 0.0 opps,backfill
+2026,7,we-can-think-of-something-funny,call,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,9.3,13.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,Michael Mayer,Harold Fannin Jr.,E_pts +1.4 Mayer on ? opps; model +3.4 Fannin on ? opps,backfill
+2026,7,we-can-think-of-something-funny,call,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,15.3,16.3,2026-10-25T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,QB,00-0026498,421,,Matthew Stafford,QB,LA,21.0,19.5,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,16.5,14.9,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,WR,00-0037247,8137,,George Pickens,WR,DAL,15.8,13.1,2026-10-27T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,WR,00-0037239,8144,,Chris Olave,WR,NO,15.5,15.8,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,WR,00-0035640,5846,,DK Metcalf,WR,PIT,14.1,13.9,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,WR,00-0041438,13279,,Carnell Tate,WR,TEN,13.4,12.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,12.5,10.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,FLEX,00-0040138,12536,,Jaylin Noel,WR,HOU,12.0,8.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,FLEX,00-0041037,13346,,Denzel Boston,WR,CLE,10.9,10.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,FLEX,00-0039066,9482,,Michael Mayer,TE,LV,10.7,9.7,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,e_pts,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,15.3,16.3,2026-10-25T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,QB,00-0026498,421,,Matthew Stafford,QB,LA,21.0,19.5,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,16.5,14.9,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,WR,00-0037247,8137,,George Pickens,WR,DAL,15.8,13.1,2026-10-27T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,WR,00-0037239,8144,,Chris Olave,WR,NO,15.5,15.8,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,WR,00-0035640,5846,,DK Metcalf,WR,PIT,14.1,13.9,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,WR,00-0041438,13279,,Carnell Tate,WR,TEN,13.4,12.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,12.5,10.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,FLEX,00-0039919,11620,,Rome Odunze,WR,CHI,10.0,13.2,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.1,12.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,9.3,13.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,model,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,15.3,16.3,2026-10-25T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,QB,00-0026498,421,,Matthew Stafford,QB,LA,21.0,19.5,2026-10-25T20:25:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,16.5,14.9,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,RB,00-0038120,8155,,Breece Hall,RB,NYJ,14.4,13.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,RB,00-0040784,12512,,Quinshon Judkins,RB,CLE,11.5,10.9,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,WR,00-0037247,8137,,George Pickens,WR,DAL,15.8,13.1,2026-10-27T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,WR,00-0037239,8144,,Chris Olave,WR,NO,15.5,15.8,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,WR,00-0035640,5846,,DK Metcalf,WR,PIT,14.1,13.9,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,WR,00-0041438,13279,,Carnell Tate,WR,TEN,13.4,12.6,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,TE,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,9.3,13.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,FLEX,00-0039894,11624,,Xavier Worthy,WR,KC,9.7,10.7,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,FLEX,00-0041037,13346,,Denzel Boston,WR,CLE,10.9,10.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,9.1,12.1,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,we-can-think-of-something-funny,sleeper,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,15.3,16.3,2026-10-25T20:05:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,QB,00-0037834,8183,,Brock Purdy,QB,SF,19.4,20.0,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,21.3,18.2,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.0,13.6,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,16.5,16.5,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,WR,00-0041489,13274,,Germie Bernard,WR,PIT,10.6,9.7,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,WR,00-0033921,4037,,Chris Godwin Jr.,WR,TB,8.0,7.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,9.2,7.5,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,call,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,12.3,12.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,QB,00-0037834,8183,,Brock Purdy,QB,SF,19.4,20.0,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,21.3,18.2,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.0,13.6,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,16.5,16.5,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,WR,00-0033921,4037,,Chris Godwin Jr.,WR,TB,8.0,7.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,WR,00-0041489,13274,,Germie Bernard,WR,PIT,10.6,9.7,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,9.2,7.5,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,e_pts,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,12.3,12.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,QB,00-0037834,8183,,Brock Purdy,QB,SF,19.4,20.0,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,21.3,18.2,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.0,13.6,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,16.5,16.5,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,WR,00-0033921,4037,,Chris Godwin Jr.,WR,TB,8.0,7.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,WR,00-0041489,13274,,Germie Bernard,WR,PIT,10.6,9.7,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,9.2,7.5,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,model,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,12.3,12.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,QB,00-0037834,8183,,Brock Purdy,QB,SF,19.4,20.0,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,21.3,18.2,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,15.0,13.6,2026-10-23T00:15:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,16.5,16.5,2026-10-26T00:20:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,WR,00-0033921,4037,,Chris Godwin Jr.,WR,TB,8.0,7.8,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,WR,00-0041489,13274,,Germie Bernard,WR,PIT,10.6,9.7,2026-10-25T13:30:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,TE,00-0036970,7553,,Kyle Pitts,TE,ATL,9.2,7.5,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,7,where-you-at,sleeper,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,12.3,12.7,2026-10-25T17:00:00+00:00,2026-10-30T17:34:12Z,1,,,,backfill
+2026,8,gooma-s-family-league,call,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,RB,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,13.4,15.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,WR,00-0036912,7525,,DeVonta Smith,WR,PHI,11.4,9.5,2026-11-02T01:20:00+00:00,2026-10-30T17:34:11Z,0,DeVonta Smith,Omar Cooper Jr.,E_pts +3.1 Smith; model only +0.9 Cooper; volume 6.6 vs 4.9 opps; Smith did not practice,live
+2026,8,gooma-s-family-league,call,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,8.9,10.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,12.6,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,call,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,Aaron Jones,Quinshon Judkins,E_pts tie (9.4 vs 9.4); model prefers Judkins by 2.8; 12.1 vs 18.3 opps,live
+2026,8,gooma-s-family-league,call,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,20.3,20.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,RB,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,13.4,15.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,WR,00-0036912,7525,,DeVonta Smith,WR,PHI,11.4,9.5,2026-11-02T01:20:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,8.9,10.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,12.6,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,9.4,9.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,e_pts,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,20.3,20.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,RB,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,13.4,15.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,WR,00-0041511,13276,,Omar Cooper Jr.,WR,NYJ,8.3,10.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,8.9,10.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,12.6,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,model,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,20.3,20.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,RB,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,13.4,15.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,WR,00-0036912,7525,,DeVonta Smith,WR,PHI,11.4,9.5,2026-11-02T01:20:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,WR,00-0034960,5947,,Jakobi Meyers,WR,JAX,8.9,10.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,TE,00-0039338,11604,,Brock Bowers,TE,LV,16.6,15.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,FLEX,00-0035229,5844,,T.J. Hockenson,TE,MIN,12.6,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,gooma-s-family-league,sleeper,SUPER_FLEX,00-0036442,6770,,Joe Burrow,QB,CIN,20.3,20.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,RB,00-0036875,7611,,Rhamondre Stevenson,RB,NE,11.2,10.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,WR,00-0039075,9493,,Puka Nacua,WR,LA,20.0,20.3,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,WR,00-0037238,8112,,Drake London,WR,ATL,18.6,18.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,TE,00-0039065,10859,,Sam LaPorta,TE,DET,9.6,11.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,call,FLEX,00-0039491,11646,,Jalen Coker,WR,CAR,17.1,9.8,2026-10-30T00:15:00+00:00,2026-10-30T17:34:11Z,1,,,,live
+2026,8,james-gregg-espn,e_pts,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,RB,00-0036875,7611,,Rhamondre Stevenson,RB,NE,11.2,10.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,WR,00-0039075,9493,,Puka Nacua,WR,LA,20.0,20.3,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,WR,00-0037238,8112,,Drake London,WR,ATL,18.6,18.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,TE,00-0039065,10859,,Sam LaPorta,TE,DET,9.6,11.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,e_pts,FLEX,00-0039491,11646,,Jalen Coker,WR,CAR,17.1,9.8,2026-10-30T00:15:00+00:00,2026-10-30T17:34:11Z,1,,,,live
+2026,8,james-gregg-espn,model,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,RB,00-0036875,7611,,Rhamondre Stevenson,RB,NE,11.2,10.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,WR,00-0039075,9493,,Puka Nacua,WR,LA,20.0,20.3,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,WR,00-0037238,8112,,Drake London,WR,ATL,18.6,18.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,TE,00-0039065,10859,,Sam LaPorta,TE,DET,9.6,11.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,model,FLEX,00-0039491,11646,,Jalen Coker,WR,CAR,17.1,9.8,2026-10-30T00:15:00+00:00,2026-10-30T17:34:11Z,1,,,,live
+2026,8,james-gregg-espn,sleeper,QB,00-0039851,11564,,Drake Maye,QB,NE,22.5,19.8,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,RB,00-0036875,7611,,Rhamondre Stevenson,RB,NE,11.2,10.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,WR,00-0039075,9493,,Puka Nacua,WR,LA,20.0,20.3,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,WR,00-0037238,8112,,Drake London,WR,ATL,18.6,18.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,TE,00-0039065,10859,,Sam LaPorta,TE,DET,9.6,11.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,james-gregg-espn,sleeper,FLEX,00-0039491,11646,,Jalen Coker,WR,CAR,17.1,9.8,2026-10-30T00:15:00+00:00,2026-10-30T17:34:11Z,1,,,,live
+2026,8,we-can-think-of-something-funny,call,QB,00-0026498,421,,Matthew Stafford,QB,LA,14.4,18.9,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,13.7,13.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,12.6,13.2,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,WR,00-0041438,13279,,Carnell Tate,WR,TEN,15.3,13.6,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,WR,00-0037247,8137,,George Pickens,WR,DAL,14.1,14.3,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,WR,00-0035640,5846,,DK Metcalf,WR,PIT,11.4,11.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,WR,00-0041037,13346,,Denzel Boston,WR,CLE,10.4,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,13.6,12.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,12.1,12.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,call,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,Rome Odunze,Quinshon Judkins,E_pts +0.8 Odunze on 6.4 opps / 95% snaps; model +1.9 Judkins on 18.3 opps / 63% carries,live
+2026,8,we-can-think-of-something-funny,call,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,13.9,13.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,QB,00-0026498,421,,Matthew Stafford,QB,LA,14.4,18.9,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,13.7,13.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,12.6,13.2,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,WR,00-0041438,13279,,Carnell Tate,WR,TEN,15.3,13.6,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,WR,00-0037247,8137,,George Pickens,WR,DAL,14.1,14.3,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,WR,00-0035640,5846,,DK Metcalf,WR,PIT,11.4,11.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,WR,00-0041037,13346,,Denzel Boston,WR,CLE,10.4,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,13.6,12.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,12.1,12.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,FLEX,00-0039919,11620,,Rome Odunze,WR,CHI,10.2,10.3,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,e_pts,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,13.9,13.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,QB,00-0026498,421,,Matthew Stafford,QB,LA,14.4,18.9,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,13.7,13.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,12.6,13.2,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,WR,00-0041438,13279,,Carnell Tate,WR,TEN,15.3,13.6,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,WR,00-0037247,8137,,George Pickens,WR,DAL,14.1,14.3,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,WR,00-0035640,5846,,DK Metcalf,WR,PIT,11.4,11.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,WR,00-0041037,13346,,Denzel Boston,WR,CLE,10.4,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,13.6,12.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,12.1,12.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,model,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,13.9,13.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,QB,00-0026498,421,,Matthew Stafford,QB,LA,14.4,18.9,2026-11-01T21:05:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,RB,00-0040719,12490,,Bhayshul Tuten,RB,JAX,13.7,13.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,RB,00-0038120,8155,,Breece Hall,RB,NYJ,13.1,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,12.6,13.2,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,WR,00-0041438,13279,,Carnell Tate,WR,TEN,15.3,13.6,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,WR,00-0037247,8137,,George Pickens,WR,DAL,14.1,14.3,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,WR,00-0035640,5846,,DK Metcalf,WR,PIT,11.4,11.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,WR,00-0041037,13346,,Denzel Boston,WR,CLE,10.4,10.7,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,TE,00-0038933,10236,,Dalton Kincaid,TE,BUF,13.6,12.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,FLEX,00-0040663,12506,,Harold Fannin Jr.,TE,CLE,12.1,12.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,FLEX,00-0035261,5967,,Tony Pollard,RB,TEN,10.9,13.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,FLEX,00-0040784,12512,,Quinshon Judkins,RB,CLE,9.4,12.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,we-can-think-of-something-funny,sleeper,SUPER_FLEX,00-0039732,11563,,Bo Nix,QB,DEN,13.9,13.9,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,QB,00-0033077,3294,,Dak Prescott,QB,DAL,24.3,20.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,Dak Prescott,Trevor Lawrence,E_pts +5.9 Prescott; model calls it even (0.6); volume similar (2.6 vs 4.3 opps),live
+2026,8,where-you-at,call,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,17.1,17.2,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,11.3,11.9,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,21.3,17.3,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,WR,00-0038606,9487,,Parker Washington,WR,JAX,11.4,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,WR,00-0041489,13274,,Germie Bernard,WR,PIT,8.2,8.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,Chris Godwin Jr.,Germie Bernard,Godwin play_prob 0.48; Bernard is not flagged. E_pts gap 0.9,live
+2026,8,where-you-at,call,TE,00-0038935,9480,,Brenton Strange,TE,JAX,9.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,FLEX,00-0038933,10236,,Dalton Kincaid,TE,BUF,9.5,8.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,K,00-0035358,6650,,Chase McLaughlin,K,TB,8.2,8.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,DL,00-0034285,5297,,Zach Sieler,DL,MIA,5.5,5.5,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,DL,00-0035230,5841,,Ed Oliver,DL,BUF,5.4,5.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,LB,00-0034413,5332,,Foyesade Oluokun,LB,JAX,8.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,call,DB,00-0033890,4081,,Budda Baker,DB,ARI,7.4,7.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,QB,00-0033077,3294,,Dak Prescott,QB,DAL,24.3,20.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,17.1,17.2,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,11.3,11.9,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,21.3,17.3,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,WR,00-0038606,9487,,Parker Washington,WR,JAX,11.4,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,WR,00-0033921,4037,,Chris Godwin Jr.,WR,TB,9.1,8.0,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,TE,00-0038935,9480,,Brenton Strange,TE,JAX,9.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,FLEX,00-0038933,10236,,Dalton Kincaid,TE,BUF,9.5,8.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,K,00-0035358,6650,,Chase McLaughlin,K,TB,8.2,8.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,DL,00-0034285,5297,,Zach Sieler,DL,MIA,5.5,5.5,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,DL,00-0035230,5841,,Ed Oliver,DL,BUF,5.4,5.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,LB,00-0034413,5332,,Foyesade Oluokun,LB,JAX,8.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,e_pts,DB,00-0033890,4081,,Budda Baker,DB,ARI,7.4,7.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,QB,00-0036971,7523,,Trevor Lawrence,QB,JAX,18.4,20.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,17.1,17.2,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,11.3,11.9,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,21.3,17.3,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,WR,00-0038606,9487,,Parker Washington,WR,JAX,11.4,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,WR,00-0041489,13274,,Germie Bernard,WR,PIT,8.2,8.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,TE,00-0038935,9480,,Brenton Strange,TE,JAX,9.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,FLEX,00-0038933,10236,,Dalton Kincaid,TE,BUF,9.5,8.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,K,00-0035358,6650,,Chase McLaughlin,K,TB,8.2,8.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,DL,00-0034285,5297,,Zach Sieler,DL,MIA,5.5,5.5,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,DL,00-0035230,5841,,Ed Oliver,DL,BUF,5.4,5.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,LB,00-0034413,5332,,Foyesade Oluokun,LB,JAX,8.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,model,DB,00-0033890,4081,,Budda Baker,DB,ARI,7.4,7.4,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,QB,00-0033077,3294,,Dak Prescott,QB,DAL,24.3,20.2,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,RB,00-0038134,8151,,Kenneth Walker III,RB,KC,17.1,17.2,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,RB,00-0036275,6790,,D'Andre Swift,RB,CHI,11.3,11.9,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,WR,00-0038543,9488,,Jaxon Smith-Njigba,WR,SEA,21.3,17.3,2026-11-03T01:15:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,WR,00-0038606,9487,,Parker Washington,WR,JAX,11.4,12.8,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,WR,00-0041489,13274,,Germie Bernard,WR,PIT,8.2,8.9,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,TE,00-0038935,9480,,Brenton Strange,TE,JAX,9.5,8.5,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,FLEX,00-0033293,4199,,Aaron Jones,RB,MIN,8.3,8.3,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,K,00-0035358,6650,,Chase McLaughlin,K,TB,8.2,,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,DL,00-0034285,5297,,Zach Sieler,DL,MIA,5.5,,2026-11-01T21:25:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,DL,00-0035230,5841,,Ed Oliver,DL,BUF,5.4,,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,LB,00-0034413,5332,,Foyesade Oluokun,LB,JAX,8.5,,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
+2026,8,where-you-at,sleeper,DB,00-0033890,4081,,Budda Baker,DB,ARI,7.4,,2026-11-01T18:00:00+00:00,2026-10-30T17:34:11Z,0,,,,live
