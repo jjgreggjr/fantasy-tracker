@@ -89,7 +89,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,1,free_agent,drop,1479,Keenan Allen,8
 2026,1,free_agent,drop,9227,Israel Abanikanda,7
 2026,1,free_agent,drop,10225,Jonathan Mingo,7
-2026,1,free_agent,drop,4080,,7
+2026,1,free_agent,drop,4080,Zay Jones,7
 2026,1,free_agent,drop,8143,Jerome Ford,7
 2026,1,free_agent,drop,331,,4
 2026,1,free_agent,drop,1264,,6
@@ -164,6 +164,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,9486,Dontayvion Wicks,10
 2026,7,waiver,add,8365,,10
 2026,7,waiver,drop,12493,Oronde Gadsden II,10
+2026,8,free_agent,drop,8129,Dameon Pierce,8
+2026,8,waiver,add,11792,,9
+2026,8,waiver,drop,8180,Jalen Nailor,9
+2026,8,waiver,add,1373,Geno Smith,9
+2026,8,waiver,drop,5870,Daniel Jones,9
 2026,8,trade,add,11584,Bucky Irving,"2, 5"
 2026,8,trade,add,11627,Troy Franklin,"2, 5"
 2026,8,trade,add,12512,Quinshon Judkins,"2, 5"
@@ -176,3 +181,5 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,trade,drop,13294,Makai Lemon,"2, 5"
 2026,8,trade,drop,13346,Denzel Boston,"2, 5"
 2026,8,trade,drop,9997,Zay Flowers,"2, 5"
+2026,8,waiver,add,8343,,5
+2026,8,waiver,drop,4950,Christian Kirk,5

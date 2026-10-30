@@ -37,6 +37,20 @@ Per week, the 95th percentile of |error| on the scored rows (the `top 5%` rule w
 | 2026 wk06 | 12.7 | 14.2 | 13.6 |
 | 2026 wk07 | 13.3 | 12.6 | 13.1 |
 
+## Band coverage: actuals against the frozen p10 / p90
+
+Share of played rows (PPR, `data/player_weeks.csv` against `data/model_pts.csv`) inside the frozen band, above p90 and below p10, by position and pooled, all post-mortemed weeks. The band is recalibrated with `serving_config.json` `recalibration.mode`; a tail over 10% is where `underage_by_position` would stretch it (model/ensemble.py).
+
+| position | n | inside [p10, p90] | above p90 | below p10 |
+|---|---|---|---|---|
+| QB | 130 | 89.2% | 6.9% | 3.8% |
+| RB | 293 | 79.2% | 14.0% | 6.8% |
+| WR | 505 | 77.4% | 12.9% | 9.7% |
+| TE | 304 | 78.0% | 12.2% | 9.9% |
+| ALL | 1232 | 79.2% | 12.3% | 8.4% |
+
+Targets: 80% inside, 10% above, 10% below. A tail over 10% is short (stretch it), one under 10% is slack (shrink only on a say-so).
+
 ## Top 15 misses, 2026 week 7
 
 Each comparator's largest played misses that week with the evidence behind the reason (expected = trailing mean over his earlier played weeks this season; volume = pass attempts + carries for a QB, carries + targets otherwise; margin = his team's final margin).

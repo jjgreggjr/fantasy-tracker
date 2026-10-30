@@ -193,6 +193,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,8259,,3
 2026,7,free_agent,add,8119,Jahan Dotson,4
 2026,7,free_agent,drop,2306,Jameis Winston,4
+2026,8,free_agent,add,12457,Jaydon Blue,2
+2026,8,free_agent,drop,4950,Christian Kirk,2
+2026,8,waiver,add,10219,Chris Rodriguez Jr.,6
+2026,8,waiver,drop,8129,Dameon Pierce,6
 2026,8,free_agent,add,11618,Jalen McMillan,8
 2026,8,free_agent,drop,11643,Jaylen Wright,8
 2026,8,free_agent,add,8122,Bam Knight,7

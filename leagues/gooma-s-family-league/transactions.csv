@@ -98,8 +98,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,6,free_agent,add,7528,Najee Harris,7
 2026,6,free_agent,add,8210,Chig Okonkwo,3
 2026,6,free_agent,add,9230,Tanner McKee,3
+2026,7,waiver,add,13345,Jonah Coleman,2
+2026,7,waiver,add,3634,Kalif Raymond,2
 2026,7,free_agent,drop,12509,Tre Harris,2
 2026,7,free_agent,drop,4177,Mack Hollins,2
+2026,7,waiver,add,CIN,,2
 2026,7,free_agent,drop,NO,,2
 2026,7,free_agent,drop,11647,Kimani Vidal,1
 2026,7,free_agent,add,13317,Ted Hurst III,6
@@ -108,3 +111,6 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,free_agent,drop,13425,Jalon Daniels,12
 2026,7,free_agent,drop,3634,Kalif Raymond,11
 2026,7,free_agent,add,2197,Brandin Cooks,3
+2026,8,free_agent,add,6650,,4
+2026,8,free_agent,add,WAS,,3
+2026,8,free_agent,drop,BAL,,3
