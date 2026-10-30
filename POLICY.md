@@ -219,6 +219,17 @@ same pre-kickoff features; `PLAN_MODEL.md` has the evidence) and writes it next 
   scores them on identical rows against the platform's own points (`data/model_eval.csv`,
   `model/reports/live_scoreboard.md`). Frozen weeks start with week 4, so the gate cannot be met before week 9
   completes. Until a human reads that report and says so, nothing changes.
+- **The call (`ff/calls.py`).** `ff.ask lineup` and `ff.ask live` print one slot-by-slot table: the E_pts optimum, the
+  model optimum, and a rule-based call on every slot where they differ. `E_pts` stays authoritative and the model is a
+  tiebreaker, with three exceptions, tried per differing pair (a = E_pts pick, b = model pick) in this order:
+  (1) **status**: if one is Questionable/Doubtful and did not practice, is `REPEAT_DNP`, or has `play_prob` <= 0.5, and the
+  other is not, and the E_pts gap is <= 2.0 (`STATUS_GAP`), start the healthier one; (2) **near tie**: E_pts gap <= 0.75
+  (`NEAR_TIE`) goes to the model's pick, or to the higher `E_opps` if the model gap is also <= 0.75; (3) **model
+  override**: model gap >= 1.5x (`MODEL_OVERRIDE`) the E_pts gap and the model's pick has `E_opps` >= the E_pts pick's
+  takes the model's pick. Otherwise a. The chosen players are re-slotted by `E_pts` so every slot is valid. The model has
+  no K or IDP numbers, so those fill from `E_pts` in the model lineup and the two lineups differ only where the model has
+  an opinion. Each week the three lineups (E_pts, model, call) are recorded and scored against actual points in the
+  live scoreboard, so the call is judged like everything else here; the adoption gate above is unchanged.
 - **The loop that improves it (Phase 5):** each week `model/reports/retrospective.md` classifies the biggest misses
   (TD variance, role change after a teammate sat, left early, inactive missed) and names the signal that would have
   carried the learnable ones; `python -m model.trial` tests any candidate under the written adoption rule before a

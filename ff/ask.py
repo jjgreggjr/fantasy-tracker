@@ -21,7 +21,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import live as live_mod, modelcols, policy, scoring, status as status_mod, trade as trade_mod
+from . import calls as calls_mod, live as live_mod, modelcols, policy, scoring, status as status_mod, trade as trade_mod
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -140,33 +140,43 @@ def optimize_lineup(pool: pd.DataFrame, slots: list[str], score_col: str, idp_on
     return picks
 
 
-def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
-    """Fill every startable slot with the exact optimum by E_pts, honoring eligibility.
-    When model columns exist, the optimum by E_pts_model is in `start.attrs["model_start"]`."""
-    meta, roster, avail, _, _ = _load(slug)
-    if roster.empty:
-        return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
+def _slot_split(meta: dict) -> tuple[list[str], bool, list[str]]:
+    """(scoreable slots, idp_on, unscored slots) from league.json."""
     all_slots = scoring.starting_slots(meta)
     # DL / LB / DB / K slots are fillable only in a league whose IDP is scored (league_idp_positions);
     # anywhere else, and for DST always, they are out of scope
     idp_on = bool(scoring.league_idp_positions(meta))
     elig = lambda sl: (scoring.IDP_SLOTS[sl] if idp_on and sl in scoring.IDP_SLOTS
                        else scoring.SLOT_ELIGIBILITY.get(sl, set()))
-    slots = [s for s in all_slots if elig(s)]
-    unscored = [s for s in all_slots if not elig(s)]
-    roster = modelcols.attach(roster, slug, ROOT)        # E_pts decides the lineup; model cols ride along
-    mcols = [c for c in modelcols.MODEL_COLS if c in roster.columns]
-    picks = optimize_lineup(roster, slots, "E_pts", idp_on)
-    used = {p["gsis_id"] for p in picks}
-    for p in picks:
-        p.pop("gsis_id", None)
-    m_picks = (optimize_lineup(roster, slots, "E_pts_model", idp_on)
-               if "E_pts_model" in roster.columns else [])
-    for p in m_picks:
-        p.pop("gsis_id", None)
+    return [s for s in all_slots if elig(s)], idp_on, [s for s in all_slots if not elig(s)]
 
-    start = pd.DataFrame(picks)
-    start.attrs["model_start"] = pd.DataFrame(m_picks)
+
+def scoreable_slots(meta: dict) -> tuple[list[str], bool]:
+    """(the slots `lineup` can fill, idp_on): what the optimizers and the recorded lineups (model.lineups) are built on."""
+    slots, idp_on, _ = _slot_split(meta)
+    return slots, idp_on
+
+
+def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
+    """Fill every startable slot with the exact optimum by E_pts, honoring eligibility.
+    When model columns exist, the optimum by E_pts_model is in `start.attrs["model_start"]`."""
+    meta, roster, avail, _, _ = _load(slug)
+    if roster.empty:
+        return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
+    slots, idp_on, unscored = _slot_split(meta)
+    roster = modelcols.attach(roster, slug, ROOT)        # E_pts decides the lineup; model cols ride along
+    three = calls_mod.three_lineups(roster, slots, idp_on)
+    ids = [c for c in calls_mod.ID_COLS if c in three["e_pts"].columns]
+    has_model = "E_pts_model" in roster.columns
+    drop = ids + ["E_opps"] + ([] if has_model else list(modelcols.MODEL_COLS))
+    clean = lambda df: df[df["name"].astype(str).ne("")].drop(columns=drop, errors="ignore").reset_index(drop=True)
+    used = set(three["e_pts"].loc[three["e_pts"]["name"].astype(str).ne(""), "gsis_id"])
+    start = clean(three["e_pts"])
+    start.attrs["model_start"] = clean(three["model"]) if has_model else pd.DataFrame()
+    start.attrs["call_start"] = three["call"].drop(columns=["E_opps"], errors="ignore")
+    start.attrs["three"] = three
+    start.attrs["all_slots"] = scoring.starting_slots(meta)
+    start.attrs["roster"] = roster
     bench = roster[~roster.gsis_id.isin(used)].copy()
     if not bench.empty and not start.empty:
         gaps = []
@@ -237,6 +247,83 @@ def side_by_side(e_start: pd.DataFrame, m_start: pd.DataFrame) -> str:
     lines.append("Differ: " + (("E_pts only: " + (", ".join(sorted(en - mn)) or "none")
                                + " | model only: " + (", ".join(sorted(mn - en)) or "none"))
                               if en != mn else "none (same players)"))
+    return "\n".join(lines)
+
+
+def _short_name(n: str) -> str:
+    return calls_mod._short(n)
+
+
+def call_table(start: pd.DataFrame, current: set, def_teams: list[str] | None = None) -> str:
+    """ONE slot-by-slot table: E_pts optimum, model optimum, and the rule-based call (ff/calls.py), then the
+    Net / Totals / Differ lines. `current` = names of today's starters; a pick not among them is marked IN."""
+    three = start.attrs.get("three") if start is not None else None
+    if not three:
+        return ""
+    e, m, c = three["e_pts"], three["model"], three["call"]
+    has_model = bool(c.attrs.get("has_model"))
+    nm = lambda x: "" if x is None or (isinstance(x, float) and pd.isna(x)) else str(x)
+
+    def pick(r):
+        if not nm(r["name"]):
+            return "-"
+        txt = f"{r['name']}{' IN' if r['name'] not in current else ''} {_fmt(r['E_pts'])}"
+        return txt + (f" / {_fmt(r.get('E_pts_model', np.nan))}" if has_model else "")
+
+    rows, seen, count = [], set(), {}
+    teams = list(def_teams or [])
+    scored = list(e["slot"])
+    for sl in start.attrs.get("all_slots", scored):
+        i = count.get(sl, 0)
+        idxs = [j for j, s_ in enumerate(scored) if s_ == sl]
+        if i >= len(idxs):
+            rows.append((sl, "not scored" + (f" ({teams.pop(0)})" if sl == "DEF" and teams else ""), "", ""))
+            continue
+        count[sl] = i + 1
+        j = idxs[i]
+        er, mr, cr = e.iloc[j], m.iloc[j], c.iloc[j]
+        if has_model and nm(cr["e_pick"]):
+            call, pid = "", int(cr["pair"])
+            if pid >= 0:
+                pr = c.attrs["pairs"][pid]
+                if pid in seen:
+                    call = f"see {pr['slot']}"
+                else:
+                    seen.add(pid)
+                    call = f"{_short_name(pr['chosen'])} — {cr['reason']}"
+            rows.append((sl, pick(er), pick(mr), call))
+        else:
+            rows.append((sl, pick(er), "same" if has_model else "", ""))
+    h1 = "E_pts pick (E / M)" if has_model else "E_pts pick"
+    w = [max(len(h), *(len(r[i]) for r in rows)) for i, h in enumerate(("Slot", h1, "Model pick (E / M)"))]
+    lines = [f"{'Slot':<{w[0]}}  {h1:<{w[1]}}" + (f"  {'Model pick (E / M)':<{w[2]}}  Call" if has_model else "")]
+    lines += [(f"{r[0]:<{w[0]}}  {r[1]:<{w[1]}}" + (f"  {r[2]:<{w[2]}}  {r[3]}" if has_model else "")).rstrip() for r in rows]
+
+    en = [n for n in e["name"] if nm(n)]
+    mn = [n for n in m["name"] if nm(n)]
+    cn = [n for n in c["name"] if nm(n)]
+    ins = [n for n in cn if n not in current]
+    outs = sorted(n for n in current if n not in set(cn))
+    diffs = [f"{pr['slot']} ({_short_name(pr['chosen'])} over {_short_name(pr['a'])})"
+             for pr in c.attrs.get("pairs", []) if pr["chosen"] != pr["a"]]
+    lines.append("")
+    lines.append("Net vs current: " + (f"IN {', '.join(_short_name(n) for n in ins)}" if ins else "no one IN")
+                 + "; " + (f"OUT {', '.join(_short_name(n) for n in outs)}" if outs else "no one OUT")
+                 + "; " + (("call differs from E_pts at " + ", ".join(diffs)) if diffs else "call = E_pts lineup"))
+    tot = lambda df, col: float(pd.to_numeric(df[col], errors="coerce").sum())
+    if not has_model:
+        lines.append(f"Totals  E_pts: {tot(e, 'E_pts'):.1f}")
+        return "\n".join(lines)
+    lines.append(f"Totals  E_pts: {tot(e, 'E_pts'):.1f} (E_pts lineup) / {tot(m, 'E_pts'):.1f} (model lineup) / "
+                 f"{tot(c, 'E_pts'):.1f} (call lineup)"
+                 f" | E_pts_model: {tot(e, 'E_pts_model'):.1f} / {tot(m, 'E_pts_model'):.1f} / {tot(c, 'E_pts_model'):.1f}")
+    es, ms = set(en), set(mn)
+    lines.append("Differ: " + (("E_pts only: " + (", ".join(sorted(es - ms)) or "none")
+                               + " | model only: " + (", ".join(sorted(ms - es)) or "none"))
+                              if es != ms else "none (same players)"))
+    bor = m.attrs.get("borrowed") or []
+    if bor:
+        lines.append(f"* Model has no K / IDP numbers: {', '.join(bor)} use E_pts in the model lineup and totals.")
     return "\n".join(lines)
 
 
@@ -538,11 +625,15 @@ def main(argv=None):
         print(live_mod.render(res))
         try:
             _st, _, _ = lineup(a.slug)
-            sbs = side_by_side(_st, _st.attrs.get("model_start"))
-        except Exception:
-            sbs = ""
-        if sbs:
-            print("\nOptimal lineup, E_pts vs model (committed scores):\n" + sbs)
+            _cur = set(res["mine"].loc[res["mine"].is_starter == 1, "name"])
+            _def = [u for u in res.get("unscored", []) if isinstance(u, str) and u.isalpha() and u.isupper()]
+            tbl = call_table(_st, _cur, _def)
+        except Exception as ex:
+            tbl = ""
+            print(f"\n(lineup call unavailable: {ex})")
+        if tbl:
+            print(f"\nOptimal lineup and the call (committed scores; IN = not in your "
+                  f"{'live Sleeper' if res.get('live') else 'committed'} lineup):\n" + tbl)
         st = res["mine"][res["mine"].is_starter == 1]
         if not st.empty:
             print("\nStatus of every current starter (and who is ahead of him):")
@@ -561,11 +652,16 @@ def main(argv=None):
         start, note, bench = lineup(a.slug)
         if "E_pts_model" in start.columns:
             print(modelcols.NOTE + "\n")
-        print(start.to_string(index=False) if not start.empty else "(no lineup)")
+        if start.empty:
+            print("(no lineup)")
         print("\n" + note)
-        sbs = side_by_side(start, start.attrs.get("model_start"))
-        if sbs:
-            print("\nE_pts optimum vs model optimum:\n" + sbs)
+        _ros = start.attrs.get("roster")
+        _cur = (set(_ros.loc[_ros["is_starter"] == 1, "name"])
+                if _ros is not None and "is_starter" in _ros.columns else set())
+        tbl = call_table(start, _cur)
+        if tbl:
+            print(f"\nOptimal lineup and the call (IN = not in the committed lineup, "
+                  f"{meta.get('roster_fetched_at') or 'unknown'}):\n" + tbl)
         if not start.empty:
             print("\nStatus of every starter (and who is ahead of him):")
             for line in _status_block(_status(), start["name"].tolist()):

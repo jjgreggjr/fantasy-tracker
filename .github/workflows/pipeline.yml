@@ -127,14 +127,17 @@ jobs:
             model-cache-${{ hashFiles('model/requirements.txt', 'model/features.py', 'model/point_in_time.py', 'model/labels.py', 'model/build_features.py') }}-
             model-cache-
 
-      - name: Model side by side with E_pts, then the live scoreboard
+      # model.lineups records the three optimal lineups per league (data/lineups_optimal.csv) and scores complete weeks
+      # (data/lineup_eval.csv). Slots freeze at their player's kickoff, so the Sunday runs re-record only unlocked slots.
+      # Same never-break contract as the others: a WARN row and exit 0 on any failure.
+      - name: Model side by side with E_pts, the recorded lineups, then the live scoreboard
         id: model
         continue-on-error: true
         # 25 (was 10): the 2026-10-18 adoption of the market + ecr families changes the history and quantile cache keys, so the
         # first run rebuilds them from scratch (about 1,000 small quantile fits); every later run is a cache hit again. A step
         # that still times out is a WARN and the frozen fallback is served next time, never a broken commit.
         timeout-minutes: 25
-        run: python -m model.serve && python -m model.scoreboard
+        run: python -m model.serve && python -m model.lineups && python -m model.scoreboard
 
       # ---- Phase 5: the weekly retrospective (what we missed, and why) --------------------
       # Reads the frozen predictions the scoreboard just judged and the box scores, classifies
