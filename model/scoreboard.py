@@ -139,6 +139,9 @@ def evaluate(root: Path = ROOT):
     if mp is None or mp.empty or lp is None or lp.empty:
         return empty, pd.DataFrame(), pd.DataFrame()
     ev, cov, avail = [], [], []
+    if "frozen_before_kickoff" in mp.columns:             # the column says a row was written after kickoff: not a prediction. Blank = old row, kept
+        from model.serve import frozen_mask
+        mp = mp[frozen_mask(mp) | mp["frozen_before_kickoff"].isna()]
     for (season, week), frozen in mp.groupby(["season", "week"]):
         season, week = int(season), int(week)
         for slug, (lid, _) in leagues.items():

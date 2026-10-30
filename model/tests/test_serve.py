@@ -303,7 +303,7 @@ class Availability(unittest.TestCase):
 
 # =========================================================================================== the frozen record
 def mp_rows(ids, pts, kick, week=4, season=2026, **extra) -> pd.DataFrame:
-    return pd.DataFrame({"season": season, "week": week, "game_id": [f"g{k[-5:]}" for k in kick], "kickoff_utc": kick,
+    return pd.DataFrame({"season": season, "week": week, "game_id": [f"g{k[:16]}" for k in kick], "kickoff_utc": kick,
                          "gsis_id": ids, "pts_model": pts, **extra})
 
 
@@ -366,6 +366,72 @@ class FrozenRecord(unittest.TestCase):
         SV.write_model_pts(self.path, mp_rows(["B"], [2.0], [self.SUN], p10=[0.5]), 2026, 4, now)
         d = self.read()
         self.assertTrue(np.isnan(d.loc["A", "p10"]) and d.loc["B", "p10"] == 0.5)
+
+
+class LockMargin(unittest.TestCase):
+    """2026-10-18 week 6: a serve that started before the 17:00 UTC kickoff wrote 38 s after it and replaced the frozen 1 pm rows."""
+    KO = "2026-10-18T17:00:00+00:00"
+
+    def old(self, served="2026-10-18T16:53:05Z", ids=("A", "B")):
+        return mp_rows(list(ids), [10.0] * len(ids), [self.KO] * len(ids), served_at=served)
+
+    def new(self, served, ids=("A", "B"), pts=99.0):
+        return mp_rows(list(ids), [pts] * len(ids), [self.KO] * len(ids), served_at=served)
+
+    def test_a_serve_38_seconds_after_kickoff_keeps_the_old_rows(self):
+        now = pd.Timestamp("2026-10-18T17:00:38Z")
+        m = SV.merge_frozen(self.old(), self.new("2026-10-18T17:00:38Z"), 2026, 6 - 2, now)
+        self.assertEqual(m["pts_model"].tolist(), [10.0, 10.0])
+        self.assertEqual(set(m["served_at"]), {"2026-10-18T16:53:05Z"})
+        self.assertTrue(m["frozen_before_kickoff"].all())
+        self.assertEqual(SV.freeze_report(self.old(), m, 2026, 4, now), [])
+
+    def test_a_serve_inside_the_lock_margin_keeps_the_old_rows_and_a_new_player_is_not_added(self):
+        now = pd.Timestamp("2026-10-18T16:55:00Z")                              # 5 min before kickoff, inside the 10 min margin
+        m = SV.merge_frozen(self.old(), self.new("2026-10-18T16:55:00Z", ids=("A", "B", "C")), 2026, 4, now)
+        self.assertEqual(sorted(m["gsis_id"]), ["A", "B"])
+        self.assertEqual(m["pts_model"].tolist(), [10.0, 10.0])
+        outside = SV.merge_frozen(self.old(), self.new("2026-10-18T16:45:00Z"), 2026, 4, pd.Timestamp("2026-10-18T16:45:00Z"))
+        self.assertEqual(outside["pts_model"].tolist(), [99.0, 99.0])           # 15 min out: re-predicted as before
+        self.assertEqual(SV.merge_frozen(self.old(), self.new("x"), 2026, 4, now, margin_min=2)["pts_model"].tolist(), [99.0, 99.0])
+
+    def test_a_game_past_kickoff_with_no_old_rows_is_written_and_warned_about(self):
+        now = pd.Timestamp("2026-10-18T17:00:38Z")
+        new = self.new("2026-10-18T17:00:38Z")
+        m = SV.merge_frozen(None, new, 2026, 4, now)
+        self.assertEqual(m["pts_model"].tolist(), [99.0, 99.0])
+        self.assertFalse(m["frozen_before_kickoff"].any())
+        other = mp_rows(["Z"], [1.0], ["2026-10-19T00:15:00+00:00"], served_at="2026-10-18T16:53:05Z")      # an old row of ANOTHER game
+        m2 = SV.merge_frozen(other, new, 2026, 4, now)
+        self.assertEqual(sorted(m2["gsis_id"]), ["A", "B"])                     # (week 4 partition of `other` is not part of `new`)
+        warn = SV.freeze_report(other, m2, 2026, 4, now)
+        self.assertEqual(len(warn), 1)
+        self.assertIn("missed freeze: 1 games / 2 rows of week 4 had no pre-kickoff prediction; first-written at 2026-10-18T17:00:38Z", warn[0])
+
+    def test_a_first_write_inside_the_margin_is_a_late_freeze_warn(self):
+        now = pd.Timestamp("2026-10-18T16:55:00Z")
+        m = SV.merge_frozen(None, self.new("2026-10-18T16:55:00Z"), 2026, 4, now)
+        self.assertTrue(m["frozen_before_kickoff"].all())
+        self.assertIn("late freeze: 1 games / 2 rows", SV.freeze_report(None, m, 2026, 4, now)[0])
+
+    def test_a_replaced_row_of_a_kicked_off_game_is_an_assertion_warn(self):
+        now = pd.Timestamp("2026-10-18T17:00:38Z")
+        bad = SV._with_flag(self.new("2026-10-18T17:00:38Z"))                   # what a broken merge would have returned
+        self.assertIn("merge_frozen replaced 2 row(s)", " ".join(SV.freeze_report(self.old(), bad, 2026, 4, now)))
+
+    def test_frozen_before_kickoff_is_written_and_the_mask_prefers_the_column(self):
+        with tempfile.TemporaryDirectory() as t:
+            path = Path(t) / "model_pts.csv"
+            SV.write_model_pts(path, mp_rows(["A", "B"], [1.0, 2.0], [self.KO, self.KO], served_at=["2026-10-18T16:00:00Z", "2026-10-18T17:00:38Z"]),
+                               2026, 4, pd.Timestamp("2026-10-18T15:00:00Z"))
+            d = pd.read_csv(path)
+            self.assertEqual(d["frozen_before_kickoff"].tolist(), [True, False])
+            d.loc[0, "frozen_before_kickoff"] = False
+            self.assertEqual(SV.frozen_mask(d).tolist(), [False, False])
+            self.assertEqual(SV.frozen_mask(d.drop(columns="frozen_before_kickoff")).tolist(), [True, False])
+            d["frozen_before_kickoff"] = d["frozen_before_kickoff"].astype(object)
+            d.loc[0, "frozen_before_kickoff"] = None                            # blank (old row): derived from served_at
+            self.assertEqual(SV.frozen_mask(d).tolist(), [True, False])
 
 
 # =========================================================================================== roster.csv columns
@@ -478,7 +544,7 @@ class FridayServe(unittest.TestCase):
         self.tmp.cleanup()
 
     def rows(self, ids, kicks, pts):
-        return pd.DataFrame({"season": 2026, "week": self.week, "game_id": "g", "kickoff_utc": kicks, "gsis_id": ids, "pts_model_components": pts,
+        return pd.DataFrame({"season": 2026, "week": self.week, "game_id": [f"g{k[:16]}" for k in kicks], "kickoff_utc": kicks, "gsis_id": ids, "pts_model_components": pts,
                              "pts_where-you-at": pts, "p10": 1.0, "p90": 30.0, "p10_where-you-at": 2.0, "p90_where-you-at": 31.0})
 
     def roster(self):
