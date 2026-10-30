@@ -140,20 +140,30 @@ def optimize_lineup(pool: pd.DataFrame, slots: list[str], score_col: str, idp_on
     return picks
 
 
-def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
-    """Fill every startable slot with the exact optimum by E_pts, honoring eligibility.
-    When model columns exist, the optimum by E_pts_model is in `start.attrs["model_start"]`."""
-    meta, roster, avail, _, _ = _load(slug)
-    if roster.empty:
-        return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
+def _slot_split(meta: dict) -> tuple[list[str], bool, list[str]]:
+    """(scoreable slots, idp_on, unscored slots) from league.json."""
     all_slots = scoring.starting_slots(meta)
     # DL / LB / DB / K slots are fillable only in a league whose IDP is scored (league_idp_positions);
     # anywhere else, and for DST always, they are out of scope
     idp_on = bool(scoring.league_idp_positions(meta))
     elig = lambda sl: (scoring.IDP_SLOTS[sl] if idp_on and sl in scoring.IDP_SLOTS
                        else scoring.SLOT_ELIGIBILITY.get(sl, set()))
-    slots = [s for s in all_slots if elig(s)]
-    unscored = [s for s in all_slots if not elig(s)]
+    return [s for s in all_slots if elig(s)], idp_on, [s for s in all_slots if not elig(s)]
+
+
+def scoreable_slots(meta: dict) -> tuple[list[str], bool]:
+    """(the slots `lineup` can fill, idp_on): what the optimizers and the recorded lineups (model.lineups) are built on."""
+    slots, idp_on, _ = _slot_split(meta)
+    return slots, idp_on
+
+
+def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
+    """Fill every startable slot with the exact optimum by E_pts, honoring eligibility.
+    When model columns exist, the optimum by E_pts_model is in `start.attrs["model_start"]`."""
+    meta, roster, avail, _, _ = _load(slug)
+    if roster.empty:
+        return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
+    slots, idp_on, unscored = _slot_split(meta)
     roster = modelcols.attach(roster, slug, ROOT)        # E_pts decides the lineup; model cols ride along
     three = calls_mod.three_lineups(roster, slots, idp_on)
     ids = [c for c in calls_mod.ID_COLS if c in three["e_pts"].columns]

@@ -40,7 +40,7 @@ class Workflow(unittest.TestCase):
         self.assertIn('python-version: "3.12"', setup)
         self.assertIn("cache: pip", setup)
         run = self.step("run: python -m model.serve")
-        self.assertIn("run: python -m model.serve && python -m model.scoreboard", run)
+        self.assertIn("run: python -m model.serve && python -m model.lineups && python -m model.scoreboard", run)
         self.assertIn("continue-on-error: true", run)
         self.assertIn("timeout-minutes", run)
         self.assertIn("continue-on-error: true", self.step("pip install -r model/requirements.txt"))
@@ -147,7 +147,7 @@ class Phase4(unittest.TestCase):
         self.assertIn("run: python -m model.retrospective", retro)
         self.assertIn("continue-on-error: true", retro)
         self.assertIn("run: python -m ff.run_weekly --strict", self.step("name: Run pipeline"))
-        self.assertIn("run: python -m model.serve && python -m model.scoreboard", self.step("id: model\n"))
+        self.assertIn("run: python -m model.serve && python -m model.lineups && python -m model.scoreboard", self.step("id: model\n"))
 
 
 if __name__ == "__main__":
