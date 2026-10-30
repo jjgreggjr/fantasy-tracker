@@ -334,6 +334,35 @@ class Backfill(unittest.TestCase):
         self.assertTrue(new.empty)
         self.assertEqual(skipped[0][:3], (SLUG, 2026, 4))
 
+    def test_a_thin_week_writes_a_warn_row_once_and_a_coverage_note_in_the_report(self):
+        root = backfill_root()
+        mp = pd.read_csv(root / "data" / "model_pts.csv", dtype={"gsis_id": str})
+        mp.loc[mp["week"] == 4, "served_at"] = "2026-09-27T18:00:00Z"
+        mp.to_csv(root / "data" / "model_pts.csv", index=False)
+        with mock.patch.object(L, "ROOT", root), mock.patch.object(L, "backfill", wraps=L.backfill) as bf, redirect_stdout(io.StringIO()):
+            L._do_backfill()
+            L._do_backfill()                                                     # the same skip is not logged twice
+        self.assertTrue(bf.called)
+        runs = (root / "logs" / "runs.csv").read_text()
+        self.assertEqual(runs.count("model.lineups: lineups backfill skipped lg-a 2026 week 4"), 1)
+        self.assertIn("frozen coverage 40%", runs)
+        L.backfill(root, now=NOW, three_lineups=stub_three)                      # nothing built for week 4; week 5 is live-recorded
+        L.score(root)
+        self.assertIn("Frozen coverage: lg-a 2026 week 4 skipped, only 40% of its projected offensive players", L.section(root))
+
+    def test_the_frozen_column_is_preferred_to_deriving_it(self):
+        root = backfill_root()
+        mp = pd.read_csv(root / "data" / "model_pts.csv", dtype={"gsis_id": str})
+        w4 = mp["week"] == 4
+        mp["frozen_before_kickoff"] = pd.NA
+        mp.loc[w4 & (mp["gsis_id"] == "w2"), "frozen_before_kickoff"] = True    # the column says Wes WAS frozen (served_at would say not)
+        mp.loc[w4 & (mp["gsis_id"] == "q1"), "frozen_before_kickoff"] = False   # ...and that Quinn was not
+        mp.to_csv(root / "data" / "model_pts.csv", index=False)
+        new = L.backfill(root, now=NOW, three_lineups=stub_three)
+        got = set(new[new["week"] == 4]["name"])
+        q = new[(new["week"] == 4) & (new["basis"] == "e_pts") & (new["name"] == "Quinn")]
+        self.assertTrue(q["E_pts"].isna().all())                                 # Quinn's row was not frozen: no prediction to pick him by
+
     def test_main_runs_record_then_backfill_then_score(self):
         calls = []
         empty = pd.DataFrame(columns=L.OPT_COLS)

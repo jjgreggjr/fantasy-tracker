@@ -130,6 +130,9 @@ jobs:
       # model.lineups records the three optimal lineups per league (data/lineups_optimal.csv) and scores complete weeks
       # (data/lineup_eval.csv). Slots freeze at their player's kickoff, so the Sunday runs re-record only unlocked slots.
       # Same never-break contract as the others: a WARN row and exit 0 on any failure.
+      # Freeze: serve never re-predicts a game kicking off within LOCK_MARGIN_MIN (10) minutes or already under way, and re-reads
+      # its clock after computing (2026-10-18 lost the 1 pm rows to a serve that started before 17:00 and wrote at 17:00:38).
+      # WARN rows: "missed freeze" (a kicked-off game with no pre-kickoff row; model.serve), thin frozen coverage (model.lineups).
       - name: Model side by side with E_pts, the recorded lineups, then the live scoreboard
         id: model
         continue-on-error: true

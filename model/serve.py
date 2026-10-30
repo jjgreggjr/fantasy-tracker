@@ -31,6 +31,15 @@ What it does, in order (every step reuses training code; nothing is re-implement
      (data/inactives.csv, written by the pipeline from nflverse weekly_rosters; this week's list only, games not yet kicked off:
      posted ~90 min before kickoff, so it bites on the Sunday pre-lock serve), or when he is cut / retired / reserve.
      Doubtful and Questionable players DO get a row (the model does not see the designation; `report_status` carries it).
+     LOCK MARGIN: a game whose kickoff is within `LOCK_MARGIN_MIN` (default 10, env LOCK_MARGIN_MIN) minutes of the serve's clock, or
+     past, is never re-predicted: its old rows are kept as written (`merge_frozen`). If such a game has NO old row, the new rows are
+     written anyway (something frozen beats nothing) and a WARN says so. The clock is re-read after the (minutes-long) computation,
+     so a game that kicked off while the serve was computing is frozen too (2026-10-18 week 6: `now` was taken before the load,
+     `served_at` after it, and the 1 pm games were re-predicted 38 s after kickoff).
+     WARN rows (check `model.serve`): "missed freeze: <n> games / <m> rows of week W had no pre-kickoff prediction; first-written at
+     <served_at>" whenever a game of the served week has kicked off with no earlier frozen row; "late freeze" for a game inside the
+     margin first written now; and "merge_frozen replaced ..." (assertion-style, impossible by construction) if a kicked-off game's
+     old row would have been overwritten. `data/model_pts.csv` carries `frozen_before_kickoff` (served_at < kickoff_utc) per row.
   6. `data/model_pts.csv` via `ff.build.replace_partition` on (season, week), then `E_pts_model`, `p10`, `p90` appended to each
      league's `roster.csv`.
 
@@ -54,6 +63,7 @@ DATA = ROOT / "data"
 MODEL_FILE = DATA / "model_pts.csv"
 CONFIG_PATH = Path(__file__).with_name("serving_config.json")
 SERVE_CHECK = "model.serve"
+LOCK_MARGIN_MIN = int(os.environ.get("LOCK_MARGIN_MIN", "10"))   # minutes before kickoff at which a game's rows lock (never re-predicted)
 FIRST_SEASON = 2021
 CODE_FILES = ("features.py", "point_in_time.py", "labels.py", "build_features.py")
 UNAVAILABLE_NFL_STATUS = {"CUT", "RET", "EXE", "RES"}          # released, retired, exempt, reserve: no row
@@ -95,6 +105,8 @@ COLUMN_DOCS = {
     "sleeper_proj_<slug>": "Sleeper's projection in that league's scoring (`proj_pts_league`), frozen at serve time",
     "e_pts_<slug>": "the pipeline's E_pts for that league, frozen at serve time (E_pts is overwritten every run)",
     "served_at": "UTC time this row was computed",
+    "frozen_before_kickoff": "True when served_at < kickoff_utc, i.e. the row is a genuine pre-kickoff prediction (blank on rows written "
+                             "before this column existed: derive it from served_at and kickoff_utc)",
 }
 
 
@@ -854,16 +866,76 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
 
 
 # --------------------------------------------------------------------------- writing (computation is finished by now)
-def merge_frozen(old, new, season: int, week: int, now):
-    """`new` plus the OLD rows of (season, week) whose game had already kicked off at `now`: those are the frozen record."""
+def _utc(series):
+    import pandas as pd
+    return pd.to_datetime(series, utc=True, errors="coerce")
+
+
+def frozen_mask(df):
+    """Boolean Series: is each row a pre-kickoff prediction? Prefers the `frozen_before_kickoff` column; rows where it is blank
+    (written before the column existed) fall back to served_at < kickoff_utc."""
+    import pandas as pd
+    derived = (_utc(df["served_at"]) < _utc(df["kickoff_utc"])) if {"served_at", "kickoff_utc"} <= set(df.columns) \
+        else pd.Series(False, index=df.index)
+    if "frozen_before_kickoff" not in df.columns:
+        return derived
+    col = df["frozen_before_kickoff"].map(lambda v: {True: True, False: False, "True": True, "False": False}.get(v))
+    return col.where(col.notna(), derived).astype(bool)
+
+
+def _with_flag(df):
+    if df is None or df.empty or not {"served_at", "kickoff_utc"} <= set(df.columns):
+        return df
+    df = df.copy()
+    df["frozen_before_kickoff"] = (_utc(df["served_at"]) < _utc(df["kickoff_utc"])).to_numpy()
+    return df
+
+
+def merge_frozen(old, new, season: int, week: int, now, margin_min: float | None = None):
+    """`new` plus the OLD rows of (season, week) whose game kicks off within the lock margin of `now` or already has: those are the
+    frozen record. A game with old rows keeps ONLY them (no new row of it is written); a locked game with no old rows gets its new
+    rows (flagged by `freeze_report`). Every row gets `frozen_before_kickoff`."""
     import pandas as pd
     if old is None or old.empty:
-        return new
+        return _with_flag(new)
+    margin = pd.Timedelta(minutes=LOCK_MARGIN_MIN if margin_min is None else margin_min)
     sel = old[(old["season"] == season) & (old["week"] == week)]
-    frozen = sel[pd.to_datetime(sel["kickoff_utc"], utc=True) <= now]
+    frozen = sel[_utc(sel["kickoff_utc"]) <= now + margin]
     if frozen.empty:
-        return new
-    return pd.concat([frozen, new[~new["gsis_id"].isin(frozen["gsis_id"])]], ignore_index=True)
+        return _with_flag(new)
+    drop = new["gsis_id"].isin(frozen["gsis_id"])
+    if "game_id" in new.columns and "game_id" in frozen.columns:
+        drop |= new["game_id"].isin(frozen["game_id"])
+    return _with_flag(pd.concat([frozen, new[~drop]], ignore_index=True))
+
+
+def freeze_report(old, merged, season: int, week: int, now, margin_min: float | None = None) -> list[str]:
+    """WARN texts about the freeze of (season, week) as `merged` (merge_frozen's result) leaves it. Empty when all is well."""
+    import pandas as pd
+    if merged is None or merged.empty or "served_at" not in merged.columns:
+        return []
+    margin = pd.Timedelta(minutes=LOCK_MARGIN_MIN if margin_min is None else margin_min)
+    out = []
+    sel = old[(old["season"] == season) & (old["week"] == week)] if old is not None and not old.empty else None
+    old_games = set(sel["game_id"]) if sel is not None and "game_id" in sel.columns else set()
+    ko, froz = _utc(merged["kickoff_utc"]), frozen_mask(merged)
+    missed = (ko <= now) & ~froz
+    if missed.any():
+        out.append(f"missed freeze: {merged.loc[missed, 'game_id'].nunique()} games / {int(missed.sum())} rows of week {week} had no "
+                   f"pre-kickoff prediction; first-written at {merged.loc[missed, 'served_at'].min()}")
+    late = (ko > now) & (ko <= now + margin) & ~merged["game_id"].isin(old_games)
+    if late.any():
+        out.append(f"late freeze: {merged.loc[late, 'game_id'].nunique()} games / {int(late.sum())} rows of week {week} kick off within "
+                   f"{margin.total_seconds() / 60:g} min and had no earlier frozen row; first-written now (served_at "
+                   f"{merged.loc[late, 'served_at'].min()})")
+    if sel is not None and len(sel):                                              # assertion-style: impossible after merge_frozen
+        past = sel[_utc(sel["kickoff_utc"]) <= now]
+        if len(past):
+            got = merged.drop_duplicates("gsis_id").set_index("gsis_id")["served_at"]
+            changed = int((past.set_index("gsis_id")["served_at"] != got.reindex(past["gsis_id"]).to_numpy()).sum())
+            if changed:
+                out.append(f"merge_frozen replaced {changed} row(s) of games already past kickoff in week {week} (should be impossible)")
+    return out
 
 
 def read_model_pts(path: Path):
@@ -1011,10 +1083,13 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     cfg = serving_config_for(cfg, store, season, week, warnings)
     upcoming = [g for g in tgs if g.kickoff > now]
     replay = not upcoming
+    prev = read_model_pts(out_path)
+    had = set(prev.loc[(prev["season"] == season) & (prev["week"] == week), "game_id"]) if prev is not None and len(prev) else set()
     if replay and not (args.dry_run or args.out):
         raise RuntimeError(f"{season} week {week} has no game left to kick off: a completed week's predictions are never rewritten "
                            "(use --dry-run to replay it)")
-    tgs = tgs if replay else upcoming
+    # a game already under way with no earlier row is still predicted (something frozen beats nothing); freeze_report WARNs about it
+    tgs = tgs if replay else upcoming + [g for g in tgs if g.kickoff <= now and g.game_id not in had]
     print(f"model.serve: {season} week {week}, {len({g.game_id for g in tgs})} games"
           + (" (replay of a completed week)" if replay else "") + f", raw data ready in {time.time() - t0:,.0f}s", flush=True)
     jobs = args.jobs or min(4, os.cpu_count() or 1)
@@ -1031,9 +1106,14 @@ def run(args, *, root: Path = ROOT) -> list[str]:
     served_index = df.index[len(hist):]
     pred, comp, league_bands = predict_week(df, season, week, cfg, leagues)
     served_df = df.loc[served_index]
+    if not args.now:
+        now = max(now, now_utc())              # the computation took minutes: a game that kicked off meanwhile is frozen, not replaced
     out, reasons = assemble(store, served_df, pred, comp, leagues, root=root, season=season, week=week, served_at=now_utc(),
                             warnings=warnings, league_bands=league_bands, now=now)
-    lines = summary_lines(merged_week(out_path, out, season, week, now), reasons, leagues, root, season, week)
+    merged = merged_week(out_path, out, season, week, now)
+    if not replay:
+        warnings += freeze_report(prev, merged, season, week, now)
+    lines = summary_lines(merged, reasons, leagues, root, season, week)
     lines += injury_lines(store, out, upcoming, now, season, week, warnings)
     if args.dry_run:
         return lines + [f"  WARN {w}" for w in warnings] + ["  (dry run: nothing written)"] + [out.head(8).to_string(index=False)]
