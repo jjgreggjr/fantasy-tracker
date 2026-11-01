@@ -131,10 +131,10 @@ Non-blank frozen values per league-week in `data/model_pts.csv` (the actual-poin
 | 2026 | 7 | james-gregg-espn | 435 | 143 | 435 | 435 | 435 | 432 | 432 |
 | 2026 | 7 | we-can-think-of-something-funny | 435 | 240 | 435 | 435 | 435 | 432 | 432 |
 | 2026 | 7 | where-you-at | 435 | 253 | 435 | 435 | 435 | 432 | 432 |
-| 2026 | 8 | gooma-s-family-league | 442 | 0 | 442 | 442 | 442 | 440 | 438 |
-| 2026 | 8 | james-gregg-espn | 442 | 0 | 442 | 442 | 442 | 440 | 438 |
-| 2026 | 8 | we-can-think-of-something-funny | 442 | 0 | 442 | 442 | 442 | 440 | 438 |
-| 2026 | 8 | where-you-at | 442 | 0 | 442 | 442 | 442 | 440 | 438 |
+| 2026 | 8 | gooma-s-family-league | 416 | 0 | 416 | 416 | 416 | 414 | 414 |
+| 2026 | 8 | james-gregg-espn | 416 | 0 | 416 | 416 | 416 | 414 | 414 |
+| 2026 | 8 | we-can-think-of-something-funny | 416 | 0 | 416 | 416 | 416 | 414 | 414 |
+| 2026 | 8 | where-you-at | 416 | 0 | 416 | 416 | 416 | 414 | 414 |
 
 ## Lineups: which number should pick my lineup
 
