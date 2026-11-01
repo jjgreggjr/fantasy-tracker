@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 8
 
 redraft · 20 roster slots  
-Generated 2026-11-01 17:16 UTC · baselines: 2026 only · lineup as of 2026-11-01T17:16:09Z
+Generated 2026-11-01 18:37 UTC · baselines: 2026 only · lineup as of 2026-11-01T18:37:39Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -84,22 +84,22 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jalon Daniels | QB | TB | ATL | 0.9 | 0.0 |  | 2 | 15 | Low |  |
 | Tommy DeVito | QB | NE | MIA | 0.9 | 0.0 |  | 2 | 4 | Med |  |
 | Case Keenum | QB | CHI | SEA | 0.6 | 0.0 |  | 3 | 31 | Low |  |
-| Tyler Huntley | QB | BAL | BUF | 0.5 | 0.0 |  | 2 | 6 | Low |  |
+| Stetson Bennett | QB | LA | LAC | 0.5 | 0.0 |  | 2 | 30 | Med |  |
 | Zach Charbonnet | RB | SEA | CHI | 8.2 | 8.1 | 25% | 1 | 16 | Med |  |
 | Corey Kiner | RB | NE | MIA | 7.7 | 8.7 | 26% | 3 | 10 | Med | 🔥 |
-| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High | 🔥 |
 | Isaiah Davis | RB | NYJ | LV | 7.6 | 5.2 | 12% | 3 | 3 | Med |  |
+| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High | 🔥 |
 | Justice Hill | RB | BAL | BUF | 7.3 | 5.6 | 12% | 2 | 5 | High | 🔥 |
 | Austin Ekeler | RB | WAS | PHI | 6.7 | 7.2 | 20% | 2 | 21 | Low |  |
 | Michael Mayer | TE | LV | NYJ | 7.9 | 4.5 | 14% | 2 | 23 | Med |  |
 | Mason Taylor | TE | NYJ | LV | 7.8 | 4.8 | 16% | 1 | 5 | High | 🔥 |
 | Colby Parkinson | TE | LA | LAC | 6.8 | 3.6 | 12% | 2 | 19 | Low |  |
-| Eli Raridon | TE | NE | MIA | 5.7 | 2.6 | 9% | 2 | 3 | Med |  |
 | Matthew Hibner | TE | BAL | BUF | 5.7 | 0.0 |  | 2 | 4 | Med |  |
+| Eli Raridon | TE | NE | MIA | 5.7 | 2.6 | 9% | 2 | 3 | Med |  |
 | Charlie Kolar | TE | LAC | LA | 5.0 | 2.4 | 8% | 1 | 14 | Med |  |
 | Calvin Ridley | WR | TEN | CIN | 8.7 | 4.4 | 14% | 4 | 9 | Low |  |
-| Efton Chism III | WR | NE | MIA | 7.5 | 4.5 | 16% | 3 | 25 | Low | 🔥 |
 | Marquise Brown | WR | PHI | WAS | 7.5 | 4.2 | 15% | 5 | 23 | Med |  |
+| Efton Chism III | WR | NE | MIA | 7.5 | 4.5 | 16% | 3 | 25 | Low | 🔥 |
 | Quentin Johnston | WR | LAC | LA | 7.2 | 5.2 | 17% | 2 | 29 | Med |  |
 | Tre Harris | WR | LAC | LA | 6.8 | 4.5 | 15% | 3 | 29 | Low |  |
 | Tez Johnson | WR | TB | ATL | 6.7 | 4.5 | 15% | 4 | 18 | Med |  |
@@ -121,7 +121,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Rasheen Ali | RB | BAL | 25.7 | 2 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 26 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 42% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 24 |
 | Jordan James | RB | SF | 22.6 | 1 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 23 |
-| Jack Bech | WR | LV | 23.9 | 1 | 3 (was 7) | 44% | WR3 on depth chart; up from 7; team passes #7; age 24 |
+| Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 44% | WR3 on depth chart; team passes #7; age 24 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 46% | TE2 on depth chart; team passes #1; age 26 |
 | Michael Mayer | TE | LV | 25.3 | 3 | 2 (was 2) | 80% | TE2 on depth chart; team passes #7; age 25 |
 

@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 8
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-01 17:16 UTC · baselines: 2026 only · lineup as of 2026-11-01T17:16:10Z
+Generated 2026-11-01 18:37 UTC · baselines: 2026 only · lineup as of 2026-11-01T18:37:40Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -108,16 +108,16 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyler Bass | K | BUF | BAL | 7.6 | 5.7 |  |  |  | High | 🔥 |
 | Nate Lynn | LB | NYJ | LV | 9.5 | 3.0 |  |  |  | Med |  |
 | Nate Landman | LB | LA | LAC | 8.3 | 7.7 |  |  |  | High |  |
-| Drue Tranquill | LB | KC | DEN | 7.7 | 8.7 |  |  |  | High |  |
 | Ventrell Miller | LB | JAX | IND | 7.7 | 5.0 |  |  |  | High |  |
+| Drue Tranquill | LB | KC | DEN | 7.7 | 8.7 |  |  |  | High |  |
 | Jacob Rodriguez | LB | MIA | NE | 7.1 | 11.0 |  |  |  | High |  |
 | Devin Bush | LB | CHI | SEA | 7.0 | 6.3 |  |  |  | High |  |
 | Tyson Bagent | QB | CHI | SEA | 2.7 | 0.0 |  | 2 | 31 | Low |  |
 | Tanner McKee | QB | PHI | WAS | 15.5 | 2.7 |  | 1 | 7 | Low |  |
 | Daniel Jones | QB | IND | JAX | 12.8 | 3.4 |  | 1 | 13 | High |  |
 | Athan Kaliakmanis | QB | WAS | PHI | 1.7 | 0.0 |  | 3 | 8 | Low |  |
-| Tommy DeVito | QB | NE | MIA | 0.9 | 0.0 |  | 2 | 4 | Med |  |
 | Jalon Daniels | QB | TB | ATL | 0.9 | 0.0 |  | 2 | 15 | Low |  |
+| Tommy DeVito | QB | NE | MIA | 0.9 | 0.0 |  | 2 | 4 | Med |  |
 | Samaje Perine | RB | CIN | TEN | 8.0 | 9.2 | 25% | 2 | 13 | Low | 🔥 |
 | Corey Kiner | RB | NE | MIA | 7.3 | 8.7 | 26% | 3 | 10 | Med | 🔥 |
 | Tyler Goodson | RB | DAL | ARI | 7.1 | 7.5 | 24% | 2 | 2 | High | 🔥 |
