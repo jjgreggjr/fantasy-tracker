@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 8
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-01 18:37 UTC · baselines: 2026 only · lineup as of 2026-11-01T18:37:40Z
+Generated 2026-11-01 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-01T21:14:54Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -120,7 +120,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tommy DeVito | QB | NE | MIA | 0.9 | 0.0 |  | 2 | 4 | Med |  |
 | Samaje Perine | RB | CIN | TEN | 8.0 | 9.2 | 25% | 2 | 13 | Low | 🔥 |
 | Corey Kiner | RB | NE | MIA | 7.3 | 8.7 | 26% | 3 | 10 | Med | 🔥 |
-| Tyler Goodson | RB | DAL | ARI | 7.1 | 7.5 | 24% | 2 | 2 | High | 🔥 |
+| Tyler Goodson | RB | DAL | ARI | 7.1 | 7.5 | 24% | 2 | 2 | High |  |
 | Isaiah Davis | RB | NYJ | LV | 6.7 | 5.2 | 12% | 3 | 3 | Med |  |
 | Austin Ekeler | RB | WAS | PHI | 6.3 | 7.2 | 20% | 2 | 21 | Low |  |
 | Dylan Sampson | RB | CLE | PIT | 6.2 | 6.9 | 18% | 2 | 31 | Med | 🔥 |

@@ -1,6 +1,6 @@
 # Week 8 digest — 2026
 
-Generated 2026-11-01 18:37 UTC  
+Generated 2026-11-01 21:14 UTC  
 Stats through: **Week 7** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 7** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 955
 - Sleeper players cache: 2026-11-01
-- projections: 868 players (Sleeper, 2026-11-01T18:37:43Z)
-- league rosters: 3 leagues, lineups read 2026-11-01T18:37:39Z
-- ESPN rosters: Average Joes (2026-11-01T18:37:49Z)
+- projections: 868 players (Sleeper, 2026-11-01T21:14:57Z)
+- league rosters: 3 leagues, lineups read 2026-11-01T21:14:53Z
+- ESPN rosters: Average Joes (2026-11-01T21:15:05Z)
 - status rows: 1521 players; 257 with practice reports
 - gameday inactives: 0 on the week 8 list (games not yet started)
 
@@ -37,7 +37,7 @@ Stats through: **Week 7** · Baselines: **2026 only**
 
 **Needs a decision:** TreVeyon Henderson (OUT), Breece Hall (OUT), Jaylin Noel (IR), Jordyn Tyson (IR), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** Corey Kiner (RB, 7.7), Tyler Goodson (RB, 7.6), Justice Hill (RB, 7.3)
+**Trending and still free here:** Corey Kiner (RB, 7.7), Justice Hill (RB, 7.3), Kimani Vidal (RB, 6.6)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Carson Beck (OUT), Breece Hall (OUT), Alvin Kamara (BYE), TreVeyon Henderson (OUT), Chris Olave (BYE), Jaylin Noel (IR), Carnell Tate (OUT), Rashid Shaheed (OUT), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Samaje Perine (RB, 8.9), Corey Kiner (RB, 7.7), Tyler Goodson (RB, 7.6)
+**Trending and still free here:** Samaje Perine (RB, 8.9), Corey Kiner (RB, 7.7), Justice Hill (RB, 7.3)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`

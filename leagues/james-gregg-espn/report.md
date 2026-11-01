@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 8
 
 redraft · 17 roster slots  
-Generated 2026-11-01 18:37 UTC · baselines: 2026 only · lineup as of 2026-11-01T18:37:49Z
+Generated 2026-11-01 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-01T21:15:05Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -70,10 +70,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Samaje Perine | RB | CIN | TEN | 8.9 | 9.2 | 25% | 2 | 13 | Low | 🔥 |
 | Kenny Gainwell | RB | TB | ATL | 8.4 | 7.3 | 16% | 2 | 1 | Med | 🔥 |
 | Corey Kiner | RB | NE | MIA | 7.7 | 8.7 | 26% | 3 | 10 | Med | 🔥 |
-| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High | 🔥 |
+| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High |  |
 | Isaiah Davis | RB | NYJ | LV | 7.6 | 5.2 | 12% | 3 | 3 | Med |  |
 | Justice Hill | RB | BAL | BUF | 7.3 | 5.6 | 12% | 2 | 5 | High | 🔥 |
-| AJ Barner | TE | SEA | CHI | 9.8 | 5.2 | 15% | 1 | 6 | High |  |
+| AJ Barner | TE | SEA | CHI | 9.8 | 5.2 | 15% | 1 | 6 | High | 🔥 |
 | Cade Otton | TE | TB | ATL | 9.5 | 4.8 | 17% | 1 | 11 | Low |  |
 | Chig Okonkwo | TE | WAS | PHI | 9.3 | 4.8 | 16% | 1 | 16 | Med |  |
 | Tyler Higbee | TE | LA | LAC | 9.0 | 4.3 | 14% | 1 | 19 | High | 🔥 |

@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 8
 
 redraft · 20 roster slots  
-Generated 2026-11-01 18:37 UTC · baselines: 2026 only · lineup as of 2026-11-01T18:37:39Z
+Generated 2026-11-01 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-01T21:14:53Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -88,7 +88,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Zach Charbonnet | RB | SEA | CHI | 8.2 | 8.1 | 25% | 1 | 16 | Med |  |
 | Corey Kiner | RB | NE | MIA | 7.7 | 8.7 | 26% | 3 | 10 | Med | 🔥 |
 | Isaiah Davis | RB | NYJ | LV | 7.6 | 5.2 | 12% | 3 | 3 | Med |  |
-| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High | 🔥 |
+| Tyler Goodson | RB | DAL | ARI | 7.6 | 7.5 | 24% | 2 | 2 | High |  |
 | Justice Hill | RB | BAL | BUF | 7.3 | 5.6 | 12% | 2 | 5 | High | 🔥 |
 | Austin Ekeler | RB | WAS | PHI | 6.7 | 7.2 | 20% | 2 | 21 | Low |  |
 | Michael Mayer | TE | LV | NYJ | 7.9 | 4.5 | 14% | 2 | 23 | Med |  |
