@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 9
 
 redraft · 20 roster slots  
-Generated 2026-11-03 23:38 UTC · baselines: 2026 only · lineup as of 2026-11-03T23:38:07Z
+Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -82,7 +82,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Gardner Minshew | QB | ARI | SEA | 6.6 | 3.3 |  | 1 | 28 | Low | 🔥 |
+| Gardner Minshew | QB | ARI | SEA | 6.5 | 3.2 |  | 1 | 28 | Low | 🔥 |
 | Tyson Bagent | QB | CHI | TB | 2.8 | 0.0 |  | 2 | 30 | Low |  |
 | J.J. McCarthy | QB | NYG | PHI | 19.0 | 4.9 |  | 1 | 10 | Low | 🔥 |
 | Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 27 | Med |  |
@@ -93,7 +93,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Kimani Vidal | RB | LAC | HOU | 7.9 | 9.0 | 24% | 3 | 4 | Med |  |
 | Elijah Mitchell | RB | PHI | NYG | 7.7 | 9.3 | 29% |  | 26 | Med | 🔥 |
 | Kaelon Black | RB | SF | LV | 6.9 | 8.0 | 24% | 2 | 3 | Med | 🔥 |
-| Zach Charbonnet | RB | SEA | ARI | 13.2 | 12.1 | 33% | 1 | 7 | High |  |
+| Zach Charbonnet | RB | SEA | ARI | 13.3 | 12.1 | 33% | 1 | 7 | High |  |
 | Michael Mayer | TE | LV | SF | 9.1 | 4.8 | 14% | 2 | 11 | Med | 🔥 |
 | Mason Taylor | TE | NYJ | KC | 6.7 | 4.8 | 15% | 1 | 24 | High |  |
 | Elijah Higgins | TE | ARI | SEA | 5.2 | 3.1 | 9% | 2 | 28 | High |  |

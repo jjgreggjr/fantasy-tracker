@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 9
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-03 23:38 UTC · baselines: 2026 only · lineup as of 2026-11-03T23:38:08Z
+Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -104,7 +104,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Leonard Williams | DL | SEA | ARI | 6.3 | 3.3 |  |  |  | Med |  |
 | Milton Williams | DL | NE | GB | 5.8 | 3.0 |  |  |  | High |  |
 | Byron Murphy II | DL | SEA | ARI | 5.6 | 3.0 |  |  |  | High |  |
-| Jason Myers | K | SEA | ARI | 8.7 | 3.3 |  |  |  | High |  |
+| Jason Myers | K | SEA | ARI | 8.8 | 3.3 |  |  |  | High |  |
 | Eddy Pineiro | K | SF | LV | 8.2 | 4.0 |  |  |  | High | 🔥 |
 | Matt Gay | K | LV | SF | 8.0 | 5.3 |  |  |  | High |  |
 | Tyler Bass | K | BUF | MIN | 8.0 | 6.3 |  |  |  | High | 🔥 |
@@ -116,7 +116,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jacob Rodriguez | LB | MIA | DET | 7.6 | 7.7 |  |  |  | High |  |
 | Ventrell Miller | LB | JAX | BAL | 7.4 | 3.7 |  |  |  | High |  |
 | Wesley Bailey | LB | LA | WAS | 7.3 | 3.0 |  |  |  | Med |  |
-| Gardner Minshew | QB | ARI | SEA | 6.6 | 3.3 |  | 1 | 28 | Low | 🔥 |
+| Gardner Minshew | QB | ARI | SEA | 6.5 | 3.2 |  | 1 | 28 | Low | 🔥 |
 | Tyson Bagent | QB | CHI | TB | 2.8 | 0.0 |  | 2 | 30 | Low |  |
 | Daniel Jones | QB | IND | DAL | 16.3 | 3.3 |  | 1 | 13 | High |  |
 | Tanner McKee | QB | PHI | NYG | 15.0 | 2.7 |  | 1 | 1 | High |  |

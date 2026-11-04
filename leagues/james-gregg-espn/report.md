@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 9
 
 redraft · 17 roster slots  
-Generated 2026-11-03 23:38 UTC · baselines: 2026 only · lineup as of 2026-11-03T23:38:30Z
+Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:12:05Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -22,7 +22,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Drake Maye | QB | NE | GB | 18.3 | 6.3 |  | 1 | 27 | High |  |
 | Bryce Young | QB | CAR | DEN | 16.0 | 4.4 |  | 1 | 19 | Low |  |
-| Zach Charbonnet | RB | SEA | ARI | 13.2 | 12.1 | 33% | 1 | 7 | High |  |
+| Zach Charbonnet | RB | SEA | ARI | 13.3 | 12.1 | 33% | 1 | 7 | High |  |
 | Rhamondre Stevenson | RB | NE | GB | 12.1 | 13.5 | 36% | 1 | 19 | High |  |
 | Aaron Jones | RB | MIN | BUF | 11.0 | 14.0 | 42% | 2 | 6 | Med |  |
 | MarShawn Lloyd | RB | GB | NE | 4.1 | 5.7 | 18% | 2 | 27 | Med |  |
@@ -61,7 +61,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Malik Willis | QB | MIA | DET | 19.4 | 5.2 |  | 1 | 8 | High | 🔥 |
-| Sam Darnold | QB | SEA | ARI | 19.1 | 3.6 |  | 1 | 6 | Med | 🔥 |
+| Sam Darnold | QB | SEA | ARI | 19.2 | 3.6 |  | 1 | 6 | Med | 🔥 |
 | J.J. McCarthy | QB | NYG | PHI | 19.0 | 4.9 |  | 1 | 10 | Low | 🔥 |
 | Baker Mayfield | QB | TB | CHI | 17.7 | 4.8 |  | 1 | 4 | Med |  |
 | Michael Penix Jr. | QB | ATL | CIN | 16.7 | 2.8 |  | 1 | 9 | High |  |
@@ -96,15 +96,15 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 62% | TE2 on depth chart; snap share trending +21%/wk; team passes #7; age 27 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
-| Cyrus Allen | WR | KC | 23.7 | 0 | 3 (was 4) | 30% | WR3 on depth chart; up from 4; snap share trending +15%/wk; team passes #16; age 24 |
+| Cyrus Allen | WR | KC | 23.7 | 0 | 3 (was 3) | 30% | WR3 on depth chart; snap share trending +15%/wk; team passes #16; age 24 |
 | Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 28% | TE3 on depth chart; snap share trending +15%/wk; team passes #11; age 26 |
 | Mike Washington Jr. | RB | LV | 23.3 | 0 | 2 (was 2) | 40% | RB2 on depth chart; snap share trending +12%/wk; age 23 |
-| Woody Marks | RB | HOU | 25.8 | 1 | 1 (was 2) | 84% | RB1 on depth chart; up from 2; snap share trending +11%/wk; age 26 |
 | Dylan Sampson | RB | CLE | 22.1 | 1 | 2 (was 2) | 51% | RB2 on depth chart; snap share trending +10%/wk; age 22 |
 | Kimani Vidal | RB | LAC | 25.2 | 2 | 3 (was 3) | 42% | RB3 on depth chart; snap share trending +9%/wk; age 25 |
 | Ray Davis | RB | BUF | 27.0 | 2 | 3 (was 3) | 17% | RB3 on depth chart; snap share trending +8%/wk; age 27 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 21% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
 | Makai Lemon | WR | PHI | 22.4 | 0 | 3 (was 3) | 89% | WR3 on depth chart; snap share trending +6%/wk; team passes #15; age 22 |
+| Keaton Mitchell | RB | LAC | 24.8 | 3 | 2 (was 2) | 28% | RB2 on depth chart; snap share trending +6%/wk; age 25 |
 
 
 ## Ask me

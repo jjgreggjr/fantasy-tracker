@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 9
 
 dynasty · 31 roster slots  
-Generated 2026-11-03 23:38 UTC · baselines: 2026 only · lineup as of 2026-11-03T23:38:07Z
+Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -37,7 +37,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Carson Beck | QB | ARI | SEA |  | 0.0 |  | 2 | 28 | Low | OUT |
 | D'Andre Swift | RB | CHI | TB | 14.2 | 18.6 | 51% | 1 | 29 | High |  |
 | Quinshon Judkins | RB | CLE | NO | 13.6 | 17.3 | 56% | 1 | 8 | High |  |
-| Zach Charbonnet | RB | SEA | ARI | 13.2 | 12.1 | 33% | 1 | 7 | High |  |
+| Zach Charbonnet | RB | SEA | ARI | 13.3 | 12.1 | 33% | 1 | 7 | High |  |
 | Bhayshul Tuten | RB | JAX | BAL | 13.0 | 19.1 | 54% | 1 | 22 | Med | QUESTIONABLE |
 | Alvin Kamara | RB | NO | CLE | 9.6 | 11.2 | 31% | 1 | 9 | High |  |
 | Mike Washington Jr. | RB | LV | SF | 8.4 | 11.4 | 43% | 2 | 23 | Med |  |
@@ -55,11 +55,11 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Xavier Worthy | WR | KC | NYJ | 10.6 | 7.1 | 19% | 2 | 19 | High |  |
 | Makai Lemon | WR | PHI | NYG | 5.5 | 3.8 | 13% | 3 | 17 | Low |  |
 | Keon Coleman | WR | BUF | MIN | 5.1 | 4.0 | 12% | 3 | 31 | Med |  |
-| Tory Horton | WR | SEA | ARI | 3.1 | 1.9 | 6% | 4 | 22 | Low |  |
+| Tory Horton | WR | SEA | ARI | 3.2 | 1.9 | 6% | 4 | 22 | Low |  |
 | DK Metcalf | WR | PIT | BYE |  | 0.0 |  | 1 |  | Low | BYE |
 | Jaylin Noel | WR | HOU | LAC |  | 0.0 |  | 7 | 24 | Low | IR |
 | Carnell Tate | WR | TEN | BYE |  | 0.0 |  | 1 |  | Low | OUT |
-| Rashid Shaheed | WR | SEA | ARI |  | 3.8 | 10% | 2 | 22 | Low | OUT |
+| Rashid Shaheed | WR | SEA | ARI |  | 3.7 | 10% | 2 | 22 | Low | OUT |
 | Ricky Pearsall | WR | SF | LV |  | 0.0 |  | 9 | 3 | Low | IR |
 | Jayden Reed | WR | GB | NE |  | 0.0 |  | 8 | 9 | Low | IR |
 
@@ -92,7 +92,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Gardner Minshew | QB | ARI | SEA | 7.6 | 3.3 |  | 1 | 28 | Low | 🔥 |
+| Gardner Minshew | QB | ARI | SEA | 7.6 | 3.2 |  | 1 | 28 | Low | 🔥 |
 | Tyson Bagent | QB | CHI | TB | 2.8 | 0.0 |  | 2 | 30 | Low |  |
 | Tanner McKee | QB | PHI | NYG | 15.6 | 2.7 |  | 1 | 1 | High |  |
 | Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
