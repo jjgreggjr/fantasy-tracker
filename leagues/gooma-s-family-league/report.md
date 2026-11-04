@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 9
 
 redraft · 20 roster slots  
-Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
+Generated 2026-11-04 20:44 UTC · baselines: 2026 only · lineup as of 2026-11-04T20:44:32Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -88,24 +88,24 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 27 | Med |  |
 | Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
 | Stetson Bennett | QB | LA | WAS | 0.5 | 0.0 |  | 2 | 14 | Med |  |
-| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med |  |
+| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med | 🔥 |
 | Seth McGowan | RB | IND | DAL | 8.4 | 8.0 | 24% | 2 | 2 | High | 🔥 |
 | Kimani Vidal | RB | LAC | HOU | 7.9 | 9.0 | 24% | 3 | 4 | Med |  |
 | Elijah Mitchell | RB | PHI | NYG | 7.7 | 9.3 | 29% |  | 26 | Med | 🔥 |
-| Kaelon Black | RB | SF | LV | 6.9 | 8.0 | 24% | 2 | 3 | Med | 🔥 |
+| Devin Singletary | RB | NYG | PHI | 6.9 | 10.0 | 27% | 2 | 20 | Med | 🔥 |
 | Zach Charbonnet | RB | SEA | ARI | 13.3 | 12.1 | 33% | 1 | 7 | High |  |
 | Michael Mayer | TE | LV | SF | 9.1 | 4.8 | 14% | 2 | 11 | Med | 🔥 |
 | Mason Taylor | TE | NYJ | KC | 6.7 | 4.8 | 15% | 1 | 24 | High |  |
 | Elijah Higgins | TE | ARI | SEA | 5.2 | 3.1 | 9% | 2 | 28 | High |  |
 | Evan Engram | TE | DEN | CAR | 4.9 | 3.2 | 10% | 1 | 27 | High |  |
-| Noah Gray | TE | KC | NYJ | 4.6 | 2.2 | 7% | 2 | 8 | Med |  |
 | Oronde Gadsden II | TE | LAC | HOU | 4.6 | 2.8 | 10% | 2 | 29 | Med |  |
+| Noah Gray | TE | KC | NYJ | 4.6 | 2.2 | 7% | 2 | 8 | Med |  |
 | Quentin Johnston | WR | LAC | HOU | 8.2 | 5.3 | 17% | 2 | 23 | Med |  |
+| Kalif Raymond | WR | CHI | TB | 8.0 | 3.7 | 12% | 3 | 14 | Med |  |
 | Adonai Mitchell | WR | NYJ | KC | 7.2 | 4.8 | 15% | 3 | 16 | Med | 🔥 |
 | Jahan Dotson | WR | ATL | CIN | 7.0 | 3.9 | 14% | 2 | 4 | High |  |
 | Savion Williams | WR | GB | NE | 6.8 | 3.6 | 8% | 3 | 9 | Med |  |
 | Marvin Mims Jr. | WR | DEN | CAR | 6.8 | 3.9 | 11% | 4 | 10 | Med |  |
-| Malachi Fields | WR | NYG | PHI | 6.1 | 3.6 | 12% | 2 | 2 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here

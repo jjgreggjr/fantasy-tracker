@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 9
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
+Generated 2026-11-04 20:44 UTC · baselines: 2026 only · lineup as of 2026-11-04T20:44:33Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -10,6 +10,7 @@ Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-0
 
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
+- Emanuel Wilson: depth charts disagree (ESPN 4 vs Sleeper 2) — his listed rank may reflect availability, not role
 - Deebo Samuel: depth charts disagree (ESPN 2 vs Sleeper 8) — his listed rank may reflect availability, not role
 - Deebo Samuel: 24% of the volume ahead of him belongs to players unlikely to play (Mike Evans (out))
 - Chris Godwin Jr.: 24% of the volume ahead of him belongs to players unlikely to play (Emeka Egbuka (out))
@@ -36,7 +37,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | D'Andre Swift | RB | CHI | TB | 13.0 | 18.6 | 51% | 1 | 29 | High |  |
 | Aaron Jones | RB | MIN | BUF | 9.8 | 14.0 | 42% | 2 | 6 | Med |  |
 | Emmett Johnson | RB | KC | NYJ | 5.2 | 6.2 | 15% | 2 | 28 | Med |  |
-| Emanuel Wilson | RB | SEA | ARI | 0.8 | 1.3 | 4% | 3 | 7 | Low |  |
+| Emanuel Wilson | RB | SEA | ARI | 0.8 | 1.3 | 4% | 4 | 7 | Low |  |
 | David Montgomery | RB | HOU | LAC |  | 13.8 | 42% | 2 | 11 | Low | OUT |
 | Brenton Strange | TE | JAX | BAL | 9.0 | 4.9 | 17% | 1 | 10 | High |  |
 | Dalton Schultz | TE | HOU | LAC | 7.2 | 4.9 | 16% | 1 | 26 | High |  |
@@ -75,7 +76,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - **D'Andre Swift** — 18.6 exp opps (proj 19, recent 26) · RB1 · 51% of team carries · vs TB (DvP 29, -9%) · TD regress -0.8 (season 5.9%/opp -> 5.2%) · High confidence
 - **Aaron Jones** — 14.0 exp opps (proj 14, recent 8) · RB2 · 42% of team carries · vs BUF (DvP 6, +8%) · TD regress +0.5 (season 1.5%/opp -> 2.1%) · Med confidence
 - **Emmett Johnson** — 6.2 exp opps (proj 6, recent 5) · RB2 · 15% of team carries · vs NYJ (DvP 28, -8%) · TD regress +0.1 (season 2.8%/opp -> 3.0%) · Med confidence
-- **Emanuel Wilson** — 1.3 exp opps (proj 1, recent 20) · RB3 · 4% of team carries · vs ARI (DvP 7, +7%) · Low confidence
+- **Emanuel Wilson** — 1.3 exp opps (proj 1, recent 20) · RB4 · 4% of team carries · vs ARI (DvP 7, +7%) · Low confidence
 - **David Montgomery** — 13.8 exp opps (proj 14, recent 11) · RB2 · 42% of team carries · vs LAC (DvP 11, +4%) · TD regress -0.8 (season 5.1%/opp -> 4.1%) · Low confidence · OUT
 - **Brenton Strange** — 4.9 exp opps (proj 5, recent 4) · TE1 · 17% of team targets · vs BAL (DvP 10, +5%) · TD regress +0.7 (season 2.9%/opp -> 5.2%) · High confidence
 - **Dalton Schultz** — 4.9 exp opps (proj 5, recent 6) · TE1 · 16% of team targets · vs LAC (DvP 26, -7%) · TD regress +1.1 (season 0.0%/opp -> 3.8%) · High confidence
@@ -104,16 +105,16 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Leonard Williams | DL | SEA | ARI | 6.3 | 3.3 |  |  |  | Med |  |
 | Milton Williams | DL | NE | GB | 5.8 | 3.0 |  |  |  | High |  |
 | Byron Murphy II | DL | SEA | ARI | 5.6 | 3.0 |  |  |  | High |  |
-| Jason Myers | K | SEA | ARI | 8.8 | 3.3 |  |  |  | High |  |
 | Eddy Pineiro | K | SF | LV | 8.2 | 4.0 |  |  |  | High | 🔥 |
 | Matt Gay | K | LV | SF | 8.0 | 5.3 |  |  |  | High |  |
 | Tyler Bass | K | BUF | MIN | 8.0 | 6.3 |  |  |  | High | 🔥 |
 | Drew Stevens | K | WAS | LA | 7.9 | 4.3 |  |  |  | High |  |
 | Nick Folk | K | ATL | CIN | 7.6 | 2.7 |  |  |  | High |  |
+| Andre Szmyt | K | CLE | NO | 7.3 | 4.0 |  |  |  | High |  |
 | Drue Tranquill | LB | KC | NYJ | 8.6 | 8.0 |  |  |  | High |  |
 | Nate Landman | LB | LA | WAS | 8.3 | 5.7 |  |  |  | High |  |
-| Devin Bush | LB | CHI | TB | 7.6 | 5.7 |  |  |  | High |  |
 | Jacob Rodriguez | LB | MIA | DET | 7.6 | 7.7 |  |  |  | High |  |
+| Devin Bush | LB | CHI | TB | 7.6 | 5.7 |  |  |  | High |  |
 | Ventrell Miller | LB | JAX | BAL | 7.4 | 3.7 |  |  |  | High |  |
 | Wesley Bailey | LB | LA | WAS | 7.3 | 3.0 |  |  |  | Med |  |
 | Gardner Minshew | QB | ARI | SEA | 6.5 | 3.2 |  | 1 | 28 | Low | 🔥 |
@@ -122,12 +123,12 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tanner McKee | QB | PHI | NYG | 15.0 | 2.7 |  | 1 | 1 | High |  |
 | Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 27 | Med |  |
 | Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
-| Dylan Sampson | RB | CLE | NO | 9.4 | 8.7 | 22% | 2 | 8 | High | 🔥 |
-| Austin Ekeler | RB | WAS | LA | 8.2 | 9.8 | 30% | 2 | 14 | Med |  |
+| Austin Ekeler | RB | WAS | LA | 8.2 | 9.8 | 30% | 2 | 14 | Med | 🔥 |
 | Devin Singletary | RB | NYG | PHI | 6.1 | 10.0 | 27% | 2 | 20 | Med | 🔥 |
 | Samaje Perine | RB | CIN | ATL | 6.1 | 6.5 | 18% | 2 | 1 | Med |  |
-| Ty Johnson | RB | BUF | MIN | 5.1 | 5.1 | 11% | 2 | 12 | High |  |
+| Tyler Goodson | RB | DAL | IND | 5.1 | 5.7 | 17% | 2 | 10 | Med |  |
 | Corey Kiner | RB | NE | GB | 5.1 | 6.6 | 20% | 3 | 19 | Med |  |
+| Ty Johnson | RB | BUF | MIN | 5.1 | 5.1 | 11% | 2 | 12 | High |  |
 | Tyler Higbee | TE | LA | WAS | 6.6 | 3.3 | 11% | 1 | 2 | High |  |
 | Elijah Higgins | TE | ARI | SEA | 4.0 | 3.1 | 9% | 2 | 28 | High |  |
 | Oronde Gadsden II | TE | LAC | HOU | 3.8 | 2.8 | 10% | 2 | 29 | Med |  |
@@ -135,8 +136,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tommy Tremble | TE | CAR | DEN | 3.4 | 2.7 | 8% | 1 | 5 | High |  |
 | Eli Raridon | TE | NE | GB | 3.3 | 2.6 | 9% | 2 | 31 | Med |  |
 | Ryan Flournoy | WR | DAL | IND | 6.3 | 5.3 | 14% | 3 | 32 | Med | 🔥 |
-| Cooper Kupp | WR | SEA | ARI | 5.6 | 3.8 | 13% | 3 | 22 | Med |  |
 | Marvin Mims Jr. | WR | DEN | CAR | 5.6 | 3.9 | 11% | 4 | 10 | Med |  |
+| Cooper Kupp | WR | SEA | ARI | 5.6 | 3.8 | 13% | 3 | 22 | Med |  |
 | Laquon Treadwell | WR | IND | DAL | 4.1 | 2.6 | 9% | 3 | 8 | Med |  |
 | Reggie Virgil | WR | ARI | SEA | 4.0 | 3.1 | 9% | 2 | 26 | Med |  |
 | Konata Mumpfield | WR | LA | WAS | 3.9 | 3.0 | 10% | 2 | 27 | Med |  |
@@ -152,7 +153,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Cade Stover | TE | HOU | 26.4 | 2 | 3 (was 3) | 28% | TE3 on depth chart; snap share trending +15%/wk; team passes #11; age 26 |
-| Dylan Sampson | RB | CLE | 22.1 | 1 | 2 (was 2) | 51% | RB2 on depth chart; snap share trending +10%/wk; age 22 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 21% | RB2 on depth chart; snap share trending +6%/wk; age 26 |
 | Jordan James | RB | SF | 22.6 | 1 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 23 |
 | Rasheen Ali | RB | BAL | 25.7 | 2 | 3 (was 3) | 4% | RB3 on depth chart; age 26 |
@@ -161,6 +161,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Trevor Etienne | RB | CAR | 22.3 | 1 | 2 (was 2) | 14% | RB2 on depth chart; age 22 |
 | Konata Mumpfield | WR | LA | 24.0 | 1 | 2 (was 2) | 47% | WR2 on depth chart; team passes #5; age 24 |
 | Julius Chestnut | RB | TEN | 26.0 | 4 | 3 (was 3) | 1% | RB3 on depth chart; age 26 |
+| Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 16% | RB3 on depth chart; age 25 |
 
 
 ## Ask me

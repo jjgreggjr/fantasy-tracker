@@ -164,6 +164,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,9486,Dontayvion Wicks,10
 2026,7,waiver,add,8365,,10
 2026,7,waiver,drop,12493,Oronde Gadsden II,10
+2026,8,waiver,add,12469,Dylan Sampson,5
+2026,8,waiver,drop,7659,,5
+2026,8,waiver,add,2747,,5
+2026,8,waiver,drop,12711,,5
 2026,8,waiver,add,7561,Elijah Mitchell,8
 2026,8,free_agent,drop,8129,Dameon Pierce,8
 2026,8,waiver,add,11792,,9
@@ -184,3 +188,4 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,trade,drop,9997,Zay Flowers,"2, 5"
 2026,8,waiver,add,8343,,5
 2026,8,waiver,drop,4950,Christian Kirk,5
+2026,9,free_agent,drop,4454,Kendrick Bourne,8

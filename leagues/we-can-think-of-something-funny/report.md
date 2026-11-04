@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 9
 
 dynasty · 31 roster slots  
-Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:11:53Z
+Generated 2026-11-04 20:44 UTC · baselines: 2026 only · lineup as of 2026-11-04T20:44:33Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -92,22 +92,22 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Gardner Minshew | QB | ARI | SEA | 7.6 | 3.2 |  | 1 | 28 | Low | 🔥 |
 | Tyson Bagent | QB | CHI | TB | 2.8 | 0.0 |  | 2 | 30 | Low |  |
 | Tanner McKee | QB | PHI | NYG | 15.6 | 2.7 |  | 1 | 1 | High |  |
-| Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
 | Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 27 | Med |  |
-| Stetson Bennett | QB | LA | WAS | 0.5 | 0.0 |  | 2 | 14 | Med |  |
-| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med |  |
-| Elijah Mitchell | RB | PHI | NYG | 7.7 | 9.3 | 29% |  | 26 | Med | 🔥 |
+| Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
+| Jacoby Brissett | QB | ARI | SEA | 0.7 | 0.0 |  | 3 | 28 | Low |  |
+| Tua Tagovailoa | QB | ATL | CIN | 0.5 | 0.0 |  | 2 | 9 | Low |  |
+| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med | 🔥 |
 | Samaje Perine | RB | CIN | ATL | 7.1 | 6.5 | 18% | 2 | 1 | Med |  |
-| Devin Singletary | RB | NYG | PHI | 6.9 | 10.0 | 27% | 2 | 20 | Med | 🔥 |
 | Justice Hill | RB | BAL | JAX | 6.3 | 7.7 | 20% | 2 | 30 | Med |  |
 | Ty Johnson | RB | BUF | MIN | 5.9 | 5.1 | 11% | 2 | 12 | High |  |
+| Tyler Goodson | RB | DAL | IND | 5.7 | 5.7 | 17% | 2 | 10 | Med |  |
+| Corey Kiner | RB | NE | GB | 5.5 | 6.6 | 20% | 3 | 19 | Med |  |
 | Mark Andrews | TE | BAL | JAX | 9.8 | 5.2 | 18% | 1 | 19 | High |  |
-| Mike Gesicki | TE | CIN | ATL | 8.4 | 4.7 | 14% | 1 | 22 | High | 🔥 |
 | Darren Waller | TE | CAR | DEN | 8.2 | 4.1 | 12% | 2 | 5 | Low |  |
 | Elijah Higgins | TE | ARI | SEA | 6.3 | 3.1 | 9% | 2 | 28 | High |  |
+| Evan Engram | TE | DEN | CAR | 5.8 | 3.2 | 10% | 1 | 27 | High |  |
 | Greg Dulcich | TE | MIA | DET | 12.3 | 4.5 | 16% | 1 | 1 | High |  |
 | Cade Otton | TE | TB | CHI | 10.9 | 4.6 | 17% | 1 | 9 | Low |  |
 | Quentin Johnston | WR | LAC | HOU | 8.2 | 5.3 | 17% | 2 | 23 | Med |  |

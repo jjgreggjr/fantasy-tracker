@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 9
 
 redraft · 17 roster slots  
-Generated 2026-11-04 00:11 UTC · baselines: 2026 only · lineup as of 2026-11-04T00:12:05Z
+Generated 2026-11-04 20:44 UTC · baselines: 2026 only · lineup as of 2026-11-04T20:44:51Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -62,14 +62,14 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Malik Willis | QB | MIA | DET | 19.4 | 5.2 |  | 1 | 8 | High | 🔥 |
 | Sam Darnold | QB | SEA | ARI | 19.2 | 3.6 |  | 1 | 6 | Med | 🔥 |
-| J.J. McCarthy | QB | NYG | PHI | 19.0 | 4.9 |  | 1 | 10 | Low | 🔥 |
 | Baker Mayfield | QB | TB | CHI | 17.7 | 4.8 |  | 1 | 4 | Med |  |
 | Michael Penix Jr. | QB | ATL | CIN | 16.7 | 2.8 |  | 1 | 9 | High |  |
 | Daniel Jones | QB | IND | DAL | 16.3 | 3.3 |  | 1 | 13 | High |  |
-| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med |  |
-| Mike Washington Jr. | RB | LV | SF | 8.4 | 11.4 | 43% | 2 | 23 | Med | 🔥 |
+| Deshaun Watson | QB | CLE | NO | 16.0 | 3.1 |  | 1 | 12 | Med |  |
+| Austin Ekeler | RB | WAS | LA | 9.0 | 9.8 | 30% | 2 | 14 | Med | 🔥 |
 | Seth McGowan | RB | IND | DAL | 8.4 | 8.0 | 24% | 2 | 2 | High | 🔥 |
-| Kendre Miller | RB | NO | CLE | 11.3 | 14.6 | 47% | 2 | 9 | Med |  |
+| Mike Washington Jr. | RB | LV | SF | 8.4 | 11.4 | 43% | 2 | 23 | Med | 🔥 |
+| Kendre Miller | RB | NO | CLE | 11.3 | 14.6 | 47% | 2 | 9 | Med | 🔥 |
 | Dylan Sampson | RB | CLE | NO | 10.7 | 8.7 | 22% | 2 | 8 | High | 🔥 |
 | Woody Marks | RB | HOU | LAC | 10.1 | 13.6 | 43% | 1 | 11 | Med |  |
 | Chig Okonkwo | TE | WAS | LA | 9.7 | 5.2 | 18% | 1 | 16 | High |  |

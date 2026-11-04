@@ -1,20 +1,20 @@
 # Week 9 digest — 2026
 
-Generated 2026-11-04 00:11 UTC  
+Generated 2026-11-04 20:44 UTC  
 Stats through: **Week 8** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-03T14:59:52Z
+- depth chart snapshot: 2026-11-04T15:20:57Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 955
 - Sleeper players cache: 2026-11-04
-- projections: 869 players (Sleeper, 2026-11-04T00:11:57Z)
-- league rosters: 3 leagues, lineups read 2026-11-04T00:11:53Z
-- ESPN rosters: Average Joes (2026-11-04T00:12:05Z)
-- status rows: 1523 players; 0 with practice reports
+- projections: 869 players (Sleeper, 2026-11-04T20:44:40Z)
+- league rosters: 3 leagues, lineups read 2026-11-04T20:44:32Z
+- ESPN rosters: Average Joes (2026-11-04T20:44:51Z)
+- status rows: 1524 players; 23 with practice reports
 - gameday inactives: 0 on the week 9 list (games not yet started)
 
 ### Data integrity
@@ -37,7 +37,7 @@ All 19 checks passed.
 
 **Needs a decision:** TreVeyon Henderson (OUT), Tony Pollard (BYE), Breece Hall (OUT), Jakobi Meyers (QUESTIONABLE), Jaylin Noel (IR), Jordyn Tyson (IR), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** J.J. McCarthy (QB, 19.0), Gardner Minshew (QB, 6.5), Carson Wentz (QB, -1.9)
+**Trending and still free here:** J.J. McCarthy (QB, 19.0), Gardner Minshew (QB, 6.5), Shedeur Sanders (QB, 0.3)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Matthew Stafford (QUESTIONABLE), Carson Beck (OUT), Bhayshul Tuten (QUESTIONABLE), Breece Hall (OUT), Tony Pollard (BYE), TreVeyon Henderson (OUT), DK Metcalf (BYE), Jaylin Noel (IR), Carnell Tate (OUT), Rashid Shaheed (OUT), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Gardner Minshew (QB, 7.6), Carson Wentz (QB, -1.9), Elijah Mitchell (RB, 7.7)
+**Trending and still free here:** Shedeur Sanders (QB, 0.3), Joe Milton III (QB, 0.0), Carson Wentz (QB, -1.9)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -100,7 +100,7 @@ Full report: `leagues/where-you-at/report.md`
 
 **Needs a decision:** Breece Hall (OUT), Kyle Monangai (OUT), Pat Freiermuth (BYE), Drake London (QUESTIONABLE)
 
-**Trending and still free here:** Malik Willis (QB, 19.4), Sam Darnold (QB, 19.2), J.J. McCarthy (QB, 19.0)
+**Trending and still free here:** Malik Willis (QB, 19.4), Sam Darnold (QB, 19.2), Gardner Minshew (QB, 6.5)
 
 
 Full report: `leagues/james-gregg-espn/report.md`

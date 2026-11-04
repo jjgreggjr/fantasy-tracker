@@ -193,6 +193,18 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,waiver,drop,8259,,3
 2026,7,free_agent,add,8119,Jahan Dotson,4
 2026,7,free_agent,drop,2306,Jameis Winston,4
+2026,8,waiver,add,9225,Tank Bigsby,8
+2026,8,waiver,drop,11577,Will Shipley,8
+2026,8,waiver,add,7042,,6
+2026,8,waiver,drop,11786,,6
+2026,8,waiver,add,HOU,,6
+2026,8,waiver,drop,KC,,6
+2026,8,waiver,add,4993,Mike Gesicki,6
+2026,8,waiver,drop,4454,Kendrick Bourne,6
+2026,8,waiver,add,CIN,,4
+2026,8,waiver,drop,11630,Roman Wilson,4
+2026,8,waiver,add,6011,Gardner Minshew,4
+2026,8,waiver,drop,3257,Jacoby Brissett,4
 2026,8,free_agent,add,12457,Jaydon Blue,2
 2026,8,free_agent,drop,4950,Christian Kirk,2
 2026,8,waiver,add,10219,Chris Rodriguez Jr.,6
@@ -203,3 +215,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,drop,6768,Tua Tagovailoa,7
 2026,8,free_agent,add,KC,,6
 2026,8,free_agent,drop,CLE,,6
+2026,9,free_agent,add,6130,Devin Singletary,6
+2026,9,free_agent,drop,10219,Chris Rodriguez Jr.,6
+2026,9,free_agent,add,7561,Elijah Mitchell,2
+2026,9,free_agent,drop,12457,Jaydon Blue,2
