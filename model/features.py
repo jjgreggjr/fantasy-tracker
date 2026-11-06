@@ -278,6 +278,10 @@ INJ_DEF_GROUPS = {"CB": "DB", "S": "DB", "SS": "DB", "FS": "DB", "DB": "DB", "SA
                   "DE": "DL", "DT": "DL", "NT": "DL", "DL": "DL", "EDGE": "DL"}
 OPP_DEF_WINDOW = 4
 
+NBR_COLUMNS = ["nbr_ahead_returned_wks", "nbr_ahead_healthy_streak", "nbr_ahead_out_streak", "nbr_behind_returned_wks",
+               "nbr_behind_healthy_streak", "self_returned_wks", "nbr_ahead_share_l8"]
+NBR_WINDOW = 8                                       # appearances behind the usage rank of the neighbors
+
 FAMILIES: dict[str, list[str]] = {
     "lags": _lag_cols(LAG_STATS) + [f"lag{k}_weeks_ago" for k in (1, 2, 3)] + ["games_std", "weeks_since_last_game"]
             + [f"{n}_std_mean" for n in STD_STATS],
@@ -327,6 +331,8 @@ FAMILIES: dict[str, list[str]] = {
     "dvp_split": DVPS_COLUMNS,
     # ---- Phase 5 candidate (2026-10-27; opt-in; `--candidate +family:opp_db_out`): the OPPONENT's defensive injury report
     "opp_db_out": OPP_DEF_COLUMNS,
+    # ---- Phase 5 candidate (2026-11-06; opt-in; `--candidate +family:nbr_health`): did the player ahead / behind him return?
+    "nbr_health": NBR_COLUMNS,
 }
 # market column -> sleeper_proj column (a stat Sleeper omits is a projected 0 when the row exists)
 MARKET_STATS = {"mkt_pts_ppr": "pts_ppr", "mkt_pts_std": "pts_std", "mkt_targets": "rec_tgt", "mkt_carries": "rush_att",
@@ -850,6 +856,118 @@ def _role_features(ctx: dict, h: Hist, t: TargetRow) -> dict[str, Any]:
     }
 
 
+def _played(h: Hist) -> dict[str, bool]:
+    """{game_id: did he take part} for every game in `h`: opportunities, a pass attempt or offensive snaps."""
+    return {g: bool(v[OPPS] > 0 or v[ATT] > 0 or v[SNAP] > 0) for g, v in zip(h.game_id, h.v)}
+
+
+def _usage_key(h: Hist, t: TargetRow, pid: str) -> tuple | None:
+    """Usage rank key over his last NBR_WINDOW appearances (last season's REG ones then this season's): (mean opportunities --
+    mean offensive snap share for a QB -- then mean snap share, player_id). None with no appearance."""
+    cur, prev = _cur_prev(h, t.season)
+    seq = np.vstack([prev, cur]) if len(prev) and len(cur) else (cur if len(cur) else prev)
+    if not len(seq):
+        return None
+    last = seq[-NBR_WINDOW:]
+    snap = _nm(last[:, SNAP])
+    prim = snap if t.position == "QB" else _nm(last[:, OPPS])
+    if _isnan(prim):
+        return None
+    return (prim, -1.0 if _isnan(snap) else snap, pid)
+
+
+def _run_stats(played: list[bool]) -> tuple[float, float, float]:
+    """(weeks since last return, healthy streak, out streak) of a played/missed sequence (oldest first)."""
+    n = len(played)
+    if not n:
+        return NAN, NAN, NAN
+    healthy = out = 0
+    for p in reversed(played):
+        if not p:
+            break
+        healthy += 1
+    for p in reversed(played):
+        if p:
+            break
+        out += 1
+    ret = NAN
+    for j in range(n - 1, 0, -1):
+        if played[j] and not played[j - 1]:
+            ret = float(n - j)
+            break
+    return ret, float(healthy), float(out)
+
+
+def _availability(store, h: Hist, t: TargetRow, pid: str, trace) -> list[bool]:
+    """True = played, False = missed, one entry per team game this season completed before the result cutoff
+    (kickoff - RESULT_LAG), oldest first. See `_neighbor_health` for the definition."""
+    def build() -> list[bool]:
+        gr = as_of_join(store, "game_results", _rk(t.kickoff), team=t.team, trace=trace)
+        gr = gr[(gr["season"] == t.season) & (gr["game_type"] == "REG") & (gr["week"] < t.week)]
+        played = _played(h)
+        inj = as_of_join(store, "injuries", t.kickoff, player_id=pid, trace=trace)
+        inj = inj[inj["season"] == t.season]
+        status = dict(_cols(inj, "week", "report_status"))                      # last known wins (sorted by known_at)
+        seq: list[bool] = []
+        for gid, wk in _cols(gr, "game_id", "week"):
+            if played.get(gid):
+                seq.append(True)
+            elif status.get(wk) in OUT_LIKE or seq:                              # reported Out, or absent after he started
+                seq.append(False)
+        return seq
+    return _memo(store, trace, ("avail", t.game_id, t.team, pid), build)
+
+
+def _neighbor_health(store, ctx: dict, h: Hist, t: TargetRow, trace) -> dict[str, float]:
+    """The opt-in `nbr_health` family (NBR_COLUMNS): did the player directly ahead of / behind this one on the USAGE order
+    come back from missed games, and for how long has he been healthy or out. NaN where there is no such neighbor or no history.
+
+    Usage order (never the depth chart, whose format changed in 2025): among the team-table players at his position (the spine, so
+    players on this week's report or just returned are in), the key is the mean of the last NBR_WINDOW (8) appearances, last
+    season's REG ones then this season's: opportunities (carries + targets); offensive snap share for a QB. Ties on the same
+    window's snap share, then player_id. The long window is deliberate: a starter who missed games still outranks his backup.
+    `ahead` = the smallest key above his, `behind` = the largest key below it; players with no appearance are not ranked.
+
+    Availability of a player, per team REG game of THIS season completed before kickoff - 4h (the current week and later never
+    enter, neither the game nor its inactives): played = he has opportunities, a pass attempt or offensive snaps in it; missed =
+    he did not, and either the injury report (as known before this kickoff) lists him Out/Doubtful for that week, or he had already
+    been part of the sequence (an unreported absence after he started, e.g. IR, which is off the report). Games before his first
+    appearance or report are not in his sequence. Byes are not games. From the sequence `p`, n games:
+      *_returned_wks     n - j for the last j with p[j] played and p[j-1] missed (1 = he returned in the latest game); NaN if never
+      *_healthy_streak   trailing run of played games (0 if he missed the latest)
+      *_out_streak       trailing run of missed games (0 if he played the latest)
+      nbr_ahead_share_l8 the player ahead's key (as above) over the sum of the keys of his position group including this player
+      self_returned_wks  returned_wks of this player himself
+    A neighbor with no sequence (no game this season) gives NaN streaks."""
+    out = dict.fromkeys(NBR_COLUMNS, NAN)
+    tab = ctx["team_table"]
+    out["self_returned_wks"] = _run_stats(_availability(store, h, t, t.player_id, trace))[0]
+    mine = _usage_key(h, t, t.player_id)
+    if mine is None:
+        return out
+    keys = {}
+    for pid, r in tab.items():
+        if pid == t.player_id or r["pos"] != t.position:
+            continue
+        hp = _history(store, pid, t, trace)
+        k = _usage_key(hp, t, pid)
+        if k is not None:
+            keys[pid] = (k, hp)
+    above = [(k, hp) for k, hp in keys.values() if k > mine]
+    below = [(k, hp) for k, hp in keys.values() if k < mine]
+    if above:
+        k, hp = min(above, key=lambda x: x[0])
+        ret, healthy, outs = _run_stats(_availability(store, hp, t, k[2], trace))
+        out["nbr_ahead_returned_wks"], out["nbr_ahead_healthy_streak"], out["nbr_ahead_out_streak"] = ret, healthy, outs
+        total = mine[0] + sum(kk[0] for kk, _ in keys.values())
+        out["nbr_ahead_share_l8"] = k[0] / total if total > 0 else NAN
+    if below:
+        k, hp = max(below, key=lambda x: x[0])
+        ret, healthy, _ = _run_stats(_availability(store, hp, t, k[2], trace))
+        out["nbr_behind_returned_wks"], out["nbr_behind_healthy_streak"] = ret, healthy
+    return out
+
+
 # --------------------------------------------------------------------------- play-by-play families (Phase 2.5)
 PBP_U = ("tgt", "rz_tgt", "i10_tgt", "ay", "ay_n", "car", "rz_car", "i10_car")            # pbp_usage columns
 PBP_T = ("tgt", "rz_tgt", "i10_tgt", "ay", "car", "rz_car", "i10_car",                    # pbp_team columns, then
@@ -1366,6 +1484,7 @@ def build_features(store, t: TargetRow, *, trace: list | None = None) -> dict:
 
     # ---- role + teammate-injury context ----------------------------------------------
     out.update(_role_features(ctx, h, t))
+    out.update(_neighbor_health(store, ctx, h, t, trace))     # opt-in `nbr_health`
 
     # ---- opponent DvP vs position ----------------------------------------------------
     out.update(ctx["dvp"].get(t.position) or {k: (NAN if "ppr" in k else None) for k in ctx["dvp"]["QB"]})
