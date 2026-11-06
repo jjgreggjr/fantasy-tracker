@@ -278,6 +278,7 @@ FAMILY_SOURCES = {
                                   "not that it is too early"),
     "streak": FamilySource(),                           # derived from the base tables: nothing to load
     "shape": FamilySource(),                            # derived from the base tables (Hist), like streak: nothing to load
+    "nbr_health": FamilySource(),                       # derived from the base tables (player_games, snaps, injuries), like streak
     "opp_db_out": FamilySource("defense", "depth_charts_def", week_rows=table_season_rows("depth_charts_def"),
                                timing="the defensive rows of the season's depth-chart file, which every serve re-downloads with "
                                       "the offensive ones; no rows means nflverse has not published the season's charts"),
