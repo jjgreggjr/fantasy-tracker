@@ -161,6 +161,41 @@ If a question doesn't name a league and the answer would differ, ask which.
 - **vor** — points above the best free agent at that position. A negative number means the waiver wire replaces him for free.
 - **E_pts_model, p10, p90** — the boosted-tree model's points in that league's scoring, and its floor and ceiling (beside `E_pts` in `roster.csv`, `ff.ask live` and `lineup`; all columns in `data/model_pts.csv`). **On probation: `E_pts` stays the number a recommendation rests on.** Quote the model columns when they add something, never instead of `E_pts`. Blank means the model has no row for him (players who are Out, IR, PUP, suspended or cut get none; the status layer owns availability). It may rank above `E_pts` only after the gate in POLICY.md is met: it beats Sleeper's projection on pick accuracy over at least 6 completed 2026 weeks (`model/reports/live_scoreboard.md`).
 
+## Default output for a team check
+
+James asked for this explicitly. On every "check my teams" / lineup answer, the
+tables are **the deliverable**: paste them into the chat in full, as printed.
+CLAUDE.md's "don't print full tables" rule does **not** apply to the outputs
+below. "Check my teams" means all four leagues (this overrides "don't mix
+leagues" in Boundaries); a single-league ask means that league only. Never
+swap a table for a summary of it.
+
+For each league, print in full:
+
+1. **Lineup**: `python -m ff.ask lineup <slug>` — every slot row (E_pts pick
+   with E / M, model pick with E / M, the call), then the `Net vs current:`,
+   `Totals` and `Differ:` lines.
+2. **Full roster**: from the same command, the "Status of every starter"
+   block and the full Bench table, so he can compare E_pts, model and his
+   Sleeper lineup player by player.
+3. **Last completed week**: `python -m ff.ask played <slug>` (what actually
+   started and scored), plus that week's row from the lineup evaluation
+   (`data/lineup_eval.csv`, or the week-by-week table in
+   `python -m ff.ask scoreboard <slug>`): e_pts, model, sleeper, call,
+   actual, perfect.
+
+Once per answer, not per league: `python -m ff.ask scoreboard` — the Summary
+and the pooled lineup table, as printed.
+
+**Legend.** Put these two lines above the first table in every answer:
+
+> E_pts pick / Model pick (E / M) = the player that method chose, then his E_pts and his model points. `same` = both chose the same player. `IN` = not in your current lineup.
+> Call = the rule-based final answer, with its reason.
+
+Everything around the tables stays short: decision first, then at most 3–5
+bullets, no preamble or recap. The tables are exempt from the length rule; the
+prose is not.
+
 ## Answer format
 
 Lead with the decision. Then the two or three numbers that drove it. Then what would change it. Keep tables small; prose for the reasoning.
