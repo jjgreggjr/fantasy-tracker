@@ -113,7 +113,11 @@ season,week,type,action,sleeper_id,name,rosters
 2026,7,free_agent,add,2197,Brandin Cooks,3
 2026,8,free_agent,drop,6819,Michael Pittman,3
 2026,8,free_agent,drop,3634,Kalif Raymond,2
+2026,8,waiver,add,9753,Zach Charbonnet,3
+2026,8,waiver,drop,2197,Brandin Cooks,3
 2026,8,free_agent,drop,6904,Jalen Hurts,4
+2026,8,waiver,add,11565,J.J. McCarthy,4
+2026,8,waiver,add,6011,Gardner Minshew,4
 2026,8,free_agent,drop,5189,,4
 2026,8,free_agent,drop,6149,Darius Slayton,4
 2026,8,free_agent,add,4147,Samaje Perine,4
@@ -124,3 +128,13 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,add,6650,,4
 2026,8,free_agent,add,WAS,,3
 2026,8,free_agent,drop,BAL,,3
+2026,9,free_agent,add,11625,Adonai Mitchell,3
+2026,9,free_agent,drop,WAS,,3
+2026,9,free_agent,add,CHI,,6
+2026,9,free_agent,drop,DET,,6
+2026,9,free_agent,add,5189,,6
+2026,9,free_agent,drop,CAR,,6
+2026,9,free_agent,add,NYG,,2
+2026,9,free_agent,drop,GB,,2
+2026,9,free_agent,add,11557,Joe Milton III,2
+2026,9,free_agent,drop,4017,Deshaun Watson,2

@@ -215,6 +215,12 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,drop,6768,Tua Tagovailoa,7
 2026,8,free_agent,add,KC,,6
 2026,8,free_agent,drop,CLE,,6
+2026,9,free_agent,add,5854,Drew Lock,4
+2026,9,free_agent,drop,12482,Savion Williams,4
+2026,9,waiver,add,10219,Chris Rodriguez Jr.,2
+2026,9,waiver,drop,4017,Deshaun Watson,2
+2026,9,waiver,add,3257,Jacoby Brissett,6
+2026,9,waiver,drop,11435,Emanuel Wilson,6
 2026,9,free_agent,add,6130,Devin Singletary,6
 2026,9,free_agent,drop,10219,Chris Rodriguez Jr.,6
 2026,9,free_agent,add,7561,Elijah Mitchell,2
