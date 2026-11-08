@@ -188,6 +188,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,trade,drop,9997,Zay Flowers,"2, 5"
 2026,8,waiver,add,8343,,5
 2026,8,waiver,drop,4950,Christian Kirk,5
+2026,9,free_agent,drop,8365,,10
+2026,9,waiver,add,11783,Ryan Flournoy,7
 2026,9,waiver,add,13453,,4
 2026,9,waiver,drop,11760,,4
 2026,9,waiver,add,11739,,4
