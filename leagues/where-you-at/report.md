@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 9
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-08 17:15 UTC · baselines: 2026 only · lineup as of 2026-11-08T17:15:53Z
+Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:13Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -148,7 +148,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +35%/wk; team passes #7; age 27 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
-| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 4) | 54% | RB3 on depth chart; up from 4; snap share trending +17%/wk; age 23 |
+| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 3) | 54% | RB3 on depth chart; snap share trending +17%/wk; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +7%/wk; age 25 |
 | Konata Mumpfield | WR | LA | 24.0 | 1 | 2 (was 2) | 46% | WR2 on depth chart; snap share trending +7%/wk; team passes #5; age 24 |

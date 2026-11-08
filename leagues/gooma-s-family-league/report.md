@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 9
 
 redraft · 20 roster slots  
-Generated 2026-11-08 17:15 UTC · baselines: 2026 only · lineup as of 2026-11-08T17:15:52Z
+Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:13Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -86,7 +86,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 21 | Med |  |
 | Austin Ekeler | RB | WAS | LA | 8.6 | 10.2 | 31% | 2 | 25 | Med | 🔥 |
 | Kaelon Black | RB | SF | LV | 8.3 | 9.6 | 28% | 2 | 3 | Med | 🔥 |
-| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High | 🔥 |
+| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High |  |
 | Kimani Vidal | RB | LAC | HOU | 8.0 | 9.2 | 25% | 2 | 1 | High | 🔥 |
 | Emari Demercado | RB | HOU | LAC | 7.9 | 7.0 | 22% | 4 | 4 | Med |  |
 | Corey Kiner | RB | NE | GB | 7.5 | 9.4 | 29% | 3 | 21 | Low | 🔥 |
@@ -98,7 +98,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Elijah Higgins | TE | ARI | SEA | 5.3 | 3.1 | 9% | 2 | 27 | High |  |
 | Jahan Dotson | WR | ATL | CIN | 9.1 | 5.0 | 17% | 2 | 3 | Med | 🔥 |
 | Jordan Watkins | WR | SF | LV | 8.7 | 3.7 | 13% | 4 | 6 | Low | 🔥 |
-| Quentin Johnston | WR | LAC | HOU | 8.6 | 5.6 | 18% | 2 | 22 | Med |  |
+| Quentin Johnston | WR | LAC | HOU | 8.6 | 5.6 | 18% | 2 | 22 | Med | 🔥 |
 | Kalif Raymond | WR | CHI | TB | 7.5 | 3.7 | 12% | 3 | 24 | Med |  |
 | Efton Chism III | WR | NE | GB | 7.4 | 3.5 | 12% | 4 | 2 | Med |  |
 | Malachi Fields | WR | NYG | PHI | 7.2 | 4.4 | 15% | 2 | 4 | High |  |
@@ -110,7 +110,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +35%/wk; team passes #7; age 27 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
-| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 4) | 54% | RB3 on depth chart; up from 4; snap share trending +17%/wk; age 23 |
+| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 3) | 54% | RB3 on depth chart; snap share trending +17%/wk; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +7%/wk; age 25 |
 | Konata Mumpfield | WR | LA | 24.0 | 1 | 2 (was 2) | 46% | WR2 on depth chart; snap share trending +7%/wk; team passes #5; age 24 |

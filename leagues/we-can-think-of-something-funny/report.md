@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 9
 
 dynasty · 31 roster slots  
-Generated 2026-11-08 17:15 UTC · baselines: 2026 only · lineup as of 2026-11-08T17:15:53Z
+Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:13Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -108,7 +108,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Greg Dulcich | TE | MIA | DET | 12.0 | 4.5 | 17% | 1 | 5 | High |  |
 | Cade Otton | TE | TB | CHI | 11.3 | 4.6 | 17% | 1 | 4 | Low |  |
 | Jordan Watkins | WR | SF | LV | 8.7 | 3.7 | 13% | 4 | 6 | Low | 🔥 |
-| Quentin Johnston | WR | LAC | HOU | 8.6 | 5.6 | 18% | 2 | 22 | Med |  |
+| Quentin Johnston | WR | LAC | HOU | 8.6 | 5.6 | 18% | 2 | 22 | Med | 🔥 |
 | Savion Williams | WR | GB | NE | 6.8 | 3.6 | 8% | 3 | 5 | Med |  |
 | Olamide Zaccheaus | WR | ATL | CIN | 6.7 | 3.6 | 12% | 3 | 3 | Low |  |
 | Darius Cooper | WR | PHI | NYG | 6.6 | 5.0 | 18% | 4 | 8 | Med | 🔥 |
@@ -121,7 +121,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +35%/wk; team passes #7; age 27 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
-| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 4) | 54% | RB3 on depth chart; up from 4; snap share trending +17%/wk; age 23 |
+| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 3) | 54% | RB3 on depth chart; snap share trending +17%/wk; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +7%/wk; age 25 |
 | Konata Mumpfield | WR | LA | 24.0 | 1 | 2 (was 2) | 46% | WR2 on depth chart; snap share trending +7%/wk; team passes #5; age 24 |

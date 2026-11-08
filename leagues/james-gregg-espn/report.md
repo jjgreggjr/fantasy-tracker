@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 9
 
 redraft · 17 roster slots  
-Generated 2026-11-08 17:15 UTC · baselines: 2026 only · lineup as of 2026-11-08T17:16:07Z
+Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:24Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -64,7 +64,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Austin Ekeler | RB | WAS | LA | 8.6 | 10.2 | 31% | 2 | 25 | Med | 🔥 |
 | Mike Washington Jr. | RB | LV | SF | 8.5 | 11.5 | 43% | 2 | 22 | Med |  |
 | Kaelon Black | RB | SF | LV | 8.3 | 9.6 | 28% | 2 | 3 | Med | 🔥 |
-| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High | 🔥 |
+| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High |  |
 | Omarion Hampton | RB | LAC | HOU | 10.5 | 13.4 | 41% | 1 | 1 | High |  |
 | Dylan Sampson | RB | CLE | NO | 10.4 | 8.7 | 22% | 2 | 9 | High | 🔥 |
 | Michael Mayer | TE | LV | SF | 9.6 | 4.8 | 14% | 2 | 2 | High | 🔥 |
@@ -88,7 +88,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +35%/wk; team passes #7; age 27 |
 | Mike Washington Jr. | RB | LV | 23.4 | 0 | 2 (was 2) | 43% | RB2 on depth chart; snap share trending +34%/wk; age 23 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 48% | WR3 on depth chart; snap share trending +21%/wk; team passes #6; age 26 |
-| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 4) | 54% | RB3 on depth chart; up from 4; snap share trending +17%/wk; age 23 |
+| Audric Estimé | RB | NO | 23.2 | 2 | 3 (was 3) | 54% | RB3 on depth chart; snap share trending +17%/wk; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 20% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Cyrus Allen | WR | KC | 23.7 | 0 | 3 (was 3) | 38% | WR3 on depth chart; snap share trending +15%/wk; team passes #16; age 24 |
 | Dylan Sampson | RB | CLE | 22.1 | 1 | 2 (was 2) | 51% | RB2 on depth chart; snap share trending +10%/wk; age 22 |
