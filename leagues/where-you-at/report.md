@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 9
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:13Z
+Generated 2026-11-08 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-08T21:14:07Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -97,7 +97,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jordan Battle | DB | CIN | ATL | 7.1 | 8.0 |  |  |  | High |  |
 | Geno Stone | DB | BUF | MIN | 7.0 | 6.0 |  |  |  | Med |  |
 | Josh Wallace | DB | LA | WAS | 6.5 | 6.0 |  |  |  | Med |  |
-| Cole Bishop | DB | BUF | MIN | 6.5 | 6.7 |  |  |  | High |  |
+| Xavier Watts | DB | ATL | CIN | 6.5 | 6.3 |  |  |  | High |  |
 | Austin Booker | DL | CHI | TB | 7.8 | 3.0 |  |  |  | High |  |
 | Laiatu Latu | DL | IND | DAL | 7.3 | 1.3 |  |  |  | High |  |
 | Dexter Lawrence | DL | CIN | ATL | 6.5 | 4.3 |  |  |  | High |  |
@@ -114,8 +114,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Nate Landman | LB | LA | WAS | 8.9 | 5.7 |  |  |  | High |  |
 | Drue Tranquill | LB | KC | NYJ | 8.7 | 8.0 |  |  |  | High |  |
 | Kendal Daniels | LB | ATL | CIN | 8.0 | 10.3 |  |  |  | High |  |
-| Jordyn Brooks | LB | MIA | DET | 7.6 | 9.3 |  |  |  | High |  |
 | Devin Bush | LB | CHI | TB | 7.6 | 5.7 |  |  |  | High |  |
+| Jordyn Brooks | LB | MIA | DET | 7.6 | 9.3 |  |  |  | High |  |
 | Carson Wentz | QB | MIN | BUF | 9.9 | 2.6 |  | 2 | 28 | Med | 🔥 |
 | Daniel Jones | QB | IND | DAL | 16.4 | 3.3 |  | 1 | 15 | High |  |
 | Shedeur Sanders | QB | CLE | NO | 16.3 | 3.2 |  | 2 | 13 | Low | 🔥 |

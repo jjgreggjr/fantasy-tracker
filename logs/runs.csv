@@ -82,3 +82,4 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-11-07T01:54:52Z,2026,9,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [9],
 2026-11-08T17:16:12Z,2026,9,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [9],
 2026-11-08T18:32:27Z,2026,9,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [9],
+2026-11-08T21:14:26Z,2026,9,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [9],

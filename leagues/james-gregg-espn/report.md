@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 9
 
 redraft · 17 roster slots  
-Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:24Z
+Generated 2026-11-08 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-08T21:14:21Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -64,7 +64,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Austin Ekeler | RB | WAS | LA | 8.6 | 10.2 | 31% | 2 | 25 | Med | 🔥 |
 | Mike Washington Jr. | RB | LV | SF | 8.5 | 11.5 | 43% | 2 | 22 | Med |  |
 | Kaelon Black | RB | SF | LV | 8.3 | 9.6 | 28% | 2 | 3 | Med | 🔥 |
-| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High |  |
+| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High | 🔥 |
 | Omarion Hampton | RB | LAC | HOU | 10.5 | 13.4 | 41% | 1 | 1 | High |  |
 | Dylan Sampson | RB | CLE | NO | 10.4 | 8.7 | 22% | 2 | 9 | High | 🔥 |
 | Michael Mayer | TE | LV | SF | 9.6 | 4.8 | 14% | 2 | 2 | High | 🔥 |

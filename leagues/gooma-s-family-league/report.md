@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 9
 
 redraft · 20 roster slots  
-Generated 2026-11-08 18:32 UTC · baselines: 2026 only · lineup as of 2026-11-08T18:32:13Z
+Generated 2026-11-08 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-08T21:14:07Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -83,10 +83,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Shedeur Sanders | QB | CLE | NO | 16.3 | 3.2 |  | 2 | 13 | Low | 🔥 |
 | Drew Lock | QB | SEA | ARI | 15.1 | 2.8 |  | 2 | 7 | Med |  |
 | Joe Fagnano | QB | BAL | JAX | 12.0 | 4.1 |  | 2 | 26 | Med |  |
-| Tommy DeVito | QB | NE | GB | 0.9 | 0.0 |  | 2 | 21 | Med |  |
+| Jalon Daniels | QB | TB | CHI | 0.9 | 0.0 |  | 2 | 4 | Low |  |
 | Austin Ekeler | RB | WAS | LA | 8.6 | 10.2 | 31% | 2 | 25 | Med | 🔥 |
 | Kaelon Black | RB | SF | LV | 8.3 | 9.6 | 28% | 2 | 3 | Med | 🔥 |
-| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High |  |
+| Seth McGowan | RB | IND | DAL | 8.3 | 8.1 | 24% | 2 | 8 | High | 🔥 |
 | Kimani Vidal | RB | LAC | HOU | 8.0 | 9.2 | 25% | 2 | 1 | High | 🔥 |
 | Emari Demercado | RB | HOU | LAC | 7.9 | 7.0 | 22% | 4 | 4 | Med |  |
 | Corey Kiner | RB | NE | GB | 7.5 | 9.4 | 29% | 3 | 21 | Low | 🔥 |
@@ -94,8 +94,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Colby Parkinson | TE | LA | WAS | 7.6 | 3.7 | 12% | 2 | 12 | Med |  |
 | Mason Taylor | TE | NYJ | KC | 6.8 | 4.8 | 16% | 1 | 24 | High |  |
 | Eli Raridon | TE | NE | GB | 6.2 | 3.8 | 13% | 2 | 30 | High |  |
-| Brevyn Spann-Ford | TE | DAL | IND | 5.3 | 2.8 | 8% | 2 | 22 | Med |  |
 | Elijah Higgins | TE | ARI | SEA | 5.3 | 3.1 | 9% | 2 | 27 | High |  |
+| Brevyn Spann-Ford | TE | DAL | IND | 5.3 | 2.8 | 8% | 2 | 22 | Med |  |
 | Jahan Dotson | WR | ATL | CIN | 9.1 | 5.0 | 17% | 2 | 3 | Med | 🔥 |
 | Jordan Watkins | WR | SF | LV | 8.7 | 3.7 | 13% | 4 | 6 | Low | 🔥 |
 | Quentin Johnston | WR | LAC | HOU | 8.6 | 5.6 | 18% | 2 | 22 | Med | 🔥 |
