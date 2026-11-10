@@ -128,6 +128,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,add,6650,,4
 2026,8,free_agent,add,WAS,,3
 2026,8,free_agent,drop,BAL,,3
+2026,9,free_agent,drop,10232,Michael Wilson,4
 2026,9,free_agent,add,NO,,11
 2026,9,free_agent,add,6130,Devin Singletary,12
 2026,9,free_agent,drop,8122,Bam Knight,12
