@@ -295,7 +295,7 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,10,CHI,BYE,0,,,,
 2026,10,CIN,PIT,1,2026-11-15,-3.5,49.5,outdoors
 2026,10,CLE,HOU,1,2026-11-15,4.5,39.5,outdoors
-2026,10,DAL,SF,1,2026-11-15,3.5,55.5,
+2026,10,DAL,SF,1,2026-11-15,4.5,55.5,
 2026,10,DEN,BYE,0,,,,
 2026,10,DET,NE,1,2026-11-15,-2.5,51.5,dome
 2026,10,GB,MIN,1,2026-11-15,-3.5,41.5,outdoors
@@ -315,7 +315,7 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,10,PHI,BYE,0,,,,
 2026,10,PIT,CIN,0,2026-11-15,3.5,49.5,outdoors
 2026,10,SEA,LV,0,2026-11-15,-6.5,40.5,dome
-2026,10,SF,DAL,0,2026-11-15,-3.5,55.5,
+2026,10,SF,DAL,0,2026-11-15,-4.5,55.5,
 2026,10,TB,BYE,0,,,,
 2026,10,TEN,JAX,1,2026-11-15,10.5,46.5,outdoors
 2026,10,WAS,NYG,0,2026-11-12,2.5,41.5,outdoors

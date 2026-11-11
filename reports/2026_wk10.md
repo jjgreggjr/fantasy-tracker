@@ -1,6 +1,6 @@
 # Week 10 digest — 2026
 
-Generated 2026-11-10 23:40 UTC  
+Generated 2026-11-11 00:13 UTC  
 Stats through: **Week 9** · Baselines: **2026 only**
 
 
@@ -10,10 +10,10 @@ Stats through: **Week 9** · Baselines: **2026 only**
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 958
-- Sleeper players cache: 2026-11-10
-- projections: 871 players (Sleeper, 2026-11-10T23:41:07Z)
-- league rosters: 3 leagues, lineups read 2026-11-10T23:41:02Z
-- ESPN rosters: Average Joes (2026-11-10T23:41:17Z)
+- Sleeper players cache: 2026-11-11
+- projections: 871 players (Sleeper, 2026-11-11T00:13:36Z)
+- league rosters: 3 leagues, lineups read 2026-11-11T00:13:29Z
+- ESPN rosters: Average Joes (2026-11-11T00:13:46Z)
 - status rows: 1538 players; 0 with practice reports
 - gameday inactives: 0 on the week 10 list (games not yet started)
 

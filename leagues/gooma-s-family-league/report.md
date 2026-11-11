@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 10
 
 redraft · 20 roster slots  
-Generated 2026-11-10 23:40 UTC · baselines: 2026 only · lineup as of 2026-11-10T23:41:02Z
+Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:29Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -108,7 +108,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 2 (was 3) | 68% | WR2 on depth chart; up from 3; snap share trending +25%/wk; team passes #10; age 26 |
+| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 2 (was 2) | 68% | WR2 on depth chart; snap share trending +25%/wk; team passes #10; age 26 |
 | Kaytron Allen | RB | MIA | 23.8 | 0 | 3 (was 3) | 6% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
 | Malachi Fields | WR | NYG | 23.2 | 0 | 2 (was 2) | 79% | WR2 on depth chart; snap share trending +10%/wk; team passes #15; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 24% | RB2 on depth chart; snap share trending +10%/wk; age 25 |

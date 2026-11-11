@@ -39,7 +39,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040946,13906,4683165,,Jaden Nixon,GB,RB,,0,2026,,CUT,,,,,,,1788114056828.0,,Active,True
 00-0040415,,,,Connor Bazelak,TB,QB,26.1,1,2025,,CUT,,,,,,,,,,
 00-0040400,12515,4431536,,Donovan Edwards,MIA,RB,23.7,1,2025,,CUT,,,,,,,1788022547704.0,,Active,True
-00-0036491,8005,4258170,BlacTa00,Tarik Black,DET,WR,28.7,5,2021,,CUT,,,,,,,1785993646075.0,,Active,True
+00-0036491,8005,4258170,BlacTa00,Tarik Black,DET,WR,28.8,5,2021,,CUT,,,,,,,1785993646075.0,,Active,True
 00-0040526,12940,5093062,,Tre Stewart,ARI,RB,,1,2025,,CUT,,,,,,,1786824603321.0,,Active,True
 00-0040531,12972,4431597,,Roc Taylor,CAR,WR,,1,2025,,CUT,,,,,,,1788031248594.0,,Active,True
 00-0040445,12772,4565172,,Courtney Jackson,TEN,WR,25.7,1,2025,,CUT,,,,,,,1792433410649.0,,Active,True
@@ -47,7 +47,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040528,,,,JJ Galbreath,IND,TE,25.3,1,2025,,CUT,,,,,,,,,,
 00-0040552,12883,4430482,SimoJo03,Joshua Simon,WAS,TE,26.0,1,2025,,DEV,,,,,,,1788853247925.0,,Active,True
 00-0040551,12478,4570242,NashNi00,Nick Nash,WAS,WR,27.3,1,2025,,CUT,,,,,,,1791329102737.0,,Active,True
-00-0040617,13189,4566157,FlorLu00,Luke Floriea,CLE,WR,25.0,1,2025,,CUT,,,,,,,1788122457685.0,,Active,True
+00-0040617,13189,4566157,FlorLu00,Luke Floriea,CLE,WR,25.1,1,2025,,CUT,,,,,,,1788122457685.0,,Active,True
 00-0040629,13202,4569372,CampDa01,Dalevon Campbell,LAC,WR,24.9,1,2025,,CUT,Questionable,,Leg,,,,1789006835625.0,,Inactive,True
 00-0040656,13217,4565358,DekkHu00,Hunter Dekkers,NO,QB,25.4,1,2025,,CUT,,,,,,,1788060352460.0,,Active,True
 00-0040651,12462,4808830,MartDa02,Damien Martinez,GB,RB,22.8,1,2025,223.0,CUT,,,,,,,1788208215065.0,,Active,True
@@ -78,12 +78,12 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041588,,,,Justin Jones,SEA,RB,,0,2026,,CUT,,,,,,,,,,
 00-0040324,,,,Cam Camper,NYJ,WR,,1,2025,,CUT,,,,,,,,,,
 00-0040317,13120,5083297,JoneJa16,Jacoby Jones,WAS,WR,25.3,1,2025,,CUT,,,,,,,1791417602171.0,,Inactive,True
-00-0040247,12743,4887918,BergJu00,Junior Bergen,NYJ,WR,24.0,1,2025,252.0,CUT,,,,,,,1787177716287.0,,Active,True
+00-0040247,12743,4887918,BergJu00,Junior Bergen,NYJ,WR,24.1,1,2025,252.0,CUT,,,,,,,1787177716287.0,,Active,True
 00-0040332,12479,4690972,JackJa05,Ja'Quinden Jackson,PHI,RB,25.2,1,2025,,CUT,,,,,,,1791938433154.0,,Inactive,True
 00-0040388,12935,5178972,KeenJa00,Jakobie Keeney-James,PIT,WR,26.1,1,2025,,CUT,,,,,,,1787957439823.0,,Active,True
 00-0040387,,,,Zach Horton,DET,TE,23.9,1,2025,,CUT,,,,,,,,,,
 00-0041476,,,,Rashad Rochelle,SEA,WR,,0,2026,,CUT,,,,,,,,,,
-00-0037570,8801,4572786,HousDe01,Dennis Houston,TB,WR,27.5,4,2022,,CUT,Questionable,,Groin,,,,1788147608040.0,,Inactive,True
+00-0037570,8801,4572786,HousDe01,Dennis Houston,TB,WR,27.6,4,2022,,CUT,Questionable,,Groin,,,,1788147608040.0,,Inactive,True
 00-0038406,9483,4361417,KuntZa00,Zack Kuntz,DAL,TE,27.4,3,2023,220.0,CUT,,,,,,,1786077910234.0,,Active,True
 00-0041233,,,,Raylen Sharpe,IND,WR,,0,2026,,CUT,,,,,,,,,,
 00-0037708,8921,3914307,AlexMa02,Maurice Alexander,CHI,WR,29.8,6,2022,,CUT,,,,,,,1768955410655.0,,Active,True
@@ -115,7 +115,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0038590,9489,4361426,ShorJu00,Justin Shorter,LV,WR,26.6,3,2023,150.0,CUT,,,,,,,1790988941187.0,,Inactive,True
 00-0041252,,,,Kenny Fletcher Jr.,IND,TE,22.9,0,2026,,CUT,,,,,,,,,,
 00-0041191,13595,4881826,JoneCa06,Cash Jones,ATL,RB,26.6,0,2026,,CUT,,,,,,,1791444340311.0,,Active,True
-00-0034860,4992,3127306,PettDa00,Dante Pettis,SF,WR,31.0,8,2018,44.0,CUT,Questionable,,Calf,,,,1791506747378.0,,Active,True
+00-0034860,4992,3127306,PettDa00,Dante Pettis,SF,WR,31.1,8,2018,44.0,CUT,Questionable,,Calf,,,,1791506747378.0,,Active,True
 00-0041308,,,,Treyvhon Saunders,HOU,WR,22.5,0,2026,,CUT,,,,,,,,,,
 00-0036427,6960,2310331,JohnTy00,Tyler Johnson,NYJ,WR,28.2,6,2020,161.0,CUT,,,,,,,1791920448845.0,,Active,True
 00-0033662,4574,2972515,RushCo00,Cooper Rush,ATL,QB,33.0,9,2017,,INA,,,,,,,1792431610445.0,,Active,True
@@ -151,7 +151,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040637,,,,Lucas Scott,BAL,RB,23.2,1,2025,,DEV,,,,,,,,,,
 00-0035924,7087,4039274,WardJo00,Jonathan Ward,BAL,RB,29.1,6,2020,,CUT,,,,,,,1793146208279.0,,Active,True
 00-0040504,,,,Bryson Nesbit,MIN,TE,24.1,1,2025,,DEV,,,,,,,,,,
-00-0041221,,,,Jackson Acker,SEA,RB,24.1,0,2026,,CUT,,,,,,,,,,
+00-0041221,,,,Jackson Acker,SEA,RB,24.2,0,2026,,CUT,,,,,,,,,,
 00-0041366,,,,Jameson Geers,ARI,TE,23.9,0,2026,,CUT,,,,,,,,,,
 00-0041483,13349,4431574,StowEl00,Eli Stowers,PHI,TE,23.6,0,2026,54.0,ACT,,,,,,,1794278744765.0,2.0,Active,True
 00-0041496,13345,4702555,ColeJo00,Jonah Coleman,DEN,RB,23.2,0,2026,108.0,ACT,,,,,,,1794187524351.0,1.0,Active,True
@@ -202,7 +202,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0036158,6806,4241985,DobbJK00,J.K. Dobbins,DEN,RB,27.9,6,2020,55.0,ACT,,,,,,,1794188123569.0,2.0,Active,True
 00-0040735,12519,4685278,BurdLu00,Luther Burden III,CHI,WR,22.9,1,2025,39.0,ACT,Questionable,,Undisclosed,,,,1794220228201.0,1.0,Active,True
 00-0040867,13294,4870795,LemoMa00,Makai Lemon,PHI,WR,22.4,0,2026,20.0,ACT,,,,,,,1794233429538.0,1.0,Active,True
-00-0040586,12457,4685279,BlueJa01,Jaydon Blue,PHI,RB,22.8,1,2025,149.0,ACT,,,,,,,1794351919947.0,3.0,Active,True
+00-0040586,12457,4685279,BlueJa01,Jaydon Blue,PHI,RB,22.8,1,2025,149.0,ACT,,,,,,,1794354620099.0,3.0,Active,True
 00-0036959,8076,4034704,BandMi00,Michael Bandy,DEN,WR,28.9,5,2021,,DEV,,,,,,,1788309624530.0,,Active,True
 00-0039361,11584,4596448,IrviBu00,Bucky Irving,TB,RB,24.2,2,2024,125.0,ACT,,,,,,,1794254146039.0,1.0,Active,True
 00-0039398,11557,4360698,MiltJo00,Joe Milton III,PHI,QB,26.7,2,2024,193.0,ACT,,,,,,,1794244228806.0,1.0,Active,True
@@ -235,7 +235,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0037031,8107,4916349,KaliNi00,Nikola Kalinic,CHI,TE,29.8,4,2022,,RES,IR,,Knee,,,,1787096450285.0,5.0,Inactive,True
 00-0037085,8208,4362748,BadiTy00,Tyler Badie,DEN,RB,27.8,4,2022,196.0,RES,IR,,Thumb,,,,1792884660724.0,4.0,Inactive,True
 00-0037086,8177,4241374,CalcGr00,Grant Calcaterra,PHI,TE,27.9,4,2022,198.0,ACT,,,,,,,1793049611079.0,3.0,Active,True
-00-0037132,8414,3926231,CoveBr00,Britain Covey,PHI,WR,29.6,4,2022,,INA,Out,,Knee,,,,1794015305871.0,7.0,Active,True
+00-0037132,8414,3926231,CoveBr00,Britain Covey,PHI,WR,29.7,4,2022,,INA,Out,,Knee,,,,1794015305871.0,7.0,Active,True
 00-0038551,9757,4599739,MillKe01,Kendre Miller,NO,RB,24.4,3,2023,71.0,CUT,,,,,,,1794349219464.0,,Active,True
 00-0038555,9225,4429013,BigsTa00,Tank Bigsby,PHI,RB,24.2,3,2023,88.0,RES,IR,Surgery,Abdomen,,,,1791345302570.0,4.0,Inactive,True
 00-0038783,11433,4383440,AdkiNa00,Nate Adkins,DEN,TE,27.3,3,2023,,ACT,,,,,,,1793596841817.0,2.0,Active,True
@@ -252,10 +252,10 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041292,13981,5225419,KatsKo00,Kolbe Katsis,DEN,WR,24.9,0,2026,,DEV,,,,,,,1790644209337.0,,Active,True
 00-0041293,13336,4685424,KeyxDa00,Dane Key,DEN,WR,23.4,0,2026,,DEV,,,,,,,1788310224531.0,,Active,True
 00-0034351,5022,3121023,GoedDa00,Dallas Goedert,PHI,TE,31.9,8,2018,49.0,ACT,,,,,,,1794233429512.0,1.0,Active,True
-00-0034844,4866,3929630,BarkSa00,Saquon Barkley,PHI,RB,29.7,8,2018,2.0,ACT,,,,,,,1794232829597.0,1.0,Active,True
+00-0034844,4866,3929630,BarkSa00,Saquon Barkley,PHI,RB,29.8,8,2018,2.0,ACT,,,,,,,1794232829597.0,1.0,Active,True
 00-0034855,4892,3052587,MayfBa00,Baker Mayfield,TB,QB,31.6,8,2018,1.0,ACT,,,,,,,1794221428438.0,1.0,Active,True
 00-0041251,13425,4596472,DaniJa03,Jalon Daniels,TB,QB,24.0,0,2026,,ACT,,,,,,,1793064627072.0,3.0,Active,True
-00-0041257,13316,4713277,RiveEr00,Eric Rivers Jr.,TB,WR,24.1,0,2026,,DEV,,,,,,,1788411038534.0,,Active,True
+00-0041257,13316,4713277,RiveEr00,Eric Rivers Jr.,TB,WR,24.2,0,2026,,DEV,,,,,,,1788411038534.0,,Active,True
 00-0041265,,,,Squirrel White,CHI,WR,,0,2026,,RET,,,,,,,,,,
 00-0041595,14080,,,Barika Kpeenu,TB,RB,23.9,0,2026,,DEV,,,,,,,1794348919588.0,,Active,True
 00-0041524,13434,4880236,KacmWi00,Will Kacmarek,MIA,TE,23.7,0,2026,87.0,ACT,Questionable,,Quadriceps,,,,1794173422752.0,2.0,Active,True
@@ -271,7 +271,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041512,13286,4685512,PricJa02,Jadarian Price,SEA,RB,23.1,0,2026,32.0,ACT,,,,,,,1794204326928.0,2.0,Active,True
 00-0041523,13296,4869645,DougCa00,Caleb Douglas,MIA,WR,23.2,0,2026,75.0,ACT,,,,,,,1794238528299.0,2.0,Active,True
 00-0041467,13541,4683159,BondLe00,Lewis Bond,HOU,WR,23.5,0,2026,204.0,DEV,,,,,,,1790644809492.0,,Active,True
-00-0041472,13307,4695705,KleiMa00,Marlin Klein,HOU,TE,24.1,0,2026,59.0,ACT,,,,,,,1791734116406.0,3.0,Active,True
+00-0041472,13307,4695705,KleiMa00,Marlin Klein,HOU,TE,24.2,0,2026,59.0,ACT,,,,,,,1791734116406.0,3.0,Active,True
 00-0041436,14026,4685116,HermDJ00,DJ Herman,MIA,RB,24.7,0,2026,,ACT,,,,,,,,3.0,Active,True
 00-0041438,13279,4871023,TateCa00,Carnell Tate,TEN,WR,21.8,0,2026,4.0,ACT,Out,,Shoulder,,,,1793460322744.0,7.0,Active,True
 00-0041443,13402,4683153,BellSk00,Skyler Bell,BUF,WR,24.4,0,2026,125.0,ACT,Out,,Coach's Decision,,,,1792217140240.0,9.0,Active,True
@@ -288,11 +288,11 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0032392,3202,3043275,HoopAu00,Austin Hooper,ATL,TE,32.0,10,2016,81.0,ACT,,,,,,,1793059526972.0,2.0,Active,True
 00-0032394,3258,2576399,VannNi00,Nick Vannett,BAL,TE,33.7,10,2016,94.0,ACT,,,,,,,1792108232892.0,4.0,Active,True
 00-0032398,3269,2576581,MoorCh00,Chris Moore,BAL,WR,33.4,10,2016,107.0,DEV,,,,,,,1792022709413.0,,Active,True
-00-0032764,3198,3043078,HenrDe00,Derrick Henry,BAL,RB,32.8,10,2016,45.0,ACT,,,,,,,1794249045509.0,1.0,Active,True
+00-0032764,3198,3043078,HenrDe00,Derrick Henry,BAL,RB,32.9,10,2016,45.0,ACT,,,,,,,1794249045509.0,1.0,Active,True
 00-0032775,3286,3043116,RobiDe01,Demarcus Robinson,SF,WR,32.1,10,2016,126.0,ACT,,,,,,,1794322849017.0,1.0,Active,True
 00-0032918,3832,4012556,HamxC.00,C.J. Ham,MIN,RB,33.3,10,2016,,RET,,,,,,,,,,
 00-0032950,3161,2573079,WentCa00,Carson Wentz,MIN,QB,33.9,10,2016,2.0,ACT,,,,,,,1794324350959.0,1.0,Active,True
-00-0031588,2449,2976212,DiggSt00,Stefon Diggs,WAS,WR,32.9,11,2015,146.0,ACT,,,,,,,1794244230748.0,1.0,Active,True
+00-0031588,2449,2976212,DiggSt00,Stefon Diggs,WAS,WR,33.0,11,2015,146.0,ACT,,,,,,,1794244230748.0,1.0,Active,True
 00-0031595,2471,2515270,BurtMi00,Michael Burton,CLE,RB,34.8,11,2015,168.0,ACT,,,,,,,,,,
 00-0031610,2505,2576925,WallDa01,Darren Waller,CAR,TE,34.2,11,2015,204.0,ACT,,,,,,,1794282344651.0,1.0,Active,True
 00-0031763,2750,2580216,CartDe02,DeAndre Carter,DET,WR,33.6,11,2015,,ACT,,,,,,,1794181823894.0,4.0,Active,True
@@ -318,7 +318,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0037382,8756,4035198,JohnBr23,Brandon Johnson,PIT,WR,28.3,4,2022,,DEV,,,,,,,1793674550936.0,,Active,True
 00-0037410,8194,4372519,CorbJa01,Jashaun Corbin,DAL,RB,26.2,4,2022,,DEV,,,,,,,1793845840081.0,,Active,True
 00-0037277,8227,4374045,QuitTe00,Teagan Quitoriano,ARI,TE,26.7,4,2022,170.0,ACT,,,,,,,1791820830059.0,3.0,Active,True
-00-0037282,8170,4361988,MitcJa00,James Mitchell,DAL,TE,27.2,4,2022,177.0,DEV,,,,,,,1794283245354.0,,Active,True
+00-0037282,8170,4361988,MitcJa00,James Mitchell,DAL,TE,27.3,4,2022,177.0,DEV,,,,,,,1794283245354.0,,Active,True
 00-0037291,8180,4382466,NailJa00,Jalen Nailor,LV,WR,27.7,4,2022,191.0,ACT,,,,,,,1794205526456.0,2.0,Active,True
 00-0037292,8489,4722908,OgleAn00,Andrew Ogletree,IND,TE,28.3,4,2022,192.0,ACT,,,,,,,1794011705657.0,3.0,Active,True
 00-0037304,8181,4241961,HeywCo00,Connor Heyward,LV,RB,27.8,4,2022,208.0,ACT,,,,,,,1792975812426.0,3.0,Active,True
@@ -334,20 +334,20 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0037840,8150,4430737,WillKy02,Kyren Williams,LA,RB,26.2,4,2022,164.0,ACT,,,,,,,1794240630270.0,1.0,Active,True
 00-0038040,8139,4361777,WhitZa01,Zamir White,NO,RB,27.1,4,2022,122.0,DEV,,,,,,,1794286245435.0,,Active,True
 00-0038041,8110,4242355,FergJa00,Jake Ferguson,DAL,TE,27.8,4,2022,129.0,ACT,Out,,Knee,,,,1794264647821.0,3.0,Active,True
-00-0038046,8127,4241263,KolaCh00,Charlie Kolar,LAC,TE,27.7,4,2022,128.0,ACT,,,,,,,1793676051274.0,2.0,Active,True
+00-0038046,8127,4241263,KolaCh00,Charlie Kolar,LAC,TE,27.8,4,2022,128.0,ACT,,,,,,,1793676051274.0,2.0,Active,True
 00-0038090,8168,4430191,MoorSk01,Skyy Moore,GB,WR,26.2,4,2022,54.0,RES,IR,,Ankle,,,,1792274447969.0,6.0,Inactive,True
 00-0038098,8116,4249836,StroPi00,Pierre Strong,GB,RB,27.9,4,2022,127.0,ACT,,,,,,,1794189324971.0,1.0,Active,True
 00-0038102,8160,4240703,PickKe00,Kenny Pickett,CAR,QB,28.4,4,2022,20.0,ACT,,,,,,,1789921855947.0,2.0,Active,True
 00-0037801,8917,3676833,TurpKa00,KaVontae Turpin,DAL,WR,30.3,7,2022,,ACT,Out,,Ribs,,,,1794011105579.0,5.0,Active,True
-00-0037805,8145,4361372,RuckJe00,Jeremy Ruckert,NYJ,TE,26.2,4,2022,101.0,ACT,,,,,,,1790982940848.0,3.0,Active,True
-00-0037809,8210,4360635,OkonCh00,Chig Okonkwo,WAS,TE,27.2,4,2022,143.0,ACT,Questionable,,Hip,,,,1794271244013.0,1.0,Active,True
+00-0037805,8145,4361372,RuckJe00,Jeremy Ruckert,NYJ,TE,26.3,4,2022,101.0,ACT,,,,,,,1790982940848.0,3.0,Active,True
+00-0037809,8210,4360635,OkonCh00,Chig Okonkwo,WAS,TE,27.2,4,2022,143.0,ACT,Questionable,,Hip,,,,1794355220192.0,1.0,Active,True
 00-0037816,8121,4361432,DoubRo00,Romeo Doubs,NE,WR,26.6,4,2022,132.0,RES,IR,,Shoulder,,,,1792632952461.0,6.0,Inactive,True
 00-0037834,8183,4361741,PurdBr00,Brock Purdy,SF,QB,26.9,4,2022,262.0,ACT,,,,,,,1794208525420.0,1.0,Active,True
 00-0037837,8125,4243389,AustCa00,Calvin Austin III,NYG,WR,27.6,4,2022,138.0,RES,IR,,Knee,,,,1787873754443.0,7.0,Inactive,True
 00-0037838,8131,4361050,LikeIs00,Isaiah Likely,NYG,TE,26.6,4,2022,139.0,ACT,,,,,,,1794230729225.0,1.0,Active,True
 00-0037740,8146,4569618,WilsGa00,Garrett Wilson,NYJ,WR,26.3,4,2022,10.0,ACT,Out,,Concussion,,,,1793987117750.0,6.0,Active,True
 00-0037741,8119,4361409,DotsJa00,Jahan Dotson,ATL,WR,26.6,4,2022,16.0,ACT,,,,,,,1794168922333.0,2.0,Active,True
-00-0037742,8135,4567156,BurkTr00,Treylon Burks,WAS,WR,26.6,4,2022,18.0,ACT,Out,,Foot,,,,1794270355785.0,7.0,Active,True
+00-0037742,8135,4567156,BurkTr00,Treylon Burks,WAS,WR,26.6,4,2022,18.0,ACT,Out,,Foot,,,,1794355520157.0,7.0,Active,True
 00-0037744,8130,4361307,McBrTr01,Trey McBride,ARI,TE,27.0,4,2022,55.0,ACT,,,,,,,1794203726219.0,1.0,Active,True
 00-0037745,8223,4035693,JoneVe00,Velus Jones Jr.,SEA,RB,29.5,4,2022,71.0,DEV,,,,,,,1794114616337.0,,Active,True
 00-0037746,8154,4241474,RobiBr01,Brian Robinson,ATL,RB,27.6,4,2022,98.0,RES,IR,,Hamstring,,,,1794087913772.0,4.0,Inactive,True
@@ -422,7 +422,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0037156,8861,3929636,CharIr00,Irvin Charles,SEA,WR,29.6,4,2022,,ACT,,,,,,,1792885260958.0,4.0,Active,True
 00-0037012,7610,4383351,LancTr00,Trey Lance,LAC,QB,26.5,5,2021,3.0,RES,IR,,Groin,,,,1791935733816.0,2.0,Inactive,True
 00-0037013,7538,4361259,WilsZa00,Zach Wilson,NO,QB,27.3,5,2021,2.0,ACT,Out,,Coach's Decision,,,,1794159019862.0,2.0,Active,True
-00-0037077,8162,4426875,HoweSa00,Sam Howell,DAL,QB,26.1,4,2022,144.0,ACT,,,,,,,1788304523035.0,3.0,Active,True
+00-0037077,8162,4426875,HoweSa00,Sam Howell,DAL,QB,26.2,4,2022,144.0,ACT,,,,,,,1788304523035.0,3.0,Active,True
 00-0037078,8214,4361438,TurnCo00,Cole Turner,MIA,TE,26.7,4,2022,149.0,RES,IR,,Undisclosed,,,,1787874054706.0,4.0,Inactive,True
 00-0036972,7527,4241464,JoneMa05,Mac Jones,SF,QB,28.2,5,2021,15.0,ACT,,,,,,,1794342318987.0,2.0,Active,True
 00-0036973,7543,4239996,EtieTr00,Travis Etienne,NO,RB,27.8,5,2021,25.0,RES,IR,Strain,Hamstring,,,,1793845539417.0,4.0,Inactive,True
@@ -459,7 +459,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0038740,11506,4426990,MoreJa01,Jalen Cropper,NO,WR,25.5,3,2023,,DEV,,,,,,,1790645109251.0,,Active,True
 00-0039165,9753,4426385,CharZa00,Zach Charbonnet,SEA,RB,25.8,3,2023,52.0,ACT,,,,,,,1794204326633.0,1.0,Active,True
 00-0039244,11963,4698191,CollCh01,Chris Collier,LV,RB,26.6,2,2024,,RES,IR,,Undisclosed,,,,1785714958620.0,7.0,Inactive,True
-00-0039266,11649,4429012,MiltKe01,Kendall Milton,CIN,RB,24.7,2,2024,,DEV,,,,,,,1788309624516.0,,Active,True
+00-0039266,11649,4429012,MiltKe01,Kendall Milton,CIN,RB,24.8,2,2024,,DEV,,,,,,,1788309624516.0,,Active,True
 00-0039299,12048,4429835,HolaGe00,George Holani,SEA,RB,26.9,2,2024,,ACT,,,,,,,1794284745457.0,4.0,Active,True
 00-0039107,10857,4259553,BennSt00,Stetson Bennett,LA,QB,29.0,3,2023,128.0,ACT,,,,,,,1789173315459.0,2.0,Active,True
 00-0039139,9221,4429795,GibbJa01,Jahmyr Gibbs,DET,RB,24.6,3,2023,12.0,ACT,,,,,,,1794183623879.0,1.0,Active,True
@@ -568,7 +568,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0039816,11762,4429684,GoulAn00,Anthony Gould,IND,WR,25.6,2,2024,142.0,ACT,,,,,,,1794012305771.0,5.0,Active,True
 00-0039824,11595,4430723,WileJa00,Jared Wiley,KC,TE,26.0,2,2024,131.0,ACT,,,,,,,1791142512596.0,3.0,Active,True
 00-0039847,11597,4429148,JohnTh00,Theo Johnson,NYG,TE,25.7,2,2024,107.0,ACT,,,,,,,1793842839543.0,2.0,Active,True
-00-0039849,11628,4432708,HarrMa09,Marvin Harrison Jr.,HOU,WR,24.2,2,2024,4.0,ACT,,,,,,,1794240630284.0,2.0,Active,True
+00-0039849,11628,4432708,HarrMa09,Marvin Harrison Jr.,HOU,WR,24.3,2,2024,4.0,ACT,,,,,,,1794240630284.0,2.0,Active,True
 00-0039751,11623,4569382,WhitJo04,Jordan Whittington,LA,WR,26.1,2,2024,213.0,ACT,IR,,Back,,,,1794348319374.0,3.0,Inactive,True
 00-0039754,11820,4361112,CulpDe00,Devin Culp,MIN,TE,26.8,2,2024,246.0,DEV,,,,,,,1793230224929.0,,Active,True
 00-0039757,12412,4427600,JennTe00,Terrell Jennings,NE,RB,25.9,2,2024,,DEV,,,,,,,1793669750486.0,,Active,True
@@ -637,7 +637,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0036637,7828,4240472,GrayNo00,Noah Gray,KC,TE,27.5,5,2021,162.0,ACT,,,,,,,1794290445975.0,2.0,Active,True
 00-0036497,8013,4245131,JoneTi00,Tim Jones,JAX,WR,28.5,5,2021,,DEV,,,,,,,1788313524687.0,,Active,True
 00-0036510,7597,4044144,YeboKe00,Kenny Yeboah,ARI,TE,28.0,5,2021,,DEV,Out,,Undisclosed,,,,1793746828879.0,5.0,Active,True
-00-0036550,7571,4360939,BateRa00,Rashod Bateman,BAL,WR,26.9,5,2021,27.0,ACT,,,,,,,1794020408961.0,2.0,Active,True
+00-0036550,7571,4360939,BateRa00,Rashod Bateman,BAL,WR,27.0,5,2021,27.0,ACT,,,,,,,1794020408961.0,2.0,Active,True
 00-0036554,7569,4258173,CollNi00,Nico Collins,HOU,WR,27.6,5,2021,89.0,ACT,,,,,,,1794234329183.0,1.0,Active,True
 00-0036555,7594,4241416,HubbCh01,Chuba Hubbard,CAR,RB,27.4,5,2021,126.0,ACT,,,,,,,1794188124522.0,1.0,Active,True
 00-0036556,7568,4362504,JordBr00,Brevin Jordan,HOU,TE,26.3,5,2021,147.0,ACT,,,,,,,1792801253079.0,4.0,Active,True
@@ -650,7 +650,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0036355,6797,4038941,HerbJu00,Justin Herbert,LAC,QB,28.7,6,2020,6.0,ACT,Questionable,,Finger,,,,1794346219226.0,1.0,Active,True
 00-0036358,6786,4241389,LambCe00,CeeDee Lamb,DAL,WR,27.6,6,2020,17.0,ACT,,,,,,,1794177322105.0,1.0,Active,True
 00-0036387,6798,4241802,ReagJa00,Jalen Reagor,MIA,WR,27.9,6,2020,21.0,DEV,,,,,,,1788318625892.0,,Active,True
-00-0036407,6783,4241463,JeudJe00,Jerry Jeudy,CLE,WR,27.5,6,2020,15.0,ACT,,,,,,,1794195325465.0,3.0,Active,True
+00-0036407,6783,4241463,JeudJe00,Jerry Jeudy,CLE,WR,27.6,6,2020,15.0,ACT,,,,,,,1794195325465.0,3.0,Active,True
 00-0036410,6801,4239993,HiggTe00,Tee Higgins,CIN,WR,27.8,6,2020,33.0,ACT,,,,,,,1794168620543.0,2.0,Active,True
 00-0040398,12538,4429435,CookBr03,Brady Cook,MIA,QB,25.1,1,2025,,DEV,,,,,,,1792043113272.0,,Active,True
 00-0040405,12925,4892576,PritJa00,Jamaal Pritchett,NYJ,WR,23.4,1,2025,,DEV,,,,,,,1791919848800.0,,Active,True
@@ -697,7 +697,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0036309,7090,4040655,MoonDa00,Darnell Mooney,NYG,WR,29.0,6,2020,173.0,ACT,Questionable,,Chest,,,,1794353420019.0,3.0,Active,True
 00-0036322,6794,4262921,JeffJu00,Justin Jefferson,MIN,WR,27.4,6,2020,22.0,ACT,,,,,,,1794323750497.0,1.0,Active,True
 00-0036331,6847,4039050,DuveDe00,Devin Duvernay,ARI,WR,29.2,6,2020,92.0,ACT,,,,,,,1794051009052.0,3.0,Active,True
-00-0036182,7496,3929785,WestNi00,Nick Westbrook-Ikhine,IND,WR,29.6,6,2020,,DEV,,,,,,,1794343520884.0,7.0,Active,True
+00-0036182,7496,3929785,WestNi00,Nick Westbrook-Ikhine,IND,WR,29.6,6,2020,,DEV,,,,,,,1794354020096.0,7.0,Active,True
 00-0036187,7204,4039505,GillRe00,Reggie Gilliam,NE,RB,29.2,6,2020,,RES,IR,,Ankle,,,,1791679208528.0,4.0,Inactive,True
 00-0036212,6768,4241479,TagoTu00,Tua Tagovailoa,ATL,QB,28.7,6,2020,5.0,ACT,,,,,,,1792193137723.0,3.0,Active,True
 00-0036223,6813,4242335,TaylJo02,Jonathan Taylor,IND,RB,27.8,6,2020,41.0,ACT,,,,,,,1794342618885.0,1.0,Active,True
@@ -728,7 +728,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040691,12508,4689114,DartJa00,Jaxson Dart,NYG,QB,23.5,1,2025,25.0,RES,IR,Surgery,Knee - Meniscus,,,,1794027006760.0,4.0,Inactive,True
 00-0040644,12531,4685350,EtieTr01,Trevor Etienne,CAR,RB,22.3,1,2025,114.0,ACT,,,,,,,1793061326686.0,2.0,Active,True
 00-0040646,12505,5082630,RoyaJa00,Jalen Royals,KC,WR,23.7,1,2025,133.0,ACT,,,,,,,1792988113997.0,4.0,Active,True
-00-0040648,12497,4597703,HortTo00,Tory Horton,SEA,WR,23.9,1,2025,166.0,ACT,,,,,,,1794281744953.0,3.0,Active,True
+00-0040648,12497,4597703,HortTo00,Tory Horton,SEA,WR,24.0,1,2025,166.0,ACT,,,,,,,1794281744953.0,3.0,Active,True
 00-0040649,12656,4691688,OuztRo00,Robbie Ouzts,SEA,RB,24.2,1,2025,175.0,RES,IR,,Undisclosed,,,,1786750245438.0,7.0,Inactive,True
 00-0040653,12475,4431479,WhitRi01,Ricky White III,SEA,WR,24.8,1,2025,238.0,DEV,,,,,,,1788409238233.0,,Active,True
 00-0040618,,,,Max Hurleman,PIT,WR,25.1,1,2025,,DEV,,,,,,,,,,
@@ -781,7 +781,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0035589,6045,3916071,JennGa00,Gary Jennings,LAC,WR,29.7,7,2019,120.0,DEV,,,,,,,1790287845959.0,,Active,True
 00-0035594,6012,4037457,HomeTr00,Travis Homer,PIT,RB,28.3,7,2019,204.0,ACT,,,,,,,1790983540985.0,3.0,Active,True
 00-0035251,5903,3115252,GrieWi00,Will Grier,CAR,QB,31.6,7,2019,100.0,RET,NA,,Undisclosed,,,,1784149850621.0,,Active,True
-00-0035261,5967,3916148,PollTo00,Tony Pollard,TEN,RB,29.5,7,2019,128.0,ACT,,,,,,,1794345619200.0,1.0,Active,True
+00-0035261,5967,3916148,PollTo00,Tony Pollard,TEN,RB,29.5,7,2019,128.0,ACT,,,,,,,1794354919996.0,1.0,Active,True
 00-0035289,6011,4038524,MinsGa00,Gardner Minshew,ARI,QB,30.5,7,2019,178.0,ACT,IR,,Elbow,,,,1794349519531.0,1.0,Inactive,True
 00-0035100,6111,3886812,BrowJa08,Jake Browning,LAC,QB,30.6,7,2019,,DEV,,,,,,,1791935733827.0,,Active,True
 00-0035125,6109,3917668,IngoAl01,Alec Ingold,LAC,RB,30.3,7,2019,,RES,,,,,,,,,,
@@ -808,7 +808,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0040894,13329,5150247,BensMa00,Malik Benson,LV,WR,24.1,0,2026,195.0,ACT,Out,,Coach's Decision,,,,1794169821254.0,9.0,Active,True
 00-0040895,13313,4685381,HendEm00,Emmanuel Henderson Jr.,SEA,WR,23.6,0,2026,199.0,DEV,,,,,,,1788408938179.0,,Active,True
 00-0040900,13582,4685110,SmitAn05,Anthony Smith,DAL,WR,24.7,0,2026,218.0,DEV,,,,,,,1788309924388.0,,Active,True
-00-0040901,13422,4877034,KanaJa00,Jaren Kanak,TEN,TE,22.7,0,2026,225.0,RES,IR,,Pectoral,,,,1786946722005.0,6.0,Inactive,True
+00-0040901,13422,4877034,KanaJa00,Jaren Kanak,TEN,TE,22.8,0,2026,225.0,RES,IR,,Pectoral,,,,1786946722005.0,6.0,Inactive,True
 00-0040906,13404,4567747,NussGa00,Garrett Nussmeier,KC,QB,24.8,0,2026,249.0,ACT,Out,,Coach's Decision,,,,1794158719706.0,3.0,Active,True
 00-0041070,13297,4869132,VirgRe00,Reggie Virgil,ARI,WR,22.5,0,2026,143.0,ACT,,,,,,,1794278444348.0,1.0,Active,True
 00-0041077,13400,4912052,JolyJu00,Justin Joly,MIA,TE,22.3,0,2026,152.0,ACT,Out,,Coach's Decision,,,,1792629052483.0,6.0,Active,True
@@ -818,7 +818,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041092,13306,4431325,GreeTa00,Taylen Green,CLE,QB,24.1,0,2026,182.0,ACT,Out,,Coach's Decision,,,,1794158419661.0,4.0,Active,True
 00-0041096,13405,4685246,AlleKa01,Kaytron Allen,MIA,RB,23.8,0,2026,187.0,ACT,,,,,,,1794283245373.0,2.0,Active,True
 00-0041044,13320,4870612,BranZa00,Zachariah Branch,ATL,WR,22.6,0,2026,79.0,ACT,Out,,Hamstring,,,,1793654148193.0,8.0,Active,True
-00-0041047,13353,5091739,BrazCh01,Chris Brazzell II,CAR,WR,23.0,0,2026,83.0,RES,IR,,Knee,,,,1791660905856.0,10.0,Inactive,True
+00-0041047,13353,5091739,BrazCh01,Chris Brazzell II,CAR,WR,23.1,0,2026,83.0,RES,IR,,Knee,,,,1791660905856.0,10.0,Inactive,True
 00-0041052,13414,4696044,BlacKa00,Kaelon Black,SF,RB,25.1,0,2026,90.0,ACT,,,,,,,1794236128071.0,2.0,Active,True
 00-0041056,13303,4685413,KlubCa00,Cade Klubnik,NYJ,QB,23.1,0,2026,110.0,ACT,,,,,,,1788203114293.0,3.0,Active,True
 00-0041067,13420,4879276,LancBr00,Bryce Lance,NO,WR,24.2,0,2026,136.0,ACT,,,,,,,1793059226751.0,4.0,Active,True
@@ -846,13 +846,13 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041132,13333,4683151,BurkDe02,Deion Burks,IND,WR,23.8,0,2026,254.0,ACT,,,,,,,1794347719304.0,4.0,Active,True
 00-0041149,13415,4428993,KingHa00,Haynes King,CAR,QB,25.8,0,2026,,ACT,Out,,Coach's Decision,,,,1794156619424.0,3.0,Active,True
 00-0041099,13533,4698597,BrowBa02,Barion Brown,NO,WR,22.9,0,2026,190.0,ACT,,,,,,,1794197425358.0,5.0,Active,True
-00-0041100,13394,4879194,CameJo01,Josh Cameron,JAX,WR,23.6,0,2026,191.0,ACT,,,,,,,1793988016259.0,4.0,Active,True
+00-0041100,13394,4879194,CameJo01,Josh Cameron,JAX,WR,23.7,0,2026,191.0,ACT,,,,,,,1793988016259.0,4.0,Active,True
 00-0041104,13347,4832846,ClaiDe00,Demond Claiborne,MIN,RB,23.1,0,2026,198.0,RES,IR,,Knee,,,,1794269755741.0,5.0,Inactive,True
-00-0041106,13554,5085024,WillCJ00,C.J. Williams,JAX,WR,24.0,0,2026,203.0,ACT,Out,,Coach's Decision,,,,1790527253607.0,8.0,Active,True
+00-0041106,13554,5085024,WillCJ00,C.J. Williams,JAX,WR,24.1,0,2026,203.0,ACT,Out,,Coach's Decision,,,,1790527253607.0,8.0,Active,True
 00-0041116,13282,5085189,EndrJa00,Jack Endries,CIN,TE,22.6,0,2026,221.0,ACT,,,,,,,1793594142309.0,4.0,Active,True
 00-0041117,13557,4432722,KaliAt00,Athan Kaliakmanis,WAS,QB,23.2,0,2026,223.0,ACT,Out,,Coach's Decision,,,,1794158419698.0,4.0,Active,True
 00-0041123,13295,4431465,MortBe00,Behren Morton,NE,QB,24.8,0,2026,234.0,ACT,Out,,Coach's Decision,,,,1794169221243.0,3.0,Active,True
-00-0041125,13424,4686468,McGoSe01,Seth McGowan,IND,RB,25.0,0,2026,237.0,ACT,,,,,,,1794236728110.0,2.0,Active,True
+00-0041125,13424,4686468,McGoSe01,Seth McGowan,IND,RB,25.1,0,2026,237.0,ACT,,,,,,,1794236728110.0,2.0,Active,True
 00-0034959,6323,3125107,BeckAn01,Andrew Beck,NYJ,RB,30.5,7,2019,,ACT,,,,,,,1781216403497.0,4.0,Active,True
 00-0034960,5947,3916433,MeyeJa01,Jakobi Meyers,JAX,WR,30.0,7,2019,,ACT,,,,,,,1794018007107.0,2.0,Active,True
 00-0034975,5995,4038441,HillJu00,Justice Hill,BAL,RB,29.0,7,2019,113.0,ACT,,,,,,,1794324949409.0,2.0,Active,True
@@ -893,7 +893,7 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0041220,13645,,,Michael Wortham,JAX,WR,24.4,0,2026,,DEV,,,,,,,1788315025464.0,,Active,True
 00-0041397,13491,5081338,WetjKa00,Kaden Wetjen,PIT,WR,24.7,0,2026,121.0,ACT,,,,,,,1787899857819.0,4.0,Active,True
 00-0041398,13433,4693370,NowaRi00,Riley Nowakowski,PIT,RB,24.4,0,2026,169.0,ACT,,,,,,,1781216404734.0,5.0,Active,True
-00-0041399,,4605951,DaniCJ00,CJ Daniels,LA,WR,24.8,0,2026,197.0,ACT,,,,,,,,,,
+00-0041399,,4605951,DaniCJ00,CJ Daniels,LA,WR,24.9,0,2026,197.0,ACT,,,,,,,,,,
 00-0041414,,,,Matthew Caldwell,LA,QB,23.5,0,2026,,RES,,,,,,,,,,
 00-0041415,13315,5082269,ConnDe00,Dean Connors,LA,RB,23.2,0,2026,,RES,IR,Surgery,Hand,,,,1793769032625.0,5.0,Inactive,True
 00-0041422,13321,4608858,VillDa00,Dan Villari,LA,TE,24.4,0,2026,,DEV,,,,,,,1788318026098.0,,Active,True
@@ -922,13 +922,13 @@ gsis_id,sleeper_id,espn_id,pfr_id,name,team,position,age,years_exp,rookie_year,d
 00-0033854,4718,2983509,OgunDa00,Dare Ogunbowale,HOU,RB,32.5,9,2017,,ACT,,,,,,,1794060309937.0,3.0,Active,True
 00-0033858,4144,3054212,SmitJo01,Jonnu Smith,GB,TE,31.2,9,2017,100.0,ACT,,,,,,,1793315105382.0,2.0,Active,True
 00-0033869,3976,3039707,TrubMi00,Mitchell Trubisky,TEN,QB,32.2,9,2017,2.0,ACT,,,,,,,1788994847353.0,2.0,Active,True
-00-0033873,4046,3139477,MahoPa00,Patrick Mahomes,KC,QB,31.1,9,2017,10.0,ACT,Questionable,,Elbow,,,,1794250547402.0,1.0,Active,True
+00-0033873,4046,3139477,MahoPa00,Patrick Mahomes,KC,QB,31.2,9,2017,10.0,ACT,Questionable,,Elbow,,,,1794250547402.0,1.0,Active,True
 00-0033885,4033,3123076,NjokDa00,David Njoku,LAC,TE,30.3,9,2017,29.0,RES,IR,,Lower Leg,,,,1794164720415.0,4.0,Inactive,True
 00-0033891,4080,3059722,JoneZa00,Zay Jones,ARI,WR,31.6,9,2017,37.0,DEV,,,,,,,1793231125014.0,,Active,True
 00-0033526,4147,3116389,PeriSa00,Samaje Perine,CIN,RB,31.2,9,2017,114.0,ACT,,,,,,,1794278144602.0,2.0,Active,True
 00-0033537,4017,3122840,WatsDe00,Deshaun Watson,CLE,QB,31.2,9,2017,12.0,ACT,Out,,Concussion,,,,1794255045987.0,2.0,Active,True
 00-0033553,4137,3045147,ConnJa00,James Conner,ARI,RB,31.5,9,2017,105.0,RES,IR,,Foot,,,,1794326749460.0,4.0,Inactive,True
-00-0033555,4177,2991662,HollMa00,Mack Hollins,NE,WR,33.1,9,2017,118.0,ACT,,,,,,,1794282044760.0,2.0,Active,True
+00-0033555,4177,2991662,HollMa00,Mack Hollins,NE,WR,33.2,9,2017,118.0,ACT,,,,,,,1794282044760.0,2.0,Active,True
 00-0033576,4189,2975863,SaubEr00,Eric Saubert,SEA,TE,32.5,9,2017,174.0,ACT,,,,,,,1790560258965.0,2.0,Active,True
 00-0033589,4274,4212909,MoorDa03,David Moore,CAR,WR,31.8,9,2017,226.0,ACT,,,,,,,1794343518897.0,,Active,True
 00-0033699,4663,3068267,EkelAu00,Austin Ekeler,WAS,RB,31.5,9,2017,,ACT,,,,,,,1794276344651.0,2.0,Active,True

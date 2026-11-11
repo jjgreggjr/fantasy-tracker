@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 10
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-10 23:40 UTC · baselines: 2026 only · lineup as of 2026-11-10T23:41:02Z
+Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:30Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -148,8 +148,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 2 (was 3) | 68% | WR2 on depth chart; up from 3; snap share trending +25%/wk; team passes #10; age 26 |
-| Tank Dell | WR | HOU | 27.0 | 3 | 3 (was 4) | 35% | WR3 on depth chart; up from 4; snap share trending +24%/wk; team passes #10; age 27 |
+| Xavier Hutchinson | WR | HOU | 26.4 | 3 | 2 (was 2) | 68% | WR2 on depth chart; snap share trending +25%/wk; team passes #10; age 26 |
+| Tank Dell | WR | HOU | 27.0 | 3 | 3 (was 3) | 35% | WR3 on depth chart; snap share trending +24%/wk; team passes #10; age 27 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 24% | RB2 on depth chart; snap share trending +10%/wk; age 25 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +9%/wk; team passes #1; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +8%/wk; team passes #6; age 27 |
