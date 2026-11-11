@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 10
 
 dynasty · 31 roster slots  
-Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:30Z
+Generated 2026-11-11 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-11T21:14:31Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -10,19 +10,20 @@ Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-1
 
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
+- Carson Beck: depth charts disagree (ESPN 1 vs Sleeper 3) — his listed rank may reflect availability, not role
 - George Pickens: depth charts disagree (ESPN 2 vs Sleeper 4) — his listed rank may reflect availability, not role
 - TreVeyon Henderson: depth charts disagree (ESPN 2 vs Sleeper 5) — his listed rank may reflect availability, not role
 - Makai Lemon: depth charts disagree (ESPN 3 vs Sleeper 1) — his listed rank may reflect availability, not role
 - Rashid Shaheed: depth charts disagree (ESPN 2 vs Sleeper 5) — his listed rank may reflect availability, not role
 - Carnell Tate: depth charts disagree (ESPN 1 vs Sleeper 7) — his listed rank may reflect availability, not role
-- Ricky Pearsall: 19% of the volume ahead of him belongs to players unlikely to play (Mike Evans (out); Deebo Samuel (out); Demarcus Robinson (healthy); Jordan Watkins (healthy); Brandin Cooks (healthy); Jacob Cowing (healthy); Brandon Aiyuk (dnr); De'Zhaun Stribling (ir); Christian Kirk (ir))
+- Ricky Pearsall: 19% of the volume ahead of him belongs to players unlikely to play (Mike Evans (out); Deebo Samuel (out); Keenan Allen (healthy); Demarcus Robinson (healthy); Jordan Watkins (healthy); Brandin Cooks (healthy); Jacob Cowing (healthy); Brandon Aiyuk (dnr); De'Zhaun Stribling (ir); Christian Kirk (ir))
 - George Pickens: OUT (Hamstring) — his depth rank of 2 reflects that, not his role
 - Jayden Reed: IR (Neck) — his depth rank of 8 reflects that, not his role
 - Jaylin Noel: IR (Toe) — his depth rank of 7 reflects that, not his role
-- Xavier Worthy: OUT (Hamstring) — his depth rank of 2 reflects that, not his role
+- Xavier Worthy: OUT (Hamstring) — his depth rank of 3 reflects that, not his role
 - TreVeyon Henderson: OUT (Illness) — his depth rank of 2 reflects that, not his role
 - Rashid Shaheed: OUT (Knee) — his depth rank of 2 reflects that, not his role
-- Ricky Pearsall: IR (Knee - PCL) — his depth rank of 10 reflects that, not his role
+- Ricky Pearsall: IR (Knee - PCL) — his depth rank of 11 reflects that, not his role
 - Carnell Tate: OUT (Shoulder) — his depth rank of 1 reflects that, not his role
 - Jayden Reed: REPEAT DNP — 0 opportunities in weeks 8,9 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - TreVeyon Henderson: REPEAT DNP — 0 opportunities in weeks 8,9 and no Full practice this week (play_prob 0.00; E_pts blanked)
@@ -35,7 +36,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Matthew Stafford | QB | LA | ARI | 17.8 | 1.5 |  | 1 | 10 | High |  |
-| Carson Beck | QB | ARI | LA | 11.1 | 3.2 |  | 2 | 23 | Med |  |
+| Carson Beck | QB | ARI | LA | 11.1 | 3.2 |  | 1 | 23 | Med |  |
 | Bo Nix | QB | DEN | BYE |  | 0.0 |  | 1 |  | Low | BYE |
 | Bhayshul Tuten | RB | JAX | TEN | 16.7 | 18.5 | 53% | 1 | 10 | High |  |
 | Zach Charbonnet | RB | SEA | LV | 16.4 | 15.2 | 46% | 1 | 2 | High |  |
@@ -57,11 +58,11 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tory Horton | WR | SEA | LV | 2.9 | 1.6 | 5% | 4 | 6 | Low |  |
 | Makai Lemon | WR | PHI | BYE |  | 0.0 |  | 3 |  | Low | BYE |
 | Jaylin Noel | WR | HOU | CLE |  | 0.0 |  | 7 | 30 | Low | IR |
-| Xavier Worthy | WR | KC | ATL |  | 0.0 |  | 2 | 17 | Low | OUT |
+| Xavier Worthy | WR | KC | ATL |  | 0.0 |  | 3 | 17 | Low | OUT |
 | Carnell Tate | WR | TEN | JAX |  | 7.8 | 25% | 1 | 19 | Low | OUT |
 | Rashid Shaheed | WR | SEA | LV |  | 4.1 | 11% | 2 | 6 | Low | OUT |
 | George Pickens | WR | DAL | SF |  | 7.7 | 21% | 2 | 25 | Low | OUT |
-| Ricky Pearsall | WR | SF | DAL |  | 0.0 |  | 10 | 9 | Low | IR |
+| Ricky Pearsall | WR | SF | DAL |  | 0.0 |  | 11 | 9 | Low | IR |
 | Rome Odunze | WR | CHI | BYE |  | 0.0 |  | 2 |  | Low | BYE |
 | Jayden Reed | WR | GB | MIN |  | 0.0 |  | 8 | 29 | Low | IR |
 
@@ -69,7 +70,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 ### Why each call
 
 - **Matthew Stafford** — 1.5 exp opps (proj 1, recent 1) · QB1 · vs ARI (DvP 10, +5%) · High confidence
-- **Carson Beck** — 3.2 exp opps (proj 3) · QB2 · vs LA (DvP 23, -5%) · Med confidence
+- **Carson Beck** — 3.2 exp opps (proj 3) · QB1 · vs LA (DvP 23, -5%) · Med confidence
 - **Bo Nix** — 0.0 exp opps (proj 0, recent 5) · QB1 · TD regress +0.3 (season 3.8%/opp -> 4.1%) · Low confidence · BYE
 - **Bhayshul Tuten** — 18.5 exp opps (proj 19, recent 15) · RB1 · 53% of team carries · vs TEN (DvP 10, +5%) · TD regress -0.6 (season 5.1%/opp -> 4.5%) · High confidence
 - **Zach Charbonnet** — 15.2 exp opps (proj 15, recent 14) · RB1 · 46% of team carries · vs LV (DvP 2, +11%) · TD regress +2.0 (season 0.0%/opp -> 2.2%) · High confidence
@@ -95,29 +96,29 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Joe Fagnano | QB | BAL | LAC | 2.8 | 0.0 |  | 2 | 14 | Low |  |
-| Kyle McCord | QB | MIA | IND | 12.3 | 2.2 |  | 2 | 18 | Med | 🔥 |
-| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 3 | 20 | Med |  |
+| Kyle McCord | QB | MIA | IND | 12.3 | 2.2 |  | 1 | 18 | Med | 🔥 |
+| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 4 | 20 | Med |  |
 | Tommy DeVito | QB | NE | DET | 0.7 | 0.0 |  | 2 | 22 | High |  |
+| Tua Tagovailoa | QB | ATL | KC | 0.5 | 0.0 |  | 2 | 24 | Low |  |
 | Stetson Bennett | QB | LA | ARI | 0.5 | 0.0 |  | 2 | 10 | Med |  |
-| Quinn Ewers | QB | JAX | TEN | 0.5 | 0.0 |  | 2 | 1 | High |  |
 | Austin Ekeler | RB | WAS | NYG | 9.0 | 10.5 | 31% | 2 | 28 | High |  |
-| Corey Kiner | RB | NE | DET | 8.9 | 11.6 | 40% | 3 | 28 | Low | 🔥 |
 | Pierre Strong | RB | GB | MIN | 8.3 | 7.8 | 22% | 4 | 5 | Med | 🔥 |
 | Justice Hill | RB | BAL | LAC | 7.9 | 7.5 | 18% | 2 | 12 | Med | 🔥 |
 | Ty Johnson | RB | BUF | NYJ | 6.3 | 5.2 | 11% | 2 | 9 | High |  |
 | Samaje Perine | RB | CIN | PIT | 6.0 | 7.7 | 23% | 2 | 27 | High |  |
+| Lan Larison | RB | NE | DET | 6.0 | 5.4 | 15% | 4 | 28 | Low |  |
 | Mark Andrews | TE | BAL | LAC | 9.8 | 5.4 | 18% | 1 | 31 | High |  |
 | Darren Waller | TE | CAR | NO | 9.7 | 4.3 | 13% | 2 | 8 | High | 🔥 |
 | Greg Dulcich | TE | MIA | IND | 9.4 | 4.2 | 16% | 1 | 18 | High |  |
 | Darnell Washington | TE | PIT | CIN | 8.8 | 3.9 | 12% | 1 | 11 | High |  |
 | Elijah Higgins | TE | ARI | LA | 8.6 | 3.5 | 12% | 2 | 5 | Med |  |
 | Brevyn Spann-Ford | TE | DAL | SF | 11.1 | 4.5 | 13% | 2 | 2 | Med |  |
-| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 3 | 9 | Med | 🔥 |
-| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 5 | 15 | Low |  |
-| Tutu Atwell | WR | LA | ARI | 8.2 | 4.5 | 18% | 2 | 24 | High | 🔥 |
-| Laquon Treadwell | WR | IND | MIA | 8.2 | 4.5 | 12% | 3 | 15 | Low |  |
-| Konata Mumpfield | WR | LA | ARI | 7.7 | 5.0 | 20% | 3 | 24 | Low | 🔥 |
-| Reggie Virgil | WR | ARI | LA | 7.7 | 4.9 | 16% | 1 | 22 | Med |  |
+| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 4 | 9 | Med | 🔥 |
+| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 2 | 15 | Low | 🔥 |
+| Laquon Treadwell | WR | IND | MIA | 8.2 | 4.5 | 12% | 1 | 15 | Low | 🔥 |
+| Tutu Atwell | WR | LA | ARI | 8.2 | 4.5 | 18% | 3 | 24 | Med | 🔥 |
+| Quentin Johnston | WR | LAC | BAL | 7.6 | 4.9 | 17% | 2 | 11 | High |  |
+| Rashod Bateman | WR | BAL | LAC | 6.2 | 3.5 | 12% | 2 | 3 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
@@ -129,10 +130,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 24% | RB2 on depth chart; snap share trending +10%/wk; age 25 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +9%/wk; team passes #1; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +8%/wk; team passes #6; age 27 |
+| Deion Burks | WR | IND | 23.8 | 0 | 2 (was 5) | 23% | WR2 on depth chart; up from 5; snap share trending +8%/wk; team passes #13; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 42% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 24 |
 | Davis Allen | TE | LA | 25.8 | 3 | 3 (was 3) | 72% | TE3 on depth chart; snap share trending +5%/wk; team passes #3; age 26 |
-| Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 15% | RB3 on depth chart; age 25 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 24% | RB2 on depth chart; age 26 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 46% | WR3 on depth chart; team passes #7; age 26 |
 | Jordan James | RB | SF | 22.6 | 1 | 3 (was 3) | 7% | RB3 on depth chart; age 23 |

@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 10
 
 redraft · 17 roster slots  
-Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:46Z
+Generated 2026-11-11 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-11T21:14:45Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -58,10 +58,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
+| Aaron Rodgers | QB | PIT | CIN | 18.1 | 1.2 |  | 1 | 13 | High | 🔥 |
 | Drew Lock | QB | SEA | LV | 15.5 | 2.6 |  | 2 | 5 | Low |  |
 | Justin Herbert | QB | LAC | BAL | 15.3 | 4.6 |  | 1 | 6 | Low |  |
 | Geno Smith | QB | NYJ | BUF | 14.6 | 2.8 |  | 1 | 32 | Med |  |
-| C.J. Stroud | QB | HOU | CLE | 14.3 | 3.0 |  | 1 | 27 | Med | 🔥 |
 | Daniel Jones | QB | IND | MIA | 13.7 | 3.6 |  | 1 | 16 | High |  |
 | Jacoby Brissett | QB | BAL | LAC | 13.6 | 3.8 |  | 1 | 14 | High |  |
 | Dylan Sampson | RB | CLE | HOU | 9.2 | 8.2 | 20% | 2 | 3 | Med |  |
@@ -77,10 +77,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | AJ Barner | TE | SEA | LV | 8.1 | 5.1 | 15% | 1 | 9 | High |  |
 | Mark Andrews | TE | BAL | LAC | 8.1 | 5.4 | 18% | 1 | 31 | High |  |
 | Malik Washington | WR | MIA | IND | 9.5 | 6.9 | 22% | 1 | 27 | High |  |
-| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 3 | 9 | Med | 🔥 |
+| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 4 | 9 | Med | 🔥 |
 | Ryan Flournoy | WR | DAL | SF | 8.6 | 5.3 | 15% | 3 | 25 | Med | 🔥 |
-| Jordyn Tyson | WR | NO | CAR | 8.5 | 4.4 | 12% | 3 | 7 | Med | 🔥 |
-| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 5 | 15 | Low |  |
+| Jordyn Tyson | WR | NO | CAR | 8.5 | 4.4 | 12% | 3 | 7 | Med |  |
+| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 2 | 15 | Low | 🔥 |
 | KC Concepcion | WR | CLE | HOU | 11.0 | 7.7 | 23% | 2 | 16 | Med | 🔥 |
 
 
@@ -96,13 +96,13 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dylan Sampson | RB | CLE | 22.2 | 1 | 2 (was 2) | 55% | RB2 on depth chart; snap share trending +9%/wk; age 22 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +9%/wk; team passes #1; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +8%/wk; team passes #6; age 27 |
+| Deion Burks | WR | IND | 23.8 | 0 | 2 (was 5) | 23% | WR2 on depth chart; up from 5; snap share trending +8%/wk; team passes #13; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 42% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 24 |
 | Davis Allen | TE | LA | 25.8 | 3 | 3 (was 3) | 72% | TE3 on depth chart; snap share trending +5%/wk; team passes #3; age 26 |
 | Mike Washington Jr. | RB | LV | 23.4 | 0 | 2 (was 2) | 40% | RB2 on depth chart; age 23 |
 | Isaac TeSlaa | WR | DET | 24.7 | 1 | 3 (was 3) | 51% | WR3 on depth chart; team passes #12; age 25 |
 | Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 15% | RB3 on depth chart; age 25 |
-| Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 24% | RB2 on depth chart; age 26 |
 
 
 ## Ask me

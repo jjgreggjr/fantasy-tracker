@@ -1,20 +1,20 @@
 # Week 10 digest — 2026
 
-Generated 2026-11-11 00:13 UTC  
+Generated 2026-11-11 21:14 UTC  
 Stats through: **Week 9** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-10T15:32:14Z
+- depth chart snapshot: 2026-11-11T07:02:21Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 958
 - Sleeper players cache: 2026-11-11
-- projections: 871 players (Sleeper, 2026-11-11T00:13:36Z)
-- league rosters: 3 leagues, lineups read 2026-11-11T00:13:29Z
-- ESPN rosters: Average Joes (2026-11-11T00:13:46Z)
-- status rows: 1538 players; 0 with practice reports
+- projections: 871 players (Sleeper, 2026-11-11T21:14:35Z)
+- league rosters: 3 leagues, lineups read 2026-11-11T21:14:31Z
+- ESPN rosters: Average Joes (2026-11-11T21:14:45Z)
+- status rows: 1534 players; 16 with practice reports
 - gameday inactives: 0 on the week 10 list (games not yet started)
 
 ### Data integrity
@@ -37,7 +37,7 @@ All 19 checks passed.
 
 **Needs a decision:** TreVeyon Henderson (OUT), Kenny Gainwell (BYE), Jaylin Noel (IR), Ted Hurst III (BYE), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** Kyle McCord (QB, 11.7), Shedeur Sanders (QB, -0.5), DJ Uiagalelei (QB, -2.6)
+**Trending and still free here:** Kyle McCord (QB, 11.7), DJ Uiagalelei (QB, -2.6), Corey Kiner (RB, 8.9)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -50,7 +50,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Matthew Stafford | QB | LA | ARI | 17.8 | 1.5 |  | 1 | 10 | High |  |
-| Carson Beck | QB | ARI | LA | 11.1 | 3.2 |  | 2 | 23 | Med |  |
+| Carson Beck | QB | ARI | LA | 11.1 | 3.2 |  | 1 | 23 | Med |  |
 | Bhayshul Tuten | RB | JAX | TEN | 16.7 | 18.5 | 53% | 1 | 10 | High |  |
 | Zach Charbonnet | RB | SEA | LV | 16.4 | 15.2 | 46% | 1 | 2 | High |  |
 | Quinshon Judkins | RB | CLE | HOU | 12.3 | 17.6 | 56% | 1 | 3 | High |  |
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Bo Nix (BYE), D'Andre Swift (BYE), TreVeyon Henderson (OUT), Makai Lemon (BYE), Jaylin Noel (IR), Xavier Worthy (OUT), Carnell Tate (OUT), Rashid Shaheed (OUT), George Pickens (OUT), Ricky Pearsall (IR), Rome Odunze (BYE), Jayden Reed (IR)
 
-**Trending and still free here:** Kyle McCord (QB, 12.3), Shedeur Sanders (QB, -0.5), DJ Uiagalelei (QB, -2.6)
+**Trending and still free here:** Kyle McCord (QB, 12.3), DJ Uiagalelei (QB, -2.6), Pierre Strong (RB, 8.3)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -79,7 +79,7 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 **Needs a decision:** Bo Nix (BYE), Jaxson Dart (IR), David Montgomery (OUT), D'Andre Swift (BYE), Terry McLaurin (IR), Deebo Samuel Sr. (OUT), Chris Godwin Jr. (BYE), Zach Sieler (IR), Cairo Santos (BYE), Chase McLaughlin (BYE), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Tyler Bass (K, 8.2), Eddy Pineiro (K, 7.7), Jason Sanders (K, 6.9)
+**Trending and still free here:** Tyler Bass (K, 8.2), Jason Sanders (K, 6.9), Kyle McCord (QB, 11.7)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -100,7 +100,7 @@ Full report: `leagues/where-you-at/report.md`
 
 **Needs a decision:** Rhamondre Stevenson (OUT), Kyle Monangai (OUT), Puka Nacua (QUESTIONABLE)
 
-**Trending and still free here:** C.J. Stroud (QB, 14.3), Fernando Mendoza (QB, 12.6), Kyle McCord (QB, 11.7)
+**Trending and still free here:** Aaron Rodgers (QB, 18.1), Fernando Mendoza (QB, 12.6), Kyle McCord (QB, 11.7)
 
 
 Full report: `leagues/james-gregg-espn/report.md`
@@ -149,7 +149,7 @@ Per-game production **allowed**. Rank 1 = softest.
 | 2 | SF | 23.3 | 9.7 | 91.7 | 1.00 | 0.7 | 1.7 | 0.00 |
 | 3 | NYJ | 22.4 | 9.8 | 94.0 | 0.75 | 0.2 | 0.2 | 0.25 |
 | 4 | TEN | 16.9 | 8.0 | 65.3 | 1.00 | 0.0 | 0.0 | 0.00 |
-| 5 | LA | 16.4 | 10.2 | 82.0 | 0.00 | 0.0 | 0.0 | 0.00 |
+| 5 | LA | 16.5 | 10.2 | 82.2 | 0.00 | 0.0 | 0.0 | 0.00 |
 | 6 | BAL | 16.2 | 6.8 | 67.5 | 0.75 | 0.0 | 0.0 | 0.00 |
 | 7 | CHI | 16.0 | 8.0 | 60.2 | 0.75 | 0.0 | 0.0 | 0.00 |
 | 8 | NO | 15.8 | 6.3 | 55.0 | 1.00 | 0.0 | 0.0 | 0.00 |

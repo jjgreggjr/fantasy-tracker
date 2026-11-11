@@ -215,6 +215,24 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,drop,6768,Tua Tagovailoa,7
 2026,8,free_agent,add,KC,,6
 2026,8,free_agent,drop,CLE,,6
+2026,9,waiver,add,12718,Konata Mumpfield,4
+2026,9,waiver,drop,8119,Jahan Dotson,4
+2026,9,waiver,add,IND,,4
+2026,9,waiver,drop,NYG,,4
+2026,9,waiver,add,12524,Shedeur Sanders,4
+2026,9,waiver,drop,6011,Gardner Minshew,4
+2026,9,waiver,add,BAL,,6
+2026,9,waiver,drop,HOU,,6
+2026,9,waiver,add,11786,,6
+2026,9,waiver,drop,7042,,6
+2026,9,waiver,add,12491,Corey Kiner,1
+2026,9,waiver,drop,10955,,1
+2026,9,waiver,add,CIN,,8
+2026,9,waiver,drop,NE,,8
+2026,9,waiver,add,13297,Reggie Virgil,1
+2026,9,waiver,drop,3634,Kalif Raymond,1
+2026,9,waiver,add,11579,Audric Estimé,2
+2026,9,waiver,drop,7561,Elijah Mitchell,2
 2026,9,free_agent,add,NYG,,4
 2026,9,free_agent,drop,CIN,,4
 2026,9,free_agent,add,5854,Drew Lock,4
@@ -227,3 +245,5 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,10219,Chris Rodriguez Jr.,6
 2026,9,free_agent,add,7561,Elijah Mitchell,2
 2026,9,free_agent,drop,12457,Jaydon Blue,2
+2026,10,free_agent,add,12634,Jordan Watkins,2
+2026,10,free_agent,drop,9486,Dontayvion Wicks,2

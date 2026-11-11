@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 10
 
 redraft · 20 roster slots  
-Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:29Z
+Generated 2026-11-11 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-11T21:14:31Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -80,28 +80,28 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Joe Fagnano | QB | BAL | LAC | 2.8 | 0.0 |  | 2 | 14 | Low |  |
 | Drew Lock | QB | SEA | LV | 15.5 | 2.6 |  | 2 | 5 | Low |  |
-| Kyle McCord | QB | MIA | IND | 11.7 | 2.2 |  | 2 | 18 | Med | 🔥 |
-| Carson Beck | QB | ARI | LA | 10.2 | 3.2 |  | 2 | 23 | Med |  |
-| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 3 | 20 | Med |  |
+| Kyle McCord | QB | MIA | IND | 11.7 | 2.2 |  | 1 | 18 | Med | 🔥 |
+| Carson Beck | QB | ARI | LA | 10.2 | 3.2 |  | 1 | 23 | Med |  |
+| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 4 | 20 | Med |  |
 | Tommy DeVito | QB | NE | DET | 0.7 | 0.0 |  | 2 | 22 | High |  |
 | Austin Ekeler | RB | WAS | NYG | 9.0 | 10.5 | 31% | 2 | 28 | High |  |
 | Corey Kiner | RB | NE | DET | 8.9 | 11.6 | 40% | 3 | 28 | Low | 🔥 |
 | Pierre Strong | RB | GB | MIN | 8.3 | 7.8 | 22% | 4 | 5 | Med | 🔥 |
-| Kaleb Johnson | RB | GB | MIN | 7.9 | 11.6 | 39% | 3 | 5 | Med |  |
 | Justice Hill | RB | BAL | LAC | 7.9 | 7.5 | 18% | 2 | 12 | Med | 🔥 |
+| Kaleb Johnson | RB | GB | MIN | 7.9 | 11.6 | 39% | 3 | 5 | Med |  |
 | Emmett Johnson | RB | KC | ATL | 7.3 | 6.0 | 15% | 2 | 1 | Med | 🔥 |
 | Brevyn Spann-Ford | TE | DAL | SF | 9.3 | 4.5 | 13% | 2 | 2 | Med |  |
 | Mason Taylor | TE | NYJ | BUF | 7.5 | 4.8 | 15% | 1 | 13 | High |  |
-| Michael Mayer | TE | LV | SEA | 7.3 | 4.6 | 14% | 2 | 20 | High |  |
 | Darnell Washington | TE | PIT | CIN | 7.3 | 3.9 | 12% | 1 | 11 | High |  |
+| Michael Mayer | TE | LV | SEA | 7.3 | 4.6 | 14% | 2 | 20 | High |  |
 | Elijah Higgins | TE | ARI | LA | 7.1 | 3.5 | 12% | 2 | 5 | Med |  |
 | Colby Parkinson | TE | LA | ARI | 6.6 | 3.6 | 15% | 2 | 29 | Med |  |
-| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 3 | 9 | Med | 🔥 |
-| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 5 | 15 | Low |  |
-| Laquon Treadwell | WR | IND | MIA | 8.2 | 4.5 | 12% | 3 | 15 | Low |  |
-| Tutu Atwell | WR | LA | ARI | 8.2 | 4.5 | 18% | 2 | 24 | High | 🔥 |
+| Demarcus Robinson | WR | SF | DAL | 8.7 | 4.7 | 17% | 4 | 9 | Med | 🔥 |
+| Deion Burks | WR | IND | MIA | 8.4 | 4.5 | 12% | 2 | 15 | Low | 🔥 |
+| Laquon Treadwell | WR | IND | MIA | 8.2 | 4.5 | 12% | 1 | 15 | Low | 🔥 |
+| Tutu Atwell | WR | LA | ARI | 8.2 | 4.5 | 18% | 3 | 24 | Med | 🔥 |
 | Reggie Virgil | WR | ARI | LA | 7.7 | 4.9 | 16% | 1 | 22 | Med |  |
-| Konata Mumpfield | WR | LA | ARI | 7.7 | 5.0 | 20% | 3 | 24 | Low | 🔥 |
+| Konata Mumpfield | WR | LA | ARI | 7.7 | 5.0 | 20% | 2 | 24 | Low | 🔥 |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
@@ -114,6 +114,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 24% | RB2 on depth chart; snap share trending +10%/wk; age 25 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +9%/wk; team passes #1; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +8%/wk; team passes #6; age 27 |
+| Deion Burks | WR | IND | 23.8 | 0 | 2 (was 5) | 23% | WR2 on depth chart; up from 5; snap share trending +8%/wk; team passes #13; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 42% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 24 |
 | Davis Allen | TE | LA | 25.8 | 3 | 3 (was 3) | 72% | TE3 on depth chart; snap share trending +5%/wk; team passes #3; age 26 |
@@ -122,7 +123,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 24% | RB2 on depth chart; age 26 |
 | Emmett Johnson | RB | KC | 23.1 | 0 | 2 (was 2) | 25% | RB2 on depth chart; age 23 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 46% | WR3 on depth chart; team passes #7; age 26 |
-| Jordan James | RB | SF | 22.6 | 1 | 3 (was 3) | 7% | RB3 on depth chart; age 23 |
 
 
 ## Ask me

@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 10
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-11 00:13 UTC · baselines: 2026 only · lineup as of 2026-11-11T00:13:30Z
+Generated 2026-11-11 21:14 UTC · baselines: 2026 only · lineup as of 2026-11-11T21:14:31Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -105,42 +105,42 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dexter Lawrence | DL | CIN | PIT | 6.4 | 4.0 |  |  |  | High |  |
 | Byron Murphy II | DL | SEA | LV | 6.0 | 3.0 |  |  |  | High |  |
 | Milton Williams | DL | NE | DET | 5.2 | 2.3 |  |  |  | High |  |
-| Osa Odighizuwa | DL | SF | DAL | 5.1 | 1.7 |  |  |  | High |  |
+| Chris Jones | DL | KC | ATL | 5.1 | 4.0 |  |  |  | High |  |
+| Jason Myers | K | SEA | LV | 8.4 | 3.3 |  |  |  | High |  |
 | Tyler Bass | K | BUF | NYJ | 8.2 | 6.0 |  |  |  | High | 🔥 |
 | Dominic Zvada | K | NYG | WAS | 8.1 | 4.3 |  |  |  | High |  |
-| Eddy Pineiro | K | SF | DAL | 7.7 | 4.3 |  |  |  | High | 🔥 |
+| Eddy Pineiro | K | SF | DAL | 7.7 | 4.3 |  |  |  | High |  |
 | Ryan Fitzgerald | K | CAR | NO | 7.7 | 3.0 |  |  |  | High |  |
 | Drew Stevens | K | WAS | NYG | 7.5 | 4.0 |  |  |  | High |  |
-| Charlie Smyth | K | NO | CAR | 7.4 | 6.0 |  |  |  | High |  |
 | Ernest Jones | LB | SEA | LV | 9.0 | 9.7 |  |  |  | High |  |
 | Nate Landman | LB | LA | ARI | 8.7 | 7.0 |  |  |  | High |  |
 | Drue Tranquill | LB | KC | ATL | 8.1 | 10.0 |  |  |  | High |  |
-| Payton Wilson | LB | PIT | CIN | 7.8 | 8.3 |  |  |  | High |  |
 | Ventrell Miller | LB | JAX | TEN | 7.8 | 5.0 |  |  |  | High |  |
+| Payton Wilson | LB | PIT | CIN | 7.8 | 8.3 |  |  |  | High |  |
 | Daiyan Henley | LB | LAC | BAL | 7.7 | 6.3 |  |  |  | Med |  |
 | Joe Fagnano | QB | BAL | LAC | 2.8 | 0.0 |  | 2 | 14 | Low |  |
 | Drew Lock | QB | SEA | LV | 15.5 | 2.6 |  | 2 | 5 | Low |  |
 | Daniel Jones | QB | IND | MIA | 13.7 | 3.6 |  | 1 | 16 | High |  |
-| Kyle McCord | QB | MIA | IND | 11.7 | 2.2 |  | 2 | 18 | Med | 🔥 |
-| Carson Beck | QB | ARI | LA | 10.2 | 3.2 |  | 2 | 23 | Med |  |
-| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 3 | 20 | Med |  |
-| Corey Kiner | RB | NE | DET | 8.2 | 11.6 | 40% | 3 | 28 | Low | 🔥 |
+| Kyle McCord | QB | MIA | IND | 11.7 | 2.2 |  | 1 | 18 | Med | 🔥 |
+| Carson Beck | QB | ARI | LA | 10.2 | 3.2 |  | 1 | 23 | Med |  |
+| Max Brosmer | QB | MIN | GB | 1.2 | 0.0 |  | 4 | 20 | Med |  |
 | Pierre Strong | RB | GB | MIN | 7.5 | 7.8 | 22% | 4 | 5 | Med | 🔥 |
 | Ty Johnson | RB | BUF | NYJ | 5.5 | 5.2 | 11% | 2 | 9 | High |  |
 | Lan Larison | RB | NE | DET | 5.4 | 5.4 | 15% | 4 | 28 | Low |  |
 | Samaje Perine | RB | CIN | PIT | 5.2 | 7.7 | 23% | 2 | 27 | High |  |
 | Khalil Herbert | RB | ATL | KC | 5.1 | 6.9 | 21% | 2 | 23 | Med |  |
+| Sione Vaki | RB | DET | NE | 3.9 | 4.9 | 14% | 2 | 31 | Med |  |
 | Brevyn Spann-Ford | TE | DAL | SF | 7.4 | 4.5 | 13% | 2 | 2 | Med |  |
 | Tyler Higbee | TE | LA | ARI | 7.0 | 4.4 | 18% | 1 | 29 | High | 🔥 |
 | Darnell Washington | TE | PIT | CIN | 5.9 | 3.9 | 12% | 1 | 11 | High |  |
 | Elijah Higgins | TE | ARI | LA | 5.6 | 3.5 | 12% | 2 | 5 | Med |  |
 | Eli Raridon | TE | NE | DET | 4.4 | 2.8 | 9% | 2 | 15 | Med |  |
 | Oronde Gadsden II | TE | LAC | BAL | 4.4 | 2.8 | 10% | 2 | 6 | Med |  |
-| Tutu Atwell | WR | LA | ARI | 7.1 | 4.5 | 18% | 2 | 24 | High | 🔥 |
-| Demarcus Robinson | WR | SF | DAL | 7.1 | 4.7 | 17% | 3 | 9 | Med | 🔥 |
-| Deion Burks | WR | IND | MIA | 7.0 | 4.5 | 12% | 5 | 15 | Low |  |
-| Laquon Treadwell | WR | IND | MIA | 6.8 | 4.5 | 12% | 3 | 15 | Low |  |
-| Konata Mumpfield | WR | LA | ARI | 6.6 | 5.0 | 20% | 3 | 24 | Low | 🔥 |
+| Tutu Atwell | WR | LA | ARI | 7.1 | 4.5 | 18% | 3 | 24 | Med | 🔥 |
+| Demarcus Robinson | WR | SF | DAL | 7.1 | 4.7 | 17% | 4 | 9 | Med | 🔥 |
+| Deion Burks | WR | IND | MIA | 7.0 | 4.5 | 12% | 2 | 15 | Low | 🔥 |
+| Laquon Treadwell | WR | IND | MIA | 6.8 | 4.5 | 12% | 1 | 15 | Low | 🔥 |
+| Konata Mumpfield | WR | LA | ARI | 6.6 | 5.0 | 20% | 2 | 24 | Low | 🔥 |
 | Reggie Virgil | WR | ARI | LA | 6.4 | 4.9 | 16% | 1 | 22 | Med |  |
 
 
@@ -149,20 +149,20 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
 | Xavier Hutchinson | WR | HOU | 26.4 | 3 | 2 (was 2) | 68% | WR2 on depth chart; snap share trending +25%/wk; team passes #10; age 26 |
-| Tank Dell | WR | HOU | 27.0 | 3 | 3 (was 3) | 35% | WR3 on depth chart; snap share trending +24%/wk; team passes #10; age 27 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 24% | RB2 on depth chart; snap share trending +10%/wk; age 25 |
 | Elijah Higgins | TE | ARI | 26.0 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +9%/wk; team passes #1; age 26 |
 | Brevyn Spann-Ford | TE | DAL | 26.9 | 2 | 2 (was 2) | 70% | TE2 on depth chart; snap share trending +8%/wk; team passes #6; age 27 |
+| Deion Burks | WR | IND | 23.8 | 0 | 2 (was 5) | 23% | WR2 on depth chart; up from 5; snap share trending +8%/wk; team passes #13; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 42% | TE2 on depth chart; snap share trending +6%/wk; team passes #16; age 24 |
 | Davis Allen | TE | LA | 25.8 | 3 | 3 (was 3) | 72% | TE3 on depth chart; snap share trending +5%/wk; team passes #3; age 26 |
-| Corey Kiner | RB | NE | 24.8 | 1 | 3 (was 3) | 15% | RB3 on depth chart; age 25 |
 | Tyler Goodson | RB | DAL | 26.0 | 4 | 2 (was 2) | 24% | RB2 on depth chart; age 26 |
 | Dohnte Meyers | WR | CIN | 26.3 | 0 | 3 (was 3) | 46% | WR3 on depth chart; team passes #7; age 26 |
 | Jordan James | RB | SF | 22.6 | 1 | 3 (was 3) | 7% | RB3 on depth chart; age 23 |
 | Oscar Delp | TE | NO | 23.3 | 0 | 3 (was 3) | 29% | TE3 on depth chart; team passes #4; age 23 |
 | Dylan Laube | RB | LV | 26.9 | 2 | 3 (was 3) | 1% | RB3 on depth chart; age 27 |
 | Theo Johnson | TE | NYG | 25.7 | 2 | 2 (was 2) | 87% | TE2 on depth chart; team passes #15; age 26 |
+| Konata Mumpfield | WR | LA | 24.0 | 1 | 2 (was 3) | 46% | WR2 on depth chart; up from 3; team passes #3; age 24 |
 
 
 ## Ask me
