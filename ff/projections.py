@@ -125,6 +125,14 @@ def build(season: int, week: int, players: pd.DataFrame, raw_dir: Path,
     for c in ["proj_carries", "proj_targets"]:
         out[c] = pd.to_numeric(out[c], errors="coerce")
     out["proj_opps"] = out.proj_carries.fillna(0) + out.proj_targets.fillna(0)
+    # A row with no stats at all (carries, targets and every projected-points column blank) is no projection, not a
+    # projected zero: leave proj_opps NaN so score.compute takes the trailing branch. A real 0 stays 0.
+    pts_cols = [c for c in ("proj_pts_ppr", "proj_pts_half", "proj_pts_std") if c in out.columns]
+    blank = out.proj_carries.isna() & out.proj_targets.isna()
+    for c in pts_cols:
+        out[c] = pd.to_numeric(out[c], errors="coerce")
+        blank &= out[c].isna()
+    out.loc[blank, "proj_opps"] = np.nan
 
     # committee share: a player's slice of his own team's projected volume
     tot_car = out.groupby("team").proj_carries.transform("sum")

@@ -214,6 +214,12 @@ class Values(unittest.TestCase):
         self.assertTrue(math.isnan(f["mkt_vs_xfp_l3"]))
         self.assertEqual(f["mkt_pts_ppr"], 21.4)
 
+    def test_a_present_row_with_every_stat_blank_is_all_nan_like_no_row(self):
+        blank = {c: np.nan for c in ("pts_ppr", "pts_half_ppr", "pts_std", "pass_att", "pass_yd", "pass_td", "rush_att",
+                                     "rush_yd", "rush_td", "rec", "rec_tgt", "rec_yd", "rec_td")}
+        f = _market_features(store([proj_row(5, KO - pd.Timedelta(hours=1), 0.0, **blank)]), target(), hist([10.0]), None)
+        self.assertTrue(all(math.isnan(v) for v in f.values()))
+
     def test_a_store_without_the_table_is_all_nan(self):
         f = _market_features(RawStore([RawTable("other", pd.DataFrame({KNOWN_AT: pd.to_datetime([KO], utc=True)
                                                                          .astype("datetime64[ns, UTC]")}), "t")]),

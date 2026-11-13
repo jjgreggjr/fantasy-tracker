@@ -211,6 +211,7 @@ same pre-kickoff features; `PLAN_MODEL.md` has the evidence) and writes it next 
 - **It does not know who is playing.** The model predicts points *if he plays*; availability belongs to the status
   layer above. A player who is Out, IR, PUP, suspended, cut or reserve (Sleeper status or the nflverse report) has
   **no row**, and the column is blank. Doubtful and Questionable players keep a row: read their status next to it.
+- **A Sleeper row with no stats is no projection.** Carries, targets and points all blank leave `proj_opps` empty, so `E_pts` falls back to the trailing average (`w_trail` is 1); it is not a projected zero.
 - **Probation: `E_pts` stays authoritative.** Every recipe, sort, lineup, cut, trade and report still runs on
   `E_pts` and nothing reads the model columns. They are there to be compared, never to decide.
 - **Adoption gate, written down at Phase 3:** the model earns recipe preference only when it beats Sleeper's

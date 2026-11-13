@@ -1616,6 +1616,10 @@ def _market_features(store, t: TargetRow, h: Hist, trace) -> dict[str, float]:
     if not len(m):
         return out
     r = _last(m)
+    # A present row with every stat blank is no projection, same as no row (training's rows always carry pts_ppr).
+    if all(math.isnan(_f(r[c])) for c in ("pts_ppr", "pts_std", "rec_tgt", "rush_att", "pass_att", "rec_yd", "rush_yd",
+                                          "pass_yd", "pass_td", "rush_td", "rec_td")):
+        return out
     for col, src in MARKET_STATS.items():
         v = _f(r[src])
         out[col] = 0.0 if math.isnan(v) and col != "mkt_pos_rank" else v
