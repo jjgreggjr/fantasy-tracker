@@ -81,15 +81,16 @@ tests a candidate; it only raises it.
    python -m ff.checkin misses --json > <scratch>/misses.json
    ```
 
-3. **Swarm.** Call the Workflow tool with the script in this folder; pass the queue and
-   today's date in `args` (scripts cannot read the clock):
+3. **Swarm.** Call the Workflow tool with the script in this folder; pass the queue
+   file's absolute path and today's date in `args` (scripts cannot read files or the
+   clock):
    ```
    Workflow({
      scriptPath: "skills/checkin/miss_research.workflow.js",
-     args: { season: 2026, week: <W>, researched_at: "<YYYY-MM-DD>", misses: <contents of misses.json> }
+     args: { season: 2026, week: <W>, researched_at: "<YYYY-MM-DD>", misses_path: "<scratch>/misses.json" }
    })
    ```
-   Per miss: a Haiku news agent (web, anchored on the game date and opponent) and a
+   One Haiku agent indexes the file; then, per miss: a Haiku news agent (web, anchored on the game date and opponent) and a
    Haiku data agent (the repo's own usage files), a Haiku synthesis, then two Haiku
    skeptics that try to refute any "foreseeable before kickoff" claim. One Sonnet
    merge turns the surviving signals into runnable `model.trial` strings, dedupes them

@@ -2,9 +2,10 @@
 //
 // Run with the Workflow tool:
 //   Workflow({ scriptPath: "skills/checkin/miss_research.workflow.js",
-//              args: { season, week, researched_at, misses } })
-// where `misses` is the JSON array printed by `python -m ff.checkin misses --json`
-// and `researched_at` is today's date (scripts cannot read the clock).
+//              args: { season, week, researched_at, misses_path } })
+// where `misses_path` is the absolute path of the file written by
+// `python -m ff.checkin misses --json > <scratch>/misses.json` and
+// `researched_at` is today's date (scripts cannot read the clock or files).
 //
 // Shape: one Haiku news agent + one Haiku data agent per big miss, a Haiku
 // synthesis per miss, two Haiku refuters per "foreseeable" claim, then one
@@ -17,6 +18,7 @@ export const meta = {
   name: 'checkin-miss-research',
   description: 'Research why each big model miss of the week happened; raise testable candidates',
   phases: [
+    { title: 'Index', detail: 'one agent reads the queue file and returns the list of misses', model: 'haiku' },
     { title: 'Research', detail: 'per miss: news agent + data agent (Haiku)', model: 'haiku' },
     { title: 'Synthesize', detail: 'per miss: one why, one foreseeable claim (Haiku)', model: 'haiku' },
     { title: 'Refute', detail: 'two skeptics per foreseeable claim (Haiku)', model: 'haiku' },
@@ -24,10 +26,47 @@ export const meta = {
   ],
 }
 
-const { season, week, researched_at } = args
-const misses = (args.misses || []).filter(Boolean)
-if (!misses.length) return { week, season, researched_at, misses: [], note: 'no misses passed in' }
+const { season, week, researched_at, misses_path } = args
+if (!misses_path) throw new Error('args.misses_path is required (python -m ff.checkin misses --json > file)')
+
+const INDEX = {
+  type: 'object',
+  properties: {
+    misses: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          gsis_id: { type: 'string' }, name: { type: 'string' }, position: { type: 'string' }, team: { type: 'string' },
+          played: { type: 'boolean' }, on_inactive_list: { type: 'boolean' },
+          teammate_out_name: { type: 'string' },
+          game: {
+            type: 'object',
+            properties: { opponent: { type: 'string' }, gameday: { type: 'string' }, home: { type: 'boolean' }, spread_line: { type: 'number' }, total_line: { type: 'number' } },
+            required: ['opponent', 'gameday'],
+          },
+          misses: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: { league: { type: 'string' }, comparator: { type: 'string' }, predicted: { type: 'number' }, actual: { type: 'number' }, error: { type: 'number' }, reason: { type: 'string' }, secondary_reason: { type: 'string' } },
+              required: ['league', 'comparator', 'predicted', 'actual', 'error', 'reason'],
+            },
+          },
+        },
+        required: ['gsis_id', 'name', 'position', 'team', 'played', 'on_inactive_list', 'teammate_out_name', 'game', 'misses'],
+      },
+    },
+  },
+  required: ['misses'],
+}
+
+const index = await agent(`Read the JSON file ${misses_path} (the output of \`python -m ff.checkin misses --json\`) and return, for EVERY element, exactly these fields copied verbatim: gsis_id, name, position, team, played, on_inactive_list, teammate_out_name (use "" for null), game (opponent, gameday, home, spread_line, total_line), misses (league, comparator, predicted, actual, error, reason, secondary_reason; use "" for null). Do not drop, reorder, summarise or invent anything; this is a mechanical copy. Return only the structured output.`,
+  { label: 'index', phase: 'Index', model: 'haiku', effort: 'low', schema: INDEX })
+const misses = ((index && index.misses) || []).filter(Boolean)
+if (!misses.length) return { week, season, researched_at, misses: [], note: 'no misses in the queue file' }
 log(`${misses.length} big misses to research for ${season} week ${week}`)
+const record = (m) => `Your player's full record is the element with gsis_id "${m.gsis_id}" in the JSON file ${misses_path}: read it first (it has the box score that week under "box", his trailing 3-week means under "trail", expected vs actual volume and TDs, snap shares, and a "retro_note"). Do not edit that file.`
 
 const FINDINGS = {
   type: 'object',
@@ -106,12 +145,10 @@ const newsPrompt = (m) => `Goal: explain in plain words why ${who(m)} scored wha
 
 What the model expected vs what happened:
 ${missLines(m)}
-Volume expected/actual: ${m.exp_vol}/${m.act_vol}; TDs expected/actual: ${m.exp_td}/${m.act_td}; snap% trailing/actual: ${m.trail_snap_pct}/${m.snap_pct}; played: ${m.played}; on inactive list: ${m.on_inactive_list}; teammate out: ${m.teammate_out_name || 'none'}.
-Box score that week: ${JSON.stringify(m.box)}
-Trailing 3-week means: ${JSON.stringify(m.trail)}
-Retrospective note: ${m.retro_note || '(none)'}
+Played: ${m.played}; on the gameday inactive list: ${m.on_inactive_list}; teammate out: ${m.teammate_out_name || 'none'}.
+${record(m)}
 
-How: first call ToolSearch with query "select:WebSearch,WebFetch" to load the web tools, then search. Search for the game recap, beat-reporter notes, snap counts, injury news and the Friday/Sunday injury report for that date. ANCHOR EVERY SEARCH ON THE DATE AND OPPONENT ABOVE: search results mix seasons, so discard anything not about the ${season} game on ${m.game && m.game.gameday}. Two to four searches is plenty; fetch at most two pages.
+How: then call ToolSearch with query "select:WebSearch,WebFetch" to load the web tools, then search. Search for the game recap, beat-reporter notes, snap counts, injury news and the Friday/Sunday injury report for that date. ANCHOR EVERY SEARCH ON THE DATE AND OPPONENT ABOVE: search results mix seasons, so discard anything not about the ${season} game on ${m.game && m.game.gameday}. Two to four searches is plenty; fetch at most two pages.
 
 Answer the questions in the schema. "pre_kickoff_signals" means only things a careful reader could have known before kickoff on ${m.game && m.game.gameday}: a limited practice, a beat report about a role change, a teammate ruled out, a line move. In-game injuries, game flow and touchdowns are NOT pre-kickoff signals. If you could not verify the cause, say so in "why" and set confidence low. Return only the structured output.`
 
@@ -119,10 +156,9 @@ const dataPrompt = (m) => `Goal: from the repo's own committed files only (no we
 
 What the model expected vs what happened:
 ${missLines(m)}
-Box score that week: ${JSON.stringify(m.box)}
-Trailing 3-week means: ${JSON.stringify(m.trail)}
+${record(m)}
 
-Read (small python/pandas one-offs are fine, read-only):
+Then read (small python/pandas one-offs are fine, read-only):
 - data/player_weeks.csv: his rows this season, and every ${m.team} player at his position group that week and the two weeks before (who took the snaps/targets/carries he did not, or that he gained).
 - data/inactives.csv and data/depth_charts.csv: which ${m.team} teammates were inactive or moved on the depth chart for week ${week}.
 - data/schedule.csv and data/defense_vs_pos.csv: the spread, total and final margin (game script).
