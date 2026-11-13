@@ -40,6 +40,10 @@ What it does, in order (every step reuses training code; nothing is re-implement
      <served_at>" whenever a game of the served week has kicked off with no earlier frozen row; "late freeze" for a game inside the
      margin first written now; and "merge_frozen replaced ..." (assertion-style, impossible by construction) if a kicked-off game's
      old row would have been overwritten. `data/model_pts.csv` carries `frozen_before_kickoff` (served_at < kickoff_utc) per row.
+     STATUS CAP: the model cannot see that the players ahead of a deep-bench player on the depth chart are back healthy. A row whose
+     blockers in data/status.csv are all healthy (and none out, little opportunity ahead) has its points capped at 1.25x the larger of
+     E_pts and Sleeper's projection (`model/status_cap.py`; never raised). `status_cap` flags it, `pts_model_components_raw` keeps the
+     uncapped number. No status.csv, or any error: a WARN and no cap.
   6. `data/model_pts.csv` via `ff.build.replace_partition` on (season, week), then `E_pts_model`, `p10`, `p90` appended to each
      league's `roster.csv`.
 
@@ -104,6 +108,10 @@ COLUMN_DOCS = {
                     "network call) and frozen with the row",
     "sleeper_proj_<slug>": "Sleeper's projection in that league's scoring (`proj_pts_league`), frozen at serve time",
     "e_pts_<slug>": "the pipeline's E_pts for that league, frozen at serve time (E_pts is overwritten every run)",
+    "status_cap": "1 when the status-layer cap (model/status_cap.py) lowered any points column of this row, else 0: every player ahead of "
+                  "him on the depth chart is healthy (data/status.csv) and his points exceeded 1.25x max(E_pts, Sleeper projection)",
+    "pts_model_components_raw": "pts_model_components before the status-layer cap, for every row (equals pts_model_components when "
+                                "status_cap is 0), so a capped row's raw model value stays auditable",
     "served_at": "UTC time this row was computed",
     "frozen_before_kickoff": "True when served_at < kickoff_utc, i.e. the row is a genuine pre-kickoff prediction (blank on rows written "
                              "before this column existed: derive it from served_at and kickoff_utc)",
@@ -817,6 +825,45 @@ def display_names(store, players, ids):
 
 
 # --------------------------------------------------------------------------- the output frame
+def read_status(root: Path, warnings: list | None = None):
+    """data/status.csv as a frame, or None (with a WARN) when it is missing or lacks the four columns the cap reads."""
+    import pandas as pd
+    from model import status_cap as SC
+    path = root / "data" / "status.csv"
+    why, st = None, None
+    if not path.exists():
+        why = "data/status.csv is missing"
+    else:
+        try:
+            st = pd.read_csv(path, low_memory=False, dtype={"gsis_id": str})
+            lacking = [c for c in ("gsis_id",) + SC.STATUS_COLUMNS if c not in st.columns]
+            if lacking:
+                why = "data/status.csv lacks " + ", ".join(lacking)
+        except Exception as e:
+            why = f"data/status.csv unreadable ({type(e).__name__}: {e})"
+    if why:
+        if warnings is not None:
+            warnings.append(f"status cap skipped: {why}")
+        return None
+    return st
+
+
+def status_cap_step(out, leagues, root: Path, warnings: list, log=print):
+    """Apply the status-layer cap; any failure becomes a WARN and leaves the frame uncapped (never breaks the serve)."""
+    from model import status_cap as SC
+    keep = out.copy()
+    try:
+        out, info = SC.apply_cap(out, read_status(root, warnings), leagues)
+        if info["eligible"] or info["capped"]:
+            log(f"  status cap: {info['capped']} of {info['eligible']} eligible rows lowered (" + ", ".join(info["names"]) + ")")
+        return out
+    except Exception as e:
+        warnings.append(f"status cap skipped: {type(e).__name__}: {e}")
+        keep["pts_model_components_raw"] = keep["pts_model_components"]
+        keep["status_cap"] = 0
+        return keep
+
+
 def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, week: int, served_at, warnings: list,
              league_bands: dict | None = None, now=None):
     """One row per predicted (and not withheld) player: the columns of COLUMN_DOCS. Returns (frame, reason Series keyed by gsis_id
@@ -857,6 +904,7 @@ def assemble(store, served, pred, comp, leagues, *, root: Path, season: int, wee
     for ls in leagues:
         pool = pools[ls.slug]
         out[f"e_pts_{ls.slug}"] = out["gsis_id"].map(pool["E_pts"]) if pool is not None and "E_pts" in pool else np.nan
+    out = status_cap_step(out, leagues, root, warnings)
     out["served_at"] = served_at.strftime("%Y-%m-%dT%H:%M:%SZ")
     num = [c for c in out.columns if c.startswith(("pts_", "sleeper_proj", "e_pts_", "p10", "p90")) or c == "p50"]
     out[num] = out[num].astype("float64").round(3) + 0.0                      # + 0.0: no "-0.0" in the file
