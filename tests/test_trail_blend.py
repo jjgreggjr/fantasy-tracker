@@ -110,3 +110,58 @@ class ProjectionIsNotMovedByTrailingPoints(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BlankSleeperRowIsNoProjection(unittest.TestCase):
+    """A Sleeper row with carries, targets and points all blank is no projection, not a projected zero (Nacua wk 10 2026)."""
+
+    @staticmethod
+    def proj_frame(stats_by_id):
+        import tempfile
+        from ff import projections
+        raw = [{"player_id": sid, "team": "LA", "opponent": "SF", "stats": st} for sid, st in stats_by_id.items()]
+        players = pd.DataFrame({"gsis_id": ["blank", "zero"], "sleeper_id": ["1", "2"],
+                                "position": ["WR", "WR"], "team": ["LA", "LA"]})
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "projections_2026_wk10_2026-11-12.json").write_text(json.dumps(raw))
+            return projections.build(2026, 10, players, d, "2026-11-12").set_index("gsis_id")
+
+    def test_all_blank_row_is_nan_and_a_real_zero_stays_zero(self):
+        pj = self.proj_frame({"1": {}, "2": {"rec_tgt": 0.0, "pts_ppr": 0.0}})
+        self.assertTrue(np.isnan(pj.loc["blank", "proj_opps"]))
+        self.assertEqual(pj.loc["zero", "proj_opps"], 0.0)
+
+    def score_rows(self, pj):
+        ids = ["blank", "zero"]
+        roster = pd.DataFrame({"gsis_id": ids, "name": ids, "position": ["WR", "WR"], "team": ["LA", "LA"]})
+        players = pd.DataFrame({"gsis_id": ids, "age": [24, 24], "years_exp": [3, 3], "injury_status": [None, None],
+                                "nfl_status": ["ACT", "ACT"], "draft_number": [16, 16], "rookie_year": [2023, 2023]})
+        base = pd.DataFrame({"gsis_id": ids, "avg_opps": [10.0, 10.0], "avg_targets": [10.0, 10.0],
+                             "avg_carries": [0.0, 0.0], "games": [3, 3]})
+        proj = pj.reset_index()
+        proj["week"] = WEEK
+        for c in ("proj_pass_yds", "proj_pass_tds", "proj_pass_int", "proj_rush_yds", "proj_rush_tds"):
+            proj[c] = proj.get(c, np.nan)
+        sched = pd.DataFrame({"week": [WEEK], "team": ["LA"], "opponent": ["SF"], "total_line": [46.0], "home": [1]})
+        dvp = pd.DataFrame({"defense": ["SF"], "position": ["WR"], "dvp_rank": [16]})
+        depth = pd.DataFrame({"gsis_id": ids, "rank": [1, 1], "prev_rank": [1, 1]})
+        points = pd.DataFrame({"season": 2026, "week": [5, 6, 7] * 2, "gsis_id": ["blank"] * 3 + ["zero"] * 3,
+                               "pts": [18.0, 19.0, 20.0] * 2})
+        meta = {"name": "t", "scoring": {"rec": 1, "rec_yd": 0.1, "rec_td": 6}}
+        return score.compute(roster, players, base, proj, dvp, sched, depth, points, meta, WEEK, 2026,
+                             cfg=None, pw=None).set_index("gsis_id")
+
+    def test_blank_row_takes_the_trailing_average_and_real_zero_stays_zero(self):
+        out = self.score_rows(self.proj_frame({"1": {}, "2": {"rec_tgt": 0.0, "pts_ppr": 0.0}}))
+        b, z = out.loc["blank"], out.loc["zero"]
+        self.assertTrue(np.isnan(b.proj_opps))
+        self.assertEqual(b.w_proj, 0.0)
+        self.assertEqual(b.pts_mix, "recent only")
+        self.assertAlmostEqual(b.trail_pts, 19.0)
+        self.assertEqual(b.E_pts, np.round(b.trail_pts * b.mult + b.td_adj, 1))
+        self.assertGreater(b.E_pts, 15.0)
+        self.assertEqual(z.proj_opps, 0.0)
+        self.assertEqual(z.pts_mix, "projection only")
+        self.assertEqual(z.proj_pts_league, 0.0)
+        self.assertEqual(z.E_pts, np.round(0 * z.mult + z.td_adj, 1))

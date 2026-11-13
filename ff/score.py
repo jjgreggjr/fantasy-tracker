@@ -269,9 +269,12 @@ def _inactive_mask(df: pd.DataFrame) -> pd.Series:
     return pd.to_numeric(df["inactive"], errors="coerce").fillna(0).astype(int).eq(1)
 
 
+WEEK_BLANK_COLS = ("E_pts", "E_opps", "E_targets", "E_carries", "proj_pts_league")
+
+
 def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
     """Set `flag` from baseline, bye and injury status, and blank `E_pts` for
-    anyone who cannot play this week."""
+    anyone who cannot play this week, along with this week's E_opps and projected points."""
     df["flag"] = ""
     df.loc[df.E_opps.isna(), "flag"] = "NO BASELINE"
     bye = df.opponent.eq("BYE") | df.opponent.isna()
@@ -294,9 +297,13 @@ def apply_flags(df: pd.DataFrame) -> pd.DataFrame:
     # a bye is a bye whatever the injury tag says: a Questionable player on a
     # bye week once kept his E_pts and the optimizer started him (Aaron Jones,
     # 2026 week 6). Apply the bye zero on the mask, not on the final label.
-    df.loc[bye | rd.ge(2)
-           | df.flag.isin(["BYE", "OUT", "IR", "PUP", "INACTIVE", "NO BASELINE"]),
-           "E_pts"] = np.nan
+    cannot_play = bye | rd.ge(2) | df.flag.isin(["BYE", "OUT", "IR", "PUP", "INACTIVE", "NO BASELINE"])
+    # this week's points and the volume behind them go together, so nobody who will not play shows
+    # "-- pts on 7.7 opps". Left alone on purpose: proj_opps / trail_pts (policy.keep_value and
+    # upside.keep_points fall back on them) and the history columns (snap%, shares, median_pts).
+    for col in WEEK_BLANK_COLS:
+        if col in df.columns:
+            df.loc[cannot_play, col] = np.nan
     return df
 
 
