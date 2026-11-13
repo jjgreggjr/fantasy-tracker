@@ -164,6 +164,12 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
     if roster.empty:
         return pd.DataFrame(), "No roster data for this league.", pd.DataFrame()
     slots, idp_on, unscored = _slot_split(meta)
+    taxi_col = (pd.to_numeric(roster["is_taxi"], errors="coerce").fillna(0)
+                if "is_taxi" in roster.columns else pd.Series(0, index=roster.index))
+    taxi_names = [str(n) for n in roster.loc[taxi_col.eq(1), "name"]]
+    roster = roster[taxi_col.ne(1)].reset_index(drop=True)   # taxi players are not eligible: never picked
+    if roster.empty:
+        return pd.DataFrame(), "No eligible roster data for this league.", pd.DataFrame()
     roster = modelcols.attach(roster, slug, ROOT)        # E_pts decides the lineup; model cols ride along
     three = calls_mod.three_lineups(roster, slots, idp_on)
     ids = [c for c in calls_mod.ID_COLS if c in three["e_pts"].columns]
@@ -177,6 +183,7 @@ def lineup(slug: str) -> tuple[pd.DataFrame, str, pd.DataFrame]:
     start.attrs["three"] = three
     start.attrs["all_slots"] = scoring.starting_slots(meta)
     start.attrs["roster"] = roster
+    start.attrs["taxi"] = taxi_names
     bench = roster[~roster.gsis_id.isin(used)].copy()
     if not bench.empty and not start.empty:
         gaps = []
@@ -293,10 +300,15 @@ def call_table(start: pd.DataFrame, current: set, def_teams: list[str] | None = 
                     call = f"{_short_name(pr['chosen'])} — {cr['reason']}"
             rows.append((sl, pick(er), pick(mr), call))
         else:
-            rows.append((sl, pick(er), "same" if has_model else "", ""))
-    h1 = "E_pts pick (E / M)" if has_model else "E_pts pick"
-    w = [max(len(h), *(len(r[i]) for r in rows)) for i, h in enumerate(("Slot", h1, "Model pick (E / M)"))]
-    lines = [f"{'Slot':<{w[0]}}  {h1:<{w[1]}}" + (f"  {'Model pick (E / M)':<{w[2]}}  Call" if has_model else "")]
+            rows.append((sl, pick(er), pick(mr) if has_model else "", ""))
+    h1 = "E_pts lineup (E / M)" if has_model else "E_pts lineup (E)"
+    h2, h3 = "Model lineup (E / M)", "Call (where they differ)"
+    w = [max(len(h), *(len(r[i]) for r in rows)) for i, h in enumerate(("Slot", h1, h2))]
+    legend = (["E / M = that player's E_pts / model points (E_pts_model), both in this league's scoring.",
+               "Each lineup column is the full lineup that method would start, every slot filled. IN = not in your "
+               "current lineup. Call = blank where both agree; where they differ, the rule-based pick (ff/calls.py) "
+               "and why."] if has_model else ["E = E_pts in this league's scoring."])
+    lines = legend + [f"{'Slot':<{w[0]}}  {h1:<{w[1]}}" + (f"  {h2:<{w[2]}}  {h3}" if has_model else "")]
     lines += [(f"{r[0]:<{w[0]}}  {r[1]:<{w[1]}}" + (f"  {r[2]:<{w[2]}}  {r[3]}" if has_model else "")).rstrip() for r in rows]
 
     en = [n for n in e["name"] if nm(n)]
@@ -656,6 +668,8 @@ def main(argv=None):
         if tbl:
             print(f"\nOptimal lineup and the call (committed scores; IN = not in your "
                   f"{'live Sleeper' if res.get('live') else 'committed'} lineup):\n" + tbl)
+            if _st.attrs.get("taxi"):
+                print("Taxi (not eligible this season): " + ", ".join(_st.attrs["taxi"]))
         st = res["mine"][res["mine"].is_starter == 1]
         if not st.empty:
             print("\nStatus of every current starter (and who is ahead of him):")
@@ -682,8 +696,10 @@ def main(argv=None):
                 if _ros is not None and "is_starter" in _ros.columns else set())
         tbl = call_table(start, _cur)
         if tbl:
-            print(f"\nOptimal lineup and the call (IN = not in the committed lineup, "
+            print(f"\nOptimal lineup and the call (committed lineup as of "
                   f"{meta.get('roster_fetched_at') or 'unknown'}):\n" + tbl)
+            if start.attrs.get("taxi"):
+                print("Taxi (not eligible this season): " + ", ".join(start.attrs["taxi"]))
         if not start.empty:
             print("\nStatus of every starter (and who is ahead of him):")
             for line in _status_block(_status(), start["name"].tolist()):
