@@ -116,6 +116,20 @@ class Rules(unittest.TestCase):
         self.assertEqual(picks(out["model"]), ["W"])
 
 
+class Pairing(unittest.TestCase):
+    def test_slot_contenders_meet_head_to_head(self):
+        # week 10 shape: Mayer holds the E_pts TE slot, Pitts the model's; a second TE (Otton) sits at FLEX in
+        # the E_pts lineup. Position-first pairing matched Otton with Pitts and Mayer with the RB.
+        out = run([("Mayer", "TE", 9.0, 9.0, 6.0), ("Otton", "TE", 9.8, 9.8, 6.0),
+                   ("Pitts", "TE", 8.6, 11.5, 6.0), ("Back", "RB", 8.0, 10.0, 12.0)], slots=("FLEX", "TE"))
+        self.assertEqual(picks(out["e_pts"]), ["Otton", "Mayer"])
+        self.assertEqual(picks(out["model"]), ["Back", "Pitts"])
+        c = out["call"].set_index("slot")
+        self.assertEqual(c.loc["TE", "name"], "Pitts")
+        self.assertIn("E_pts tie", c.loc["TE", "reason"])
+        self.assertEqual(c.loc["FLEX", "name"], "Otton")
+
+
 class KIdpFill(unittest.TestCase):
     def setUp(self):
         self.out = run([("Q", "QB", 20, 18, 30), ("Kick", "K", 8, np.nan, 0), ("Lb", "LB", 7, np.nan, 0),

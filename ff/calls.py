@@ -13,7 +13,9 @@ three exceptions, applied per differing pair (a = E_pts pick, b = model pick) in
   otherwise       a, the E_pts pick.
 
 The chosen players are then re-slotted by E_pts so every slot is valid; a swap that cannot be
-slotted is dropped (the E_pts pick stays). The model never scores K or IDP positions, so those
+slotted is dropped (the E_pts pick stays). The pairs are the real slot contenders: at each slot where
+the two lineups differ, the E_pts pick meets the model pick; only players left over fall back to
+matching by position, then slot fit. The model never scores K or IDP positions, so those
 fill from E_pts in the model lineup and the two lineups differ only where the model has an opinion.
 """
 from __future__ import annotations
@@ -207,8 +209,15 @@ def three_lineups(roster: pd.DataFrame, slots: list[str], idp_on: bool,
 
     pairs: list[tuple[str, str]] = []
     left = list(m_only)
+    e_left = list(e_only)
+    for k in range(len(slots)):                        # the real contenders first: both picks at the same slot
+        a, b = e.at[k, "name"], m.at[k, "name"]
+        if a and b and a in e_left and b in left:
+            pairs.append((a, b))
+            e_left.remove(a)
+            left.remove(b)
     unpaired = []
-    for a in e_only:                                   # same position first
+    for a in e_left:                                   # leftovers: same position first
         hit = next((b for b in left if rows.loc[b, "position"] == rows.loc[a, "position"]), None)
         if hit is None:
             unpaired.append(a)
