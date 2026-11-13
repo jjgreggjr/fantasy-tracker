@@ -493,7 +493,8 @@ def _build_section(season: int, week: int, date: str, misses_in: list[dict]) -> 
          "| player | pos/team | why | foreseeable? | candidate |", "|---|---|---|---|---|"]
     for m in misses_in:
         why = _esc(m.get("why", ""))
-        srcs = [_esc(s) for s in (m.get("sources") or [])]
+        # Web sources only: the agents also list the repo files they read, which say nothing to a reader.
+        srcs = [_esc(s) for s in (m.get("sources") or []) if not str(s).strip().lower().startswith("local:")]
         if srcs:
             why += " Sources: " + "; ".join(srcs)
         fore = "yes" if m.get("foreseeable") else "no"
