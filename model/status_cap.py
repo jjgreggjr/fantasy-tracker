@@ -1,7 +1,7 @@
 """Status-layer cap on served points (rule-based; pandas/numpy).
 
 The tree model predicts "points if he plays" from what it sees, and cannot see that every player ahead of a deep-bench player on
-the depth chart is back healthy (2026 week 9: Emanuel Wilson, SEA RB4, model 10.6 vs E_pts 0.8, Charbonnet back). data/status.csv
+the depth chart is back healthy (2026 week 9: Emanuel Wilson, SEA RB4, model 4.4 and p90 10.6 vs E_pts 0.8, Charbonnet back). data/status.csv
 (`ff.status.build`) does see it. A row is ELIGIBLE when it has `n_blockers >= 1`, `blockers_out == 0`, `opportunity_ahead <=
 CAP_MAX_OPP_AHEAD`, and every blocker in `blocked_by` ("Name (status[, practice]); ...") is healthy. An eligible row's points are
 capped, per league, at `max(e_pts_<slug>, sleeper_proj_<slug>) * CAP_SLACK`; the PPR columns (`pts_model`, `pts_model_components`)
