@@ -598,6 +598,12 @@ def explain(slug: str, player: str) -> tuple[pd.DataFrame, str]:
         ("Confidence", p.get("confidence"), p.get("conf")),
         ("Flag", p.get("flag") or "—", ""),
     ]
+    # the status layer's QB1-change note is informational, so it sits beside the flag, not in it
+    st = _status()
+    if not st.empty and "qb_change_note" in st.columns:
+        m = st[st["gsis_id"].eq(p.get("gsis_id")) & st["qb_change_note"].notna()]
+        if not m.empty:
+            rows.append(("QB change", m.iloc[0]["qb_change_note"], "re-check his role before trusting E_pts"))
     return (pd.DataFrame(rows, columns=["component", "value", "note"]),
             f"{p['name']} — {p.position}, {p.team} — in {meta.get('name')}")
 

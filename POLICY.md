@@ -109,6 +109,7 @@ Every run now builds `data/status.csv`, one row per player on a depth chart:
 | `espn_rank` vs `sleeper_rank` | **two independent depth charts.** A disagreement of 2+ places is the signature of a rank driven by availability rather than role |
 | `blocked_by` | every player listed ahead of him, **with their statuses** |
 | `opportunity_ahead` | share of team volume held by players ahead of him who probably will not play |
+| `qb_change` / `qb_change_note` | 1 for a WR / TE / RB whose team's QB1 changed since the latest earlier week; informational only (see QB change below) |
 
 `opportunity_ahead` is what turns news into a number: when the starters ahead
 of a backup are hurt, his expected volume should rise *this week*, before any
@@ -136,6 +137,11 @@ blend, so the 0-opportunity weeks he spent off the active roster are not held ag
 in both E_pts and `start_score`). The file carries no per-row timestamp, so when a week holds several rows for
 one player the last row wins, except that in the target week an ACT row beats a non-ACT one; a timestamp column,
 if one ever appears, orders the rows instead.
+
+**QB change (informational).** A WR, TE or RB whose team's rank-1 QB in `depth_charts.csv` this week differs from its
+rank-1 QB in the latest earlier week gets `qb_change` 1 and `qb_change_note` in `status.csv` (Michael Mayer, LV 2026
+week 10). It shows in the status line, `explain` and the status warnings and changes nothing else: `play_prob`,
+E_pts and `flag` are untouched, and the QB himself is not flagged. Re-check the role before trusting E_pts.
 
 **Enforcement.** Every recipe prints a status line for every player it names,
 including who is ahead of him. Every league report opens with a status-warnings
