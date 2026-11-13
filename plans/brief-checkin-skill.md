@@ -2,6 +2,10 @@
 
 Written 2026-11-13 at the end of the status-cap chat (PR #27). Start a new chat with "read plans/brief-checkin-skill.md and build it".
 
+**Built 2026-11-13.** `skills/checkin/SKILL.md`, `python -m ff.checkin` (report / misses / gate / record) and
+`skills/checkin/miss_research.workflow.js`. Open questions settled: the weekly marker is a `## 2026 week N` section in
+`model/reports/miss_research.md`; the routines stay manual (no Thursday schedule).
+
 ## What James wants
 
 One skill he runs every time he checks his lineups: Thursday night, again Saturday or Sunday morning, any time. Same report shape every
