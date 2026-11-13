@@ -10,6 +10,7 @@ so you can argue with the assumptions rather than with a black box.
 blended with recent production, adjusted for the matchup. The trailing-production weight is capped by
 `score.trail_cap`, adopted at 0 on 2026-10-15 (`DEFAULTS["trail_cap"]` in `ff/score.py`): a real projection is not moved by
 trailing data. A stale `config.json` override of 0.6 was removed 2026-10-29, so it is live from week 8 runs.
+The flags that blank `E_pts` (Out, IR, PUP, bye, inactive, `repeat_dnp` 2, no baseline) blank this week's `E_opps`, `E_targets`, `E_carries` and `proj_pts_league` with it, so no one shows volume for a game he will not play; `keep_pts` (and so `vor`, which falls back on `median_pts` / `trail_pts`) and `proj_opps` are unaffected.
 
 `keep_value` answers **"should he occupy a roster spot."** In a dynasty league
 that is a different question with a longer horizon, so it uses different
