@@ -83,12 +83,15 @@ Two things are easy to conflate — always say which you mean:
 Lead with the difference between the two; that difference *is* the advice.
 
 Both recipes print one slot-by-slot table in the league's slot order: the
-E_pts pick, the model pick (`same` when identical), and **the call** — a
-rule-based choice with its reason when they differ (rules in `ff/calls.py`
+E_pts lineup and the model lineup (each a full lineup, every slot filled,
+with each player's E / M), and **the call** — blank where both lineups agree,
+a rule-based choice with its reason where they differ (rules in `ff/calls.py`
 and POLICY.md "The call": E_pts is authoritative; status first, then a
 near-tie goes to the model, then a model override on bigger model gap plus
 more volume). `IN` marks a pick not in the current lineup; the `Net:` line
 is the summary James wants. Give him that table as-is, don't rebuild it.
+Taxi-squad players are never picked; they are excluded and listed on a
+`Taxi (not eligible this season):` line under the table.
 Every run records four lineups per league (E_pts, model, Sleeper, call) (`data/lineups_optimal.csv`,
 frozen slot by slot at kickoff) and, once the week completes, scores them and
 his actual lineup with real points (`data/lineup_eval.csv`, "Lineups" section
@@ -189,8 +192,8 @@ and the pooled lineup table, as printed.
 
 **Legend.** Put these two lines above the first table in every answer:
 
-> E_pts pick / Model pick (E / M) = the player that method chose, then his E_pts and his model points. `same` = both chose the same player. `IN` = not in your current lineup.
-> Call = the rule-based final answer, with its reason.
+> E / M = that player's E_pts / model points (E_pts_model), both in this league's scoring.
+> Each lineup column is the full lineup that method would start, every slot filled. IN = not in your current lineup. Call = blank where both agree; where they differ, the rule-based pick (ff/calls.py) and why.
 
 Everything around the tables stays short: decision first, then at most 3–5
 bullets, no preamble or recap. The tables are exempt from the length rule; the

@@ -144,9 +144,53 @@ class Render(unittest.TestCase):
         start.attrs.update(three=out, all_slots=["WR", "DEF"])
         txt = ask.call_table(start, {"A"}, ["KC"])
         self.assertIn("B IN 9.9 / 13.9", txt)
+        self.assertNotIn("same", txt)
+        self.assertIn("E / M = that player's E_pts / model points (E_pts_model), both in this league's scoring.", txt)
+        self.assertIn("Each lineup column is the full lineup that method would start, every slot filled.", txt)
+        self.assertIn("E_pts lineup (E / M)", txt.splitlines()[2])
+        self.assertIn("Model lineup (E / M)", txt.splitlines()[2])
+        self.assertIn("Call (where they differ)", txt.splitlines()[2])
         self.assertIn("not scored (KC)", txt)
         self.assertIn("Net vs current: IN B; OUT A; call differs from E_pts at WR (B over A)", txt)
         self.assertIn("(call lineup)", txt)
+
+    def test_agreeing_rows_show_the_model_player_and_a_blank_call(self):
+        r = roster([("A", "WR", 12.5, 9.0, 6.1), ("B", "WR", 9.9, 7.0, 6.0)])
+        out = calls.three_lineups(r, ["WR"], False, status=NOSTATUS)
+        start = out["e_pts"].copy()
+        start.attrs.update(three=out, all_slots=["WR"])
+        row = ask.call_table(start, {"A"}).splitlines()[3]
+        self.assertEqual(row.split(), ["WR", "A", "12.5", "/", "9.0", "A", "12.5", "/", "9.0"])
+
+    def test_no_model_column_prints_the_short_legend(self):
+        r = roster([("A", "WR", 12.5, 9.0, 6.1)]).drop(columns=["E_pts_model"])
+        out = calls.three_lineups(r, ["WR"], False, status=NOSTATUS)
+        start = out["e_pts"].copy()
+        start.attrs.update(three=out, all_slots=["WR"])
+        lines = ask.call_table(start, set()).splitlines()
+        self.assertEqual(lines[0], "E = E_pts in this league's scoring.")
+        self.assertEqual(lines[1].split(), ["Slot", "E_pts", "lineup", "(E)"])
+
+
+class Taxi(unittest.TestCase):
+    def test_taxi_player_is_never_picked_and_is_listed(self):
+        from unittest import mock
+        r = roster([("Star", "QB", 30.0, 30.0, 9.0, {"is_taxi": 1, "is_starter": 0, "conf": "High"}),
+                    ("Vet", "QB", 12.0, 11.0, 9.0, {"is_taxi": 0, "is_starter": 1, "conf": "High"}),
+                    ("Rb", "RB", 8.0, 8.0, 9.0, {"is_taxi": 0, "is_starter": 0, "conf": "High"})])
+        real = calls.three_lineups
+        with mock.patch.object(ask, "_load", return_value=({}, r, pd.DataFrame(), pd.DataFrame(), None)), \
+                mock.patch.object(ask, "_slot_split", return_value=(["QB", "RB"], False, [])), \
+                mock.patch.object(ask.modelcols, "attach", side_effect=lambda df, *a: df), \
+                mock.patch.object(ask.calls_mod, "three_lineups",
+                                  side_effect=lambda ro, sl, idp: real(ro, sl, idp, status=NOSTATUS)):
+            start, _, bench = ask.lineup("x")
+        three = start.attrs["three"]
+        for k in ("e_pts", "model", "call"):
+            self.assertNotIn("Star", list(three[k]["name"]))
+        self.assertNotIn("Star", list(bench["name"]))
+        self.assertEqual(start.attrs["taxi"], ["Star"])
+        self.assertIn("Vet", list(start["name"]))
 
 
 if __name__ == "__main__":
