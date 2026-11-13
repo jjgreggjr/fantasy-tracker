@@ -44,6 +44,8 @@ REPEAT_DNP_CAP = 0.25
 ACTIVE_NFL_STATUS = "ACT"
 # nflverse weekly_rosters `status` the week before -> what this week's ACT means
 ROLE_CHANGE_FROM = {"RES": "IR activation", "PUP": "PUP activation", "DEV": "practice-squad elevation"}
+QB_CHANGE_COLS = ["team", "qb_now", "qb_prev", "qb_now_name", "qb_prev_name"]
+QB_CHANGE_POSITIONS = {"WR", "TE", "RB"}        # the pass-catchers a new QB1 touches; the QB himself is not flagged
 ROLE_CHANGE_COLS = ["gsis_id", "prev_status", "status", "role_change_kind", "role_change_known_at"]
 # per-row timestamp columns a weekly_rosters frame might carry (nflverse's own has none as of 2026)
 ROSTER_TIME_COLS = ["known_at", "date_modified", "updated_at", "timestamp", "date"]
@@ -356,6 +358,37 @@ def role_changes(rosters: pd.DataFrame | None, season: int, week: int | None,
     return now[ROLE_CHANGE_COLS].reset_index(drop=True)
 
 
+def qb_changes(depth: pd.DataFrame | None, season: int, week: int | None) -> pd.DataFrame:
+    """Teams whose rank-1 QB in `week` is not their rank-1 QB in the latest earlier week of `season` that the
+    depth file holds (Michael Mayer, LV 2026 week 10: the Raiders changed starting QB and nothing said so).
+    A week with several snapshots uses its latest `snapshot_dt`; a bye or a gap in the file is skipped by
+    comparing against the latest earlier week the team has. Week 1, or a team with no earlier week, is not
+    flagged. Columns QB_CHANGE_COLS."""
+    cols = {"season", "week", "team", "position", "rank", "gsis_id", "name"}
+    if week is None or depth is None or depth.empty or not cols <= set(depth.columns):
+        return pd.DataFrame(columns=QB_CHANGE_COLS)
+    q = depth[depth["position"].eq("QB")].copy()
+    q["season"] = pd.to_numeric(q["season"], errors="coerce")
+    q["week"] = pd.to_numeric(q["week"], errors="coerce")
+    q["rank"] = pd.to_numeric(q["rank"], errors="coerce")
+    q = q[(q["season"] == season) & (q["week"] <= week) & q["week"].notna()]
+    if "snapshot_dt" in q.columns:      # the latest snapshot of each team-week is the one that stands
+        q["_t"] = pd.to_datetime(q["snapshot_dt"], errors="coerce", utc=True)
+        q = q[q["_t"].eq(q.groupby(["team", "week"])["_t"].transform("max")) | q["_t"].isna()]
+    q1 = (q[q["rank"] == 1].sort_values(["week", "gsis_id"]).drop_duplicates(["team", "week"], keep="last"))
+    now = q1[q1["week"] == week].set_index("team")
+    rows = []
+    for team, r in now.iterrows():
+        before = q1[(q1["team"] == team) & (q1["week"] < week)].sort_values("week")
+        if before.empty:
+            continue
+        b = before.iloc[-1]
+        if pd.notna(r["gsis_id"]) and pd.notna(b["gsis_id"]) and r["gsis_id"] != b["gsis_id"]:
+            rows.append({"team": team, "qb_now": r["gsis_id"], "qb_prev": b["gsis_id"],
+                         "qb_now_name": r["name"], "qb_prev_name": b["name"]})
+    return pd.DataFrame(rows, columns=QB_CHANGE_COLS)
+
+
 def _availability_rules(p: pd.DataFrame, dnp: pd.DataFrame | None,
                         roles: pd.DataFrame | None) -> pd.DataFrame:
     """Apply the repeat-DNP cap and the role-change lift to a players frame that already has
@@ -400,7 +433,8 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
           injuries: pd.DataFrame | None = None,
           inactives: pd.DataFrame | None = None,
           dnp: pd.DataFrame | None = None,
-          roles: pd.DataFrame | None = None) -> pd.DataFrame:
+          roles: pd.DataFrame | None = None,
+          qb: pd.DataFrame | None = None) -> pd.DataFrame:
     """One status row per player on a depth chart, including the blocker chain.
 
     `injuries` is nflverse's injuries_{season} table; its rows for `week` supply the
@@ -409,7 +443,9 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
     is flagged `inactive` (play_prob 0) whatever his designation; `injury_status` stays as
     Sleeper reported it. `dnp` is `recent_dnp(...)` and `roles` is `role_changes(...)`: the
     repeat-DNP cap and the activation lift (`_availability_rules`), columns `repeat_dnp`,
-    `dnp_weeks`, `role_change`, `role_change_kind`."""
+    `dnp_weeks`, `role_change`, `role_change_kind`. `qb` is `qb_changes(...)`: every WR / TE / RB of a team
+    whose QB1 changed gets `qb_change` 1 and `qb_change_note`. Informational only: `play_prob` and E_pts
+    are untouched."""
     if depth is None or depth.empty:
         return pd.DataFrame()
 
@@ -450,6 +486,8 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
         pw = proj[proj.week == week]
         share = pw.set_index("gsis_id")[["proj_carry_share", "proj_target_share"]]
 
+    qb_note = ({r.team: f"new QB1: {r.qb_now_name} (was {r.qb_prev_name})" for r in qb.itertuples()}
+               if qb is not None and not qb.empty else {})
     rows = []
     for (team, pos), g in d.groupby(["team", "position"]):
         g = g.sort_values("rank")
@@ -468,6 +506,7 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                         v = share.loc[b.gsis_id, col]
                         if pd.notna(v):
                             opp_ahead += float(v) * (1 - float(b.play_prob))
+            qc = qb_note.get(team) if pos in QB_CHANGE_POSITIONS else None
             rows.append({
                 "gsis_id": r.gsis_id, "name": r["name"], "team": team,
                 "position": pos, "espn_rank": r["rank"],
@@ -481,6 +520,8 @@ def build(players: pd.DataFrame, depth: pd.DataFrame,
                 "dnp_weeks": r.dnp_weeks,
                 "role_change": int(r.role_change),
                 "role_change_kind": r.role_change_kind,
+                "qb_change": int(qc is not None),
+                "qb_change_note": qc,
                 "injury_body_part": r.injury_body_part,
                 "practice": r.practice_participation,
                 "news_age_hours": r.news_age_hours,
@@ -514,8 +555,8 @@ def build_idp(idp_players: pd.DataFrame, week: int | None = None,
     repeat-DNP and role-change rules (built on skill-player opportunities) are 0."""
     cols = ["gsis_id", "name", "team", "position", "espn_rank", "sleeper_rank", "depth_disagreement",
             "status_flag", "report_status", "play_prob", "inactive", "inactive_known_at", "repeat_dnp",
-            "dnp_weeks", "role_change", "role_change_kind", "injury_body_part", "practice",
-            "news_age_hours", "n_blockers", "blockers_out", "opportunity_ahead", "blocked_by"]
+            "dnp_weeks", "role_change", "role_change_kind", "qb_change", "qb_change_note",
+            "injury_body_part", "practice", "news_age_hours", "n_blockers", "blockers_out", "opportunity_ahead", "blocked_by"]
     if idp_players is None or idp_players.empty:
         return pd.DataFrame(columns=cols)
     p = with_reports(idp_players, week_reports(injuries, week))
@@ -535,6 +576,7 @@ def build_idp(idp_players: pd.DataFrame, week: int | None = None,
         "report_status": p.report_status, "play_prob": p.play_prob,
         "inactive": p.inactive.astype(int), "inactive_known_at": p.inactive_known_at,
         "repeat_dnp": 0, "dnp_weeks": np.nan, "role_change": 0, "role_change_kind": np.nan,
+        "qb_change": 0, "qb_change_note": np.nan,
         "injury_body_part": p.get("injury_body_part"), "practice": p.practice_participation,
         "news_age_hours": p.news_age_hours, "n_blockers": 0, "blockers_out": 0,
         "opportunity_ahead": 0.0, "blocked_by": NO_DEPTH_MODEL})
@@ -576,6 +618,9 @@ def warnings(st: pd.DataFrame, roster_ids: set | None = None) -> list[str]:
         for _, r in s[pd.to_numeric(s.role_change, errors="coerce").fillna(0) == 1].iterrows():
             out.append(f"{r['name']}: {r.get('role_change_kind') or 'role change'} this week — "
                        "his recent 0-opportunity weeks are not held against him")
+    if "qb_change" in s.columns:
+        for _, r in s[pd.to_numeric(s.qb_change, errors="coerce").fillna(0) == 1].iterrows():
+            out.append(f"{r['name']}: {r.get('qb_change_note')} — re-check his role before trusting E_pts")
     return out
 
 
@@ -599,6 +644,8 @@ def describe(st: pd.DataFrame, name: str) -> str:
         bits.append(f"REPEAT DNP (0 opps in weeks {r.get('dnp_weeks')}, play_prob {r.play_prob:.2f})")
     if pd.notna(r.get("role_change_kind")):
         bits.append(f"{r.role_change_kind} this week")
+    if pd.notna(r.get("qb_change_note")):
+        bits.append(f"QB CHANGE: {r.qb_change_note}")
     if pd.notna(r.practice):
         bits.append(f"practice: {r.practice}")
     if pd.notna(r.injury_body_part):

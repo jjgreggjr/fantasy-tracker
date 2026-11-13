@@ -507,7 +507,16 @@ def _main(argv=None) -> int:
         log.warning("repeat-DNP / role-change rules failed: %s", e)
         warnings.append(f"repeat-DNP / role-change rules failed ({e}) — not applied this run.")
 
-    st = status_mod.build(players, depth, proj, preview_week, injuries, inactives, dnp, roles)
+    # QB1 change (informational): this week's rank-1 QB vs the latest earlier week, from the whole depth file
+    qb = pd.DataFrame(columns=status_mod.QB_CHANGE_COLS)
+    try:
+        qb = status_mod.qb_changes(build.read_data_csv(DATA / "depth_charts.csv"), season, preview_week)
+        log.info("QB1 changes this week: %d team(s)", len(qb))
+    except Exception as e:                      # new data must never stop the rest
+        log.warning("QB-change check failed: %s", e)
+        warnings.append(f"QB-change check failed ({e}) — not applied this run.")
+
+    st = status_mod.build(players, depth, proj, preview_week, injuries, inactives, dnp, roles, qb)
     if want_idp:
         # status rows for every defender / kicker on a tracked roster or with a stat line this season
         # (availability only: there is no depth chart or blocker chain for them); best-effort

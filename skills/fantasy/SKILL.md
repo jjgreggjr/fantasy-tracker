@@ -42,6 +42,8 @@ when cleared. That is the weekly "is he back yet?" check. `data/status.csv` has 
 
 `repeat_dnp` 1 (flag `REPEAT_DNP`) means 0 opportunities in each of his team's last two games (`dnp_weeks`) and no Full practice this week: `play_prob` is capped at 0.25 and his `E_pts` is a number for a player who has not been playing, so say so. `repeat_dnp` 2 adds Out/Doubtful or a DNP practice: `play_prob` 0, `E_pts` blank. `role_change` 1 (`role_change_kind`: IR activation, PUP activation, practice-squad elevation; flag `ROLE_CHANGE`) lifts that: his recent 0-opp weeks are not held against him.
 
+`qb_change` 1 (`qb_change_note`, e.g. "new QB1: Kenny Pickett (was Geno Smith)") marks a WR, TE or RB whose team's rank-1 QB this week is not the one it had in the latest earlier week. It is informational (`play_prob`, `E_pts` and `flag` are untouched), so re-check this pass-catcher's role before trusting `E_pts`: his recent volume came with another QB. It shows as a "QB CHANGE" bit in the status line and a "QB change" row in `explain`.
+
 A `depth_disagreement` of 2+ means ESPN and Sleeper's depth charts disagree, which is the signature of a rank driven by health rather than role. Always mention it.
 
 ## Lineup freshness — do this first
