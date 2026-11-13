@@ -250,12 +250,15 @@ def last_week(root: Path = ROOT) -> list[str]:
         if not le.empty:
             e = le[(le["season"] == season) & (le["week"] == wk) & (le["league"] == slug)]
             a, p = e[e["basis"] == "actual"], e[e["basis"] == "perfect"]
+            # The optimizers and the hindsight-best lineup skip unscored slots (K, DEF), so
+            # the comparable number is offense-only; the raw ratio can read above 100%.
             if len(a):
-                act, eff = f"{a.iloc[0]['points']:.1f}", f"{100 * a.iloc[0]['efficiency']:.0f}%"
+                act = f"{a.iloc[0]['offense_points']:.1f}"
+                eff = f"{100 * a.iloc[0]['offense_efficiency']:.0f}%"
             if len(p):
-                perf = f"{p.iloc[0]['points']:.1f}"
+                perf = f"{p.iloc[0]['offense_points']:.1f}"
         rows.append([meta.get("name", slug), pf, pa, res, act, perf, eff])
-    L += _table(["league", "PF", "PA", "W/L", "lineup pts", "perfect pts", "efficiency"], rows)
+    L += _table(["league", "PF", "PA", "W/L", "lineup pts (offense)", "perfect pts (offense)", "offense efficiency"], rows)
     L.append("")
     me = _csv(root, "data/model_eval.csv")
     line = "Pick accuracy: no model_eval rows for that week."

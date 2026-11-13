@@ -14,7 +14,7 @@ Clone or `cd` into the repo first (public, no credentials):
 `git clone --depth 1 https://github.com/jjgreggjr/fantasy-tracker`. Never run the
 pipeline or the model from here; the workflow writes the data, this skill reads it.
 
-## Steps 1-4: one command
+## Steps 1-4 (and the step 6 gate): one command
 
 ```bash
 python -m ff.checkin
@@ -29,7 +29,13 @@ Read-only. Quote from it; do not recompute anything it already says.
   reports" are normal early in the week and the command already ignores them.
 - **Last week**: three bullets at most. Points and W/L per league, actual vs perfect
   lineup points, model vs Sleeper vs E_pts pick accuracy. Then the `Gate:` line
-  verbatim. The gate is met by a hair; E_pts is still authoritative.
+  verbatim. The gate is met by a hair; E_pts is still authoritative. Lineup points and
+  efficiency are offense-only (the optimizers and the hindsight-best lineup skip K and
+  DEF), so they are below the matchup `PF` by design.
+- **Staleness**: `HEALTH` only calls the data broken after 4 days. If the newest run is
+  more than a day old and a GitHub Actions dispatch tool is available, trigger
+  `pipeline.yml` on `main` (the fantasy skill's rule) and carry on with the check-in;
+  do not wait for it.
 - **Season efficiency**: paste the small table as printed. Nothing else.
 - **Serve**: one line, when the serve for this week landed and whether it was frozen
   before kickoff. The refit sentence it prints is the whole answer to "was the model
@@ -48,13 +54,18 @@ python -m ff.ask lineup <slug>
 
 Lineup freshness rules from that skill apply: the live read's fetch time is the first
 line of the league block; the ESPN league is a committed snapshot and is labelled as
-such. Print, per league, in full: the slot-by-slot table (E_pts lineup, model lineup,
-the call), the `Net vs current:` / `Totals` / `Differ:` lines, and the "Status of every
-starter" block. Then one line of injury flags: any starter who is Out / Doubtful /
-IR / inactive, and any benched Out/IR player whose healthy role beats a starter ("is
-he back yet?"). The legend lines from the fantasy skill go above the first table.
-Points and volume together, every player you name. The tables are the deliverable;
-the prose around them stays short.
+such. Print, per league, in full, **from the `live` output** (its `IN` marks are
+against the lineup as it is now; `lineup` marks them against the committed snapshot,
+which can be days old): the slot-by-slot table (E_pts lineup, model lineup, the
+call), the `Net vs current:` / `Totals` / `Differ:` lines, the "Status of every
+starter" block and the Bench table. Then one line of injury flags: any starter who is
+Out / Doubtful / IR / inactive, and any benched Out/IR player whose healthy role beats
+a starter ("is he back yet?"; `data/status.csv` has `news_age_hours`,
+`injury_body_part` and `opportunity_ahead` when the printed tables do not). The legend
+lines from the fantasy skill go once, above the first league block. Points and volume
+together, every player you name. The tables are the deliverable; the prose around
+them stays short. The last completed week and the scoreboard are already in steps 2
+and 3; do not repeat `ff.ask played` or `ff.ask scoreboard` per league.
 
 ## Step 6: miss research (once a week, writes)
 
