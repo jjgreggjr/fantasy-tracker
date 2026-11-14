@@ -188,7 +188,7 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,trade,drop,9997,Zay Flowers,"2, 5"
 2026,8,waiver,add,8343,,5
 2026,8,waiver,drop,4950,Christian Kirk,5
-2026,9,waiver,add,11579,Audric Estimé,5
+2026,9,waiver,add,11579,Audric Estime,5
 2026,9,waiver,drop,2747,,5
 2026,9,waiver,add,9502,Tank Dell,5
 2026,9,waiver,drop,2617,,5
@@ -209,3 +209,12 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,waiver,add,5871,,5
 2026,9,waiver,add,5816,,5
 2026,9,free_agent,drop,4454,Kendrick Bourne,8
+2026,10,waiver,add,4147,Samaje Perine,8
+2026,10,waiver,add,5119,,1
+2026,10,free_agent,drop,2020,,1
+2026,10,waiver,add,2747,,5
+2026,10,waiver,drop,10213,Tre Tucker,5
+2026,10,waiver,add,12718,Konata Mumpfield,9
+2026,10,waiver,drop,7666,,9
+2026,10,waiver,add,7042,,10
+2026,10,waiver,drop,12713,,10

@@ -129,6 +129,9 @@ season,week,type,action,sleeper_id,name,rosters
 2026,8,free_agent,add,WAS,,3
 2026,8,free_agent,drop,BAL,,3
 2026,9,free_agent,drop,12711,,1
+2026,9,waiver,add,12494,Kyle McCord,1
+2026,9,waiver,add,12491,Corey Kiner,4
+2026,9,waiver,add,13272,Carson Beck,4
 2026,9,free_agent,drop,10232,Michael Wilson,4
 2026,9,free_agent,add,NO,,11
 2026,9,free_agent,add,6130,Devin Singletary,12
@@ -143,3 +146,16 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,GB,,2
 2026,9,free_agent,add,11557,Joe Milton III,2
 2026,9,free_agent,drop,4017,Deshaun Watson,2
+2026,10,free_agent,add,12540,Chimere Dike,12
+2026,10,free_agent,drop,11579,Audric Estime,12
+2026,10,free_agent,add,11579,Audric Estime,12
+2026,10,free_agent,add,4017,Deshaun Watson,12
+2026,10,free_agent,drop,11630,Roman Wilson,12
+2026,10,free_agent,add,3286,Demarcus Robinson,8
+2026,10,free_agent,drop,8676,Rashid Shaheed,8
+2026,10,free_agent,add,13337,Emmett Johnson,8
+2026,10,free_agent,drop,12048,George Holani,8
+2026,10,free_agent,add,BAL,,6
+2026,10,free_agent,drop,CHI,,6
+2026,10,free_agent,drop,9225,Tank Bigsby,12
+2026,10,free_agent,add,4177,Mack Hollins,4
