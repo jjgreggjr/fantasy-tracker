@@ -245,6 +245,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,10219,Chris Rodriguez Jr.,6
 2026,9,free_agent,add,7561,Elijah Mitchell,2
 2026,9,free_agent,drop,12457,Jaydon Blue,2
+2026,10,free_agent,add,5995,Justice Hill,7
+2026,10,free_agent,drop,2197,Brandin Cooks,7
 2026,10,free_agent,add,7042,,5
 2026,10,free_agent,drop,6650,,5
 2026,10,free_agent,add,12634,Jordan Watkins,2

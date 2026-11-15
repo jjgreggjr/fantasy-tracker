@@ -146,6 +146,8 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,GB,,2
 2026,9,free_agent,add,11557,Joe Milton III,2
 2026,9,free_agent,drop,4017,Deshaun Watson,2
+2026,10,free_agent,add,8122,Bam Knight,12
+2026,10,free_agent,drop,12487,Terrance Ferguson,12
 2026,10,free_agent,add,12540,Chimere Dike,12
 2026,10,free_agent,drop,11579,Audric Estime,12
 2026,10,free_agent,add,11579,Audric Estime,12
