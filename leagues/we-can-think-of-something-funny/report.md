@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 10
 
 dynasty · 31 roster slots  
-Generated 2026-11-15 19:28 UTC · baselines: 2026 only · lineup as of 2026-11-15T19:28:55Z
+Generated 2026-11-15 21:52 UTC · baselines: 2026 only · lineup as of 2026-11-15T21:53:00Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 

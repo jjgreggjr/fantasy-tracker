@@ -1,6 +1,6 @@
 # Week 10 digest — 2026
 
-Generated 2026-11-15 19:28 UTC  
+Generated 2026-11-15 21:52 UTC  
 Stats through: **Week 9** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 9** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 958
 - Sleeper players cache: 2026-11-15
-- projections: 871 players (Sleeper, 2026-11-15T19:29:00Z)
-- league rosters: 3 leagues, lineups read 2026-11-15T19:28:55Z
-- ESPN rosters: Average Joes (2026-11-15T19:29:07Z)
+- projections: 871 players (Sleeper, 2026-11-15T21:53:05Z)
+- league rosters: 3 leagues, lineups read 2026-11-15T21:53:00Z
+- ESPN rosters: Average Joes (2026-11-15T21:53:12Z)
 - status rows: 1548 players; 267 with practice reports
 - gameday inactives: 0 on the week 10 list (games not yet started)
 
@@ -37,7 +37,7 @@ Stats through: **Week 9** · Baselines: **2026 only**
 
 **Needs a decision:** Drake Maye (OUT), TreVeyon Henderson (IR), Kenny Gainwell (BYE), T.J. Hockenson (OUT), Jaylin Noel (IR), Ted Hurst III (BYE), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** Justice Hill (RB, 7.4), Seth McGowan (RB, 7.2), Audric Estime (RB, 6.9)
+**Trending and still free here:** Justice Hill (RB, 7.4), Seth McGowan (RB, 7.2), Kaelon Black (RB, 6.7)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`

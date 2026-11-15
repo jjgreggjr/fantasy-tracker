@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 10
 
 redraft · 20 roster slots  
-Generated 2026-11-15 19:28 UTC · baselines: 2026 only · lineup as of 2026-11-15T19:28:55Z
+Generated 2026-11-15 21:52 UTC · baselines: 2026 only · lineup as of 2026-11-15T21:53:00Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -103,7 +103,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tutu Atwell | WR | LA | ARI | 8.4 | 4.4 | 17% | 2 | 19 | High | 🔥 |
 | Tai Felton | WR | MIN | GB | 8.2 | 4.4 | 14% | 5 | 4 | Low |  |
 | Myles Price | WR | MIN | GB | 8.2 | 4.3 | 13% | 4 | 4 | Low |  |
-| Quentin Johnston | WR | LAC | BAL | 7.6 | 4.8 | 16% | 2 | 8 | High |  |
+| Quentin Johnston | WR | LAC | BAL | 7.6 | 4.8 | 16% | 2 | 8 | High | 🔥 |
 | Laquon Treadwell | WR | IND | MIA | 7.4 | 4.0 | 14% | 1 | 14 | Low |  |
 | Kevin Austin Jr. | WR | NO | CAR | 10.1 | 4.6 |  |  | 7 | Low |  |
 
