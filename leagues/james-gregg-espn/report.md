@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 10
 
 redraft · 17 roster slots  
-Generated 2026-11-15 18:01 UTC · baselines: 2026 only · lineup as of 2026-11-15T18:02:02Z
+Generated 2026-11-15 19:28 UTC · baselines: 2026 only · lineup as of 2026-11-15T19:29:07Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -93,7 +93,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|
 | Elijah Higgins | TE | ARI | 26.1 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +34%/wk; team passes #1; age 26 |
 | Mitchell Evans | TE | CAR | 23.5 | 1 | 3 (was 3) | 40% | TE3 on depth chart; snap share trending +15%/wk; team passes #2; age 24 |
-| Lan Larison | RB | NE | 25.1 | 1 | 3 (was 4) | 15% | RB3 on depth chart; up from 4; snap share trending +14%/wk; age 25 |
+| Lan Larison | RB | NE | 25.1 | 1 | 3 (was 3) | 15% | RB3 on depth chart; snap share trending +14%/wk; age 25 |
 | Kaytron Allen | RB | MIA | 23.9 | 0 | 3 (was 3) | 6% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
 | Dylan Sampson | RB | CLE | 22.2 | 1 | 2 (was 2) | 60% | RB2 on depth chart; snap share trending +8%/wk; age 22 |
 | Seth McGowan | RB | IND | 25.1 | 0 | 2 (was 2) | 28% | RB2 on depth chart; snap share trending +6%/wk; age 25 |
@@ -101,7 +101,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Malachi Fields | WR | NYG | 23.2 | 0 | 2 (was 2) | 86% | WR2 on depth chart; snap share trending +5%/wk; team passes #13; age 23 |
 | Sione Vaki | RB | DET | 25.3 | 2 | 2 (was 2) | 30% | RB2 on depth chart; age 25 |
 | Trevor Etienne | RB | CAR | 22.4 | 1 | 2 (was 2) | 9% | RB2 on depth chart; age 22 |
-| Chris Brooks | RB | GB | 26.8 | 3 | 3 (was 5) | 20% | RB3 on depth chart; up from 5; age 27 |
+| Chris Brooks | RB | GB | 26.8 | 3 | 3 (was 3) | 20% | RB3 on depth chart; age 27 |
 | Antonio Williams | WR | WAS | 22.3 | 0 | 2 (was 2) | 84% | WR2 on depth chart; team passes #16; age 22 |
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
 | Tyjae Spears | RB | TEN | 25.4 | 3 | 2 (was 2) | 46% | RB2 on depth chart; age 25 |
