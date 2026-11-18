@@ -247,6 +247,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,12457,Jaydon Blue,2
 2026,10,free_agent,add,5995,Justice Hill,7
 2026,10,free_agent,drop,2197,Brandin Cooks,7
+2026,10,trade,add,8150,Kyren Williams,"4, 7"
+2026,10,trade,add,9758,C.J. Stroud,"4, 7"
+2026,10,trade,drop,8150,Kyren Williams,"4, 7"
+2026,10,trade,drop,9758,C.J. Stroud,"4, 7"
 2026,10,free_agent,add,7042,,5
 2026,10,free_agent,drop,6650,,5
 2026,10,free_agent,add,12634,Jordan Watkins,2

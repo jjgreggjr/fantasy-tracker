@@ -1,25 +1,25 @@
-# Week 10 digest — 2026
+# Week 11 digest — 2026
 
-Generated 2026-11-15 21:52 UTC  
-Stats through: **Week 9** · Baselines: **2026 only**
+Generated 2026-11-18 01:15 UTC  
+Stats through: **Week 10** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-15T14:41:31Z
+- depth chart snapshot: 2026-11-17T16:52:03Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(10)]
 - 2025 baseline weeks: 18 weeks
-- players in dimension: 958
-- Sleeper players cache: 2026-11-15
-- projections: 871 players (Sleeper, 2026-11-15T21:53:05Z)
-- league rosters: 3 leagues, lineups read 2026-11-15T21:53:00Z
-- ESPN rosters: Average Joes (2026-11-15T21:53:12Z)
-- status rows: 1548 players; 267 with practice reports
-- gameday inactives: 0 on the week 10 list (games not yet started)
+- players in dimension: 959
+- Sleeper players cache: 2026-11-18
+- projections: 872 players (Sleeper, 2026-11-18T01:15:57Z)
+- league rosters: 3 leagues, lineups read 2026-11-18T01:15:51Z
+- ESPN rosters: Average Joes (2026-11-18T01:16:07Z)
+- status rows: 1543 players; 0 with practice reports
+- gameday inactives: 0 on the week 11 list (games not yet started)
 
 ### Data integrity
 
-- **WARN** player_weeks.volume — suspiciously few rows in week(s) [10]
+All 19 checks passed.
 
 
 ## Gooma's Family League
@@ -28,16 +28,16 @@ Stats through: **Week 9** · Baselines: **2026 only**
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | PIT | 19.1 | 3.1 |  | 1 | 25 | High |  |
-| Geno Smith | QB | NYJ | BUF | 14.5 | 2.8 |  | 1 | 32 | Low |  |
-| Breece Hall | RB | NYJ | BUF | 11.9 | 15.7 | 50% | 1 | 27 | High |  |
-| Tony Pollard | RB | TEN | JAX | 11.4 | 16.5 | 60% | 1 | 24 | Med |  |
-| Quinshon Judkins | RB | CLE | HOU | 11.3 | 15.8 | 52% | 1 | 4 | High |  |
+| Joe Burrow | QB | CIN | WAS | 22.3 | 3.2 |  | 1 | 26 | High |  |
+| Tony Pollard | RB | TEN | DAL | 16.9 | 16.0 | 63% | 1 | 1 | High |  |
+| Breece Hall | RB | NYJ | LAC | 12.9 | 15.9 | 51% | 1 | 19 | High |  |
+| Aaron Jones | RB | MIN | SF | 8.2 | 13.0 | 41% | 2 | 30 | Med |  |
+| Kenny Gainwell | RB | TB | DET | 6.1 | 7.0 | 16% | 2 | 28 | Low |  |
 
 
-**Needs a decision:** Drake Maye (OUT), TreVeyon Henderson (IR), Kenny Gainwell (BYE), T.J. Hockenson (OUT), Jaylin Noel (IR), Ted Hurst III (BYE), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
+**Needs a decision:** Drake Maye (OUT), Geno Smith (OUT), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Brock Bowers (OUT), T.J. Hockenson (OUT), Jaylin Noel (IR), Omar Cooper Jr. (OUT), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** Justice Hill (RB, 7.4), Seth McGowan (RB, 7.2), Kaelon Black (RB, 6.7)
+**Trending and still free here:** Justice Hill (RB, 8.4), Seth McGowan (RB, 6.8), Kaelon Black (RB, 4.9)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -49,16 +49,16 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Matthew Stafford | QB | LA | ARI | 17.6 | 1.5 |  | 1 | 8 | Low |  |
-| Carson Beck | QB | ARI | LA | 10.7 | 3.2 |  | 1 | 22 | Med |  |
-| Zach Charbonnet | RB | SEA | LV | 15.4 | 14.4 | 42% | 1 | 5 | High |  |
-| Bhayshul Tuten | RB | JAX | TEN | 14.1 | 16.0 | 47% | 1 | 11 | High |  |
-| Breece Hall | RB | NYJ | BUF | 11.9 | 15.7 | 50% | 1 | 27 | High |  |
+| Bo Nix | QB | DEN | LV | 19.4 | 4.7 |  | 1 | 10 | High |  |
+| Carson Beck | QB | ARI | KC | 11.7 | 2.6 |  | 1 | 23 | Low |  |
+| D'Andre Swift | RB | CHI | NO | 20.2 | 18.7 | 51% | 1 | 8 | High |  |
+| Tony Pollard | RB | TEN | DAL | 16.9 | 16.0 | 63% | 1 | 1 | High |  |
+| Bhayshul Tuten | RB | JAX | NYG | 13.4 | 18.4 | 54% | 1 | 31 | High |  |
 
 
-**Needs a decision:** Bo Nix (BYE), D'Andre Swift (BYE), TreVeyon Henderson (IR), Makai Lemon (BYE), Jaylin Noel (IR), Carnell Tate (OUT), Ricky Pearsall (IR), Rome Odunze (BYE), Jayden Reed (IR)
+**Needs a decision:** Matthew Stafford (BYE), Zach Charbonnet (BYE), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Harold Fannin Jr. (BYE), Kyle Pitts (BYE), Denzel Boston (BYE), Tory Horton (BYE), Jaylin Noel (IR), Carnell Tate (OUT), Rashid Shaheed (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Deshaun Watson (QB, 16.3), Darren Waller (TE, 9.1), Darnell Washington (TE, 8.6)
+**Trending and still free here:** Joe Milton III (QB, 16.0), Samaje Perine (RB, 7.3), Darren Waller (TE, 10.4)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -70,16 +70,16 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Brock Purdy | QB | SF | DAL | 20.5 | 4.1 |  | 1 | 19 | Med |  |
-| Trevor Lawrence | QB | JAX | TEN | 20.5 | 3.9 |  | 1 | 1 | Med |  |
-| Dak Prescott | QB | DAL | SF | 18.0 | 2.9 |  | 1 | 16 | Med |  |
-| Emmett Johnson | RB | KC | ATL | 15.5 | 16.7 | 64% | 2 | 7 | Low |  |
-| Aaron Jones | RB | MIN | GB | 8.7 | 12.9 | 39% | 2 | 14 | Med |  |
+| Dak Prescott | QB | DAL | TEN | 23.7 | 3.0 |  | 1 | 1 | Med |  |
+| Bo Nix | QB | DEN | LV | 18.8 | 4.7 |  | 1 | 10 | High |  |
+| Trevor Lawrence | QB | JAX | NYG | 18.2 | 5.0 |  | 1 | 17 | Med |  |
+| Brock Purdy | QB | SF | MIN | 13.8 | 4.5 |  | 1 | 29 | High |  |
+| D'Andre Swift | RB | CHI | NO | 18.8 | 18.7 | 51% | 1 | 8 | High |  |
 
 
-**Needs a decision:** Bo Nix (BYE), Jaxson Dart (IR), David Montgomery (OUT), Kenneth Walker III (OUT), D'Andre Swift (BYE), Terry McLaurin (IR), Chris Godwin Jr. (BYE), Zach Sieler (IR), Chase McLaughlin (BYE), Edgerrin Cooper (IR)
+**Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), David Montgomery (OUT), Kenneth Walker III (OUT), Kyle Pitts (BYE), Terry McLaurin (IR), Jaxon Smith-Njigba (BYE), Zach Sieler (IR), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Ryan Fitzgerald (K, 8.1), Bam Knight (RB, 8.4), Tyler Higbee (TE, 7.0)
+**Trending and still free here:** Cairo Santos (K, 7.7), Joe Milton III (QB, 15.3), Gavin Bartholomew (TE, 1.8)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -91,16 +91,16 @@ Full report: `leagues/where-you-at/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Bryce Young | QB | CAR | NO | 19.9 | 2.9 |  | 1 | 10 | Low |  |
-| Zach Charbonnet | RB | SEA | LV | 15.4 | 14.4 | 42% | 1 | 5 | High |  |
-| Breece Hall | RB | NYJ | BUF | 11.9 | 15.7 | 50% | 1 | 27 | High |  |
-| Rhamondre Stevenson | RB | NE | DET | 11.6 | 13.7 | 41% | 1 | 28 | High |  |
-| Aaron Jones | RB | MIN | GB | 9.9 | 12.9 | 39% | 2 | 14 | Med |  |
+| Bryce Young | QB | CAR | BAL | 19.7 | 3.2 |  | 1 | 5 | Low |  |
+| Breece Hall | RB | NYJ | LAC | 12.9 | 15.9 | 51% | 1 | 19 | High |  |
+| Aaron Jones | RB | MIN | SF | 8.2 | 13.0 | 41% | 2 | 30 | Med |  |
+| Sam LaPorta | TE | DET | TB | 12.1 | 6.4 | 19% | 1 | 17 | High |  |
+| Pat Freiermuth | TE | PIT | PHI | 5.7 | 3.6 | 12% | 2 | 31 | Med |  |
 
 
-**Needs a decision:** Drake Maye (OUT), Kyle Monangai (OUT), Pat Freiermuth (QUESTIONABLE), Puka Nacua (IR)
+**Needs a decision:** Drake Maye (OUT), Rhamondre Stevenson (BYE), Kyle Monangai (OUT), Zach Charbonnet (BYE), Puka Nacua (IR), Drake London (QUESTIONABLE)
 
-**Trending and still free here:** Aaron Rodgers (QB, 18.4), Deshaun Watson (QB, 16.0), Fernando Mendoza (QB, 13.0)
+**Trending and still free here:** Aaron Rodgers (QB, 17.4), Fernando Mendoza (QB, 15.7), Joe Milton III (QB, 15.3)
 
 
 Full report: `leagues/james-gregg-espn/report.md`
@@ -117,28 +117,28 @@ Per-game production **allowed**. Rank 1 = softest.
 
 | Rank | Def | PPR/g | Tgt | RecYd | RecTD | Car | RushYd | RushTD |
 |---|---|---|---|---|---|---|---|---|
-| 1 | CLE | 31.6 | 3.7 | 18.3 | 0.00 | 27.3 | 148.0 | 2.00 |
-| 2 | DAL | 31.0 | 6.7 | 34.0 | 0.33 | 22.0 | 129.7 | 1.33 |
-| 3 | CAR | 30.7 | 4.7 | 20.3 | 0.33 | 30.3 | 123.0 | 1.67 |
-| 4 | HOU | 30.3 | 6.0 | 26.5 | 0.00 | 27.5 | 151.5 | 1.50 |
-| 5 | LV | 30.3 | 2.7 | 18.3 | 0.33 | 30.3 | 167.7 | 1.33 |
-| 6 | NYJ | 30.1 | 4.0 | 35.0 | 0.67 | 28.3 | 119.3 | 1.00 |
-| 7 | ATL | 28.5 | 5.0 | 28.7 | 0.00 | 30.7 | 172.7 | 1.00 |
-| 8 | IND | 28.2 | 4.7 | 31.7 | 0.33 | 27.7 | 143.3 | 1.00 |
+| 1 | DAL | 38.5 | 6.5 | 69.0 | 0.75 | 22.5 | 126.0 | 1.50 |
+| 2 | ATL | 30.3 | 5.5 | 39.0 | 0.50 | 29.0 | 156.2 | 0.75 |
+| 3 | CAR | 29.2 | 6.0 | 24.0 | 0.50 | 27.0 | 98.2 | 1.50 |
+| 4 | NYJ | 28.5 | 3.5 | 27.2 | 0.50 | 26.5 | 130.8 | 1.00 |
+| 5 | HOU | 28.1 | 7.7 | 39.0 | 0.00 | 23.0 | 115.7 | 1.33 |
+| 6 | LV | 27.9 | 2.2 | 15.8 | 0.25 | 30.0 | 158.2 | 1.25 |
+| 7 | PIT | 27.4 | 11.7 | 76.3 | 0.67 | 15.0 | 37.7 | 0.33 |
+| 8 | NO | 27.3 | 8.0 | 66.3 | 0.00 | 26.7 | 99.7 | 0.67 |
 
 
 ### vs WR — 8 softest
 
 | Rank | Def | PPR/g | Tgt | RecYd | RecTD | Car | RushYd | RushTD |
 |---|---|---|---|---|---|---|---|---|
-| 1 | LAC | 56.3 | 22.5 | 233.0 | 3.00 | 0.0 | 0.0 | 0.00 |
-| 2 | TEN | 55.0 | 26.0 | 253.5 | 1.50 | 1.5 | 11.5 | 0.00 |
-| 3 | NE | 51.8 | 18.0 | 242.3 | 2.00 | 1.7 | 6.0 | 0.00 |
-| 4 | GB | 42.0 | 21.3 | 186.7 | 1.67 | 0.3 | -0.3 | 0.00 |
-| 5 | PHI | 36.6 | 20.0 | 170.3 | 1.33 | 0.3 | -1.3 | 0.00 |
-| 6 | LV | 35.7 | 15.3 | 160.3 | 1.33 | 0.7 | 3.3 | 0.00 |
-| 7 | CAR | 35.1 | 18.3 | 142.3 | 1.33 | 1.0 | 12.3 | 0.00 |
-| 8 | BAL | 33.8 | 16.0 | 166.3 | 1.33 | 0.3 | 1.3 | 0.00 |
+| 1 | TEN | 55.4 | 24.7 | 263.0 | 1.67 | 1.3 | 7.7 | 0.00 |
+| 2 | NE | 50.0 | 17.8 | 223.5 | 2.25 | 1.2 | 4.5 | 0.00 |
+| 3 | LAC | 46.8 | 23.0 | 214.3 | 2.00 | 0.0 | 0.0 | 0.00 |
+| 4 | SF | 41.3 | 23.7 | 150.7 | 2.00 | 0.7 | 5.7 | 0.00 |
+| 5 | GB | 41.2 | 21.5 | 179.0 | 1.50 | 0.5 | 2.8 | 0.00 |
+| 6 | PIT | 37.8 | 19.7 | 191.0 | 0.67 | 0.0 | 0.0 | 0.00 |
+| 7 | LV | 37.6 | 14.8 | 173.5 | 1.50 | 0.5 | 2.5 | 0.00 |
+| 8 | PHI | 36.6 | 20.0 | 170.3 | 1.33 | 0.3 | -1.3 | 0.00 |
 
 
 ### vs TE — 8 softest
@@ -146,24 +146,24 @@ Per-game production **allowed**. Rank 1 = softest.
 | Rank | Def | PPR/g | Tgt | RecYd | RecTD | Car | RushYd | RushTD |
 |---|---|---|---|---|---|---|---|---|
 | 1 | DEN | 31.3 | 14.7 | 116.7 | 1.33 | 0.0 | 0.0 | 0.00 |
-| 2 | SF | 27.4 | 10.5 | 101.0 | 1.50 | 1.0 | 2.5 | 0.00 |
-| 3 | NYJ | 24.3 | 10.3 | 105.7 | 0.67 | 0.3 | 0.3 | 0.33 |
-| 4 | BAL | 20.4 | 7.7 | 84.3 | 1.00 | 0.0 | 0.0 | 0.00 |
-| 5 | TEN | 18.9 | 8.0 | 84.0 | 1.00 | 0.0 | 0.0 | 0.00 |
-| 6 | WAS | 17.5 | 10.0 | 81.3 | 0.33 | 0.3 | 0.7 | 0.00 |
-| 7 | IND | 16.6 | 5.0 | 62.3 | 1.00 | 0.0 | 0.0 | 0.00 |
-| 8 | LV | 16.4 | 9.7 | 60.3 | 0.67 | 0.0 | 0.0 | 0.00 |
+| 2 | NYJ | 20.6 | 9.2 | 95.5 | 0.50 | 0.2 | 0.2 | 0.25 |
+| 3 | SF | 20.2 | 8.7 | 80.0 | 1.00 | 0.7 | 1.7 | 0.00 |
+| 4 | WAS | 17.5 | 10.0 | 81.3 | 0.33 | 0.3 | 0.7 | 0.00 |
+| 5 | TEN | 16.9 | 7.3 | 65.7 | 1.00 | 0.0 | 0.0 | 0.00 |
+| 6 | BAL | 16.7 | 6.8 | 69.0 | 0.75 | 0.0 | 0.0 | 0.00 |
+| 7 | PIT | 15.0 | 8.7 | 70.3 | 0.33 | 0.0 | 0.0 | 0.00 |
+| 8 | LA | 14.5 | 9.0 | 73.0 | 0.00 | 0.0 | 0.0 | 0.00 |
 
 
 ### vs QB — 8 softest
 
 | Rank | Def | PPR/g | Tgt | RecYd | RecTD | Car | RushYd | RushTD |
 |---|---|---|---|---|---|---|---|---|
-| 1 | TEN | 28.8 | 0.0 | 0.0 | 0.00 | 3.0 | 14.5 | 1.00 |
-| 2 | NE | 24.3 | 0.0 | 0.0 | 0.00 | 2.3 | 11.0 | 0.33 |
-| 3 | BAL | 22.9 | 0.0 | 0.0 | 0.00 | 4.0 | 13.0 | 0.33 |
-| 4 | NYJ | 22.9 | 0.0 | 0.0 | 0.00 | 5.7 | 15.7 | 0.67 |
-| 5 | LAC | 21.9 | 0.0 | 0.0 | 0.00 | 2.0 | 9.0 | 0.00 |
+| 1 | TEN | 28.2 | 0.0 | 0.0 | 0.00 | 3.3 | 18.7 | 0.67 |
+| 2 | NE | 23.4 | 0.0 | 0.0 | 0.00 | 2.8 | 8.5 | 0.25 |
+| 3 | NYJ | 22.7 | 0.0 | 0.0 | 0.00 | 6.0 | 12.5 | 1.00 |
+| 4 | SF | 22.5 | 0.0 | 0.0 | 0.00 | 3.7 | 2.0 | 0.33 |
+| 5 | BAL | 21.3 | 0.0 | 0.0 | 0.00 | 4.8 | 22.5 | 0.50 |
 | 6 | DEN | 20.8 | 0.0 | 0.0 | 0.00 | 3.3 | 11.7 | 0.00 |
-| 7 | LV | 20.2 | 0.0 | 0.0 | 0.00 | 4.7 | 12.7 | 0.33 |
-| 8 | ARI | 19.5 | 0.0 | 0.0 | 0.00 | 6.3 | 36.3 | 0.67 |
+| 7 | ATL | 19.6 | 0.0 | 0.0 | 0.00 | 3.0 | 10.2 | 0.25 |
+| 8 | ARI | 19.6 | 0.0 | 0.0 | 0.00 | 5.2 | 26.8 | 0.50 |

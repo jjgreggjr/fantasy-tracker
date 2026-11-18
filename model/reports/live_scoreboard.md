@@ -2,17 +2,17 @@
 
 ## Summary
 
-- Gate: MET, 6 of 6 completed weeks scored (model minus Sleeper +0.004 pick accuracy).
-- Pick accuracy, pooled on identical rows: model 0.670, sleeper 0.666, e_pts 0.660.
-- Lineup efficiency (points / hindsight-best lineup, pooled over 20 league-weeks): e_pts 80.1%, model 82.8%, sleeper 81.5%, call 82.0%, actual 94.9%.
-- Offense-only efficiency (QB/RB/WR/TE, the like-for-like number): e_pts 83.0%, model 86.0%, sleeper 84.6%, call 85.1%, actual 86.8%.
-- Lineup wins (highest total of e_pts / model / sleeper / call): e_pts 10, model 12, sleeper 12, call 12.
+- Gate: MET, 7 of 6 completed weeks scored (model minus Sleeper +0.005 pick accuracy).
+- Pick accuracy, pooled on identical rows: model 0.670, sleeper 0.665, e_pts 0.660.
+- Lineup efficiency (points / hindsight-best lineup, pooled over 24 league-weeks): e_pts 80.9%, model 83.2%, sleeper 82.0%, call 82.1%, actual 92.5%.
+- Offense-only efficiency (QB/RB/WR/TE, the like-for-like number): e_pts 83.3%, model 85.8%, sleeper 84.4%, call 84.6%, actual 84.2%.
+- Lineup wins (highest total of e_pts / model / sleeper / call): e_pts 12, model 14, sleeper 13, call 14.
 
 **Adoption gate: the model earns recipe preference only when it beats Sleeper's projection on pick accuracy over at least 6 completed 2026 weeks.**
 
-**Gate status: MET.** 6 of 6 completed weeks scored (2026 wk4, 2026 wk5, 2026 wk6, 2026 wk7, 2026 wk8, 2026 wk9). Pooled pick accuracy on identical rows: model (E_pts_model) 0.670, Sleeper 0.666 (difference 0.004). 
+**Gate status: MET.** 7 of 6 completed weeks scored (2026 wk4, 2026 wk5, 2026 wk6, 2026 wk7, 2026 wk8, 2026 wk9, 2026 wk10). Pooled pick accuracy on identical rows: model (E_pts_model) 0.670, Sleeper 0.665 (difference 0.005). 
 
-Week-blocked 95% interval for that difference: [-0.012, +0.020] (informational; the gate is the point estimate over 6+ weeks, as written).
+Week-blocked 95% interval for that difference: [-0.009, +0.019] (informational; the gate is the point estimate over 6+ weeks, as written).
 
 ## What is scored
 
@@ -32,11 +32,11 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 3676 | 82296 | 0.670 | 0.435 |
-| `model_flat` | 3676 | 82296 | 0.668 | 0.434 |
-| `model_blend` | 3676 | 82296 | 0.671 | 0.439 |
-| `sleeper` | 3676 | 82296 | 0.666 | 0.431 |
-| `e_pts` | 3676 | 82296 | 0.660 | 0.394 |
+| `model_components` | 4246 | 93847 | 0.670 | 0.428 |
+| `model_flat` | 4246 | 93847 | 0.667 | 0.426 |
+| `model_blend` | 4246 | 93847 | 0.670 | 0.431 |
+| `sleeper` | 4246 | 93847 | 0.665 | 0.426 |
+| `e_pts` | 4246 | 93847 | 0.660 | 0.395 |
 
 ### By position
 
@@ -44,41 +44,41 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 576 | 6854 | 0.645 | 0.407 |
-| `model_flat` | 576 | 6854 | 0.658 | 0.437 |
-| `model_blend` | 576 | 6854 | 0.657 | 0.436 |
-| `sleeper` | 576 | 6854 | 0.665 | 0.445 |
-| `e_pts` | 576 | 6854 | 0.622 | 0.336 |
+| `model_components` | 670 | 7953 | 0.646 | 0.410 |
+| `model_flat` | 670 | 7953 | 0.656 | 0.433 |
+| `model_blend` | 670 | 7953 | 0.656 | 0.436 |
+| `sleeper` | 670 | 7953 | 0.665 | 0.446 |
+| `e_pts` | 670 | 7953 | 0.626 | 0.353 |
 
 **RB**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 1074 | 24143 | 0.687 | 0.501 |
-| `model_flat` | 1074 | 24143 | 0.684 | 0.497 |
-| `model_blend` | 1074 | 24143 | 0.690 | 0.507 |
-| `sleeper` | 1074 | 24143 | 0.683 | 0.494 |
-| `e_pts` | 1074 | 24143 | 0.686 | 0.502 |
+| `model_components` | 1242 | 27674 | 0.689 | 0.507 |
+| `model_flat` | 1242 | 27674 | 0.686 | 0.503 |
+| `model_blend` | 1242 | 27674 | 0.692 | 0.513 |
+| `sleeper` | 1242 | 27674 | 0.685 | 0.502 |
+| `e_pts` | 1242 | 27674 | 0.688 | 0.509 |
 
 **WR**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 1446 | 44297 | 0.673 | 0.466 |
-| `model_flat` | 1446 | 44297 | 0.669 | 0.461 |
-| `model_blend` | 1446 | 44297 | 0.672 | 0.470 |
-| `sleeper` | 1446 | 44297 | 0.665 | 0.454 |
-| `e_pts` | 1446 | 44297 | 0.661 | 0.448 |
+| `model_components` | 1662 | 50169 | 0.672 | 0.470 |
+| `model_flat` | 1662 | 50169 | 0.667 | 0.460 |
+| `model_blend` | 1662 | 50169 | 0.670 | 0.470 |
+| `sleeper` | 1662 | 50169 | 0.664 | 0.454 |
+| `e_pts` | 1662 | 50169 | 0.659 | 0.446 |
 
 **TE**
 
 | comparator | players | pairs | pick accuracy | Spearman |
 |---|---|---|---|---|
-| `model_components` | 580 | 7002 | 0.625 | 0.365 |
-| `model_flat` | 580 | 7002 | 0.615 | 0.343 |
-| `model_blend` | 580 | 7002 | 0.615 | 0.342 |
-| `sleeper` | 580 | 7002 | 0.610 | 0.329 |
-| `e_pts` | 580 | 7002 | 0.600 | 0.289 |
+| `model_components` | 672 | 8051 | 0.614 | 0.324 |
+| `model_flat` | 672 | 8051 | 0.607 | 0.307 |
+| `model_blend` | 672 | 8051 | 0.606 | 0.304 |
+| `sleeper` | 672 | 8051 | 0.603 | 0.301 |
+| `e_pts` | 672 | 8051 | 0.597 | 0.271 |
 
 ### By week (pick accuracy, pooled over leagues)
 
@@ -90,15 +90,16 @@ Metrics: **pick accuracy** = over all same-position pairs in a league-week with 
 | 2026 wk07 | 0.672 | 0.673 | 0.676 | 0.673 | 0.673 |
 | 2026 wk08 | 0.666 | 0.667 | 0.668 | 0.666 | 0.666 |
 | 2026 wk09 | 0.683 | 0.689 | 0.687 | 0.682 | 0.674 |
+| 2026 wk10 | 0.664 | 0.658 | 0.659 | 0.657 | 0.657 |
 
 ### By league (pick accuracy, pooled over weeks)
 
 | league | model_components | model_flat | model_blend | sleeper | e_pts |
 |---|---|---|---|---|---|
-| gooma-s-family-league | 0.670 | 0.666 | 0.670 | 0.665 | 0.657 |
-| james-gregg-espn | 0.636 | 0.631 | 0.637 | 0.630 | 0.627 |
-| we-can-think-of-something-funny | 0.687 | 0.686 | 0.689 | 0.683 | 0.677 |
-| where-you-at | 0.668 | 0.667 | 0.669 | 0.664 | 0.659 |
+| gooma-s-family-league | 0.670 | 0.666 | 0.669 | 0.665 | 0.659 |
+| james-gregg-espn | 0.638 | 0.633 | 0.638 | 0.633 | 0.628 |
+| we-can-think-of-something-funny | 0.686 | 0.684 | 0.687 | 0.681 | 0.676 |
+| where-you-at | 0.666 | 0.664 | 0.666 | 0.661 | 0.657 |
 
 ## Coverage
 
@@ -112,6 +113,7 @@ Played rostered skill players per week (summed over leagues), how many had a mod
 | 2026 | 7 | 609 | 583 | 583 |
 | 2026 | 8 | 610 | 590 | 590 |
 | 2026 | 9 | 622 | 608 | 608 |
+| 2026 | 10 | 597 | 575 | 570 |
 
 ## Which comparators exist
 
@@ -143,10 +145,14 @@ Non-blank frozen values per league-week in `data/model_pts.csv` (the actual-poin
 | 2026 | 9 | james-gregg-espn | 433 | 139 | 433 | 433 | 433 | 429 | 427 |
 | 2026 | 9 | we-can-think-of-something-funny | 433 | 241 | 433 | 433 | 433 | 429 | 427 |
 | 2026 | 9 | where-you-at | 433 | 252 | 433 | 433 | 433 | 429 | 427 |
-| 2026 | 10 | gooma-s-family-league | 430 | 0 | 430 | 430 | 430 | 346 | 404 |
-| 2026 | 10 | james-gregg-espn | 430 | 0 | 430 | 430 | 430 | 346 | 404 |
-| 2026 | 10 | we-can-think-of-something-funny | 430 | 0 | 430 | 430 | 430 | 346 | 404 |
-| 2026 | 10 | where-you-at | 430 | 0 | 430 | 430 | 430 | 346 | 404 |
+| 2026 | 10 | gooma-s-family-league | 430 | 221 | 430 | 430 | 430 | 346 | 404 |
+| 2026 | 10 | james-gregg-espn | 430 | 141 | 430 | 430 | 430 | 346 | 404 |
+| 2026 | 10 | we-can-think-of-something-funny | 430 | 242 | 430 | 430 | 430 | 346 | 404 |
+| 2026 | 10 | where-you-at | 430 | 256 | 430 | 430 | 430 | 346 | 404 |
+| 2026 | 11 | gooma-s-family-league | 365 | 0 | 365 | 365 | 365 | 310 | 358 |
+| 2026 | 11 | james-gregg-espn | 365 | 0 | 365 | 365 | 365 | 310 | 358 |
+| 2026 | 11 | we-can-think-of-something-funny | 365 | 0 | 365 | 365 | 365 | 310 | 358 |
+| 2026 | 11 | where-you-at | 365 | 0 | 365 | 365 | 365 | 310 | 358 |
 
 ## Lineups: which number should pick my lineup
 
@@ -156,12 +162,12 @@ Each week the pipeline records four lineups per league: optimal by E_pts, by the
 
 | lineup | total points | offense points | efficiency | offense efficiency | league-weeks | wins | points vs actual |
 |---|---|---|---|---|---|---|---|
-| e_pts | 2705.3 | 2626.3 | 80.1% | 83.0% | 20 | 10 | -498.1 |
-| model | 2797.6 | 2718.6 | 82.8% | 86.0% | 20 | 12 | -405.7 |
-| sleeper | 2753.6 | 2674.6 | 81.5% | 84.6% | 20 | 12 | -449.7 |
-| call | 2769.7 | 2690.7 | 82.0% | 85.1% | 20 | 12 | -433.7 |
-| actual | 3203.4 | 2744.2 | 94.9% | 86.8% | 20 | - | - |
-| perfect | 3377.0 | 3162.5 | 100.0% | 100.0% | 20 | - | +173.6 |
+| e_pts | 3284.2 | 3177.2 | 80.9% | 83.3% | 24 | 12 | -468.7 |
+| model | 3379.1 | 3272.1 | 83.2% | 85.8% | 24 | 14 | -373.8 |
+| sleeper | 3327.9 | 3220.9 | 82.0% | 84.4% | 24 | 13 | -425.0 |
+| call | 3333.4 | 3226.4 | 82.1% | 84.6% | 24 | 14 | -419.5 |
+| actual | 3752.9 | 3213.5 | 92.5% | 84.2% | 24 | - | - |
+| perfect | 4059.4 | 3814.9 | 100.0% | 100.0% | 24 | - | +306.5 |
 
 ### gooma-s-family-league
 
@@ -172,8 +178,9 @@ Each week the pipeline records four lineups per league: optimal by E_pts, by the
 | 2026 wk07 (b) | 134.3 (76.3%) | 157.3 (89.4%) | 157.3 (89.4%) | 157.3 (89.4%) | 174.1 (98.9%) | 176.0 (100.0%) | model / sleeper / call |
 | 2026 wk08 | 155.5 (95.1%) | 155.5 (95.1%) | 155.5 (95.1%) | 155.5 (95.1%) | 165.5 (101.2%) | 163.5 (100.0%) | e_pts / model / sleeper / call |
 | 2026 wk09 | 136.1 (94.8%) | 136.1 (94.8%) | 136.1 (94.8%) | 136.1 (94.8%) | 157.0 (109.3%) | 143.6 (100.0%) | e_pts / model / sleeper / call |
+| 2026 wk10 | 160.9 (98.2%) | 141.9 (86.6%) | 141.9 (86.6%) | 160.9 (98.2%) | 138.1 (84.3%) | 163.8 (100.0%) | e_pts / call |
 
-Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 84.5% (offense 84.5%), model 91.8% (offense 91.8%), sleeper 91.3% (offense 91.3%), call 87.2% (offense 87.2%), actual 94.4% (offense 87.4%).
+Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 86.7% (offense 86.7%), model 90.9% (offense 90.9%), sleeper 90.6% (offense 90.6%), call 89.0% (offense 89.0%), actual 92.7% (offense 85.8%).
 
 ### james-gregg-espn
 
@@ -184,8 +191,9 @@ Selected team efficiency, season to date (points / hindsight-best lineup): e_pts
 | 2026 wk07 (b) | 77.8 (66.4%) | 55.8 (47.6%) | 77.8 (66.4%) | 77.8 (66.4%) | 109.5 (93.4%) | 117.2 (100.0%) | e_pts / sleeper / call |
 | 2026 wk08 | 83.4 (80.9%) | 83.4 (80.9%) | 83.4 (80.9%) | 83.4 (80.9%) | 91.4 (88.6%) | 103.1 (100.0%) | e_pts / model / sleeper / call |
 | 2026 wk09 | 112.2 (92.9%) | 105.7 (87.5%) | 114.3 (94.6%) | 112.2 (92.9%) | 122.7 (101.6%) | 120.7 (100.0%) | sleeper |
+| 2026 wk10 | 58.1 (59.6%) | 71.4 (73.2%) | 58.1 (59.6%) | 58.1 (59.6%) | 97.4 (99.8%) | 97.6 (100.0%) | model |
 
-Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 84.8% (offense 84.8%), model 82.8% (offense 82.8%), sleeper 87.3% (offense 87.3%), call 87.0% (offense 87.0%), actual 97.1% (offense 88.7%).
+Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 81.7% (offense 81.7%), model 81.6% (offense 81.6%), sleeper 83.8% (offense 83.8%), call 83.5% (offense 83.5%), actual 97.4% (offense 86.7%).
 
 ### we-can-think-of-something-funny
 
@@ -196,8 +204,9 @@ Selected team efficiency, season to date (points / hindsight-best lineup): e_pts
 | 2026 wk07 (b) | 168.7 (69.0%) | 219.1 (89.6%) | 202.3 (82.8%) | 186.3 (76.2%) | 237.4 (97.1%) | 244.4 (100.0%) | model |
 | 2026 wk08 | 220.3 (94.2%) | 211.2 (90.3%) | 220.3 (94.2%) | 220.3 (94.2%) | 231.6 (99.0%) | 233.9 (100.0%) | e_pts / sleeper / call |
 | 2026 wk09 | 142.7 (89.8%) | 141.0 (88.7%) | 141.0 (88.7%) | 143.3 (90.1%) | 157.3 (98.9%) | 159.0 (100.0%) | call |
+| 2026 wk10 | 205.6 (93.5%) | 205.6 (93.5%) | 198.5 (90.3%) | 205.6 (93.5%) | 185.3 (84.3%) | 219.8 (100.0%) | e_pts / model / call |
 
-Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 81.4% (offense 81.4%), model 86.1% (offense 86.1%), sleeper 82.3% (offense 82.3%), call 83.8% (offense 83.8%), actual 92.0% (offense 85.8%).
+Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 83.5% (offense 83.5%), model 87.4% (offense 87.4%), sleeper 83.7% (offense 83.7%), call 85.5% (offense 85.5%), actual 90.6% (offense 83.9%).
 
 ### where-you-at
 
@@ -208,8 +217,9 @@ Selected team efficiency, season to date (points / hindsight-best lineup): e_pts
 | 2026 wk07 (b) | 86.2 (57.9%) | 86.2 (57.9%) | 86.2 (57.9%) | 86.2 (57.9%) | 151.6 (101.8%) | 148.9 (100.0%) | e_pts / model / sleeper / call |
 | 2026 wk08 | 147.6 (89.7%) | 141.5 (86.0%) | 146.1 (88.8%) | 147.6 (89.7%) | 153.1 (93.0%) | 164.6 (100.0%) | e_pts / call |
 | 2026 wk09 | 129.5 (75.7%) | 130.1 (76.1%) | 130.1 (76.1%) | 129.5 (75.7%) | 162.5 (95.0%) | 171.0 (100.0%) | model / sleeper |
+| 2026 wk10 | 154.4 (76.7%) | 162.6 (80.8%) | 175.8 (87.4%) | 139.2 (69.2%) | 128.8 (64.0%) | 201.2 (100.0%) | sleeper |
 
-Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 70.1% (offense 81.9%), model 69.6% (offense 81.2%), sleeper 65.8% (offense 76.1%), call 70.3% (offense 82.2%), actual 97.2% (offense 85.4%).
+Selected team efficiency, season to date (points / hindsight-best lineup): e_pts 71.4% (offense 80.1%), model 71.8% (offense 80.7%), sleeper 70.0% (offense 78.3%), call 70.0% (offense 78.3%), actual 90.7% (offense 80.2%).
 
 (b) = backfilled week (12 league-weeks): built after the fact from the pre-game roster snapshot and the predictions frozen before kickoff in `data/model_pts.csv`. Backfilled `call` lineups had no status rule (no historical practice / play_prob), and K / DEF / IDP slots have no frozen projection, so they are empty there. A league-week where a serve at kickoff overwrote the frozen rows (under 80% of his projected offensive players still frozen) is not backfilled.
 
