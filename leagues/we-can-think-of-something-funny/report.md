@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 11
 
 dynasty · 31 roster slots  
-Generated 2026-11-18 01:51 UTC · baselines: 2026 only · lineup as of 2026-11-18T01:51:17Z
+Generated 2026-11-18 21:47 UTC · baselines: 2026 only · lineup as of 2026-11-18T21:48:01Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -89,28 +89,28 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Joe Milton III | QB | PHI | PIT | 16.0 | 3.0 |  | 1 | 9 | Low | 🔥 |
 | Tanner McKee | QB | PHI | PIT | 13.8 | 4.0 |  | 2 | 9 | Med |  |
-| Jalon Daniels | QB | TB | DET | 13.7 | 4.8 |  | 2 | 24 | Med |  |
+| Jalon Daniels | QB | TB | DET | 13.7 | 4.8 |  | 2 | 24 | Med | 🔥 |
 | Kyle McCord | QB | MIA | BUF | 12.5 | 2.3 |  | 1 | 32 | High |  |
 | Mitchell Trubisky | QB | TEN | DAL | 10.5 | 2.2 |  | 2 | 11 | Med |  |
 | Jake Browning | QB | LAC | NYJ | 10.4 | 1.8 |  |  | 3 | Low |  |
 | Emari Demercado | RB | HOU | IND | 9.0 | 8.2 | 24% | 3 | 11 | Med |  |
+| Michael Carter | RB | TEN | DAL | 7.7 | 10.5 |  |  | 1 | Low |  |
 | Samaje Perine | RB | CIN | WAS | 7.3 | 7.8 | 23% | 2 | 15 | High | 🔥 |
 | Jaret Patterson | RB | DEN | LV | 6.6 | 7.5 |  |  | 6 | Low |  |
-| Ty Johnson | RB | BUF | MIA | 6.5 | 4.8 | 8% | 2 | 22 | Med |  |
 | Devin Neal | RB | WAS | CIN | 11.8 | 8.4 |  |  | 17 | Low |  |
 | Phil Mafah | RB | NYG | JAX | 10.4 | 7.0 |  |  | 23 | Low |  |
 | Cade Otton | TE | TB | DET | 9.3 | 4.4 | 17% | 1 | 19 | Med |  |
 | Mark Andrews | TE | BAL | CAR | 9.1 | 5.5 | 18% | 1 | 29 | High | 🔥 |
 | Gunnar Helm | TE | TEN | DAL | 8.6 | 3.5 | 11% | 1 | 11 | Med |  |
+| Greg Dulcich | TE | MIA | BUF | 8.0 | 4.3 | 16% | 1 | 32 | High |  |
 | Albert Okwuegbunam | TE | LV | DEN | 12.4 | 6.0 |  |  | 1 | Low |  |
 | Brevyn Spann-Ford | TE | DAL | TEN | 12.0 | 4.5 | 12% | 2 | 5 | Med |  |
-| Darren Waller | TE | CAR | BAL | 10.4 | 4.4 | 14% | 2 | 6 | Med | 🔥 |
 | Kevin Austin Jr. | WR | NO | CHI | 9.1 | 4.6 |  |  | 23 | Low |  |
 | Quentin Johnston | WR | LAC | NYJ | 7.6 | 4.9 | 16% | 2 | 24 | Med |  |
-| Xavier Hutchinson | WR | HOU | IND | 7.6 | 5.2 | 17% | 2 | 17 | Med | 🔥 |
 | Kalif Raymond | WR | CHI | NO | 7.0 | 3.7 | 12% | 3 | 29 | Med |  |
-| Elic Ayomanor | WR | TEN | DAL | 11.2 | 5.8 | 18% | 3 | 9 | Med | 🔥 |
-| Chimere Dike | WR | TEN | DAL | 10.2 | 5.1 | 16% | 4 | 9 | Med |  |
+| Laquon Treadwell | WR | IND | HOU | 6.9 | 4.6 | 16% | 1 | 12 | Med |  |
+| Elic Ayomanor | WR | TEN | DAL | 11.2 | 5.8 | 18% | 2 | 9 | Med | 🔥 |
+| Chimere Dike | WR | TEN | DAL | 10.2 | 5.1 | 16% | 3 | 9 | Med | 🔥 |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here

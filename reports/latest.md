@@ -1,20 +1,20 @@
 # Week 11 digest — 2026
 
-Generated 2026-11-18 01:51 UTC  
+Generated 2026-11-18 21:47 UTC  
 Stats through: **Week 10** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-17T16:52:03Z
+- depth chart snapshot: 2026-11-18T16:23:40Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(10)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 959
 - Sleeper players cache: 2026-11-18
-- projections: 872 players (Sleeper, 2026-11-18T01:51:22Z)
-- league rosters: 3 leagues, lineups read 2026-11-18T01:51:16Z
-- ESPN rosters: Average Joes (2026-11-18T01:51:30Z)
-- status rows: 1543 players; 0 with practice reports
+- projections: 873 players (Sleeper, 2026-11-18T21:48:07Z)
+- league rosters: 3 leagues, lineups read 2026-11-18T21:48:01Z
+- ESPN rosters: Average Joes (2026-11-18T21:48:18Z)
+- status rows: 1544 players; 17 with practice reports
 - gameday inactives: 0 on the week 11 list (games not yet started)
 
 ### Data integrity
@@ -37,7 +37,7 @@ All 19 checks passed.
 
 **Needs a decision:** Drake Maye (OUT), Geno Smith (OUT), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Brock Bowers (OUT), T.J. Hockenson (OUT), Jaylin Noel (IR), Omar Cooper Jr. (OUT), DeVonta Smith (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
 
-**Trending and still free here:** Justice Hill (RB, 8.4), Seth McGowan (RB, 6.8), Kaelon Black (RB, 4.9)
+**Trending and still free here:** Jalon Daniels (QB, 12.7), Justice Hill (RB, 8.4), Seth McGowan (RB, 6.8)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Matthew Stafford (BYE), Zach Charbonnet (BYE), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Harold Fannin Jr. (BYE), Kyle Pitts (BYE), Denzel Boston (BYE), Tory Horton (BYE), Jaylin Noel (IR), Carnell Tate (OUT), Rashid Shaheed (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Joe Milton III (QB, 16.0), Samaje Perine (RB, 7.3), Darren Waller (TE, 10.4)
+**Trending and still free here:** Joe Milton III (QB, 16.0), Jalon Daniels (QB, 13.7), Samaje Perine (RB, 7.3)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -79,7 +79,7 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 **Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), David Montgomery (OUT), Kenneth Walker III (OUT), Kyle Pitts (BYE), Terry McLaurin (IR), Jaxon Smith-Njigba (BYE), Zach Sieler (IR), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Cairo Santos (K, 7.7), Joe Milton III (QB, 15.3), Gavin Bartholomew (TE, 1.8)
+**Trending and still free here:** Cairo Santos (K, 7.7), Joey Slye (K, 7.4), Joe Milton III (QB, 15.3)
 
 
 Full report: `leagues/where-you-at/report.md`

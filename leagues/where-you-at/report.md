@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 11
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-18 01:51 UTC · baselines: 2026 only · lineup as of 2026-11-18T01:51:17Z
+Generated 2026-11-18 21:47 UTC · baselines: 2026 only · lineup as of 2026-11-18T21:48:02Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -19,7 +19,6 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - Terry McLaurin: IR (Knee) — his depth rank of 7 reflects that, not his role
 - Edgerrin Cooper: IR (Achilles)
 - Zach Sieler: IR (Biceps)
-- David Montgomery: REPEAT DNP — 0 opportunities in weeks 9,10 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - Jaxson Dart: REPEAT DNP — 0 opportunities in weeks 9,10 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - Terry McLaurin: REPEAT DNP — 0 opportunities in weeks 9,10 and no Full practice this week (play_prob 0.00; E_pts blanked)
 
@@ -93,12 +92,12 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Trending |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Amani Hooker | DB | BUF | MIA | 9.9 | 4.3 |  |  |  | High |  |
 | Ar'Darius Washington | DB | NYG | JAX | 8.2 | 5.7 |  |  |  | Med |  |
 | Corey Thornton | DB | CAR | BAL | 7.5 | 3.5 |  |  |  | Med |  |
 | Jordan Battle | DB | CIN | WAS | 7.4 | 7.0 |  |  |  | High |  |
 | Kamari Lassiter | DB | HOU | IND | 7.0 | 5.0 |  |  |  | Med |  |
 | Cole Bishop | DB | BUF | MIA | 7.0 | 3.7 |  |  |  | High |  |
+| Jalen Ramsey | DB | PIT | PHI | 6.9 | 5.0 |  |  |  | High |  |
 | Austin Booker | DL | CHI | NO | 7.9 | 3.3 |  |  |  | High |  |
 | Dexter Lawrence | DL | CIN | WAS | 7.7 | 3.3 |  |  |  | High |  |
 | Zach Allen | DL | DEN | LV | 6.9 | 2.0 |  |  |  | High |  |
@@ -108,7 +107,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Cairo Santos | K | CHI | NO | 7.7 | 6.0 |  |  |  | High | 🔥 |
 | Drew Stevens | K | WAS | CIN | 7.7 | 4.3 |  |  |  | High |  |
 | Dominic Zvada | K | NYG | JAX | 7.5 | 4.7 |  |  |  | High |  |
-| Joey Slye | K | TEN | DAL | 7.4 | 4.3 |  |  |  | High |  |
+| Joey Slye | K | TEN | DAL | 7.4 | 4.3 |  |  |  | High | 🔥 |
 | Eddy Pineiro | K | SF | MIN | 7.3 | 5.0 |  |  |  | High |  |
 | Ryan Fitzgerald | K | CAR | BAL | 7.2 | 4.0 |  |  |  | High |  |
 | Drue Tranquill | LB | KC | ARI | 8.8 | 9.0 |  |  |  | High |  |
@@ -119,23 +118,23 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Ventrell Miller | LB | JAX | NYG | 7.5 | 5.0 |  |  |  | High |  |
 | Joe Milton III | QB | PHI | PIT | 15.3 | 3.0 |  | 1 | 9 | Low | 🔥 |
 | Tanner McKee | QB | PHI | PIT | 13.1 | 4.0 |  | 2 | 9 | Med |  |
-| Jalon Daniels | QB | TB | DET | 12.7 | 4.8 |  | 2 | 24 | Med |  |
+| Jalon Daniels | QB | TB | DET | 12.7 | 4.8 |  | 2 | 24 | Med | 🔥 |
 | Kyle McCord | QB | MIA | BUF | 11.9 | 2.3 |  | 1 | 32 | High |  |
 | Daniel Jones | QB | IND | HOU | 11.3 | 3.2 |  | 1 | 15 | High |  |
 | Carson Beck | QB | ARI | KC | 10.7 | 2.6 |  | 1 | 23 | Low |  |
 | Phil Mafah | RB | NYG | JAX | 9.5 | 7.0 |  |  | 23 | Low |  |
 | Emari Demercado | RB | HOU | IND | 8.5 | 8.2 | 24% | 3 | 11 | Med |  |
 | Bam Knight | RB | ARI | KC | 7.5 | 12.5 | 43% | 2 | 24 | Low |  |
+| Kendre Miller | RB | DAL | TEN | 7.4 | 7.4 |  |  | 13 | Low |  |
+| Michael Carter | RB | TEN | DAL | 6.6 | 10.5 |  |  | 1 | Low |  |
 | Jaret Patterson | RB | DEN | LV | 6.0 | 7.5 |  |  | 6 | Low |  |
-| Israel Abanikanda | RB | DAL | TEN | 5.6 | 5.4 | 19% |  | 13 | Low |  |
-| Ty Johnson | RB | BUF | MIA | 5.5 | 4.8 | 8% | 2 | 22 | Med |  |
 | Brevyn Spann-Ford | TE | DAL | TEN | 8.2 | 4.5 | 12% | 2 | 5 | Med |  |
 | Albert Okwuegbunam | TE | LV | DEN | 6.8 | 6.0 |  |  | 1 | Low |  |
 | Oronde Gadsden II | TE | LAC | NYJ | 4.9 | 2.8 | 9% | 2 | 2 | Med |  |
 | David Njoku | TE | LAC | NYJ | 4.9 | 2.5 | 8% | 3 | 2 | Low |  |
-| Darnell Washington | TE | PIT | PHI | 4.6 | 3.6 | 12% | 1 | 31 | High |  |
 | Tommy Tremble | TE | CAR | BAL | 4.6 | 3.2 | 10% | 1 | 6 | Med |  |
-| Chimere Dike | WR | TEN | DAL | 8.3 | 5.1 | 16% | 4 | 9 | Med |  |
+| Darnell Washington | TE | PIT | PHI | 4.6 | 3.6 | 12% | 1 | 31 | High |  |
+| Chimere Dike | WR | TEN | DAL | 8.3 | 5.1 | 16% | 3 | 9 | Med | 🔥 |
 | Kevin Austin Jr. | WR | NO | CHI | 7.7 | 4.6 |  |  | 23 | Low |  |
 | Tre Tucker | WR | LV | DEN | 6.4 | 5.4 | 16% | 1 | 25 | Med |  |
 | Xavier Hutchinson | WR | HOU | IND | 6.4 | 5.2 | 17% | 2 | 17 | Med | 🔥 |
@@ -161,7 +160,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | DJ Giddens | RB | IND | 23.2 | 1 | 3 (was 3) | 13% | RB3 on depth chart; age 23 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 35% | TE2 on depth chart; team passes #16; age 24 |
 | Theo Johnson | TE | NYG | 25.7 | 2 | 2 (was 2) | 28% | TE2 on depth chart; team passes #13; age 26 |
-| CJ Daniels | WR | LA | 24.9 | 0 | 3 (was 3) | 61% | WR3 on depth chart; team passes #6; age 25 |
+| CJ Daniels | WR | LA | 24.9 | 0 | 2 (was 3) | 61% | WR2 on depth chart; up from 3; team passes #6; age 25 |
 
 
 ## Ask me

@@ -245,6 +245,20 @@ season,week,type,action,sleeper_id,name,rosters
 2026,9,free_agent,drop,10219,Chris Rodriguez Jr.,6
 2026,9,free_agent,add,7561,Elijah Mitchell,2
 2026,9,free_agent,drop,12457,Jaydon Blue,2
+2026,10,waiver,add,10226,Andrei Iosivas,2
+2026,10,waiver,drop,10219,Chris Rodriguez Jr.,2
+2026,10,waiver,add,KC,,3
+2026,10,waiver,drop,12542,Efton Chism III,3
+2026,10,waiver,add,6650,,4
+2026,10,waiver,drop,2747,,4
+2026,10,waiver,add,10218,Xavier Hutchinson,4
+2026,10,waiver,drop,IND,,4
+2026,10,waiver,add,2505,Darren Waller,7
+2026,10,waiver,drop,7528,Najee Harris,7
+2026,10,waiver,add,HOU,,6
+2026,10,waiver,drop,BAL,,6
+2026,10,waiver,add,4017,Deshaun Watson,2
+2026,10,waiver,drop,11579,Audric Estime,2
 2026,10,free_agent,add,5995,Justice Hill,7
 2026,10,free_agent,drop,2197,Brandin Cooks,7
 2026,10,trade,add,8150,Kyren Williams,"4, 7"
