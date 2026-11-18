@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 11
 
 redraft · 17 roster slots  
-Generated 2026-11-18 01:15 UTC · baselines: 2026 only · lineup as of 2026-11-18T01:16:07Z
+Generated 2026-11-18 01:51 UTC · baselines: 2026 only · lineup as of 2026-11-18T01:51:30Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -89,14 +89,14 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Jordyn Tyson | WR | NO | 22.3 | 0 | 2 (was 3) | 48% | WR2 on depth chart; up from 3; snap share trending +47%/wk; team passes #2; age 22 |
+| Jordyn Tyson | WR | NO | 22.3 | 0 | 2 (was 2) | 48% | WR2 on depth chart; snap share trending +47%/wk; team passes #2; age 22 |
 | Elijah Higgins | TE | ARI | 26.1 | 3 | 2 (was 2) | 49% | TE2 on depth chart; snap share trending +34%/wk; team passes #5; age 26 |
 | Bam Knight | RB | ARI | 25.6 | 4 | 2 (was 2) | 38% | RB2 on depth chart; snap share trending +32%/wk; age 26 |
 | Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 45% | WR3 on depth chart; snap share trending +22%/wk; team passes #10; age 24 |
 | Kaelon Black | RB | SF | 25.1 | 0 | 2 (was 2) | 32% | RB2 on depth chart; snap share trending +15%/wk; age 25 |
 | Isaac TeSlaa | WR | DET | 24.7 | 1 | 3 (was 3) | 59% | WR3 on depth chart; snap share trending +12%/wk; team passes #12; age 25 |
 | Jake Briningstool | TE | KC | 23.9 | 1 | 3 (was 3) | 19% | TE3 on depth chart; snap share trending +10%/wk; team passes #15; age 24 |
-| MarShawn Lloyd | RB | GB | 25.9 | 2 | 3 (was 2) | 20% | RB3 on depth chart; snap share trending +9%/wk; age 26 |
+| MarShawn Lloyd | RB | GB | 25.9 | 2 | 3 (was 3) | 20% | RB3 on depth chart; snap share trending +9%/wk; age 26 |
 | Mitchell Evans | TE | CAR | 23.5 | 1 | 3 (was 3) | 43% | TE3 on depth chart; snap share trending +9%/wk; team passes #2; age 24 |
 | Jacob Saylors | RB | DET | 26.7 | 3 | 3 (was 3) | 4% | RB3 on depth chart; snap share trending +8%/wk; age 27 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 3% | RB3 on depth chart; snap share trending +6%/wk; age 24 |
