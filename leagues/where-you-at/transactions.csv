@@ -221,3 +221,6 @@ season,week,type,action,sleeper_id,name,rosters
 2026,10,waiver,drop,7666,,9
 2026,10,waiver,add,7042,,10
 2026,10,waiver,drop,12713,,10
+2026,11,waiver,add,3160,,4
+2026,11,waiver,add,2020,,5
+2026,11,waiver,drop,13150,Darius Cooper,5

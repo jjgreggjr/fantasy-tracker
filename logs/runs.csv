@@ -99,3 +99,4 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-11-18T01:54:13Z,2026,11,WARN,0,1,"model.serve: ecr: no rows for 2026 week 11 yet (DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no scrape for its week yet), so the ecr columns would be empty for every row of this serve: serving the frozen fallback WITHOUT market, ecr (71 inputs, its own frozen tree counts) instead of the 90-input spec",model
 2026-11-18T21:48:24Z,2026,11,OK,0,0,,
 2026-11-18T21:51:44Z,2026,11,WARN,0,1,"model.serve: ecr: no rows for 2026 week 11 yet (DynastyProcess scrapes FantasyPros Fridays 00:03 UTC, so a Tuesday/Wednesday serve has no scrape for its week yet), so the ecr columns would be empty for every row of this serve: serving the frozen fallback WITHOUT market, ecr (71 inputs, its own frozen tree counts) instead of the 90-input spec",model
+2026-11-21T03:12:46Z,2026,11,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [11],
