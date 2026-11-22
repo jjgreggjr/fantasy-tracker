@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 11
 
 redraft · 17 roster slots  
-Generated 2026-11-22 18:42 UTC · baselines: 2026 only · lineup as of 2026-11-22T18:42:45Z
+Generated 2026-11-22 20:30 UTC · baselines: 2026 only · lineup as of 2026-11-22T20:30:34Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -78,9 +78,9 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Michael Mayer | TE | LV | DEN | 13.5 | 7.3 | 23% | 2 | 1 | Low | 🔥 |
 | Kevin Austin Jr. | WR | NO | CHI | 9.8 | 4.6 |  |  | 13 | Low |  |
 | Chris Godwin Jr. | WR | TB | DET | 8.7 | 4.9 | 18% | 2 | 31 | Med | 🔥 |
-| Ryan Flournoy | WR | DAL | TEN | 11.1 | 5.0 | 15% | 3 | 1 | Med | 🔥 |
 | Elic Ayomanor | WR | TEN | DAL | 11.1 | 5.8 | 17% | 2 | 10 | Med | 🔥 |
-| Khalil Shakir | WR | BUF | MIA | 10.8 | 5.0 | 19% | 2 | 20 | High | 🔥 |
+| Ryan Flournoy | WR | DAL | TEN | 11.1 | 5.0 | 15% | 3 | 1 | Med | 🔥 |
+| Khalil Shakir | WR | BUF | MIA | 10.8 | 5.0 | 19% | 2 | 20 | High |  |
 | Chimere Dike | WR | TEN | DAL | 10.2 | 5.1 | 15% | 3 | 10 | Med | 🔥 |
 
 
@@ -102,7 +102,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Antonio Williams | WR | WAS | 22.4 | 0 | 2 (was 2) | 85% | WR2 on depth chart; team passes #16; age 22 |
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
 | Xavier Hutchinson | WR | HOU | 26.5 | 3 | 2 (was 2) | 80% | WR2 on depth chart; team passes #10; age 26 |
-| Makai Lemon | WR | PHI | 22.5 | 0 | 2 (was 3) | 93% | WR2 on depth chart; up from 3; team passes #14; age 22 |
+| Makai Lemon | WR | PHI | 22.5 | 0 | 2 (was 2) | 93% | WR2 on depth chart; team passes #14; age 22 |
 
 
 ## Ask me

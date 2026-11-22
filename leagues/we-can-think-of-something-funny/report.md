@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 11
 
 dynasty · 31 roster slots  
-Generated 2026-11-22 18:42 UTC · baselines: 2026 only · lineup as of 2026-11-22T18:42:32Z
+Generated 2026-11-22 20:30 UTC · baselines: 2026 only · lineup as of 2026-11-22T20:30:11Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -95,7 +95,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jake Browning | QB | LAC | NYJ | 10.0 | 1.8 |  |  | 8 | Low |  |
 | Emari Demercado | RB | HOU | IND | 9.4 | 8.2 | 24% | 3 | 4 | Med |  |
 | Samaje Perine | RB | CIN | WAS | 7.5 | 7.8 | 23% | 2 | 14 | Med | 🔥 |
-| Ty Johnson | RB | BUF | MIA | 6.8 | 5.0 | 8% | 2 | 21 | Low | 🔥 |
+| Ty Johnson | RB | BUF | MIA | 6.8 | 5.0 | 8% | 2 | 21 | Low |  |
 | Jaret Patterson | RB | DEN | LV | 6.4 | 7.5 |  |  | 10 | Low |  |
 | Jaydn Ott | RB | KC | ARI | 5.9 | 5.8 | 17% | 3 | 18 | Low | 🔥 |
 | Devin Neal | RB | WAS | CIN | 12.8 | 8.4 |  |  | 6 | Low |  |
@@ -123,7 +123,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jake Briningstool | TE | KC | 24.0 | 1 | 3 (was 3) | 24% | TE3 on depth chart; team passes #15; age 24 |
 | Mitchell Evans | TE | CAR | 23.5 | 1 | 3 (was 3) | 48% | TE3 on depth chart; team passes #2; age 24 |
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
-| Darius Cooper | WR | PHI | 25.0 | 1 | 3 (was 4) | 93% | WR3 on depth chart; up from 4; team passes #14; age 25 |
+| Darius Cooper | WR | PHI | 25.0 | 1 | 3 (was 3) | 93% | WR3 on depth chart; team passes #14; age 25 |
 | Lew Nichols III | RB | PIT | 25.3 | 3 | 3 (was 3) | 15% | RB3 on depth chart; age 25 |
 | Jaylen Wright | RB | MIA | 23.6 | 2 | 2 (was 2) | 17% | RB2 on depth chart; age 24 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 35% | TE2 on depth chart; team passes #16; age 24 |
@@ -131,7 +131,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Dohnte Meyers | WR | CIN | 26.4 | 0 | 3 (was 3) | 42% | WR3 on depth chart; team passes #4; age 26 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 6% | RB3 on depth chart; age 24 |
 | CJ Daniels | WR | LA | 24.9 | 0 | 2 (was 2) | 61% | WR2 on depth chart; team passes #6; age 25 |
-| Sam Roush | TE | CHI | 23.2 | 0 | 2 (was 2) | 52% | TE2 on depth chart; team passes #11; age 23 |
+| Jacob Saylors | RB | DET | 26.7 | 3 | 3 (was 3) | 8% | RB3 on depth chart; age 27 |
 
 
 ## Ask me

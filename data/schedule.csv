@@ -362,12 +362,12 @@ season,week,team,opponent,home,gameday,spread_line,total_line,roof
 2026,12,DAL,PHI,1,2026-11-26,,,
 2026,12,DEN,PIT,0,2026-11-27,,,outdoors
 2026,12,DET,CHI,1,2026-11-26,,,dome
-2026,12,GB,LA,0,2026-11-25,,,dome
+2026,12,GB,LA,0,2026-11-25,3.0,45.5,dome
 2026,12,HOU,BAL,1,2026-11-29,,,
 2026,12,IND,NYG,1,2026-11-29,,,
 2026,12,JAX,TEN,1,2026-11-29,,,outdoors
 2026,12,KC,BUF,0,2026-11-26,,,outdoors
-2026,12,LA,GB,1,2026-11-25,,,dome
+2026,12,LA,GB,1,2026-11-25,-3.0,45.5,dome
 2026,12,LAC,NE,1,2026-11-29,,,dome
 2026,12,LV,CLE,0,2026-11-29,,,outdoors
 2026,12,MIA,NYJ,1,2026-11-29,,,outdoors

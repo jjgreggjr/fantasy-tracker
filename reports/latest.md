@@ -1,6 +1,6 @@
 # Week 11 digest — 2026
 
-Generated 2026-11-22 18:42 UTC  
+Generated 2026-11-22 20:30 UTC  
 Stats through: **Week 10** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 10** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 961
 - Sleeper players cache: 2026-11-22
-- projections: 876 players (Sleeper, 2026-11-22T18:42:37Z)
-- league rosters: 3 leagues, lineups read 2026-11-22T18:42:32Z
-- ESPN rosters: Average Joes (2026-11-22T18:42:45Z)
+- projections: 876 players (Sleeper, 2026-11-22T20:30:21Z)
+- league rosters: 3 leagues, lineups read 2026-11-22T20:30:11Z
+- ESPN rosters: Average Joes (2026-11-22T20:30:34Z)
 - status rows: 1552 players; 252 with practice reports
 - gameday inactives: 0 on the week 11 list (games not yet started)
 
@@ -37,7 +37,7 @@ Stats through: **Week 10** · Baselines: **2026 only**
 
 **Needs a decision:** Drake Maye (OUT), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Brock Bowers (QUESTIONABLE), Jaylin Noel (IR), Omar Cooper Jr. (OUT), Romeo Doubs (IR), Dontayvion Wicks (IR)
 
-**Trending and still free here:** Josh Johnson (QB, 8.0), Ty Johnson (RB, 6.8), Jaydn Ott (RB, 5.9)
+**Trending and still free here:** Josh Johnson (QB, 8.0), Jaydn Ott (RB, 5.9), Kaelon Black (RB, 4.8)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Carson Beck (OUT), Matthew Stafford (BYE), Zach Charbonnet (BYE), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Harold Fannin Jr. (BYE), Dalton Kincaid (OUT), Kyle Pitts (BYE), Denzel Boston (BYE), Tory Horton (BYE), Jaylin Noel (IR), Rashid Shaheed (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Josh Johnson (QB, 8.9), Samaje Perine (RB, 7.5), Ty Johnson (RB, 6.8)
+**Trending and still free here:** Josh Johnson (QB, 8.9), Samaje Perine (RB, 7.5), Jaydn Ott (RB, 5.9)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -79,7 +79,7 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 **Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), Kenneth Walker III (OUT), Dalton Kincaid (OUT), Kyle Pitts (BYE), Terry McLaurin (IR), Jaxon Smith-Njigba (BYE), Zach Sieler (IR), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Joey Slye (K, 7.4), Josh Johnson (QB, 8.0), Ty Johnson (RB, 5.8)
+**Trending and still free here:** Joey Slye (K, 7.4), Josh Johnson (QB, 8.0), Jaydn Ott (RB, 5.5)
 
 
 Full report: `leagues/where-you-at/report.md`

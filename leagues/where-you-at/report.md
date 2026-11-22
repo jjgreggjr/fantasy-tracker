@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 11
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-22 18:42 UTC · baselines: 2026 only · lineup as of 2026-11-22T18:42:32Z
+Generated 2026-11-22 20:30 UTC · baselines: 2026 only · lineup as of 2026-11-22T20:30:12Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -94,8 +94,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Kamari Lassiter | DB | HOU | IND | 8.4 | 5.0 |  |  |  | High |  |
 | Corey Thornton | DB | CAR | BAL | 7.5 | 3.5 |  |  |  | Med |  |
-| Brandon Jones | DB | DEN | LV | 7.4 | 3.7 |  |  |  | Med |  |
 | Jordan Battle | DB | CIN | WAS | 7.4 | 7.0 |  |  |  | High |  |
+| Brandon Jones | DB | DEN | LV | 7.4 | 3.7 |  |  |  | Med |  |
 | Dane Belton | DB | NYJ | LAC | 7.0 | 8.7 |  |  |  | High |  |
 | Cole Bishop | DB | BUF | MIA | 6.9 | 3.7 |  |  |  | High |  |
 | Austin Booker | DL | CHI | NO | 7.8 | 3.3 |  |  |  | High |  |
@@ -105,10 +105,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Laiatu Latu | DL | IND | HOU | 5.3 | 2.0 |  |  |  | High |  |
 | Alim McNeill | DL | DET | TB | 5.2 | 2.0 |  |  |  | High |  |
 | Drew Stevens | K | WAS | CIN | 7.8 | 4.3 |  |  |  | High |  |
-| Joey Slye | K | TEN | DAL | 7.4 | 4.3 |  |  |  | High | 🔥 |
 | Dominic Zvada | K | NYG | JAX | 7.4 | 4.7 |  |  |  | High |  |
-| Eddy Pineiro | K | SF | MIN | 7.3 | 5.0 |  |  |  | High |  |
+| Joey Slye | K | TEN | DAL | 7.4 | 4.3 |  |  |  | High | 🔥 |
 | Ryan Fitzgerald | K | CAR | BAL | 7.3 | 4.0 |  |  |  | High |  |
+| Eddy Pineiro | K | SF | MIN | 7.3 | 5.0 |  |  |  | High |  |
 | Matt Gay | K | LV | DEN | 7.0 | 4.0 |  |  |  | Med |  |
 | Drue Tranquill | LB | KC | ARI | 9.3 | 9.0 |  |  |  | High |  |
 | Barrett Carter | LB | CIN | WAS | 8.7 | 8.0 |  |  |  | High |  |
@@ -126,19 +126,19 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Bam Knight | RB | ARI | KC | 7.4 | 12.3 | 43% | 2 | 23 | Med |  |
 | Kendre Miller | RB | DAL | TEN | 6.9 | 7.4 |  |  | 22 | Low |  |
 | Jaret Patterson | RB | DEN | LV | 5.9 | 7.5 |  |  | 10 | Low |  |
-| Ty Johnson | RB | BUF | MIA | 5.8 | 5.0 | 8% | 2 | 21 | Low | 🔥 |
+| Ty Johnson | RB | BUF | MIA | 5.8 | 5.0 | 8% | 2 | 21 | Low |  |
 | Devin Neal | RB | WAS | CIN | 11.9 | 8.4 |  |  | 6 | Low |  |
 | Brevyn Spann-Ford | TE | DAL | TEN | 7.7 | 4.3 | 13% | 2 | 4 | Med |  |
 | Albert Okwuegbunam | TE | LV | DEN | 6.8 | 6.0 |  |  | 1 | Low |  |
 | Oronde Gadsden II | TE | LAC | NYJ | 5.1 | 2.9 | 10% | 2 | 2 | Med |  |
 | David Njoku | TE | LAC | NYJ | 4.9 | 2.5 | 8% | 3 | 2 | Low |  |
-| Darnell Washington | TE | PIT | PHI | 4.8 | 3.6 | 12% | 1 | 24 | High |  |
 | Dawson Knox | TE | BUF | MIA | 4.8 | 3.1 | 12% | 2 | 29 | Med | 🔥 |
+| Darnell Washington | TE | PIT | PHI | 4.8 | 3.6 | 12% | 1 | 24 | High |  |
 | Kevin Austin Jr. | WR | NO | CHI | 8.2 | 4.6 |  |  | 13 | Low |  |
-| Tre Tucker | WR | LV | DEN | 7.6 | 6.1 | 19% | 1 | 19 | High |  |
+| Tre Tucker | WR | LV | DEN | 7.6 | 6.1 | 19% | 1 | 19 | High | 🔥 |
 | Xavier Hutchinson | WR | HOU | IND | 6.7 | 5.2 | 17% | 2 | 11 | High |  |
-| Tai Felton | WR | MIN | SF | 5.2 | 3.3 | 10% | 5 | 3 | Low |  |
 | Laquon Treadwell | WR | IND | HOU | 5.2 | 4.6 | 16% | 1 | 22 | Low |  |
+| Tai Felton | WR | MIN | SF | 5.2 | 3.3 | 10% | 5 | 3 | Low |  |
 | Treylon Burks | WR | WAS | CIN | 5.1 | 4.0 | 13% | 3 | 24 | Med | 🔥 |
 
 
@@ -152,7 +152,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Mitchell Evans | TE | CAR | 23.5 | 1 | 3 (was 3) | 48% | TE3 on depth chart; team passes #2; age 24 |
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
 | Xavier Hutchinson | WR | HOU | 26.5 | 3 | 2 (was 2) | 80% | WR2 on depth chart; team passes #10; age 26 |
-| Darius Cooper | WR | PHI | 25.0 | 1 | 3 (was 4) | 93% | WR3 on depth chart; up from 4; team passes #14; age 25 |
+| Darius Cooper | WR | PHI | 25.0 | 1 | 3 (was 3) | 93% | WR3 on depth chart; team passes #14; age 25 |
 | Lew Nichols III | RB | PIT | 25.3 | 3 | 3 (was 3) | 15% | RB3 on depth chart; age 25 |
 | Bam Knight | RB | ARI | 25.6 | 4 | 2 (was 2) | 54% | RB2 on depth chart; age 26 |
 | Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 35% | TE2 on depth chart; team passes #16; age 24 |

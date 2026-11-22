@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 11
 
 redraft · 20 roster slots  
-Generated 2026-11-22 18:42 UTC · baselines: 2026 only · lineup as of 2026-11-22T18:42:32Z
+Generated 2026-11-22 20:30 UTC · baselines: 2026 only · lineup as of 2026-11-22T20:30:11Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -84,24 +84,24 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Carson Wentz | QB | MIN | SF | 8.4 | 1.0 |  | 3 | 3 | Low |  |
 | Mitchell Trubisky | QB | TEN | DAL | 10.8 | 2.2 |  | 2 | 7 | Med |  |
 | Marcus Mariota | QB | WAS | CIN | 10.5 | 5.0 |  | 2 | 10 | Med |  |
-| Ty Johnson | RB | BUF | MIA | 6.8 | 5.0 | 8% | 2 | 21 | Low | 🔥 |
+| Ty Johnson | RB | BUF | MIA | 6.8 | 5.0 | 8% | 2 | 21 | Low |  |
 | Jaret Patterson | RB | DEN | LV | 6.4 | 7.5 |  |  | 10 | Low |  |
 | Jaydn Ott | RB | KC | ARI | 5.9 | 5.8 | 17% | 3 | 18 | Low | 🔥 |
 | Austin Ekeler | RB | WAS | CIN | 5.6 | 4.8 | 14% | 2 | 6 | Low |  |
 | Trevor Etienne | RB | CAR | BAL | 4.8 | 5.3 | 15% | 2 | 13 | Med |  |
 | Devin Neal | RB | WAS | CIN | 12.8 | 8.4 |  |  | 6 | Low |  |
-| Albert Okwuegbunam | TE | LV | DEN | 9.6 | 6.0 |  |  | 1 | Low |  |
 | Brevyn Spann-Ford | TE | DAL | TEN | 9.6 | 4.3 | 13% | 2 | 4 | Med |  |
+| Albert Okwuegbunam | TE | LV | DEN | 9.6 | 6.0 |  |  | 1 | Low |  |
 | Mason Taylor | TE | NYJ | LAC | 7.8 | 4.6 | 15% | 1 | 19 | Med | 🔥 |
 | Oronde Gadsden II | TE | LAC | NYJ | 6.1 | 2.9 | 10% | 2 | 2 | Med |  |
 | Dawson Knox | TE | BUF | MIA | 5.9 | 3.1 | 12% | 2 | 29 | Med | 🔥 |
-| David Njoku | TE | LAC | NYJ | 5.9 | 2.5 | 8% | 3 | 2 | Low |  |
+| Darnell Washington | TE | PIT | PHI | 5.9 | 3.6 | 12% | 1 | 24 | High |  |
 | Kevin Austin Jr. | WR | NO | CHI | 9.8 | 4.6 |  |  | 13 | Low |  |
 | Xavier Hutchinson | WR | HOU | IND | 8.0 | 5.2 | 17% | 2 | 11 | High |  |
 | Kalif Raymond | WR | CHI | NO | 6.9 | 3.7 | 12% | 3 | 25 | Low |  |
 | Tre Harris | WR | LAC | NYJ | 6.5 | 4.0 | 13% | 3 | 28 | Med |  |
 | Laquon Treadwell | WR | IND | HOU | 6.4 | 4.6 | 16% | 1 | 22 | Low |  |
-| Tai Felton | WR | MIN | SF | 6.3 | 3.3 | 10% | 5 | 3 | Low |  |
+| Jauan Jennings | WR | MIN | SF | 6.3 | 3.1 | 10% | 3 | 3 | Low | 🔥 |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
