@@ -103,3 +103,5 @@ ran_at,season,week,status,fails,warns,detail,note
 2026-11-22T18:42:49Z,2026,11,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [11],
 2026-11-22T20:30:40Z,2026,11,WARN,0,1,player_weeks.volume: suspiciously few rows in week(s) [11],
 2026-11-22T20:41:08Z,2026,11,WARN,0,1,model.serve: missed freeze: 1 games / 30 rows of week 11 had no pre-kickoff prediction; first-written at 2026-11-22T20:41:08Z,model
+2026-11-22T22:32:05Z,2026,11,WARN,0,2,player_weeks.volume: suspiciously few rows in week(s) [11]; player_weeks.snaps: 87% of week 11 missing snap counts,
+2026-11-22T22:37:51Z,2026,11,WARN,0,1,model.serve: missed freeze: 1 games / 30 rows of week 11 had no pre-kickoff prediction; first-written at 2026-11-22T20:41:08Z,model
