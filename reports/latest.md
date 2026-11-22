@@ -1,20 +1,20 @@
 # Week 11 digest — 2026
 
-Generated 2026-11-21 03:12 UTC  
+Generated 2026-11-22 18:42 UTC  
 Stats through: **Week 10** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-20T16:05:07Z
+- depth chart snapshot: 2026-11-22T15:12:52Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(10), np.int64(11)]
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 961
-- Sleeper players cache: 2026-11-21
-- projections: 876 players (Sleeper, 2026-11-21T03:12:31Z)
-- league rosters: 3 leagues, lineups read 2026-11-21T03:12:23Z
-- ESPN rosters: Average Joes (2026-11-21T03:12:41Z)
-- status rows: 1543 players; 237 with practice reports
+- Sleeper players cache: 2026-11-22
+- projections: 876 players (Sleeper, 2026-11-22T18:42:37Z)
+- league rosters: 3 leagues, lineups read 2026-11-22T18:42:32Z
+- ESPN rosters: Average Joes (2026-11-22T18:42:45Z)
+- status rows: 1552 players; 252 with practice reports
 - gameday inactives: 0 on the week 11 list (games not yet started)
 
 ### Data integrity
@@ -28,16 +28,16 @@ Stats through: **Week 10** · Baselines: **2026 only**
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Joe Burrow | QB | CIN | WAS | 22.8 | 3.2 |  | 1 | 24 | Med |  |
-| Geno Smith | QB | NYJ | LAC | 16.5 | 2.4 |  | 1 | 12 | Low |  |
-| Tony Pollard | RB | TEN | DAL | 16.9 | 16.0 | 63% | 1 | 1 | High |  |
-| Breece Hall | RB | NYJ | LAC | 14.4 | 16.5 | 51% | 1 | 19 | High |  |
-| Aaron Jones | RB | MIN | SF | 8.1 | 13.0 | 41% | 2 | 31 | Med |  |
+| Joe Burrow | QB | CIN | WAS | 23.4 | 3.2 |  | 1 | 24 | Med |  |
+| Geno Smith | QB | NYJ | LAC | 16.9 | 2.4 |  | 1 | 12 | Low |  |
+| Tony Pollard | RB | TEN | DAL | 19.6 | 17.9 | 66% | 1 | 1 | High |  |
+| Breece Hall | RB | NYJ | LAC | 14.6 | 16.4 | 51% | 1 | 19 | High |  |
+| Aaron Jones | RB | MIN | SF | 8.1 | 13.1 | 41% | 2 | 31 | Med |  |
 
 
-**Needs a decision:** Drake Maye (OUT), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Brock Bowers (QUESTIONABLE), Jaylin Noel (IR), Omar Cooper Jr. (OUT), Romeo Doubs (IR), Dontayvion Wicks (OUT)
+**Needs a decision:** Drake Maye (OUT), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Brock Bowers (QUESTIONABLE), Jaylin Noel (IR), Omar Cooper Jr. (OUT), Romeo Doubs (IR), Dontayvion Wicks (IR)
 
-**Trending and still free here:** Kaelon Black (RB, 4.9), Mason Taylor (TE, 7.9), Dawson Knox (TE, 3.3)
+**Trending and still free here:** Josh Johnson (QB, 8.0), Ty Johnson (RB, 6.8), Jaydn Ott (RB, 5.9)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -49,16 +49,16 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Bo Nix | QB | DEN | LV | 19.6 | 4.8 |  | 1 | 9 | High |  |
-| Carson Beck | QB | ARI | KC | 11.5 | 2.5 |  | 1 | 22 | Low | QUESTIONABLE |
-| D'Andre Swift | RB | CHI | NO | 19.7 | 18.9 | 51% | 1 | 11 | Med |  |
-| Tony Pollard | RB | TEN | DAL | 16.9 | 16.0 | 63% | 1 | 1 | High |  |
-| Breece Hall | RB | NYJ | LAC | 14.4 | 16.5 | 51% | 1 | 19 | High |  |
+| Bo Nix | QB | DEN | LV | 19.8 | 4.8 |  | 1 | 9 | High |  |
+| Tony Pollard | RB | TEN | DAL | 19.6 | 17.9 | 66% | 1 | 1 | High |  |
+| D'Andre Swift | RB | CHI | NO | 19.4 | 19.0 | 51% | 1 | 11 | Med |  |
+| Breece Hall | RB | NYJ | LAC | 14.6 | 16.4 | 51% | 1 | 19 | High |  |
+| Bhayshul Tuten | RB | JAX | NYG | 13.8 | 18.5 | 54% | 1 | 28 | High |  |
 
 
-**Needs a decision:** Carson Beck (QUESTIONABLE), Matthew Stafford (BYE), Zach Charbonnet (BYE), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Dalton Kincaid (DOUBTFUL), Harold Fannin Jr. (BYE), Kyle Pitts (BYE), Carnell Tate (REPEAT_DNP), Denzel Boston (BYE), Tory Horton (BYE), Jaylin Noel (IR), Rashid Shaheed (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
+**Needs a decision:** Carson Beck (OUT), Matthew Stafford (BYE), Zach Charbonnet (BYE), Quinshon Judkins (BYE), TreVeyon Henderson (IR), Harold Fannin Jr. (BYE), Dalton Kincaid (OUT), Kyle Pitts (BYE), Denzel Boston (BYE), Tory Horton (BYE), Jaylin Noel (IR), Rashid Shaheed (BYE), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** Joe Milton III (QB, 16.4), Samaje Perine (RB, 7.4), Chris Rodriguez Jr. (RB, 4.7)
+**Trending and still free here:** Josh Johnson (QB, 8.9), Samaje Perine (RB, 7.5), Ty Johnson (RB, 6.8)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -70,16 +70,16 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Dak Prescott | QB | DAL | TEN | 23.3 | 3.2 |  | 1 | 1 | High |  |
-| Bo Nix | QB | DEN | LV | 19.1 | 4.8 |  | 1 | 9 | High |  |
+| Dak Prescott | QB | DAL | TEN | 22.5 | 3.2 |  | 1 | 1 | High |  |
+| Bo Nix | QB | DEN | LV | 19.2 | 4.8 |  | 1 | 9 | High |  |
 | Trevor Lawrence | QB | JAX | NYG | 18.3 | 5.1 |  | 1 | 15 | Med |  |
-| Brock Purdy | QB | SF | MIN | 14.1 | 4.5 |  | 1 | 28 | High |  |
-| D'Andre Swift | RB | CHI | NO | 18.3 | 18.9 | 51% | 1 | 11 | Med |  |
+| Brock Purdy | QB | SF | MIN | 14.0 | 4.5 |  | 1 | 28 | High |  |
+| D'Andre Swift | RB | CHI | NO | 18.1 | 19.0 | 51% | 1 | 11 | Med |  |
 
 
-**Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), Kenneth Walker III (OUT), Dalton Kincaid (DOUBTFUL), Kyle Pitts (BYE), Terry McLaurin (IR), Jaxon Smith-Njigba (BYE), Zach Sieler (IR), Edgerrin Cooper (IR)
+**Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), Kenneth Walker III (OUT), Dalton Kincaid (OUT), Kyle Pitts (BYE), Terry McLaurin (IR), Jaxon Smith-Njigba (BYE), Zach Sieler (IR), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Joey Slye (K, 7.4), Joe Milton III (QB, 15.7), Dawson Knox (TE, 2.7)
+**Trending and still free here:** Joey Slye (K, 7.4), Josh Johnson (QB, 8.0), Ty Johnson (RB, 5.8)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -91,16 +91,16 @@ Full report: `leagues/where-you-at/report.md`
 
 | Player | Pos | Tm | Opp | E_pts | Opps | Share | Depth | DvP | Conf | Note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Bryce Young | QB | CAR | BAL | 18.7 | 3.3 |  | 1 | 11 | Low |  |
-| Breece Hall | RB | NYJ | LAC | 14.4 | 16.5 | 51% | 1 | 19 | High |  |
+| Bryce Young | QB | CAR | BAL | 19.1 | 3.2 |  | 1 | 11 | Low |  |
+| Breece Hall | RB | NYJ | LAC | 14.6 | 16.4 | 51% | 1 | 19 | High |  |
 | Kyle Monangai | RB | CHI | NO | 8.5 | 8.3 | 23% | 2 | 11 | Med |  |
-| Aaron Jones | RB | MIN | SF | 8.1 | 13.0 | 41% | 2 | 31 | Med |  |
-| Sam LaPorta | TE | DET | TB | 11.5 | 6.5 | 19% | 1 | 25 | Med |  |
+| Aaron Jones | RB | MIN | SF | 8.1 | 13.1 | 41% | 2 | 31 | Med |  |
+| Sam LaPorta | TE | DET | TB | 11.8 | 6.6 | 19% | 1 | 25 | Med |  |
 
 
 **Needs a decision:** Drake Maye (OUT), Rhamondre Stevenson (BYE), Zach Charbonnet (BYE), Puka Nacua (IR), Drake London (QUESTIONABLE)
 
-**Trending and still free here:** Aaron Rodgers (QB, 16.4), Fernando Mendoza (QB, 15.8), Joe Milton III (QB, 15.7)
+**Trending and still free here:** Fernando Mendoza (QB, 16.0), Josh Johnson (QB, 8.0), Justice Hill (RB, 8.1)
 
 
 Full report: `leagues/james-gregg-espn/report.md`

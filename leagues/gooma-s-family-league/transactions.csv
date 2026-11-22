@@ -163,6 +163,12 @@ season,week,type,action,sleeper_id,name,rosters
 2026,10,free_agent,drop,CHI,,6
 2026,10,free_agent,drop,9225,Tank Bigsby,12
 2026,10,free_agent,add,4177,Mack Hollins,4
+2026,11,free_agent,add,13968,,11
+2026,11,free_agent,drop,6083,,11
+2026,11,free_agent,add,13274,Germie Bernard,4
+2026,11,free_agent,drop,7611,Rhamondre Stevenson,4
+2026,11,free_agent,add,11647,Kimani Vidal,4
+2026,11,free_agent,drop,13272,Carson Beck,4
 2026,11,free_agent,add,9482,Michael Mayer,11
 2026,11,free_agent,drop,NO,,11
 2026,11,free_agent,add,BUF,,7
