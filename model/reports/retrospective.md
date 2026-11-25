@@ -2,19 +2,19 @@
 
 What each comparator got most wrong in every completed week, and why, judged on the scoreboard's identical rows (`python -m model.retrospective`, run after `model.scoreboard`). It explains misses; it is not the adoption gate.
 
-Weeks post-mortemed: 2026 wk4, 2026 wk5, 2026 wk6, 2026 wk7, 2026 wk8, 2026 wk9, 2026 wk10. A big miss is |predicted - actual| >= 12 points in the league's scoring, one row per player-week per comparator (the `gooma-s-family-league` row where he is rostered there, else the first other league alphabetically). Comparators: `model_components` (E_pts_model), `sleeper`, `e_pts`.
+Weeks post-mortemed: 2026 wk4, 2026 wk5, 2026 wk6, 2026 wk7, 2026 wk8, 2026 wk9, 2026 wk10, 2026 wk11. A big miss is |predicted - actual| >= 12 points in the league's scoring, one row per player-week per comparator (the `gooma-s-family-league` row where he is rostered there, else the first other league alphabetically). Comparators: `model_components` (E_pts_model), `sleeper`, `e_pts`.
 
 ## Drift: pick accuracy by week
 
 From `data/model_eval.csv`, pooled over leagues (the scoreboard's number). Cumulative mean and the week-to-week standard deviation of the weekly values.
 
-| comparator | 2026 wk04 | 2026 wk05 | 2026 wk06 | 2026 wk07 | 2026 wk08 | 2026 wk09 | 2026 wk10 | mean | week sd |
-|---|---|---|---|---|---|---|---|---|---|
-| `model_components` | 0.679 | 0.675 | 0.645 | 0.672 | 0.666 | 0.683 | 0.664 | 0.669 | 0.013 |
-| `model_flat` | 0.670 | 0.670 | 0.638 | 0.673 | 0.667 | 0.689 | 0.658 | 0.666 | 0.015 |
-| `model_blend` | 0.678 | 0.674 | 0.643 | 0.676 | 0.668 | 0.687 | 0.659 | 0.669 | 0.015 |
-| `sleeper` | 0.644 | 0.700 | 0.635 | 0.673 | 0.666 | 0.682 | 0.657 | 0.665 | 0.022 |
-| `e_pts` | 0.647 | 0.668 | 0.636 | 0.673 | 0.666 | 0.674 | 0.657 | 0.660 | 0.014 |
+| comparator | 2026 wk04 | 2026 wk05 | 2026 wk06 | 2026 wk07 | 2026 wk08 | 2026 wk09 | 2026 wk10 | 2026 wk11 | mean | week sd |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `model_components` | 0.679 | 0.675 | 0.645 | 0.672 | 0.666 | 0.683 | 0.664 | 0.658 | 0.668 | 0.012 |
+| `model_flat` | 0.670 | 0.670 | 0.638 | 0.673 | 0.667 | 0.689 | 0.658 | 0.661 | 0.666 | 0.014 |
+| `model_blend` | 0.678 | 0.674 | 0.643 | 0.676 | 0.668 | 0.687 | 0.659 | 0.658 | 0.668 | 0.014 |
+| `sleeper` | 0.644 | 0.700 | 0.635 | 0.673 | 0.666 | 0.682 | 0.657 | 0.664 | 0.665 | 0.021 |
+| `e_pts` | 0.647 | 0.668 | 0.636 | 0.673 | 0.666 | 0.674 | 0.657 | 0.654 | 0.659 | 0.013 |
 
 No comparator is trending: every span move is inside twice its week-to-week standard deviation.
 
@@ -24,9 +24,9 @@ Share of each comparator's big misses by reason, all weeks pooled. `inactive_mis
 
 | comparator | big misses | `left_early` | `teammate_out` | `blowout_script` | `volume_up` | `volume_down` | `td_variance` | `unexplained` | learnable | noise | `inactive_missed` (apart) |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `model_components` | 116 | 5 (4%) | 6 (5%) | 2 (2%) | 36 (31%) | 7 (6%) | 28 (24%) | 32 (28%) | 44% | 56% | 46 |
-| `sleeper` | 109 | 7 (6%) | 7 (6%) | 3 (3%) | 32 (29%) | 9 (8%) | 26 (24%) | 25 (23%) | 47% | 53% | 30 |
-| `e_pts` | 124 | 4 (3%) | 7 (6%) | 3 (2%) | 36 (29%) | 14 (11%) | 27 (22%) | 33 (27%) | 48% | 52% | 32 |
+| `model_components` | 122 | 5 (4%) | 6 (5%) | 2 (2%) | 40 (33%) | 8 (7%) | 29 (24%) | 32 (26%) | 46% | 54% | 53 |
+| `sleeper` | 117 | 7 (6%) | 7 (6%) | 3 (3%) | 37 (32%) | 11 (9%) | 27 (23%) | 25 (21%) | 50% | 50% | 35 |
+| `e_pts` | 133 | 4 (3%) | 8 (6%) | 3 (2%) | 41 (31%) | 15 (11%) | 28 (21%) | 34 (26%) | 50% | 50% | 41 |
 
 Per week, the 95th percentile of |error| on the scored rows (the `top 5%` rule would have cut here instead of at 12):
 
@@ -39,6 +39,7 @@ Per week, the 95th percentile of |error| on the scored rows (the `top 5%` rule w
 | 2026 wk08 | 15.5 | 14.7 | 15.2 |
 | 2026 wk09 | 14.3 | 14.0 | 14.7 |
 | 2026 wk10 | 15.4 | 15.0 | 15.4 |
+| 2026 wk11 | 11.6 | 11.6 | 11.9 |
 
 ## Band coverage: actuals against the frozen p10 / p90
 
@@ -46,76 +47,55 @@ Share of played rows (PPR, `data/player_weeks.csv` against `data/model_pts.csv`)
 
 | position | n | inside [p10, p90] | above p90 | below p10 |
 |---|---|---|---|---|
-| QB | 237 | 82.7% | 9.7% | 7.6% |
-| RB | 509 | 79.2% | 12.6% | 8.3% |
-| WR | 870 | 78.6% | 12.6% | 8.7% |
-| TE | 514 | 80.7% | 11.3% | 8.0% |
-| ALL | 2130 | 79.7% | 12.0% | 8.3% |
+| QB | 269 | 83.6% | 9.7% | 6.7% |
+| RB | 572 | 80.1% | 11.7% | 8.2% |
+| WR | 985 | 78.9% | 12.5% | 8.6% |
+| TE | 576 | 80.9% | 11.5% | 7.6% |
+| ALL | 2402 | 80.2% | 11.7% | 8.1% |
 
 Targets: 80% inside, 10% above, 10% below. A tail over 10% is short (stretch it), one under 10% is slack (shrink only on a say-so).
 
-## Top 15 misses, 2026 week 10
+## Top 15 misses, 2026 week 11
 
 Each comparator's largest played misses that week with the evidence behind the reason (expected = trailing mean over his earlier played weeks this season; volume = pass attempts + carries for a QB, carries + targets otherwise; margin = his team's final margin).
 
-**`model_components`** (15 shown)
+**`model_components`** (6 shown)
 
 | player | pos | team | league | predicted | actual | error | reason | secondary | vol exp/act | TD exp/act | snap% trail/act | margin | teammate out |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| George Pickens | WR | DAL | gooma-s-family-league | 14.1 | 43.5 | -29.4 | `volume_up` | `td_variance` | 7.0/18 | 0.3/3 | 0.68/0.89 | -6 |  |
-| Emmett Johnson | RB | KC | gooma-s-family-league | 8.2 | 35.1 | -26.9 | `teammate_out` | `volume_up` | 5.0/29 | 0.7/2 | 0.25/0.88 | 22 | Kenneth Walker III |
-| Christian McCaffrey | RB | SF | gooma-s-family-league | 24.3 | 46.3 | -22.0 | `unexplained` |  | 20.3/17 | 1.7/3 | 0.68/0.60 | 6 |  |
-| Jahmyr Gibbs | RB | DET | gooma-s-family-league | 23.6 | 44.2 | -20.6 | `td_variance` |  | 27.7/30 | 0.7/2 | 0.78/0.69 | 25 |  |
-| Chuba Hubbard | RB | CAR | gooma-s-family-league | 16.7 | 34.2 | -17.5 | `volume_up` | `td_variance` | 21.0/32 | 0.3/2 | 0.81/0.84 | 3 |  |
-| Isaiah Likely | TE | NYG | gooma-s-family-league | 10.4 | 27.7 | -17.3 | `volume_up` |  | 7.0/11 | 0.7/1 | 0.84/0.88 | -3 |  |
-| Drake Maye | QB | NE | gooma-s-family-league | 19.3 | 3.0 | 16.3 | `left_early` | `blowout_script` | 34.0/5 | 3.0/0 | 0.94/0.17 | -25 |  |
-| Patrick Mahomes | QB | KC | gooma-s-family-league | 19.2 | 35.4 | -16.2 | `td_variance` |  | 37.0/37 | 1.7/5 | 0.98/0.95 | 22 |  |
-| Dak Prescott | QB | DAL | gooma-s-family-league | 18.7 | 34.4 | -15.7 | `volume_up` | `td_variance` | 33.7/55 | 2.3/5 | 1.00/1.00 | -6 |  |
-| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 18.7 | 34.1 | -15.4 | `unexplained` |  | 11.7/14 | 1.0/0 | 0.89/0.89 | 20 |  |
-| Deebo Samuel Sr. | WR | SF | gooma-s-family-league | 10.8 | 25.9 | -15.0 | `td_variance` |  | 5.3/6 | 0.7/2 | 0.62/0.68 | 6 | Mike Evans |
-| Chase Brown | RB | CIN | gooma-s-family-league | 14.1 | 28.3 | -14.2 | `td_variance` |  | 16.3/19 | 0.0/2 | 0.69/0.73 | 20 |  |
-| Parker Washington | WR | JAX | gooma-s-family-league | 14.0 | 28.2 | -14.2 | `unexplained` |  | 7.0/9 | 0.3/1 | 0.69/0.77 | 17 |  |
-| Joe Burrow | QB | CIN | gooma-s-family-league | 19.5 | 33.2 | -13.6 | `unexplained` |  | 38.3/45 | 4.7/4 | 0.98/0.95 | 20 |  |
-| Jalen Coker | WR | CAR | gooma-s-family-league | 12.7 | 0.3 | 12.4 | `unexplained` |  | 5.0/5 | 0.3/0 | 0.78/0.80 | 3 |  |
+| Jonah Coleman | RB | DEN | gooma-s-family-league | 14.9 | 34.9 | -20.0 | `volume_up` | `td_variance` | 16.0/29 | 0.7/3 | 0.64/0.85 | 14 |  |
+| Ted Hurst III | WR | TB | gooma-s-family-league | 2.9 | 22.6 | -19.7 | `volume_up` | `td_variance` | 1.0/7 | 0.0/2 | 0.33/0.64 | -10 |  |
+| Dak Prescott | QB | DAL | gooma-s-family-league | 20.3 | 35.9 | -15.6 | `td_variance` |  | 42.3/37 | 3.0/5 | 1.00/1.00 | 21 |  |
+| Ashton Jeanty | RB | LV | gooma-s-family-league | 13.2 | 27.9 | -14.7 | `volume_up` |  | 10.7/19 | 0.0/1 | 0.58/0.84 | -14 |  |
+| Jack Bech | WR | LV | where-you-at | 4.2 | 18.8 | -14.6 | `volume_up` |  | 3.7/9 | 0.0/1 | 0.48/0.79 | -14 |  |
+| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 20.6 | 8.1 | 12.5 | `volume_down` |  | 14.0/9 | 0.7/0 | 0.90/0.97 | -2 |  |
 
-**`sleeper`** (14 shown)
+**`sleeper`** (8 shown)
 
 | player | pos | team | league | predicted | actual | error | reason | secondary | vol exp/act | TD exp/act | snap% trail/act | margin | teammate out |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| George Pickens | WR | DAL | gooma-s-family-league | 13.4 | 43.5 | -30.1 | `volume_up` | `td_variance` | 7.0/18 | 0.3/3 | 0.68/0.89 | -6 |  |
-| Emmett Johnson | RB | KC | gooma-s-family-league | 9.8 | 35.1 | -25.3 | `teammate_out` | `volume_up` | 5.0/29 | 0.7/2 | 0.25/0.88 | 22 | Kenneth Walker III |
-| Christian McCaffrey | RB | SF | gooma-s-family-league | 22.6 | 46.3 | -23.7 | `unexplained` |  | 20.3/17 | 1.7/3 | 0.68/0.60 | 6 |  |
-| Jahmyr Gibbs | RB | DET | gooma-s-family-league | 24.5 | 44.2 | -19.7 | `td_variance` |  | 27.7/30 | 0.7/2 | 0.78/0.69 | 25 |  |
-| Drake Maye | QB | NE | gooma-s-family-league | 22.0 | 3.0 | 18.9 | `left_early` | `blowout_script` | 34.0/5 | 3.0/0 | 0.94/0.17 | -25 |  |
-| Patrick Mahomes | QB | KC | gooma-s-family-league | 18.5 | 35.4 | -16.9 | `td_variance` |  | 37.0/37 | 1.7/5 | 0.98/0.95 | 22 |  |
-| Dak Prescott | QB | DAL | gooma-s-family-league | 17.9 | 34.4 | -16.5 | `volume_up` | `td_variance` | 33.7/55 | 2.3/5 | 1.00/1.00 | -6 |  |
-| Chuba Hubbard | RB | CAR | gooma-s-family-league | 18.0 | 34.2 | -16.2 | `volume_up` | `td_variance` | 21.0/32 | 0.3/2 | 0.81/0.84 | 3 |  |
-| Isaiah Likely | TE | NYG | gooma-s-family-league | 12.5 | 27.7 | -15.2 | `volume_up` |  | 7.0/11 | 0.7/1 | 0.84/0.88 | -3 |  |
-| Deebo Samuel Sr. | WR | SF | gooma-s-family-league | 11.0 | 25.9 | -14.9 | `td_variance` |  | 5.3/6 | 0.7/2 | 0.62/0.68 | 6 | Mike Evans |
-| Chase Brown | RB | CIN | gooma-s-family-league | 13.8 | 28.3 | -14.5 | `td_variance` |  | 16.3/19 | 0.0/2 | 0.69/0.73 | 20 |  |
-| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 19.9 | 34.1 | -14.2 | `unexplained` |  | 11.7/14 | 1.0/0 | 0.89/0.89 | 20 |  |
-| Parker Washington | WR | JAX | gooma-s-family-league | 14.7 | 28.2 | -13.5 | `unexplained` |  | 7.0/9 | 0.3/1 | 0.69/0.77 | 17 |  |
-| Jalen Coker | WR | CAR | gooma-s-family-league | 12.9 | 0.3 | 12.6 | `unexplained` |  | 5.0/5 | 0.3/0 | 0.78/0.80 | 3 |  |
+| Ted Hurst III | WR | TB | gooma-s-family-league | 1.8 | 22.6 | -20.9 | `volume_up` | `td_variance` | 1.0/7 | 0.0/2 | 0.33/0.64 | -10 |  |
+| Jonah Coleman | RB | DEN | gooma-s-family-league | 17.4 | 34.9 | -17.5 | `volume_up` | `td_variance` | 16.0/29 | 0.7/3 | 0.64/0.85 | 14 |  |
+| Ashton Jeanty | RB | LV | gooma-s-family-league | 12.9 | 27.9 | -15.0 | `volume_up` |  | 10.7/19 | 0.0/1 | 0.58/0.84 | -14 |  |
+| Dak Prescott | QB | DAL | gooma-s-family-league | 21.1 | 35.9 | -14.8 | `td_variance` |  | 42.3/37 | 3.0/5 | 1.00/1.00 | 21 |  |
+| Jack Bech | WR | LV | where-you-at | 4.4 | 18.8 | -14.4 | `volume_up` |  | 3.7/9 | 0.0/1 | 0.48/0.79 | -14 |  |
+| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 21.9 | 8.1 | 13.8 | `volume_down` |  | 14.0/9 | 0.7/0 | 0.90/0.97 | -2 |  |
+| Antonio Williams | WR | WAS | gooma-s-family-league | 8.2 | 21.2 | -13.0 | `volume_up` |  | 5.0/11 | 0.3/0 | 0.84/0.84 | 2 |  |
+| Luther Burden III | WR | CHI | gooma-s-family-league | 15.3 | 3.3 | 12.0 | `volume_down` |  | 8.0/4 | 1.0/0 | 0.58/0.59 | 8 |  |
 
-**`e_pts`** (15 shown)
+**`e_pts`** (9 shown)
 
 | player | pos | team | league | predicted | actual | error | reason | secondary | vol exp/act | TD exp/act | snap% trail/act | margin | teammate out |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| George Pickens | WR | DAL | gooma-s-family-league | 12.4 | 43.5 | -31.1 | `volume_up` | `td_variance` | 7.0/18 | 0.3/3 | 0.68/0.89 | -6 |  |
-| Emmett Johnson | RB | KC | gooma-s-family-league | 10.0 | 35.1 | -25.1 | `teammate_out` | `volume_up` | 5.0/29 | 0.7/2 | 0.25/0.88 | 22 | Kenneth Walker III |
-| Jahmyr Gibbs | RB | DET | gooma-s-family-league | 21.7 | 44.2 | -22.5 | `td_variance` |  | 27.7/30 | 0.7/2 | 0.78/0.69 | 25 |  |
-| Christian McCaffrey | RB | SF | gooma-s-family-league | 23.9 | 46.3 | -22.4 | `unexplained` |  | 20.3/17 | 1.7/3 | 0.68/0.60 | 6 |  |
-| Patrick Mahomes | QB | KC | gooma-s-family-league | 17.6 | 35.4 | -17.8 | `td_variance` |  | 37.0/37 | 1.7/5 | 0.98/0.95 | 22 |  |
-| Drake Maye | QB | NE | gooma-s-family-league | 20.0 | 3.0 | 17.0 | `left_early` | `blowout_script` | 34.0/5 | 3.0/0 | 0.94/0.17 | -25 |  |
-| Chuba Hubbard | RB | CAR | gooma-s-family-league | 17.6 | 34.2 | -16.6 | `volume_up` | `td_variance` | 21.0/32 | 0.3/2 | 0.81/0.84 | 3 |  |
-| Dak Prescott | QB | DAL | gooma-s-family-league | 18.0 | 34.4 | -16.4 | `volume_up` | `td_variance` | 33.7/55 | 2.3/5 | 1.00/1.00 | -6 |  |
-| Deebo Samuel Sr. | WR | SF | gooma-s-family-league | 10.1 | 25.9 | -15.8 | `td_variance` |  | 5.3/6 | 0.7/2 | 0.62/0.68 | 6 | Mike Evans |
-| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 18.8 | 34.1 | -15.3 | `unexplained` |  | 11.7/14 | 1.0/0 | 0.89/0.89 | 20 |  |
-| Isaiah Likely | TE | NYG | gooma-s-family-league | 12.4 | 27.7 | -15.3 | `volume_up` |  | 7.0/11 | 0.7/1 | 0.84/0.88 | -3 |  |
-| Chase Brown | RB | CIN | gooma-s-family-league | 14.2 | 28.3 | -14.1 | `td_variance` |  | 16.3/19 | 0.0/2 | 0.69/0.73 | 20 |  |
-| Joe Burrow | QB | CIN | gooma-s-family-league | 19.1 | 33.2 | -14.1 | `unexplained` |  | 38.3/45 | 4.7/4 | 0.98/0.95 | 20 |  |
-| Parker Washington | WR | JAX | gooma-s-family-league | 15.4 | 28.2 | -12.8 | `unexplained` |  | 7.0/9 | 0.3/1 | 0.69/0.77 | 17 |  |
-| Jalen Coker | WR | CAR | gooma-s-family-league | 13.0 | 0.3 | 12.7 | `unexplained` |  | 5.0/5 | 0.3/0 | 0.78/0.80 | 3 |  |
+| Ted Hurst III | WR | TB | gooma-s-family-league | 1.6 | 22.6 | -21.0 | `volume_up` | `td_variance` | 1.0/7 | 0.0/2 | 0.33/0.64 | -10 |  |
+| Jonah Coleman | RB | DEN | gooma-s-family-league | 17.4 | 34.9 | -17.5 | `volume_up` | `td_variance` | 16.0/29 | 0.7/3 | 0.64/0.85 | 14 |  |
+| Jack Bech | WR | LV | where-you-at | 4.0 | 18.8 | -14.8 | `volume_up` |  | 3.7/9 | 0.0/1 | 0.48/0.79 | -14 |  |
+| Ashton Jeanty | RB | LV | gooma-s-family-league | 14.1 | 27.9 | -13.8 | `volume_up` |  | 10.7/19 | 0.0/1 | 0.58/0.84 | -14 |  |
+| Antonio Williams | WR | WAS | gooma-s-family-league | 7.8 | 21.2 | -13.4 | `volume_up` |  | 5.0/11 | 0.3/0 | 0.84/0.84 | 2 |  |
+| Dak Prescott | QB | DAL | gooma-s-family-league | 23.3 | 35.9 | -12.6 | `td_variance` |  | 42.3/37 | 3.0/5 | 1.00/1.00 | 21 |  |
+| Emmett Johnson | RB | KC | gooma-s-family-league | 11.8 | 24.3 | -12.5 | `teammate_out` | `volume_up` | 13.7/27 | 1.3/1 | 0.46/0.82 | 27 | Kenneth Walker III |
+| Ja'Marr Chase | WR | CIN | gooma-s-family-league | 20.5 | 8.1 | 12.4 | `volume_down` |  | 14.0/9 | 0.7/0 | 0.90/0.97 | -2 |  |
+| Michael Mayer | TE | LV | gooma-s-family-league | 13.5 | 1.4 | 12.1 | `unexplained` |  | 4.3/4 | 0.0/0 | 0.79/0.67 | -14 | Brock Bowers |
 
 **Did not play, predicted > 5 (`model_components`, 7 players; status layer, not scored)**
 
@@ -123,13 +103,13 @@ Gameday inactive list (nflverse weekly_rosters, posted ~90 min before kickoff; t
 
 | player | pos | team | league | predicted | on inactive list |
 |---|---|---|---|---|---|
-| Kenneth Walker III | RB | KC | gooma-s-family-league | 17.9 | yes |
-| Jordan Addison | WR | MIN | gooma-s-family-league | 11.0 | yes |
-| Ladd McConkey | WR | LAC | gooma-s-family-league | 9.8 | yes |
-| Omar Cooper Jr. | WR | NYJ | gooma-s-family-league | 9.2 | no |
-| David Montgomery | RB | HOU | gooma-s-family-league | 7.8 | yes |
-| Demarcus Robinson | WR | SF | gooma-s-family-league | 7.3 | no |
-| Reggie Virgil | WR | ARI | we-can-think-of-something-funny | 5.9 | no |
+| Carson Beck | QB | ARI | we-can-think-of-something-funny | 10.4 | yes |
+| Dalton Kincaid | TE | BUF | gooma-s-family-league | 8.8 | yes |
+| Ja'Kobi Lane | WR | BAL | gooma-s-family-league | 7.5 | no |
+| Tyjae Spears | RB | TEN | gooma-s-family-league | 6.8 | no |
+| Oronde Gadsden II | TE | LAC | we-can-think-of-something-funny | 5.9 | no |
+| Brock Bowers | TE | LV | gooma-s-family-league | 5.3 | yes |
+| Audric Estime | RB | NO | james-gregg-espn | 5.1 | yes |
 
 ## Candidate signals (derived)
 
@@ -137,13 +117,13 @@ For each reason class, the share of the model's played big misses it explains, t
 
 | reason | share of model big misses | features that carry the signal | status in `serving_config.json` inputs |
 |---|---|---|---|
-| `volume_up` | 31% (36) | `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos`, `opps_trend` | served: `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos` ; not built: `opps_trend` |
-| `volume_down` | 6% (7) | `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos`, `opps_trend` | served: `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos` ; not built: `opps_trend` |
+| `volume_up` | 33% (40) | `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos`, `opps_trend` | served: `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos` ; not built: `opps_trend` |
+| `volume_down` | 7% (8) | `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos`, `opps_trend` | served: `opps_l1`, `opps_l2`, `opps_l3`, `target_share_l1`, `carry_share_l1`, `role_score`, `role_rank_pos` ; not built: `opps_trend` |
 | `teammate_out` | 5% (6) | `tm_out_above_n`, `tm_out_group_opps`, `tm_out_targets_all`, `tm_out_carries_all`, `tm_group_size` | served: `tm_out_above_n`, `tm_out_group_opps`, `tm_out_targets_all`, `tm_out_carries_all`, `tm_group_size` |
 | `blowout_script` | 2% (2) | `team_spread`, `implied_team_total`, `total_line` | served: `team_spread`, `implied_team_total`, `total_line` |
 | `left_early` | 4% (5) | `snap_pct_l1`, `inj_weeks_since_report`, `inj_report_status`, `inj_practice_status` | served: `snap_pct_l1`, `inj_weeks_since_report` ; pruned: `inj_report_status`, `inj_practice_status` |
-| `td_variance` | 24% (28) | `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` | served: `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` |
-| `inactive_missed` | 46 rows, counted apart (24 of 46 on the gameday inactive list) | status layer (`ff.status`, Sleeper `injury_status`, the nflverse report, the gameday inactive list), not a feature | n/a |
+| `td_variance` | 24% (29) | `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` | served: `td_luck_rush_std`, `td_luck_rec_std`, `td_luck_pass_std`, `td_luck_total_std`, `td_luck_total_prev` |
+| `inactive_missed` | 53 rows, counted apart (28 of 53 on the gameday inactive list) | status layer (`ff.status`, Sleeper `injury_status`, the nflverse report, the gameday inactive list), not a feature | n/a |
 
 ## Limits
 
