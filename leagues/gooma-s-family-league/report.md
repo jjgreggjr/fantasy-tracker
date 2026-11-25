@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 12
 
 redraft · 20 roster slots  
-Generated 2026-11-25 02:44 UTC · baselines: 2026 only · lineup as of 2026-11-25T02:45:01Z
+Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:41Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -108,12 +108,12 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 5) | 39% | WR2 on depth chart; up from 5; snap share trending +50%/wk; team passes #6; age 24 |
+| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 2) | 39% | WR2 on depth chart; snap share trending +50%/wk; team passes #6; age 24 |
 | Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 56% | WR3 on depth chart; snap share trending +22%/wk; team passes #9; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
-| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 1) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
+| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 2) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
 | Jake Briningstool | TE | KC | 24.0 | 1 | 3 (was 3) | 29% | TE3 on depth chart; snap share trending +8%/wk; team passes #12; age 24 |
-| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 4) | 14% | RB3 on depth chart; up from 4; snap share trending +6%/wk; age 22 |
+| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +6%/wk; age 22 |
 | Kaelon Black | RB | SF | 25.1 | 0 | 2 (was 2) | 32% | RB2 on depth chart; age 25 |
 | Trevor Etienne | RB | CAR | 22.4 | 1 | 2 (was 2) | 14% | RB2 on depth chart; age 22 |
 | Malachi Fields | WR | NYG | 23.2 | 0 | 2 (was 2) | 87% | WR2 on depth chart; team passes #11; age 23 |
@@ -121,8 +121,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
 | Xavier Hutchinson | WR | HOU | 26.5 | 3 | 2 (was 2) | 80% | WR2 on depth chart; team passes #10; age 26 |
 | Jordan James | RB | SF | 22.7 | 1 | 3 (was 3) | 6% | RB3 on depth chart; age 23 |
-| Jalen Royals | WR | KC | 23.8 | 1 | 4 (was 5) | 31% | WR4 on depth chart; up from 5; team passes #12; age 24 |
 | Roman Wilson | WR | PIT | 25.4 | 2 | 3 (was 3) | 69% | WR3 on depth chart; team passes #8; age 25 |
+| CJ Donaldson | RB | NO | 22.4 | 0 | 2 (was 2) | 44% | RB2 on depth chart; age 22 |
 
 
 ## Ask me

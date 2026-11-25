@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 12
 
 dynasty · 31 roster slots  
-Generated 2026-11-25 02:44 UTC · baselines: 2026 only · lineup as of 2026-11-25T02:45:02Z
+Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:41Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -94,8 +94,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tanner McKee | QB | PHI | DAL | 14.2 | 2.0 |  | 2 | 5 | Low |  |
 | Josh Johnson | QB | ARI | WAS | 13.2 | 2.0 |  | 2 | 21 | Med |  |
 | Samaje Perine | RB | CIN | NO | 9.5 | 10.1 | 30% | 2 | 20 | High | 🔥 |
-| Chris Rodriguez Jr. | RB | JAX | TEN | 8.2 | 8.8 | 26% | 2 | 18 | Med | 🔥 |
 | Elijah Mitchell | RB | PHI | DAL | 8.2 | 7.0 |  |  | 1 | Low |  |
+| Chris Rodriguez Jr. | RB | JAX | TEN | 8.2 | 8.8 | 26% | 2 | 18 | Med | 🔥 |
 | Jaret Patterson | RB | DEN | PIT | 6.5 | 7.5 |  |  | 8 | Low |  |
 | Phil Mafah | RB | NYG | IND | 12.1 | 7.0 |  |  | 2 | Low |  |
 | Devin Neal | RB | WAS | ARI | 12.0 | 8.4 |  |  | 15 | Low |  |
@@ -117,21 +117,21 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 5) | 39% | WR2 on depth chart; up from 5; snap share trending +50%/wk; team passes #6; age 24 |
+| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 2) | 39% | WR2 on depth chart; snap share trending +50%/wk; team passes #6; age 24 |
 | Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 56% | WR3 on depth chart; snap share trending +22%/wk; team passes #9; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
-| Kayshon Boutte | WR | HOU | 24.6 | 3 | 3 (was 5) | 52% | WR3 on depth chart; up from 5; snap share trending +10%/wk; team passes #10; age 25 |
-| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 1) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
+| Kayshon Boutte | WR | HOU | 24.6 | 3 | 3 (was 3) | 52% | WR3 on depth chart; snap share trending +10%/wk; team passes #10; age 25 |
+| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 2) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
 | Jake Briningstool | TE | KC | 24.0 | 1 | 3 (was 3) | 29% | TE3 on depth chart; snap share trending +8%/wk; team passes #12; age 24 |
-| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 4) | 14% | RB3 on depth chart; up from 4; snap share trending +6%/wk; age 22 |
+| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +6%/wk; age 22 |
 | Trevor Etienne | RB | CAR | 22.4 | 1 | 2 (was 2) | 14% | RB2 on depth chart; age 22 |
 | Anthony Tyus III | RB | CAR | 23.7 | 1 | 3 (was 3) | 1% | RB3 on depth chart; age 24 |
 | Jaleel McLaughlin | RB | CLE | 26.2 | 3 | 3 (was 3) | 16% | RB3 on depth chart; age 26 |
 | Jaylen Wright | RB | MIA | 23.7 | 2 | 2 (was 2) | 18% | RB2 on depth chart; age 24 |
 | Jordan James | RB | SF | 22.7 | 1 | 3 (was 3) | 6% | RB3 on depth chart; age 23 |
-| Jalen Royals | WR | KC | 23.8 | 1 | 4 (was 5) | 31% | WR4 on depth chart; up from 5; team passes #12; age 24 |
 | Roman Wilson | WR | PIT | 25.4 | 2 | 3 (was 3) | 69% | WR3 on depth chart; team passes #8; age 25 |
-| CJ Donaldson | RB | NO | 22.4 | 0 | 2 (was 4) | 44% | RB2 on depth chart; up from 4; age 22 |
+| CJ Donaldson | RB | NO | 22.4 | 0 | 2 (was 2) | 44% | RB2 on depth chart; age 22 |
+| Will Shipley | RB | PHI | 24.2 | 2 | 2 (was 2) | 36% | RB2 on depth chart; age 24 |
 
 
 ## Ask me

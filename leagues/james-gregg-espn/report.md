@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 12
 
 redraft · 17 roster slots  
-Generated 2026-11-25 02:44 UTC · baselines: 2026 only · lineup as of 2026-11-25T02:45:18Z
+Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:57Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -60,8 +60,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Joe Milton III | QB | PHI | DAL | 18.3 | 2.4 |  | 1 | 5 | Low |  |
 | Deshaun Watson | QB | CLE | LV | 17.9 | 4.0 |  | 1 | 13 | Med | 🔥 |
 | Kyle McCord | QB | MIA | NYJ | 17.1 | 2.5 |  | 1 | 6 | High |  |
-| Baker Mayfield | QB | TB | CAR | 16.0 | 5.0 |  | 1 | 17 | High |  |
 | Justin Herbert | QB | LAC | NE | 16.0 | 4.7 |  | 1 | 2 | Med |  |
+| Baker Mayfield | QB | TB | CAR | 16.0 | 5.0 |  | 1 | 17 | High |  |
 | Jordan Mason | RB | MIN | ATL | 12.6 | 13.8 | 46% | 1 | 4 | High |  |
 | Phil Mafah | RB | NYG | IND | 12.1 | 7.0 |  |  | 2 | Low |  |
 | Devin Neal | RB | WAS | ARI | 12.0 | 8.4 |  |  | 15 | Low |  |
@@ -74,8 +74,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Tyler Higbee | TE | LA | GB | 8.4 | 4.7 | 17% | 1 | 16 | High | 🔥 |
 | Michael Mayer | TE | LV | CLE | 8.3 | 4.6 | 15% | 2 | 8 | Med |  |
 | Dalton Schultz | TE | HOU | BAL | 10.2 | 4.9 | 15% | 1 | 6 | Med |  |
-| Chris Godwin Jr. | WR | TB | CAR | 9.8 | 5.3 | 19% | 2 | 6 | Med |  |
 | Malik Washington | WR | MIA | NYJ | 9.8 | 7.1 | 22% | 1 | 28 | High | 🔥 |
+| Chris Godwin Jr. | WR | TB | CAR | 9.8 | 5.3 | 19% | 2 | 6 | Med |  |
 | Mack Hollins | WR | NE | LAC | 9.4 | 5.1 | 17% | 2 | 4 | Med |  |
 | Makai Lemon | WR | PHI | DAL | 9.3 | 5.3 | 18% | 3 | 5 | Med |  |
 | KC Concepcion | WR | CLE | LV | 12.4 | 7.7 | 22% | 2 | 9 | High | 🔥 |
@@ -86,14 +86,14 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 5) | 39% | WR2 on depth chart; up from 5; snap share trending +50%/wk; team passes #6; age 24 |
+| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 2) | 39% | WR2 on depth chart; snap share trending +50%/wk; team passes #6; age 24 |
 | Corey Kiner | RB | NE | 24.8 | 1 | 2 (was 2) | 30% | RB2 on depth chart; snap share trending +25%/wk; age 25 |
 | Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 56% | WR3 on depth chart; snap share trending +22%/wk; team passes #9; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
-| Kayshon Boutte | WR | HOU | 24.6 | 3 | 3 (was 5) | 52% | WR3 on depth chart; up from 5; snap share trending +10%/wk; team passes #10; age 25 |
-| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 1) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
+| Kayshon Boutte | WR | HOU | 24.6 | 3 | 3 (was 3) | 52% | WR3 on depth chart; snap share trending +10%/wk; team passes #10; age 25 |
+| Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 2) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
 | Jake Briningstool | TE | KC | 24.0 | 1 | 3 (was 3) | 29% | TE3 on depth chart; snap share trending +8%/wk; team passes #12; age 24 |
-| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 4) | 14% | RB3 on depth chart; up from 4; snap share trending +6%/wk; age 22 |
+| LeQuint Allen Jr. | RB | JAX | 22.3 | 1 | 3 (was 3) | 14% | RB3 on depth chart; snap share trending +6%/wk; age 22 |
 | Kaelon Black | RB | SF | 25.1 | 0 | 2 (was 2) | 32% | RB2 on depth chart; age 25 |
 | Kimani Vidal | RB | LAC | 25.2 | 2 | 3 (was 3) | 36% | RB3 on depth chart; age 25 |
 | Trevor Etienne | RB | CAR | 22.4 | 1 | 2 (was 2) | 14% | RB2 on depth chart; age 22 |

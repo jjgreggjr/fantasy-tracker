@@ -1,6 +1,6 @@
 # Week 12 digest — 2026
 
-Generated 2026-11-25 02:44 UTC  
+Generated 2026-11-25 03:09 UTC  
 Stats through: **Week 11** · Baselines: **2026 only**
 
 
@@ -11,9 +11,9 @@ Stats through: **Week 11** · Baselines: **2026 only**
 - 2025 baseline weeks: 18 weeks
 - players in dimension: 961
 - Sleeper players cache: 2026-11-25
-- projections: 874 players (Sleeper, 2026-11-25T02:45:08Z)
-- league rosters: 3 leagues, lineups read 2026-11-25T02:45:01Z
-- ESPN rosters: Average Joes (2026-11-25T02:45:18Z)
+- projections: 874 players (Sleeper, 2026-11-25T03:09:47Z)
+- league rosters: 3 leagues, lineups read 2026-11-25T03:09:41Z
+- ESPN rosters: Average Joes (2026-11-25T03:09:57Z)
 - status rows: 1555 players; 0 with practice reports
 - gameday inactives: 0 on the week 12 list (games not yet started)
 
