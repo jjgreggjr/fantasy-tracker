@@ -1,7 +1,7 @@
 # We can think of something funny — 2026 Week 12
 
 dynasty · 31 roster slots  
-Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:41Z
+Generated 2026-11-25 23:01 UTC · baselines: 2026 only · lineup as of 2026-11-25T23:01:56Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -21,6 +21,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - Jaylin Noel: REPEAT DNP — 0 opportunities in weeks 10,11 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - TreVeyon Henderson: REPEAT DNP — 0 opportunities in weeks 9,10 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - Ricky Pearsall: REPEAT DNP — 0 opportunities in weeks 10,11 and no Full practice this week (play_prob 0.00; E_pts blanked)
+- DK Metcalf: new QB1: Mason Rudolph (was Aaron Rodgers) — re-check his role before trusting E_pts
 
 
 ## Your roster
@@ -89,36 +90,34 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | Joe Milton III | QB | PHI | DAL | 18.8 | 2.4 |  | 1 | 5 | Low |  |
 | Kyle McCord | QB | MIA | NYJ | 17.5 | 2.5 |  | 1 | 6 | High |  |
-| Anthony Richardson | QB | IND | NYG | 17.0 | 5.5 |  | 1 | 15 | Low |  |
 | Tommy DeVito | QB | NE | LAC | 16.0 | 3.0 |  | 1 | 8 | Med |  |
+| Drew Lock | QB | SEA | SF | 15.9 | 5.5 |  | 2 | 9 | Med |  |
+| Aaron Rodgers | QB | PIT | DEN | 15.7 | 1.2 |  | 4 | 3 | Low |  |
 | Tanner McKee | QB | PHI | DAL | 14.2 | 2.0 |  | 2 | 5 | Low |  |
-| Josh Johnson | QB | ARI | WAS | 13.2 | 2.0 |  | 2 | 21 | Med |  |
-| Samaje Perine | RB | CIN | NO | 9.5 | 10.1 | 30% | 2 | 20 | High | 🔥 |
 | Elijah Mitchell | RB | PHI | DAL | 8.2 | 7.0 |  |  | 1 | Low |  |
-| Chris Rodriguez Jr. | RB | JAX | TEN | 8.2 | 8.8 | 26% | 2 | 18 | Med | 🔥 |
 | Jaret Patterson | RB | DEN | PIT | 6.5 | 7.5 |  |  | 8 | Low |  |
+| Will Shipley | RB | PHI | DAL | 6.3 | 6.9 | 22% | 2 | 1 | Low | 🔥 |
+| Pierre Strong | RB | GB | LA | 6.3 | 10.0 |  |  | 32 | Low |  |
 | Phil Mafah | RB | NYG | IND | 12.1 | 7.0 |  |  | 2 | Low |  |
 | Devin Neal | RB | WAS | ARI | 12.0 | 8.4 |  |  | 15 | Low |  |
 | Elijah Higgins | TE | ARI | WAS | 9.8 | 3.6 | 12% | 2 | 4 | Low |  |
 | Colby Parkinson | TE | LA | GB | 9.3 | 4.4 | 16% | 2 | 16 | Med |  |
 | Cade Otton | TE | TB | CAR | 8.3 | 4.6 | 17% | 1 | 24 | High |  |
-| Evan Engram | TE | DEN | PIT | 7.6 | 3.5 | 11% | 1 | 9 | Med | 🔥 |
 | Albert Okwuegbunam | TE | LV | CLE | 11.9 | 6.0 |  |  | 8 | Low |  |
 | Greg Dulcich | TE | MIA | NYJ | 10.1 | 4.3 | 16% | 1 | 3 | High |  |
-| Mack Hollins | WR | NE | LAC | 9.4 | 5.1 | 17% | 2 | 4 | Med |  |
+| Mark Andrews | TE | BAL | HOU | 10.1 | 5.6 | 17% | 1 | 25 | High |  |
+| Mack Hollins | WR | NE | LAC | 9.4 | 5.1 | 17% | 2 | 4 | Med | 🔥 |
 | Kevin Austin Jr. | WR | NO | CIN | 9.3 | 4.6 |  |  | 21 | Low |  |
 | Tai Felton | WR | MIN | ATL | 8.9 | 4.9 | 15% | 4 | 7 | Low | 🔥 |
 | Quentin Johnston | WR | LAC | NE | 8.6 | 4.8 | 16% | 2 | 2 | Med |  |
-| Chimere Dike | WR | TEN | JAX | 8.0 | 4.9 | 15% | 2 | 30 | Med | 🔥 |
 | Kalif Raymond | WR | CHI | DET | 7.5 | 4.0 | 12% | 3 | 27 | Med |  |
+| Anthony Gould | WR | IND | NYG | 7.3 | 4.0 | 14% | 3 | 10 | Med |  |
 
 
 ## Dynasty watchlist — young, ascending, unrostered here
 
 | Player | Pos | Tm | Age | Yrs | Depth | Snap% | Why |
 |---|---|---|---|---|---|---|---|
-| Harrison Wallace III | WR | ARI | 23.6 | 0 | 2 (was 2) | 39% | WR2 on depth chart; snap share trending +50%/wk; team passes #6; age 24 |
-| Jack Bech | WR | LV | 23.9 | 1 | 3 (was 3) | 56% | WR3 on depth chart; snap share trending +22%/wk; team passes #9; age 24 |
 | Jaydn Ott | RB | KC | 23.9 | 0 | 3 (was 3) | 12% | RB3 on depth chart; snap share trending +11%/wk; age 24 |
 | Kayshon Boutte | WR | HOU | 24.6 | 3 | 3 (was 3) | 52% | WR3 on depth chart; snap share trending +10%/wk; team passes #10; age 25 |
 | Darnell Washington | TE | PIT | 25.3 | 3 | 2 (was 2) | 53% | TE2 on depth chart; snap share trending +9%/wk; team passes #8; age 25 |
@@ -132,6 +131,8 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Roman Wilson | WR | PIT | 25.4 | 2 | 3 (was 3) | 69% | WR3 on depth chart; team passes #8; age 25 |
 | CJ Donaldson | RB | NO | 22.4 | 0 | 2 (was 2) | 44% | RB2 on depth chart; age 22 |
 | Will Shipley | RB | PHI | 24.2 | 2 | 2 (was 2) | 36% | RB2 on depth chart; age 24 |
+| Ben Sinnott | TE | WAS | 24.4 | 2 | 2 (was 2) | 35% | TE2 on depth chart; team passes #15; age 24 |
+| Reggie Virgil | WR | ARI | 22.5 | 0 | 3 (was 3) | 34% | WR3 on depth chart; team passes #6; age 22 |
 
 
 ## Ask me

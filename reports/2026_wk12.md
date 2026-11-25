@@ -1,20 +1,20 @@
 # Week 12 digest — 2026
 
-Generated 2026-11-25 03:09 UTC  
+Generated 2026-11-25 23:01 UTC  
 Stats through: **Week 11** · Baselines: **2026 only**
 
 
 ## Data freshness
 
-- depth chart snapshot: 2026-11-24T18:50:30Z
+- depth chart snapshot: 2026-11-25T17:56:34Z
 - 2026 player weeks: weeks [np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6), np.int64(7), np.int64(8), np.int64(9), np.int64(10), np.int64(11)]
 - 2025 baseline weeks: 18 weeks
-- players in dimension: 961
+- players in dimension: 963
 - Sleeper players cache: 2026-11-25
-- projections: 874 players (Sleeper, 2026-11-25T03:09:47Z)
-- league rosters: 3 leagues, lineups read 2026-11-25T03:09:41Z
-- ESPN rosters: Average Joes (2026-11-25T03:09:57Z)
-- status rows: 1555 players; 0 with practice reports
+- projections: 875 players (Sleeper, 2026-11-25T23:02:03Z)
+- league rosters: 3 leagues, lineups read 2026-11-25T23:01:55Z
+- ESPN rosters: Average Joes (2026-11-25T23:02:13Z)
+- status rows: 1554 players; 85 with practice reports
 - gameday inactives: 0 on the week 12 list (games not yet started)
 
 ### Data integrity
@@ -37,7 +37,7 @@ All 19 checks passed.
 
 **Needs a decision:** Drake Maye (OUT), TreVeyon Henderson (IR), Brock Bowers (OUT), Jaylin Noel (IR), Omar Cooper Jr. (OUT), Romeo Doubs (IR), Dontayvion Wicks (IR)
 
-**Trending and still free here:** DJ Uiagalelei (QB, 2.9), Rhamondre Stevenson (RB, 14.8), Evan Engram (TE, 6.4)
+**Trending and still free here:** DJ Uiagalelei (QB, 2.9), Mason Rudolph (QB, 0.8), Rhamondre Stevenson (RB, 14.8)
 
 
 Full report: `leagues/gooma-s-family-league/report.md`
@@ -58,7 +58,7 @@ Full report: `leagues/gooma-s-family-league/report.md`
 
 **Needs a decision:** Carson Beck (OUT), Bhayshul Tuten (QUESTIONABLE), TreVeyon Henderson (IR), Dalton Kincaid (OUT), Denzel Boston (QUESTIONABLE), Jaylin Noel (IR), Ricky Pearsall (IR), Jayden Reed (IR)
 
-**Trending and still free here:** DJ Uiagalelei (QB, 2.9), Samaje Perine (RB, 9.5), Chris Rodriguez Jr. (RB, 8.2)
+**Trending and still free here:** DJ Uiagalelei (QB, 2.9), Mason Rudolph (QB, 0.8), Will Shipley (RB, 6.3)
 
 
 Full report: `leagues/we-can-think-of-something-funny/report.md`
@@ -79,7 +79,7 @@ Full report: `leagues/we-can-think-of-something-funny/report.md`
 
 **Needs a decision:** Jaxson Dart (IR), Emanuel Wilson (OUT), Kenneth Walker III (OUT), Dalton Kincaid (OUT), Terry McLaurin (IR), Zach Sieler (IR), Edgerrin Cooper (IR)
 
-**Trending and still free here:** Drew Stevens (K, 8.3), DJ Uiagalelei (QB, 2.9), Will Shipley (RB, 5.7)
+**Trending and still free here:** Drew Stevens (K, 8.3), DJ Uiagalelei (QB, 2.9), Mason Rudolph (QB, 0.8)
 
 
 Full report: `leagues/where-you-at/report.md`
@@ -100,7 +100,7 @@ Full report: `leagues/where-you-at/report.md`
 
 **Needs a decision:** Drake Maye (OUT), Sam LaPorta (QUESTIONABLE), Drake London (QUESTIONABLE), Jalen Coker (QUESTIONABLE), Puka Nacua (IR)
 
-**Trending and still free here:** J.J. McCarthy (QB, 19.6), Deshaun Watson (QB, 17.9), Geno Smith (QB, 15.6)
+**Trending and still free here:** J.J. McCarthy (QB, 19.6), Geno Smith (QB, 15.6), Fernando Mendoza (QB, 13.9)
 
 
 Full report: `leagues/james-gregg-espn/report.md`

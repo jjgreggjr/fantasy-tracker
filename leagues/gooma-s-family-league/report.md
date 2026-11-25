@@ -1,7 +1,7 @@
 # Gooma's Family League — 2026 Week 12
 
 redraft · 20 roster slots  
-Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:41Z
+Generated 2026-11-25 23:01 UTC · baselines: 2026 only · lineup as of 2026-11-25T23:01:55Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 

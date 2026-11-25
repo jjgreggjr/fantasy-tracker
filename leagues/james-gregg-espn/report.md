@@ -1,7 +1,7 @@
 # Average Joes — 2026 Week 12
 
 redraft · 17 roster slots  
-Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:57Z
+Generated 2026-11-25 23:01 UTC · baselines: 2026 only · lineup as of 2026-11-25T23:02:13Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -12,6 +12,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 
 - Puka Nacua: IR (Knee - MCL) — his depth rank of 7 reflects that, not his role
 - Drake Maye: OUT (Ankle) — his depth rank of 3 reflects that, not his role
+- Pat Freiermuth: new QB1: Mason Rudolph (was Aaron Rodgers) — re-check his role before trusting E_pts
 
 
 ## Your roster
@@ -58,10 +59,10 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 |---|---|---|---|---|---|---|---|---|---|---|
 | J.J. McCarthy | QB | NYG | IND | 19.6 | 3.7 |  | 1 | 11 | Med | 🔥 |
 | Joe Milton III | QB | PHI | DAL | 18.3 | 2.4 |  | 1 | 5 | Low |  |
-| Deshaun Watson | QB | CLE | LV | 17.9 | 4.0 |  | 1 | 13 | Med | 🔥 |
 | Kyle McCord | QB | MIA | NYJ | 17.1 | 2.5 |  | 1 | 6 | High |  |
 | Justin Herbert | QB | LAC | NE | 16.0 | 4.7 |  | 1 | 2 | Med |  |
 | Baker Mayfield | QB | TB | CAR | 16.0 | 5.0 |  | 1 | 17 | High |  |
+| Anthony Richardson | QB | IND | NYG | 15.9 | 5.5 |  | 1 | 15 | Low |  |
 | Jordan Mason | RB | MIN | ATL | 12.6 | 13.8 | 46% | 1 | 4 | High |  |
 | Phil Mafah | RB | NYG | IND | 12.1 | 7.0 |  |  | 2 | Low |  |
 | Devin Neal | RB | WAS | ARI | 12.0 | 8.4 |  |  | 15 | Low |  |
@@ -70,14 +71,14 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Bam Knight | RB | ARI | WAS | 10.0 | 11.8 | 38% | 2 | 16 | Med |  |
 | Albert Okwuegbunam | TE | LV | CLE | 9.2 | 6.0 |  |  | 8 | Low |  |
 | Greg Dulcich | TE | MIA | NYJ | 8.5 | 4.3 | 16% | 1 | 3 | High |  |
-| Mark Andrews | TE | BAL | HOU | 8.4 | 5.6 | 17% | 1 | 25 | High |  |
 | Tyler Higbee | TE | LA | GB | 8.4 | 4.7 | 17% | 1 | 16 | High | 🔥 |
+| Mark Andrews | TE | BAL | HOU | 8.4 | 5.6 | 17% | 1 | 25 | High |  |
 | Michael Mayer | TE | LV | CLE | 8.3 | 4.6 | 15% | 2 | 8 | Med |  |
 | Dalton Schultz | TE | HOU | BAL | 10.2 | 4.9 | 15% | 1 | 6 | Med |  |
 | Malik Washington | WR | MIA | NYJ | 9.8 | 7.1 | 22% | 1 | 28 | High | 🔥 |
 | Chris Godwin Jr. | WR | TB | CAR | 9.8 | 5.3 | 19% | 2 | 6 | Med |  |
-| Mack Hollins | WR | NE | LAC | 9.4 | 5.1 | 17% | 2 | 4 | Med |  |
-| Makai Lemon | WR | PHI | DAL | 9.3 | 5.3 | 18% | 3 | 5 | Med |  |
+| Mack Hollins | WR | NE | LAC | 9.4 | 5.1 | 17% | 2 | 4 | Med | 🔥 |
+| Konata Mumpfield | WR | LA | GB | 9.3 | 5.7 | 20% | 1 | 8 | Med | 🔥 |
 | KC Concepcion | WR | CLE | LV | 12.4 | 7.7 | 22% | 2 | 9 | High | 🔥 |
 | Antonio Williams | WR | WAS | ARI | 10.0 | 5.3 | 18% | 2 | 17 | Med | 🔥 |
 

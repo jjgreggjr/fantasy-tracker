@@ -1,7 +1,7 @@
 # Where You At? — 2026 Week 12
 
 dynasty · 34 roster slots · IDP  
-Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-25T03:09:41Z
+Generated 2026-11-25 23:01 UTC · baselines: 2026 only · lineup as of 2026-11-25T23:01:56Z
 
 `E_pts` is expected points **in this league's scoring**: projected stat line blended with recent production, then adjusted ±12% for the matchup. **DvP rank 1 = softest matchup.** It is a ranking of opportunity, not a point projection.
 
@@ -10,7 +10,7 @@ Generated 2026-11-25 03:09 UTC · baselines: 2026 only · lineup as of 2026-11-2
 
 A depth-chart rank can reflect *availability* rather than role. These are the cases where that is happening on your roster.
 
-- Emmett Johnson: 55% of the volume ahead of him belongs to players unlikely to play (Kenneth Walker III (out))
+- Emmett Johnson: 55% of the volume ahead of him belongs to players unlikely to play (Kenneth Walker III (out, Limited Participation in Practice))
 - Dalton Kincaid: OUT (Thumb) — his depth rank of 1 reflects that, not his role
 - Kenneth Walker III: OUT (Groin) — his depth rank of 1 reflects that, not his role
 - Jaxson Dart: IR (Knee - Meniscus) — his depth rank of 3 reflects that, not his role
@@ -22,6 +22,7 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 - Jaxson Dart: REPEAT DNP — 0 opportunities in weeks 10,11 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - Emanuel Wilson: REPEAT DNP — 0 opportunities in weeks 9,10 and no Full practice this week (play_prob 0.00; E_pts blanked)
 - Terry McLaurin: REPEAT DNP — 0 opportunities in weeks 10,11 and no Full practice this week (play_prob 0.00; E_pts blanked)
+- Germie Bernard: new QB1: Mason Rudolph (was Aaron Rodgers) — re-check his role before trusting E_pts
 
 
 ## Your roster
@@ -100,15 +101,15 @@ A depth-chart rank can reflect *availability* rather than role. These are the ca
 | Antonio Johnson | DB | JAX | TEN | 6.6 | 5.7 |  |  |  | High |  |
 | Cole Bishop | DB | BUF | KC | 6.4 | 4.3 |  |  |  | High |  |
 | Gabe Hall | DL | PHI | DAL | 8.0 | 1.0 |  |  |  | Med |  |
-| Dexter Lawrence | DL | CIN | NO | 7.7 | 1.7 |  |  |  | High |  |
 | Austin Booker | DL | CHI | DET | 7.7 | 3.3 |  |  |  | High |  |
+| Dexter Lawrence | DL | CIN | NO | 7.7 | 1.7 |  |  |  | High |  |
 | Zach Allen | DL | DEN | PIT | 6.6 | 2.0 |  |  |  | High |  |
 | Byron Murphy II | DL | SEA | SF | 6.5 | 3.7 |  |  |  | High |  |
 | Mason Graham | DL | CLE | LV | 5.8 | 2.3 |  |  |  | High |  |
 | Drew Stevens | K | WAS | ARI | 8.3 | 4.3 |  |  |  | High | 🔥 |
 | Dominic Zvada | K | NYG | IND | 8.2 | 5.0 |  |  |  | High |  |
-| Eddy Pineiro | K | SF | SEA | 7.5 | 5.7 |  |  |  | High |  |
 | Matt Gay | K | LV | CLE | 7.5 | 3.3 |  |  |  | High |  |
+| Eddy Pineiro | K | SF | SEA | 7.5 | 5.7 |  |  |  | High |  |
 | Daniel Carlson | K | MIA | NYJ | 7.2 | 3.0 |  |  |  | High |  |
 | Andre Szmyt | K | CLE | LV | 7.1 | 4.0 |  |  |  | High |  |
 | Alex Singleton | LB | DEN | PIT | 9.0 | 10.3 |  |  |  | High |  |

@@ -269,9 +269,25 @@ season,week,type,action,sleeper_id,name,rosters
 2026,10,free_agent,drop,6650,,5
 2026,10,free_agent,add,12634,Jordan Watkins,2
 2026,10,free_agent,drop,9486,Dontayvion Wicks,2
+2026,11,waiver,add,WAS,,4
+2026,11,waiver,drop,PIT,,4
+2026,11,waiver,add,9229,Anthony Richardson,4
+2026,11,waiver,drop,5854,Drew Lock,4
+2026,11,waiver,add,12483,Jack Bech,2
+2026,11,waiver,drop,10226,Andrei Iosivas,2
+2026,11,waiver,add,12540,Chimere Dike,3
+2026,11,waiver,drop,KC,,3
+2026,11,waiver,add,10219,Chris Rodriguez Jr.,1
+2026,11,waiver,drop,13297,Reggie Virgil,1
 2026,11,free_agent,add,7600,Pat Freiermuth,6
 2026,11,free_agent,drop,6130,Devin Singletary,6
 2026,11,free_agent,add,5012,Mark Andrews,2
 2026,11,free_agent,drop,7600,Pat Freiermuth,2
 2026,11,free_agent,add,12499,Elic Ayomanor,2
 2026,11,free_agent,drop,12634,Jordan Watkins,2
+2026,12,free_agent,add,4147,Samaje Perine,6
+2026,12,free_agent,drop,96,Aaron Rodgers,6
+2026,12,free_agent,add,NYG,,5
+2026,12,free_agent,drop,NYJ,,5
+2026,12,free_agent,add,13670,Harrison Wallace III,2
+2026,12,free_agent,drop,5012,Mark Andrews,2
