@@ -66,3 +66,30 @@ Researched: 2026-11-19. Misses researched: 28. Candidates raised: 0.
 | Reggie Virgil | WR/ARI | Healthy, WR1 on the depth chart and absent from the inactive list, yet no stats; no source gives a cause. | no | - |
 | Kendre Miller | RB/NO | Miller was not on the inactive list and had no stats rows in weeks 9 and 10, so the inactive_missed label is suspect. He was already off the depth chart in the week 9 snapshot, and the model has no demotion feature. | no: Dropped out of NO's top 5 RBs on the depth chart. | - |
 | Shedeur Sanders | QB/CLE | Watson returned as QB1, so Sanders was a benched backup after a one-game snap spike caused by Watson's absence. The signal is the 16:30Z inactive list, a status layer, and the depth chart showed no change. | no: Watson off the inactive list at 16:30Z. | - |
+
+## 2026 week 11
+
+Researched: 2026-11-25. Misses researched: 20. Candidates raised: 0.
+
+| player | pos/team | why | foreseeable? | candidate |
+|---|---|---|---|---|
+| Ted Hurst III | WR/TB | Snap share fell over weeks 7-9, the depth chart slipped from WR3 to WR4, and no teammate was out, so nothing pointed to a volume spike. The 2 TDs on 7 targets and the one-game role jump were not foreseeable. | no | - |
+| Brock Bowers | TE/LV | Bowers was on the gameday inactive list, but the 19:55Z stamp is derived as kickoff minus 90 minutes, not an observed posting time, and no pre-kickoff run could be shown to have used it. Skeptics refuted foreseeability. | no | - |
+| Jonah Coleman | RB/DEN | No usable verdict was produced for this miss; the research step returned an off-task note. Treated as not foreseeable until it is re-researched. | no | - |
+| Dak Prescott | QB/DAL | Mostly TD luck: 4 pass TDs on 33 attempts (12.1%) against a 5.4-7.0% trailing rate, plus a smaller volume drop from the DAL lead. The td_variance label conflicts with the blowout rule that should rank above it. | no | - |
+| Ashton Jeanty | RB/LV | Jeanty's usage rose for three weeks (opps 6, 13, 13), and that trend is already served as opps_l1 to l3 and snap_pct_l1 to l3. The Bowers-out signal came late and was never linked to him. Skeptics refuted foreseeability. | no | - |
+| Jack Bech | WR/LV | Bech's snap share and targets rose in weeks 9 and 10, but two games of rise is a weak trend the 3-week mean reasonably lags, and the week 11 values are post-game. The l1 features already carry the recent rise. Skeptics refuted foreseeability. | no | - |
+| Ja'Marr Chase | WR/CIN | Targets fell from a 14.0 trailing mean to 9 with no pre-kickoff trend, injury or teammate-out signal. The lost looks went to TEs mid-game, so the miss was not foreseeable. | no | - |
+| Tanner McKee | QB/PHI | McKee was QB2 behind Joe Milton on the depth chart for weeks 9-11, but depth rank is deliberately not a model feature and the inactive feed never named him. The pre-kickoff claim was not established. Skeptics refuted foreseeability. | no | - |
+| Antonio Williams | WR/WAS | A pure target spike: target share jumped from 0.06 to 0.34 with snap share flat at 84%. No dated pre-kickoff signal explains it, and McLaurin does not appear on the week 11 inactives. | no | - |
+| Emmett Johnson | RB/KC | Walker was out and Johnson got 27 touches against 13.7 expected. Teammate-out features already exist and the practice-status feature was pruned by SHAP. The practice-miss reports could not be dated before the serve. Skeptics refuted foreseeability. | no | - |
+| Michael Mayer | TE/LV | Mostly efficiency: 4 targets, 1 catch, 4 yards, 0 TDs, with the Bowers-out bump already in the projection. The yardage slide is carried by the served pts_ppr_l1 to l3 and xfp lags. Skeptics refuted foreseeability. | no | - |
+| Luther Burden III | WR/CHI | A one-game volume drop: 3 targets against a roughly 7.7 trailing average, with a normal 59% snap share and no depth or injury change. | no | - |
+| Carson Beck | QB/ARI | Beck was on the official week 11 inactive list. No pipeline run after that release could be shown to exist, so the timing claim failed. Skeptics refuted foreseeability. | no | - |
+| Cade Klubnik | QB/NYJ | Geno Smith played all 60 snaps and Klubnik sat as QB2. The limited-practice news could not be dated, and teammate practice status is not a pipeline feature. Skeptics refuted foreseeability. | no | - |
+| Dalton Kincaid | TE/BUF | Kincaid was on the inactive list, but the 16:30Z stamp is a fixed offset and the data landed after kickoff. His snap slide (0.57, 0.50, 0.46) is too mild to trigger any rule. Skeptics refuted foreseeability. | no | - |
+| Tyjae Spears | RB/TEN | Spears dropped from RB2 to RB5 on the week 11 depth chart, but that was already a served input (role_rank_pos, role_score) and the model still projected 9.2. The did-not-practice note could not be dated. Skeptics refuted foreseeability. | no | - |
+| Ja'Kobi Lane | WR/BAL | Lane was not on the gameday inactive list and no injury or status record exists for week 11, so no pre-kickoff signal flagged him. The inactive_missed label looks wrong here. | no | - |
+| Kendre Miller | RB/NO | Miller was absent from the NO depth chart snapshots for weeks 9-11 before kickoff, but he was not on the inactive list and the cause of the zero is unproven. Skeptics refuted foreseeability. | no | - |
+| Oronde Gadsden II | TE/LAC | His week 10 snap share dropped to 21%, but he stayed TE2 on the depth chart, was healthy in status.csv and was not on the inactive list, so a zero was not foreseeable. The snap_pct_l1 feature already carries the drop. Skeptics refuted foreseeability. | no | - |
+| Audric Estime | RB/NO | Estime was on the gameday inactive list released 16:30Z, but no pre-kickoff run after that release could be shown. Skeptics refuted foreseeability. | no | - |
