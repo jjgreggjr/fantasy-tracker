@@ -285,6 +285,10 @@ season,week,type,action,sleeper_id,name,rosters
 2026,11,free_agent,drop,7600,Pat Freiermuth,2
 2026,11,free_agent,add,12499,Elic Ayomanor,2
 2026,11,free_agent,drop,12634,Jordan Watkins,2
+2026,12,free_agent,add,13394,Josh Cameron,8
+2026,12,free_agent,drop,12185,,8
+2026,12,free_agent,add,TB,,2
+2026,12,free_agent,drop,SEA,,2
 2026,12,free_agent,add,4147,Samaje Perine,6
 2026,12,free_agent,drop,96,Aaron Rodgers,6
 2026,12,free_agent,add,NYG,,5
